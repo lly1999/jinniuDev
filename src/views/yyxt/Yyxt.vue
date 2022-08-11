@@ -28,7 +28,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>更改密码</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -99,7 +99,10 @@ const router = useRouter()
 function goback(){
   router.push('/home')
 }
-
+function logout(){
+  //TODO 清除登录信息
+  router.push('/login')
+}
 // 这个应该从后台请求获得
 const menuList = [
   {icon: 'icon-jkjm.png', title:'监控界面', to:'jkjm', click:"getCompanyList", submenu:[]},

@@ -43,7 +43,7 @@
               <el-sub-menu :index="idx+''" :key="idx">
                 <template #title>
                   <!-- <el-icon><component :is="icons[item.icon]"></component></el-icon> -->
-                  <!-- <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/> -->
+                  <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
                   <span>{{item.title}}</span>
                 </template>
                 <el-menu-item
@@ -52,7 +52,7 @@
                     :key="subidx"
                     @click="displayContent(subitem.to)">
                   <!-- <el-icon><component :is="icons[subitem.icon]"/></el-icon> -->
-                  <!-- <el-image :src="require('@/assets/cclj/' + item.icon)" class="menu-img"/> -->
+                  <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
                   <span>{{subitem.title}}</span>
                 </el-menu-item>
               </el-sub-menu>
@@ -60,14 +60,14 @@
             <template v-else>
               <el-menu-item :index="idx" :key="idx" @click="displayContent(item.to)">
                 <!-- <el-icon><component :is="icons[item.icon]"/></el-icon> -->
-                <!-- <el-image :src="require('@/assets/cclj/' + item.icon)" class="menu-img"/> -->
+                <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
                 <span>{{item.title}}</span>
               </el-menu-item>
             </template>
           </template>
           <el-menu-item :index="menuList.length">
             <el-icon><component :is="Link"></component></el-icon>
-            <span><a href="http://jinniu.xbase.com.cn/" target="_blank">跳转主页</a></span>
+            <span><a href="http://101.37.246.72/denglu_shlj.exe" target="_blank">跳转主页</a></span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -99,10 +99,7 @@ const router = useRouter()
 function goback(){
   router.push('/home')
 }
-function logout(){
-  //TODO 清除登录信息
-  router.push('/login')
-}
+
 // 这个应该从后台请求获得
 const menuList = [
   {icon: 'icon-jkjm.png', title:'监控界面', to:'jkjm', click:"getCompanyList", submenu:[]},
@@ -114,6 +111,10 @@ const menuList = [
 
 function displayContent(name){
   router.push({name})
+}
+function logout(){
+  //TODO 清除登录信息
+  router.push("/login")
 }
 </script>
 

@@ -2,11 +2,11 @@
   
   <el-card class="card" shadow = "hover">
     <template #header>
-      <ul v-if ="url"><div class="header"><span><a style=" text-decoration: underline color: #000; color: #000;font-size:20px" :href="url" target="_blank">{{systemName}}</a></span></div></ul>
-      <div class = "header" style="font-size:20px" v-else>{{systemName}}</div>
+      <ul v-if ="url"><div class="header"><el-button type="text" @click="toSystem()" >{{systemName}}</el-button></div></ul>
+      <div class = "header" style="font-size:20px" v-else><el-button type="text" disabled @click="toSystem()" >{{systemName}}</el-button></div>
     </template>
     <el-image v-if="image" class="image" :src="require('@/assets/home/'+image)"> </el-image>
-    <el-image class="image" v-else :src="require('@/assets/home/image-laji.jpg')"></el-image>
+    <el-image class="image" v-else :src="require('@/assets/home/img-jmhj.jpg')"></el-image>
 
     <div class="infoContainer">
       <!-- logo -->
@@ -29,16 +29,32 @@
 </template>
 
 <script setup>
-defineProps({
+import router from '@/router';
+
+
+
+
+
+const prop =defineProps({
     logo:String,
     infoList:Array,
     systemName: String,
     url:String,
-    image:String
+    image:String,
+    
 })
+function toSystem(){
+  router.push(prop.url)
+}
 </script>
 
 <style scoped>
+
+.el-button {
+  font-size: 20px;
+  color: green;
+ 
+}
 .card{
   border-radius: 13px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 8%);

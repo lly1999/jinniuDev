@@ -1,6 +1,10 @@
 <template>
   <div class="login-wrap">
-    <div class="ms-title">金牛城市管家智慧平台</div>
+    <div class="ms-title">
+      <el-avatar class="ms-logo" style="width: 100px; height: 100px"
+      :src="require('@/assets/login-img.jpg')" 
+      :fit="fit"></el-avatar>
+      <div class="login-title">城市管家</div></div>
     <!--      定时触发表单显示-->
     <div class="ms-login">
       <transition name="fade">
@@ -23,6 +27,9 @@
               </template>
             </el-input>
           </el-form-item>
+           <el-checkbox v-model="checked" size="medium">记住密码</el-checkbox>
+    <!-- 找回密码 -->
+
           <div class="login-btn">
             <el-button type="primary" @click="login()">登录</el-button>
           </div>
@@ -58,7 +65,12 @@ function login(){
 </script>
 
 <style scoped>
-
+.el-checkbox{
+  margin-top: -10px;
+  margin-bottom: 10px;
+  color: #fff;
+  size: "medium";
+}
 .login-wrap {
   position: relative;
   width: 100%;
@@ -67,6 +79,7 @@ function login(){
   background-size: 100%;
 }
 
+
 .ms-login {
   position: absolute;
   left: 50%;
@@ -74,21 +87,28 @@ function login(){
   width: 350px;
   margin: -190px 0 0 -175px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.3);
+   /* background: rgba(255, 255, 255, 0.3); 
+   border-style: solid; 
+   border-color: #fff; */
   overflow: hidden;
 }
 
 .ms-title {
   position: absolute;
-  left: 45%;
+  left: 40%;
   top: 40%;
-  margin: -190px 0 0 -175px;
+  margin: -220px 0 0 -75px;
   line-height: 50px;
   text-align: center;
-  font-size: 60px;
+  font-size: 70px;
   color: #fff;
+  display: flex;
+  padding: 5px;
 }
-
+.login-title{
+  
+  padding: 15px;
+}
 .ms-content {
   padding: 30px 30px;
 }

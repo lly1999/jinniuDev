@@ -28,7 +28,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>更改密码</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -127,6 +127,10 @@ function getIcon(idxStr){
 
 function displayContent(name){
   router.push({name})
+}
+function logout(){
+  //TODO 清除登录信息
+  router.push('/login')
 }
 </script>
 

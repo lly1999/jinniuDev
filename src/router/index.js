@@ -11,6 +11,7 @@ import Xzzf from "@/views/xzzf/Xzzf.vue"
 import Ycxt from "@/views/ycxt/Ycxt.vue"
 import Yyxt from "@/views/yyxt/Yyxt.vue"
 import Cclj from "@/views/cclj/Cclj.vue"
+import Shlj from "@/views/shlj/Shlj.vue"
 //2.配置路由映射
 const routes = [
     {path:'/', component: Login},
@@ -197,7 +198,8 @@ const routes = [
         
     ]
     },//行政执法
-    {name:'cclj', path:'/cclj', component: Cclj}
+    {name:'cclj', path:'/cclj', component: Cclj},
+    {name:'shlj',path:'/shlj',component:Shlj}
 ]
 
 //3.创建路由实例

@@ -29,7 +29,7 @@
     <el-container>
       <!-- 大类和子系统栏 -->
       <el-header class="navHeader">
-        <div class="title">金牛城市管家智慧平台</div>
+        <div class="title">城市管家</div>
         
         <div class="classification" v-if="showDepts">
           <class-item 
@@ -80,29 +80,24 @@
         <!-- 背景图片-->
       </el-header>
       <div class="background" v-if="showDepts">
-          <img src="@/assets/home/background-00.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
+          <img src="@/assets/home/background1.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
       <div class="background" v-if="choosedDept===0">
-          <img src="@/assets/home/background2.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
+          <img src="@/assets/home/background-hjws.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
 <div class="background" v-if="choosedDept===1">
           <img src="@/assets/home/background3.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
 <div class="background" v-if="choosedDept===2">
-          <img src="@/assets/home/background5.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
+          <img src="@/assets/home/background-jgzm.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
         <div class="background" v-if="choosedDept===3">
-          <img src="@/assets/home/background-hjws.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
+          <img src="@/assets/home/background4.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
         <div class="background" v-if="choosedDept===4">
           <img src="@/assets/home/background-ggzp.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
         </div>
-        <div class="background" v-if="choosedDept===5">
-          <img src="@/assets/home/background4.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
-        </div>
-        <div class="background" v-if="choosedDept===6">
-          <img src="@/assets/home/background6.jpg" width="10000"  style="overflow-y:auto;overflow-x: auto;">
-        </div>
+       
 
       <!-- 页面显示区域 -->
       <el-main  class="main">
@@ -113,7 +108,9 @@
             :url = "item.url"
             :logo="item.systemLogo"
             :info-list="item.data"
-            :image = "item.image">
+            :image = "item.image"
+            :to = "item.to"
+            >
         </main-info>
       </el-main>
     </el-container>
@@ -209,7 +206,7 @@ function show(to, subsysName){
 
 function logout(){
   //TODO 清除登录信息
-  router.back()
+  router.push('/login')
 }
 </script>
 
@@ -230,22 +227,31 @@ function logout(){
 }
 .title{
   padding: 25px;
-  font-size:32px;
+  font-size:40px;
   margin-left: 10px;
   margin-bottom: 10px;
-  white-space: nowrap
+  white-space: nowrap;
+  letter-spacing: 3px;
 
 }
-.classification, .subsys{
+.subsys{
   /**保持子系统栏与标题栏背景色一致 */
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 25px;
   text-align: center;
   
   
 }
-
+.classification{
+  /**保持子系统栏与标题栏背景色一致 */
+  display: flex;
+  flex-wrap: wrap;
+  padding: 25px;
+  text-align: center;
+ 
+  
+}
 .main{
   display: flex;
   flex-wrap: wrap;/*当屏幕尺寸变小时，各个子系统汇总模块自动换行*/
@@ -267,7 +273,7 @@ function logout(){
 
 .subdepts{
   padding: 0px;
-  font-size:20px;
+  font-size:25px;
   margin-left: -25px;
   margin-top: 15px;
   white-space: nowrap;
