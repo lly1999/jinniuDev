@@ -1,148 +1,250 @@
 <template>
-  <div class="login-wrap">
-    <div class="ms-title">
-      <el-avatar class="ms-logo" style="width: 100px; height: 100px"
-      :src="require('@/assets/login-img.jpg')" 
-      :fit="fit"></el-avatar>
-      <div class="login-title">城市管家</div></div>
-    <!--      定时触发表单显示-->
-    <div class="ms-login">
-      <transition name="fade">
-        <el-form :model="params" class="ms-content" v-if="seen">
-          <el-form-item>
-            <el-input v-model="params.username" placeholder="用户名">
-              <template #prepend>
-                <el-icon>
-                  <User/>
-                </el-icon>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input type="password" v-model="params.password" placeholder="密码">
-              <template #prepend>
-                <el-icon>
-                  <Lock/>
-                </el-icon>
-              </template>
-            </el-input>
-          </el-form-item>
-           <el-checkbox v-model="checked" size="medium">记住密码</el-checkbox>
-    <!-- 找回密码 -->
 
-          <div class="login-btn">
-            <el-button type="primary" @click="login()">登录</el-button>
-          </div>
-        </el-form>
-      </transition>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-header-title">成都市金牛区综合行政执法局</div>
     </div>
-    <div class="ms-bottom">成都市金牛区综合行政执法局</div>
+    <div class="login-box">
+      <img class="login-box-logo" alt="" src="@/assets/login/login-logo.png">
+      <div class="login-box-title">城市管家</div>
+      <input v-model="params.username" class="username-input" type="text" placeholder="请输入用户名">
+      <input v-model="params.password" class="password-input" type="password" placeholder="请输入密码">
+      <input class="remember-password" type="checkbox">
+      <div class="remember-password-text">记住密码</div>
+      <el-button class="login-btn" type="primary" color="#0B9ED9" @click="login">登录</el-button>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import {ref, reactive, onMounted} from "vue";
-import {User, Lock} from '@element-plus/icons-vue'
-const seen = ref(true)
-const params = reactive({
-  username: "admin",
-  password: "123456"
+import { ElButton } from 'element-plus'
+import router from '@/router'
+import { ref, onMounted, reactive, h } from 'vue';
+import { ElMessage, ElDialog, tabBarProps } from 'element-plus'
+import { params } from '@/store/store.js'
+import { getLogin } from '@/api/home.js'
+
+const Base64 = require("js-base64").Base64
+// const params = reactive({
+//   username: "",
+//   password: "123"
+// })
+onMounted(() => {
+  if (localStorage.getItem("username"))
+    params.username = localStorage.getItem("username")
+  if (localStorage.getItem("password"))
+    params.password = localStorage.getItem("password")
+
 })
 
-const showForm = () => {
-  seen.value = !seen.value
-}
-//页面加载完成3s后自动显示登录界面
-// onMounted(() => {
-//   setTimeout(showForm, 3000)
-// })
+const login = () => {
+  let passwordBase64 = Base64.encode(params.password)
+  console.log(passwordBase64)
+  localStorage.setItem("username", params.username)
+  localStorage.setItem("password", params.password)
+  var user = {
+    name: params.username,
+    password: params.password
+  }
+  getLogin(user).then(data => {
+    if (data) {
 
-const router = useRouter()
-function login(){
-  router.push({name:'home'})
+      params.isLogin = true
+      params.token = data.token
+      router.push({ name: "home" }); localStorage.setItem("username", params.username)
+    }
+    else {
+      ElMessage({
+        message: h('p', null, [
+          h('span', null, '用户名或者密码错误！'),
+        ]),
+        type: 'error'
+      })
+    }
+  })
+  // if (params.username == '18380195019' || params.username == '13908173345') {
+  //   if (params.username == '18380195019') {
+  //   }
+  //   else (params.username == '13908173345')
+  //   {
+  //   }
+  //   if (passwordBase64 == Base64.encode('jinniu')) {
+  //     router.push({ name: "home" }); localStorage.setItem("username", params.username)
+  //     localStorage.setItem("password", params.password)
+  //   }
+
+  //   else {
+  //     ElMessage({
+  //       message: h('p', null, [
+  //         h('span', null, '用户名或者密码错误！'),
+  //       ]),
+  //       type: 'error'
+  //     })
+  //   }
+  // }
+
+  // else {
+  //   ElMessage({
+  //     message: h('p', null, [
+  //       h('span', null, '用户名或者密码错误！'),
+  //     ]),
+  //     type: 'error'
+  //   })
+  // }
+
 }
+
 </script>
 
 <style scoped>
-.el-checkbox{
-  margin-top: -10px;
-  margin-bottom: 10px;
-  color: #fff;
-  size: "medium";
-}
-.login-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url(@/assets/login-bg.jpg);
-  background-size: 100%;
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("@/assets/login/login-background.png");
+  background-size: 100% 100%;
 }
 
-
-.ms-login {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 350px;
-  margin: -190px 0 0 -175px;
-  border-radius: 5px;
-   /* background: rgba(255, 255, 255, 0.3); 
-   border-style: solid; 
-   border-color: #fff; */
-  overflow: hidden;
+.login-header {
+  width: 100vw;
+  height: 8.1vh;
+  margin: auto auto;
+  background-image: url("@/assets/login/login-header.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding-top: 1.5vh;
 }
 
-.ms-title {
-  position: absolute;
-  left: 40%;
-  top: 40%;
-  margin: -220px 0 0 -75px;
-  line-height: 50px;
+.login-header-title {
+  width: 32.1vw;
+  height: 5.1vh;
+  font-size: 1.8rem;
+  color: #FFFFFF;
+  font-family: Alibaba PuHuiTi;
   text-align: center;
-  font-size: 70px;
-  color: #fff;
-  display: flex;
-  padding: 5px;
+  text-shadow: 0 1px 4px rgba(0, 85, 255, 0.75);
+  margin-left: auto;
+  margin-right: auto;
 }
-.login-title{
-  
-  padding: 15px;
+
+.login-box {
+  width: 35vw;
+  height: 53.7vh;
+  background-image: url("@/assets/login/login-border.png");
+  background-size: cover;
+  margin-top: 14.5vh;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
 }
-.ms-content {
-  padding: 30px 30px;
+
+.login-box-title {
+  width: 6.7vw;
+  height: 4.2vh;
+  font-family: PingFangSC-Medium;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  position: absolute;
+  top: 13.7vh;
+  right: 13.1vw;
+  left: 15.2vw;
+}
+
+.login-box-logo {
+  width: 1.7vw;
+  height: 3vh;
+  position: absolute;
+  top: 14.4vh;
+  left: 13.1vw;
+  right: 20.2vw;
+  margin-right: 0.4vw;
+}
+
+.username-input {
+  width: 18.7vw;
+  height: 1.8vh;
+  position: absolute;
+  top: 20.4vh;
+  left: 7.1vw;
+  background: rgba(62, 181, 228, 0.25);
+  border: 1px solid #22AEE6;
+  outline: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+  background-image: url("@/assets/login/username.png");
+  background-repeat: no-repeat;
+  background-position: left 0.8vw top 1.3vh;
+  padding-left: 2.1vw;
+  padding-top: 1.3vh;
+  padding-bottom: 1.3vh;
+}
+
+.username-input::-webkit-input-placeholder {
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.password-input {
+  width: 18.7vw;
+  height: 1.8vh;
+  position: absolute;
+  top: 27vh;
+  left: 7.1vw;
+  background: rgba(62, 181, 228, 0.25);
+  border: 1px solid #22AEE6;
+  outline: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+
+  background-image: url("@/assets/login/password.png");
+  background-repeat: no-repeat;
+  background-position: left 0.8vw top 1.3vh;
+  padding-left: 2.1vw;
+  padding-top: 1.3vh;
+  padding-bottom: 1.3vh;
+}
+
+.password-input::-webkit-input-placeholder {
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+input[type="checkbox"] {
+  width: 0.7vw;
+  height: 1.3vh;
+  position: absolute;
+  top: 32.9vh;
+  left: 7.1vw;
+  background: rgba(62, 181, 228, 0.25) !important;
+  border: 1px solid #22AEE6 !important;
+}
+
+input[type="checkbox"]::after {
+  width: 0.7vw;
+  height: 1.3vh;
+  position: absolute;
+  top: 32.9vh;
+  left: 7.1vw;
+  background: rgba(62, 181, 228, 0.25) !important;
+  border: 1px solid #22AEE6;
+}
+
+.remember-password-text {
+  width: 5vw;
+  height: 1.9vh;
+  position: absolute;
+  top: 32.6vh;
+  left: 8.2vw;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-family: PingFangSC-Regular;
 }
 
 .login-btn {
-  text-align: center;
-}
-
-.login-btn button {
-  width: 100%;
-  height: 36px;
-  margin-bottom: 10px;
-}
-
-.ms-bottom{
+  width: 20.8vw;
+  height: 4.4vh;
   position: absolute;
-  left: 43%;
-  bottom: 200px;
-  margin: -190px 0 0 -175px;
-  line-height: 50px;
-  /* text-align: center; */
-  font-size: 48px;
-  color: #fff;
-  font-family:LOGO;
-}
-
-/*表单fade显示*/
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+  top: 36.7vh;
+  left: 7.1vw;
+  font-size: 0.875rem;
 }
 </style>

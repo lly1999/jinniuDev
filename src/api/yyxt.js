@@ -1,29 +1,52 @@
 import request from '@/utils/request.js'
-
-export function getCompanyList(){
+export function getMainInfoYyxt() {
     return request({
-        url:'/yyxt/getCompanyList',
+        url: '/yyxt/mainInfo',
+        method: 'get'
+    })
+}
+export function getCompanyList() {
+    return request({
+        url: '/yyxt/getCompanyList',
         method: 'get'
     })
 }
 
-export function getCompanyReference(){
+export function getCompanyReference() {
     return request({
-        url:'/yyxt/getCompanyReference',
-        method:'get'
+        url: '/yyxt/getCompanyReference',
+        method: 'get'
     })
 }
 
-export function getStatist(){
+export function getStatist() {
     return request({
-        url:'/yyxt/getStatist',
-        method:'get'
+        url: '/yyxt/getStatist',
+        method: 'get'
     })
 }
 
-export function getCase(){
+export function getCase() {
     return request({
         url: '/yyxt/getCase',
+        method: 'get'
+    })
+}
+export function getMapDataYyxt() {
+    return request({
+        url: '/yyxt/getMapDataYyxt',
+        method: 'get'
+    })
+}
+export function getMonitor() {
+    return request({
+        url: '/yyxt/getMonitor',
+        method: 'get'
+    })
+}
+export function getOverStandard() {
+    return request({
+        url: '/yyxt/getOverStandard',
         method: 'get'
     })
 }

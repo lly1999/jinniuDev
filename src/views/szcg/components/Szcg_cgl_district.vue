@@ -4,7 +4,9 @@
         animated>
         <template #default>
             <template v-for="tableItem in tableData">
-                <el-table :data="tableItem.data" class="table" :fit="false">
+                <el-table :data="tableItem.data" class="table" :fit="false"
+                :row-style="{height: '50px'}"
+                :cell-style="{padding: '15px',height:'20px'}">
                  <el-table-colum prop ="问题类型" label = "部件" width="160"/>
                     <el-table-column 
                         v-for="i in tableItem.headerNames.length"
@@ -34,6 +36,8 @@ onBeforeMount(() => {
 
 <style scoped>
 .table{
+    size: large;
     margin-bottom: 1em;
+    font-size: 23px;
 }
 </style>

@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 //1.定义路由组件
 import Login from '@/views/Login.vue'
@@ -12,46 +12,65 @@ import Ycxt from "@/views/ycxt/Ycxt.vue"
 import Yyxt from "@/views/yyxt/Yyxt.vue"
 import Cclj from "@/views/cclj/Cclj.vue"
 import Shlj from "@/views/shlj/Shlj.vue"
+import Map from "@/views/Map.vue"
+import jkjm from "@/views/yyxt/components/Jkjm.vue"
+import Ggzp from "@/views/ggzp/Ggzp.vue"
+import Dept0 from "@/views/home/dept0.vue"
+import Dept1 from "@/views/home/dept1.vue"
+import Dept2 from "@/views/home/dept2.vue"
+import Dept3 from "@/views/home/dept3.vue"
+import Lzj from "@/views/lzj/Content.vue"
+import Ddzh from "@/views/ddzh/Ddzh.vue"
+import { params } from "@/store/store";
+
+
 //2.配置路由映射
 const routes = [
-    {path:'/', component: Login},
-    {path:'/login', component: Login},
-    {name:'home', path:'/home', component: Home},
+    { path: '/', component: Login, name: Login },
+    { path: '/login', component: Login, name: Login },
+    { name: 'home', path: '/home', component: Home, meta: { requestAuth: true }, },
+    { name: 'map', path: '/map', component: Map },
+    { name: 'dept0', path: '/dept0', component: Dept0 },
+    { name: 'dept1', path: '/dept1', component: Dept1 },
+    { name: 'dept2', path: '/dept2', component: Dept2 },
+    { name: 'dept3', path: '/dept3', component: Dept3 },
+
+    // { name: 'mapop', path: '/mapop', component: MapOp },
     {
         // 油烟系统
-        name:'yyxt', 
-        path:'/yyxt', 
+        name: 'yyxt',
+        path: '/yyxt',
         component: Yyxt,
-        children:[
+        children: [
             {
                 name: 'jkjm',
-                path:'jkjm',//子组件的path不以/开头
+                path: 'jkjm',//子组件的path不以/开头
                 component: () => import('@/views/yyxt/components/Jkjm.vue')
             },
             {
                 name: 'qygl',
-                path:'qygl',
+                path: 'qygl',
                 component: () => import('@/views/yyxt/components/Qygl.vue')
             },
             {
                 name: 'tjfx',
-                path:'tjfx',
+                path: 'tjfx',
                 component: () => import('@/views/yyxt/components/Tjfx.vue')
             },
             {
                 name: 'ajgl',
-                path:'ajgl',
+                path: 'ajgl',
                 component: () => import('@/views/yyxt/components/Ajgl.vue')
             },
-            
+
         ]
     },
     {
         //数字城管
-        name:'szcg', 
-        path:'/szcg', 
+        name: 'szcg',
+        path: '/szcg',
         component: Szcg,
-        children:[
+        children: [
             {
                 name: 'ajcx',
                 path: 'ajcx',
@@ -129,83 +148,134 @@ const routes = [
             },
             {
                 name: 'szcg_monitor',
-                path:'szcg_monitor',
+                path: 'szcg_monitor',
                 component: () => import('@/views/szcg/components/Szcg_monitor.vue')
             },
             {
                 name: 'szcg_workman',
-                path:'szcg_workman',
+                path: 'szcg_workman',
                 component: () => import('@/views/szcg/components/Szcg_workman.vue')
             },
             {
                 name: 'szcg_period',
-                path:'szcg_period',
+                path: 'szcg_period',
                 component: () => import('@/views/szcg/components/Szcg_period.vue')
             },
             {
                 name: 'szcg_diy',
-                path:'szcg_diy',
+                path: 'szcg_diy',
                 component: () => import('@/views/szcg/components/Szcg_diy.vue')
             },
             {
                 name: 'dlcz',
-                path:'dlcz',
+                path: 'dlcz',
                 component: () => import('@/views/szcg/components/Dlcz.vue')
             },
             {
                 name: 'dlcz_type',
-                path:'dlcz_type',
+                path: 'dlcz_type',
                 component: () => import('@/views/szcg/components/Dlcz_type.vue')
             },
             {
                 name: 'cgzxpj',
-                path:'cgzxpj',
+                path: 'cgzxpj',
                 component: () => import('@/views/szcg/components/Cgzxpj.vue')
             },
             {
                 name: 'gwpj',
-                path:'gwpj',
+                path: 'gwpj',
                 component: () => import('@/views/szcg/components/Gwpj.vue')
             },
         ]
     },
-    {name:'ycxt', path:'/ycxt', component: Ycxt},//扬尘系统
-    {name:'gxdc', path:'/gxdc', component: Gxdc},//共享单车
-    {name:'jgzm', path:'/jgzm', component: Jgzm,
-    children:[
-        {
-            name: 'nhtj',
-            path:'nhtj',//子组件的path不以/开头
-            component: () => import('@/views/jgzm/components/Nhtj.vue')
-        },
-        {
-            name: 'jbgl',
-            path:'jbgl',//子组件的path不以/开头
-            component: () => import('@/views/jgzm/components/Jbgl.vue')
-        },
-        
-    ]
+    { name: 'ycxt', path: '/ycxt', component: Ycxt },//扬尘系统
+    { name: 'gxdc', path: '/gxdc', component: Gxdc },//共享单车
+    {
+        name: 'jgzm', path: '/jgzm', component: Jgzm,
+        children: [
+            {
+                name: 'nhtj',
+                path: 'nhtj',//子组件的path不以/开头
+                component: () => import('@/views/jgzm/components/Nhtj.vue')
+            },
+            {
+                name: 'jbgl',
+                path: 'jbgl',//子组件的path不以/开头
+                component: () => import('@/views/jgzm/components/Jbgl.vue')
+            },
+
+        ]
     },//景观照明
-    {name:'syd' , path:'/syd', component: Syd},//诉易达
-    {name:'xzzf', path:'/xzzf', component: Xzzf,
-    children:[
-        {
-            name: 'qdkq',
-            path:'qdkq',//子组件的path不以/开头
-            component: () => import('@/views/xzzf/components/Qdkq.vue')
-        },
-        
-        
-    ]
+    { name: 'syd', path: '/syd', component: Syd },//诉易达
+    {
+        name: 'xzzf', path: '/xzzf', component: Xzzf,
+        children: [
+            {
+                name: 'qdkq',
+                path: 'qdkq',//子组件的path不以/开头
+                component: () => import('@/views/xzzf/components/Qdkq.vue')
+            },
+
+
+        ]
     },//行政执法
-    {name:'cclj', path:'/cclj', component: Cclj},
-    {name:'shlj',path:'/shlj',component:Shlj}
+    { name: 'cclj', path: '/cclj', component: Cclj },
+    { name: 'shlj', path: '/shlj', component: Shlj },
+    { name: 'ddzh', path: '/ddzh', component: Ddzh },
+
+    {
+        name: 'ggzp', path: '/ggzp', component: Ggzp,
+        children: [
+            {
+                name: 'xjry',
+                path: 'xjry',
+                component: () => import('@/views/ggzp/components/Xjry.vue')
+            }, {
+                name: 'xcgl',
+                path: 'xcgl',
+                component: () => import('@/views/ggzp/components/Xcgl.vue')
+            }
+        ]
+    },
+    {
+        name: 'lzj', path: '/lzj', component: Lzj,
+        meta: { requestAuth: false },
+        children: [
+            {
+
+                name: 'jinniu',
+                path: 'jinniu',//子组件的path不以/开头
+                component: () => import('@/views/lzj/components/Jinniu.vue')
+            }, {
+
+                name: 'hongxing',
+                path: 'hongxing',//子组件的path不以/开头
+                component: () => import('@/views/lzj/components/Hongxing.vue')
+            },
+            {
+                name: 'xihua',
+                path: 'xihua',//子组件的path不以/开头
+                component: () => import('@/views/lzj/components/Xihua.vue')
+            }, {
+                name: 'honghuayan',
+                path: 'honghuayan',//子组件的path不以/开头
+                component: () => import('@/views/lzj/components/Honghuayan.vue')
+            },
+
+        ]
+    }
 ]
 
 //3.创建路由实例
 const router = createRouter({
     routes,
-    history:createWebHashHistory()
+    history: createWebHashHistory()
 })
-
+router.beforeEach((to, from, next) => {
+    if (!params.isLogin && to.meta.requestAuth) {
+        next({ name: Login });
+    } else {
+        next();
+    }
+})
 export default router;

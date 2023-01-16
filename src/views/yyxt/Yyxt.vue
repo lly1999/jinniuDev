@@ -14,7 +14,7 @@
       </template>
       <!-- 子系统名字 -->
       <template #content>
-        <span class="content">{{subsysName}}</span>
+        <span class="content" style="font-size:25px">餐饮油烟管家</span>
       </template>
       <!-- 用户信息 -->
       <template #userinfo>
@@ -44,7 +44,7 @@
                 <template #title>
                   <!-- <el-icon><component :is="icons[item.icon]"></component></el-icon> -->
                   <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
-                  <span>{{item.title}}</span>
+                  <span style="font-size:20px">{{item.title}}</span>
                 </template>
                 <el-menu-item
                     v-for="(subitem, subidx) in item.submenu"
@@ -53,7 +53,7 @@
                     @click="displayContent(subitem.to)">
                   <!-- <el-icon><component :is="icons[subitem.icon]"/></el-icon> -->
                   <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
-                  <span>{{subitem.title}}</span>
+                  <span style="font-size:20px">{{subitem.title}}</span>
                 </el-menu-item>
               </el-sub-menu>
             </template>
@@ -61,13 +61,13 @@
               <el-menu-item :index="idx" :key="idx" @click="displayContent(item.to)">
                 <!-- <el-icon><component :is="icons[item.icon]"/></el-icon> -->
                 <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/>
-                <span>{{item.title}}</span>
+                <span style="font-size:20px">{{item.title}}</span>
               </el-menu-item>
             </template>
           </template>
           <el-menu-item :index="menuList.length">
             <el-icon><component :is="Link"></component></el-icon>
-            <span><a href="http://101.37.246.72/denglu_yyxt.exe" target="_blank">跳转主页</a></span>
+            <span style="font-size:20px"><a href="http://47.93.222.102/loginauto.html?uname=18981967017&pw=9876" target="_blank">跳转主页</a></span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -82,7 +82,8 @@
 import { useRouter, useRoute } from "vue-router";
 import {House, ArrowDown, Setting, Link} from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+
 
 // 由于<script setup>使用动态组件时，:is属性的值是对象实例，而不是组件名
 // 而menuList里的icon是组件名，因此这里做一个映射
@@ -111,7 +112,7 @@ const menuList = [
   {icon: 'icon-jkjm.png', title:'案件管理', to:'ajgl', click:'', submenu:[]},
   // {icon: 'icon-jkjm.png', title:'案件管理', to:'', click:'', submenu:[{icon:'icon-jkjm.png', title:'子模块1', to:'/subpath1', click:''},  {icon: 'icon-jkjm.png', title:'子模块2', to:'/subpath2', click:''}]},
 ]
-
+onMounted(()=>router.push('/yyxt/jkjm'))
 function displayContent(name){
   router.push({name})
 }

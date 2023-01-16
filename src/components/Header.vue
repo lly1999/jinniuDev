@@ -4,20 +4,25 @@
     <!-- 商标栏-->
     <el-row>
       <!--商标-->
-      <el-col :span="18">
+      <el-col :span="12">
         <div>
-          <el-page-header class="page-header" @back="goback">
-            <template #icon>
+          <el-page-header class="page-header" @back="goback" :icon="null">
+            <!-- <template #icon>
               <slot name="icon"></slot>
-            </template>
+            </template> -->
             <template #title>
               <slot name="title"></slot>
             </template>
+
             <template #content>
               <slot name="content"></slot>
             </template>
           </el-page-header>
         </div>
+      </el-col>
+      <!-- 时间 -->
+      <el-col :span="6" class="time">
+        <slot name="time"></slot>
       </el-col>
       <!--用户信息-->
       <el-col :span="6" class="userinfo">
@@ -30,7 +35,7 @@
 <script setup>
 // 向父组件抛出事件，由父组件决定如何处理
 const emit = defineEmits(['back'])
-function goback(){
+function goback() {
   emit('back');
 }
 </script>
@@ -38,7 +43,7 @@ function goback(){
 <style scoped>
 .header {
   font-size: 22px;
-  background-color: #242f42;
+  background-color: #004B8C;
   color: #fff;
   height: 55px;
 }
@@ -63,13 +68,14 @@ function goback(){
 }
 
 .userinfo {
+  font-size: large;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-:deep(.userinfo .el-dropdown-link){
-  color:#fff;
+:deep(.userinfo .el-dropdown-link) {
+  color: #fff;
+  font-size: large;
 }
-
 </style>

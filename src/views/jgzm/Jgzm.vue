@@ -14,7 +14,7 @@
       </template>
       <!-- 子系统名字 -->
       <template #content>
-        <span class="content">{{subsysName}}</span>
+        <span class="content" style="font-size:25px">景观照明集中控制管家</span>
       </template>
       <!-- 用户信息 -->
       <template #userinfo>
@@ -43,7 +43,7 @@
               <el-sub-menu :index="idx+''" :key="idx">
                 <template #title>
                   <el-icon><component :is="icons[item.icon]"></component></el-icon>
-                  <span>{{item.title}}</span>
+                  <span style="font-size:25px">{{item.title}}</span>
                 </template>
                 <el-menu-item
                     v-for="(subitem, subidx) in item.submenu"
@@ -51,20 +51,20 @@
                     :key="subidx"
                     @click="displayContent(subitem.to)">
                   <el-icon><component :is="icons[subitem.icon]"/></el-icon>
-                  <span>{{subitem.title}}</span>
+                  <span style="font-size:25px;padding:15px">{{subitem.title}}</span>
                 </el-menu-item>
               </el-sub-menu>
             </template>
             <template v-else>
               <el-menu-item :index="idx" :key="idx" @click="displayContent(item.to)">
                 <el-icon><component :is="icons[item.icon]"/></el-icon>
-                <span>{{item.title}}</span>
+                <span style="font-size:25px">{{item.title}}</span>
               </el-menu-item>
             </template>
           </template>
           <el-menu-item>
             <el-icon><component :is="Link"></component></el-icon>
-            <span><a href="http://101.37.246.72/denglu_jgzm.exe" target="_blank">跳转主页</a></span>
+            <span style="font-size:25px"><a href="http://171.221.172.143:180/#/login?user=HH&pd=oLHjPGJkLwihgAjddGnGqDEMk4z6MT0Xgca2A%2BBscT9xkVQJO7uy3u2lldkgs8hWvYIk8RRP7WpVs02WlJs8c52C1DkI0Vev0oe7JW0UnrLzbqZOMJwLoTUt7nTChcfU4H%2FoF8lvUuJFNDrstIHyM%2BnAWx1fuuNUEU%2B2uBqitqk%3D" target="_blank">跳转主页</a></span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -79,7 +79,7 @@
 import { useRouter, useRoute } from "vue-router";
 import {House, ArrowDown, Setting, Link} from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 
 // 由于<script setup>使用动态组件时，:is属性的值是对象实例，而不是组件名
 // 而menuList里的icon是组件名，因此这里做一个映射
@@ -90,6 +90,7 @@ const icons = {
 // 设置子系统名字
 const route = useRoute()
 const subsysName = ref(route.params.subsysName)
+onMounted(()=>router.push('/jgzm/jbgl'))
 
 // 导航栏的返回上一级按键
 const router = useRouter()
@@ -112,4 +113,5 @@ function displayContent(name){
 </script>
 
 <style scoped src="@/assets/css/subsys.css">
+
 </style>

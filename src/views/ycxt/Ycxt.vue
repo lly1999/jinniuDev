@@ -14,7 +14,7 @@
       </template>
       <!-- 子系统名字 -->
       <template #content>
-        <span class="content">{{subsysName}}</span>
+        <span class="content" style="font-size:25px">扬尘治理大数据协同管家</span>
       </template>
       <!-- 用户信息 -->
       <template #userinfo>
@@ -44,7 +44,7 @@
                 <template #title>
                   <el-icon><component :is="icons[item.icon]"></component></el-icon>
                   <!-- <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/> -->
-                  <span>{{item.title}}</span>
+                  <span style="font-size:20px">{{item.title}}</span>
                 </template>
                 <el-menu-item
                     v-for="(subitem, subidx) in item.submenu"
@@ -53,7 +53,7 @@
                     @click="displayContent(subitem.to)">
                   <el-icon><component :is="icons[subitem.icon]"/></el-icon>
                   <!-- <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/> -->
-                  <span>{{subitem.title}}</span>
+                  <span style="font-size:20px">{{subitem.title}}</span>
                 </el-menu-item>
               </el-sub-menu>
             </template>
@@ -61,13 +61,13 @@
               <el-menu-item :index="idx" :key="idx" @click="displayContent(item.to)">
                 <el-icon><component :is="icons[item.icon]"/></el-icon>
                 <!-- <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/> -->
-                <span>{{item.title}}</span>
+                <span style="font-size:20px">{{item.title}}</span>
               </el-menu-item>
             </template>
           </template>
           <el-menu-item>
             <el-icon><component :is="Link"></component></el-icon>
-            <span><a href="http://101.37.246.72/denglu_ycxt.exe" target="_blank">跳转主页脚本</a></span>
+            <span style="font-size:20px"><a href="http://101.37.246.72/denglu_ycxt.exe" target="_blank">跳转主页脚本</a></span>
           </el-menu-item>
         </el-menu>
       </el-aside>

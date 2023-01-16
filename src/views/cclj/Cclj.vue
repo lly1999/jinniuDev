@@ -14,7 +14,7 @@
       </template>
       <!-- 子系统名字 -->
       <template #content>
-        <span class="content">{{subsysName}}</span>
+        <span class="content" style="font-size:25px">餐厨垃圾收运管家</span>
       </template>
       <!-- 用户信息 -->
       <template #userinfo>
@@ -44,7 +44,7 @@
                 <template #title>
                   <!-- <el-icon><component :is="icons[item.icon]"></component></el-icon> -->
                   <!-- <el-image :src="require('@/assets/yyxt/' + item.icon)" class="menu-img"/> -->
-                  <span>{{item.title}}</span>
+                  <span style="font-size:20px;">{{item.title}}</span>
                 </template>
                 <el-menu-item
                     v-for="(subitem, subidx) in item.submenu"
@@ -53,7 +53,7 @@
                     @click="displayContent(subitem.to)">
                   <!-- <el-icon><component :is="icons[subitem.icon]"/></el-icon> -->
                   <!-- <el-image :src="require('@/assets/cclj/' + item.icon)" class="menu-img"/> -->
-                  <span>{{subitem.title}}</span>
+                  <span style="font-size:20px;">{{subitem.title}}</span>
                 </el-menu-item>
               </el-sub-menu>
             </template>
@@ -61,13 +61,13 @@
               <el-menu-item :index="idx" :key="idx" @click="displayContent(item.to)">
                 <!-- <el-icon><component :is="icons[item.icon]"/></el-icon> -->
                 <!-- <el-image :src="require('@/assets/cclj/' + item.icon)" class="menu-img"/> -->
-                <span>{{item.title}}</span>
+                <span style="font-size:20px;">{{item.title}}</span>
               </el-menu-item>
             </template>
           </template>
           <el-menu-item :index="menuList.length">
             <el-icon><component :is="Link"></component></el-icon>
-            <span><a href="http://jinniu.xbase.com.cn/" target="_blank">跳转主页</a></span>
+            <span style="font-size:20px;"><a href="http://jinniu.xbase.com.cn/" target="_blank">跳转主页</a></span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -105,11 +105,11 @@ function logout(){
 }
 // 这个应该从后台请求获得
 const menuList = [
-  {icon: 'icon-jkjm.png', title:'监控界面', to:'jkjm', click:"getCompanyList", submenu:[]},
-  {icon: 'icon-qygl.png', title:'企业管理', to:'qygl', click:'', submenu:[]},
-  {icon: 'icon-tjfx.png', title:'统计分析', to:'tjfx', click:'', submenu:[]},
-  {icon: 'icon-jkjm.png', title:'案件管理', to:'ajgl', click:'', submenu:[]},
-  // {icon: 'icon-jkjm.png', title:'案件管理', to:'', click:'', submenu:[{icon:'icon-jkjm.png', title:'子模块1', to:'/subpath1', click:''},  {icon: 'icon-jkjm.png', title:'子模块2', to:'/subpath2', click:''}]},
+  {icon: 'icon-jkjm.png', title:'餐厨垃圾', to:'', click:"getCompanyList", submenu:[]},
+  // {icon: 'icon-qygl.png', title:'企业管理', to:'qygl', click:'', submenu:[]},
+  // {icon: 'icon-tjfx.png', title:'统计分析', to:'tjfx', click:'', submenu:[]},
+  // {icon: 'icon-jkjm.png', title:'案件管理', to:'ajgl', click:'', submenu:[]},
+  // // {icon: 'icon-jkjm.png', title:'案件管理', to:'', click:'', submenu:[{icon:'icon-jkjm.png', title:'子模块1', to:'/subpath1', click:''},  {icon: 'icon-jkjm.png', title:'子模块2', to:'/subpath2', click:''}]},
 ]
 
 function displayContent(name){
@@ -118,4 +118,9 @@ function displayContent(name){
 </script>
 
 <style scoped src="@/assets/css/subsys.css">
+.table{
+    size: large;
+    margin-bottom: 1em;
+    font-size: 20px;
+}
 </style>

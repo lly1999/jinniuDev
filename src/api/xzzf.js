@@ -6,3 +6,9 @@ export function getHistory(){
         method: 'get'
     })
 }
+export function getMainXzzf(){
+    return request({
+        url: '/xzzf/mainInfo',
+        method: 'get'
+    })
+}

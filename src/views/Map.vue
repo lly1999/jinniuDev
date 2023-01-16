@@ -10,7 +10,7 @@
 
       <template #time>
         <div class="text-week">
-          今天是: {{date}} {{week}}
+          今天是: {{ date }} {{ week }}
         </div>
       </template>
 
@@ -21,7 +21,7 @@
         </div>
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{user.username + "（" + user.role + "）"}}
+            {{ params.username + "（" + params.role + "）" }}
             <el-icon>
               <ArrowDown />
             </el-icon>
@@ -110,7 +110,7 @@
         <template #header>
           <div class="card-header">
             <span>营门口街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoYingmenkou.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoYingmenkou.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -123,16 +123,16 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoYingmenkou.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoYingmenkou.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoYingmenkou.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoYingmenkou.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoYingmenkou.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoYingmenkou.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleYingmenkou=true" :icon="Pointer">
-                  {{infoYingmenkou.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleYingmenkou = true" :icon="Pointer">
+                  {{ infoYingmenkou.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoYingmenkou.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoYingmenkou.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -145,14 +145,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoYingmenkou.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoYingmenkou.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoYingmenkou.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoYingmenkou.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoYingmenkou.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoYingmenkou.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoYingmenkou.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoYingmenkou.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoYingmenkou.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoYingmenkou.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -168,7 +168,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleYingmenkou=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleYingmenkou = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -208,7 +208,7 @@
         <template #header>
           <div class="card-header">
             <span>抚琴街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoFuqin.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoFuqin.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -221,14 +221,14 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoFuqin.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoFuqin.tableInfoYyxt.totalCount_normal}}</el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoFuqin.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="已安装设备企业">{{ infoFuqin.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoFuqin.tableInfoYyxt.totalCount_normal }}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoFuqin.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleFuqin=true" :icon="Pointer">
-                  {{infoFuqin.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleFuqin = true" :icon="Pointer">
+                  {{ infoFuqin.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoFuqin.tableInfoYyxt.totalCount_warning}}</el-descriptions-item>
+              <el-descriptions-item label="预警企业数">{{ infoFuqin.tableInfoYyxt.totalCount_warning }}</el-descriptions-item>
 
             </el-descriptions>
           </el-popover>
@@ -240,12 +240,12 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoFuqin.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoFuqin.tableInfoSzcg.NEED_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoFuqin.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoFuqin.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoFuqin.tableInfoSzcg.NEED_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置案件数">{{ infoFuqin.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoFuqin.tableInfoSzcg.TO_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoFuqin.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日待处置案件数">{{ infoFuqin.tableInfoSzcg.TO_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoFuqin.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
             </el-descriptions>
@@ -274,7 +274,7 @@
         <template #header>
           <div class="card-header">
             <span>西安路街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoXianlu.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoXianlu.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -287,14 +287,14 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoXianlu.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoXianlu.tableInfoYyxt.totalCount_normal}}</el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoXianlu.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="已安装设备企业">{{ infoXianlu.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoXianlu.tableInfoYyxt.totalCount_normal }}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoXianlu.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleXianlu=true" :icon="Pointer">
-                  {{infoXianlu.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleXianlu = true" :icon="Pointer">
+                  {{ infoXianlu.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoXianlu.tableInfoYyxt.totalCount_warning}}</el-descriptions-item>
+              <el-descriptions-item label="预警企业数">{{ infoXianlu.tableInfoYyxt.totalCount_warning }}</el-descriptions-item>
 
             </el-descriptions>
           </el-popover>
@@ -306,13 +306,13 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoXianlu.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoXianlu.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoXianlu.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoXianlu.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoXianlu.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoXianlu.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoXianlu.tableInfoSzcg.TO_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoXianlu.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日待处置案件数">{{ infoXianlu.tableInfoSzcg.TO_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoXianlu.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -328,7 +328,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleXianlu=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleXianlu = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -347,7 +347,7 @@
         <template #header>
           <div class="card-header">
             <span>西华街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoXihua.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoXihua.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -360,14 +360,14 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoXihua.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoXihua.tableInfoYyxt.totalCount_normal}}</el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoXihua.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="已安装设备企业">{{ infoXihua.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoXihua.tableInfoYyxt.totalCount_normal }}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoXihua.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleXihua=true" :icon="Pointer">
-                  {{infoXihua.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleXihua = true" :icon="Pointer">
+                  {{ infoXihua.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoXihua.tableInfoYyxt.totalCount_warning}}</el-descriptions-item>
+              <el-descriptions-item label="预警企业数">{{ infoXihua.tableInfoYyxt.totalCount_warning }}</el-descriptions-item>
 
             </el-descriptions>
           </el-popover>
@@ -379,12 +379,12 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoXihua.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoXihua.tableInfoSzcg.NEED_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoXihua.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoXihua.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoXihua.tableInfoSzcg.NEED_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置案件数">{{ infoXihua.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoXihua.tableInfoSzcg.TO_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoXihua.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日待处置案件数">{{ infoXihua.tableInfoSzcg.TO_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoXihua.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -400,7 +400,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleXihua=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleXihua = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -416,7 +416,7 @@
         <template #header>
           <div class="card-header">
             <span>荷花池街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoHehuachi.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoHehuachi.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -429,15 +429,15 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoHehuachi.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoHehuachi.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="已安装设备企业">{{ infoHehuachi.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoHehuachi.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoHehuachi.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoHehuachi.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleHehuachi=true" :icon="Pointer">
-                  {{infoHehuachi.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleHehuachi = true" :icon="Pointer">
+                  {{ infoHehuachi.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoHehuachi.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoHehuachi.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -450,14 +450,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoHehuachi.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoHehuachi.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoHehuachi.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoHehuachi.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoHehuachi.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoHehuachi.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoHehuachi.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoHehuachi.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoHehuachi.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoHehuachi.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -473,7 +473,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleHehuachi=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleHehuachi = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -489,7 +489,7 @@
         <template #header>
           <div class="card-header">
             <span>驷马桥街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoSimaqiao.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoSimaqiao.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -502,15 +502,15 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoSimaqiao.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoSimaqiao.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="已安装设备企业">{{ infoSimaqiao.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoSimaqiao.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoSimaqiao.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoSimaqiao.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleSimaqiao=true" :icon="Pointer">
-                  {{infoSimaqiao.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleSimaqiao = true" :icon="Pointer">
+                  {{ infoSimaqiao.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoSimaqiao.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoSimaqiao.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -523,14 +523,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoSimaqiao.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoSimaqiao.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoSimaqiao.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoSimaqiao.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoSimaqiao.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoSimaqiao.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoSimaqiao.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoSimaqiao.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoSimaqiao.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoSimaqiao.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -546,7 +546,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleSimaqiao=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleSimaqiao = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -562,7 +562,7 @@
         <template #header>
           <div class="card-header">
             <span>茶店子街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoChadianzi.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoChadianzi.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -575,16 +575,16 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoChadianzi.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoChadianzi.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoChadianzi.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoChadianzi.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoChadianzi.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoChadianzi.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleChadianzi=true" :icon="Pointer">
-                  {{infoChadianzi.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleChadianzi = true" :icon="Pointer">
+                  {{ infoChadianzi.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoChadianzi.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoChadianzi.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -597,14 +597,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoChadianzi.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoChadianzi.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoChadianzi.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoChadianzi.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoChadianzi.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoChadianzi.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoChadianzi.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoChadianzi.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoChadianzi.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoChadianzi.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -620,7 +620,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleChadianzi=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleChadianzi = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -636,7 +636,7 @@
         <template #header>
           <div class="card-header">
             <span>九里堤街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoJiulidi.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoJiulidi.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -649,15 +649,15 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoJiulidi.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoJiulidi.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="已安装设备企业">{{ infoJiulidi.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoJiulidi.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoJiulidi.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoJiulidi.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleJiulidi=true" :icon="Pointer">
-                  {{infoJiulidi.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleJiulidi = true" :icon="Pointer">
+                  {{ infoJiulidi.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoJiulidi.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoJiulidi.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -670,13 +670,13 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoJiulidi.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoJiulidi.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoJiulidi.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoJiulidi.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoJiulidi.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoJiulidi.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoJiulidi.tableInfoSzcg.TO_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoJiulidi.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日待处置案件数">{{ infoJiulidi.tableInfoSzcg.TO_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoJiulidi.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -692,7 +692,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleJiulidi=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleJiulidi = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -708,7 +708,7 @@
         <template #header>
           <div class="card-header">
             <span>五块石街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoWukuaishi.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoWukuaishi.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -721,16 +721,16 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoWukuaishi.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoWukuaishi.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoWukuaishi.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoWukuaishi.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoWukuaishi.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoWukuaishi.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleWukuaishi=true" :icon="Pointer">
-                  {{infoWukuaishi.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleWukuaishi = true" :icon="Pointer">
+                  {{ infoWukuaishi.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoWukuaishi.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoWukuaishi.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -743,14 +743,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoWukuaishi.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoWukuaishi.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoWukuaishi.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoWukuaishi.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoWukuaishi.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoWukuaishi.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoWukuaishi.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoWukuaishi.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoWukuaishi.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoWukuaishi.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -766,7 +766,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleWukuaishi=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleWukuaishi = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -782,7 +782,7 @@
         <template #header>
           <div class="card-header">
             <span>金泉街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoJinquan.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoJinquan.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -795,15 +795,15 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoJinquan.tableInfoYyxt.totalCount_all}}</el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoJinquan.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="已安装设备企业">{{ infoJinquan.tableInfoYyxt.totalCount_all }}</el-descriptions-item>
+              <el-descriptions-item label="正常运行企业">{{ infoJinquan.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoJinquan.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoJinquan.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleJinquan=true" :icon="Pointer">
-                  {{infoJinquan.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleJinquan = true" :icon="Pointer">
+                  {{ infoJinquan.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoJinquan.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoJinquan.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -816,13 +816,13 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoJinquan.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoJinquan.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoJinquan.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoJinquan.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoJinquan.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoJinquan.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoJinquan.tableInfoSzcg.TO_DISPOSE_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoJinquan.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日待处置案件数">{{ infoJinquan.tableInfoSzcg.TO_DISPOSE_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoJinquan.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -838,7 +838,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleJinquan=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleJinquan = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -854,7 +854,7 @@
         <template #header>
           <div class="card-header">
             <span>沙河源街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoShaheyuan.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoShaheyuan.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -867,16 +867,16 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoShaheyuan.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoShaheyuan.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoShaheyuan.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoShaheyuan.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoShaheyuan.tableInfoYyxt.totalCount_off}}</el-descriptions-item>
+              <el-descriptions-item label="离线企业数">{{ infoShaheyuan.tableInfoYyxt.totalCount_off }}</el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleShaHeyuan=true" :icon="Pointer">
-                  {{infoShaheyuan.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleShaHeyuan = true" :icon="Pointer">
+                  {{ infoShaheyuan.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoShaheyuan.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoShaheyuan.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -889,14 +889,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoShaheyuan.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoShaheyuan.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoShaheyuan.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoShaheyuan.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoShaheyuan.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoShaheyuan.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoShaheyuan.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoShaheyuan.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoShaheyuan.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoShaheyuan.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -912,7 +912,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleShaHeyuan=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleShaHeyuan = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -928,7 +928,7 @@
         <template #header>
           <div class="card-header">
             <span>天回镇街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoTianhuizhen.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoTianhuizhen.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -941,17 +941,17 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoTianhuizhen.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoTianhuizhen.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoTianhuizhen.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoTianhuizhen.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoTianhuizhen.tableInfoYyxt.totalCount_off}}
+              <el-descriptions-item label="离线企业数">{{ infoTianhuizhen.tableInfoYyxt.totalCount_off }}
               </el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleTianhuizhen=true" :icon="Pointer">
-                  {{infoTianhuizhen.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleTianhuizhen = true" :icon="Pointer">
+                  {{ infoTianhuizhen.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoTianhuizhen.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoTianhuizhen.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -964,14 +964,14 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoTianhuizhen.tableInfoSzcg.REPORT_NUM}}</el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoTianhuizhen.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoTianhuizhen.tableInfoSzcg.REPORT_NUM }}</el-descriptions-item>
+              <el-descriptions-item label="今日应处置案件数">{{ infoTianhuizhen.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoTianhuizhen.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoTianhuizhen.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoTianhuizhen.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoTianhuizhen.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoTianhuizhen.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoTianhuizhen.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -987,7 +987,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleTianhuizhen=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleTianhuizhen = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -1003,7 +1003,7 @@
         <template #header>
           <div class="card-header">
             <span>凤凰山街道</span>
-            <el-button class="button" text style="font-size:20px" @click="infoFenghuangshan.infoVisible=false">
+            <el-button class="button" text style="font-size:20px" @click="infoFenghuangshan.infoVisible = false">
               <el-icon class="closeIcon" size="20px">
                 <Close />
               </el-icon>
@@ -1016,17 +1016,17 @@
               <el-button style="margin-right: 16px;font-size:20px" type="text">油烟检测</el-button>
             </template>
             <el-descriptions title="油烟检测" border direction="vertical">
-              <el-descriptions-item label="已安装设备企业">{{infoFenghuangshan.tableInfoYyxt.totalCount_all}}
+              <el-descriptions-item label="已安装设备企业">{{ infoFenghuangshan.tableInfoYyxt.totalCount_all }}
               </el-descriptions-item>
-              <el-descriptions-item label="正常运行企业">{{infoFenghuangshan.tableInfoYyxt.totalCount_normal}}
+              <el-descriptions-item label="正常运行企业">{{ infoFenghuangshan.tableInfoYyxt.totalCount_normal }}
               </el-descriptions-item>
-              <el-descriptions-item label="离线企业数">{{infoFenghuangshan.tableInfoYyxt.totalCount_off}}
+              <el-descriptions-item label="离线企业数">{{ infoFenghuangshan.tableInfoYyxt.totalCount_off }}
               </el-descriptions-item>
               <el-descriptions-item label="超标企业数">
-                <el-button type="primary" link @click="companyVisibleFenghuangshan=true" :icon="Pointer">
-                  {{infoFenghuangshan.tableInfoYyxt.totalCount_over}} </el-button>
+                <el-button type="primary" link @click="companyVisibleFenghuangshan = true" :icon="Pointer">
+                  {{ infoFenghuangshan.tableInfoYyxt.totalCount_over }} </el-button>
               </el-descriptions-item>
-              <el-descriptions-item label="预警企业数">{{infoFenghuangshan.tableInfoYyxt.totalCount_warning}}
+              <el-descriptions-item label="预警企业数">{{ infoFenghuangshan.tableInfoYyxt.totalCount_warning }}
               </el-descriptions-item>
 
             </el-descriptions>
@@ -1039,15 +1039,15 @@
             </template>
             <el-descriptions title="数字城管" border direction="vertical" style="font-size:25px">
 
-              <el-descriptions-item label="今日巡查上报数">{{infoFenghuangshan.tableInfoSzcg.REPORT_NUM}}
+              <el-descriptions-item label="今日巡查上报数">{{ infoFenghuangshan.tableInfoSzcg.REPORT_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日应处置案件数">{{infoFenghuangshan.tableInfoSzcg.NEED_DISPOSE_NUM}}
+              <el-descriptions-item label="今日应处置案件数">{{ infoFenghuangshan.tableInfoSzcg.NEED_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置案件数">{{infoFenghuangshan.tableInfoSzcg.INTIME_DISPOSE_NUM}}
+              <el-descriptions-item label="今日处置案件数">{{ infoFenghuangshan.tableInfoSzcg.INTIME_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日待处置案件数">{{infoFenghuangshan.tableInfoSzcg.TO_DISPOSE_NUM}}
+              <el-descriptions-item label="今日待处置案件数">{{ infoFenghuangshan.tableInfoSzcg.TO_DISPOSE_NUM }}
               </el-descriptions-item>
-              <el-descriptions-item label="今日处置率">{{infoFenghuangshan.tableInfoSzcg.DISPOSE_LV}}</el-descriptions-item>
+              <el-descriptions-item label="今日处置率">{{ infoFenghuangshan.tableInfoSzcg.DISPOSE_LV }}</el-descriptions-item>
 
 
 
@@ -1063,7 +1063,7 @@
         </div>
 
         <div class="text item">
-          <el-button size="large" plain type="primary" @click="tableVisibleFenghuangshan=true"> 查看本区城管执法人员</el-button>
+          <el-button size="large" plain type="primary" @click="tableVisibleFenghuangshan = true"> 查看本区城管执法人员</el-button>
         </div>
       </el-card>
 
@@ -1401,12 +1401,12 @@ import { ArrowDown, Close, Pointer } from '@element-plus/icons-vue'
 import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { params } from '@/store/store.js'
 
 
 import Header from "@/components/Header.vue"
 import { getMapDataSzcg } from '@/api/szcg.js'
 import { getMapDataYyxt } from '@/api/yyxt.js'
-import { getMapDataGgzp } from '@/api/ggzp.js'
 
 import MapContent from "@/components/Mapcontent.vue"
 
@@ -1592,24 +1592,24 @@ onBeforeMount(() => {
     infoTianhuizhen.tableInfoSzcg = tableInfoSzcg.value[11]
     infoFenghuangshan.tableInfoSzcg = tableInfoSzcg.value[12]
   })
-  getMapDataGgzp().then(data => {
-    tableInfoGgzp.value = data
-    console.log(tableInfoGgzp)
-    // 请求各个子系统要显示的数据
-    infoFuqin.tableInfoGgzp = tableInfoGgzp.value[0]
-    infoYingmenkou.tableInfoGgzp = tableInfoGgzp.value[1]
-    infoXianlu.tableInfoGgzp = tableInfoGgzp.value[2]
-    infoXihua.tableInfoGgzp = tableInfoGgzp.value[3]
-    infoHehuachi.tableInfoGgzp = tableInfoGgzp.value[4]
-    infoSimaqiao.tableInfoGgzp = tableInfoGgzp.value[5]
-    infoChadianzi.tableInfoGgzp = tableInfoGgzp.value[6]
-    infoJiulidi.tableInfoGgzp = tableInfoGgzp.value[7]
-    infoWukuaishi.tableInfoGgzp = tableInfoGgzp.value[8]
-    infoJinquan.tableInfoGgzp = tableInfoGgzp.value[9]
-    infoShaheyuan.tableInfoGgzp = tableInfoGgzp.value[10]
-    infoTianhuizhen.tableInfoGgzp = tableInfoGgzp.value[11]
-    infoFenghuangshan.tableInfoGgzp = tableInfoGgzp.value[12]
-  })
+  // getMapDataGgzp().then(data => {
+  //   tableInfoGgzp.value = data
+  //   console.log(tableInfoGgzp)
+  //   // 请求各个子系统要显示的数据
+  //   infoFuqin.tableInfoGgzp = tableInfoGgzp.value[0]
+  //   infoYingmenkou.tableInfoGgzp = tableInfoGgzp.value[1]
+  //   infoXianlu.tableInfoGgzp = tableInfoGgzp.value[2]
+  //   infoXihua.tableInfoGgzp = tableInfoGgzp.value[3]
+  //   infoHehuachi.tableInfoGgzp = tableInfoGgzp.value[4]
+  //   infoSimaqiao.tableInfoGgzp = tableInfoGgzp.value[5]
+  //   infoChadianzi.tableInfoGgzp = tableInfoGgzp.value[6]
+  //   infoJiulidi.tableInfoGgzp = tableInfoGgzp.value[7]
+  //   infoWukuaishi.tableInfoGgzp = tableInfoGgzp.value[8]
+  //   infoJinquan.tableInfoGgzp = tableInfoGgzp.value[9]
+  //   infoShaheyuan.tableInfoGgzp = tableInfoGgzp.value[10]
+  //   infoTianhuizhen.tableInfoGgzp = tableInfoGgzp.value[11]
+  //   infoFenghuangshan.tableInfoGgzp = tableInfoGgzp.value[12]
+  // })
   getMapDataYyxt().then(data => {
     tableInfoYyxt.value = data
     // 请求各个子系统要显示的数据
