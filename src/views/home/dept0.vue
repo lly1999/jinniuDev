@@ -108,7 +108,7 @@
               src="@/assets/images/environment/truck.png" alt="">
             <div
               :class="garbage_transport_selected == false ? 'garbage-transport-text' : 'garbage-transport-text garbage-transport-text-select'">
-              餐厨垃圾收运管家</div>
+              餐厨垃圾全生命周期管家</div>
           </div>
           <div @click="garbage_compress_click"
             :class="garbage_compress_selected == false ? 'garbage-compress' : 'garbage-compress garbage-compress-select'">
@@ -118,7 +118,7 @@
               src="@/assets/images/environment/garbage-compress-selected.png" alt="">
             <div
               :class="garbage_compress_selected == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
-              垃圾数据归集管家</div>
+              生活垃圾全生命周期管家</div>
           </div>
 
           <div
@@ -134,12 +134,12 @@
               <div class="transport-content-title">{{ environment_item.title }}</div>
               <div class="content-title-en">{{ environment_item.title_en }}</div>
               <div v-if="garbage_compress_selected == true" class="content-number">①金牛区今日垃圾总数: {{
-                  environment_item.not_accept
+                environment_item.not_accept
               }}；②红星垃圾站垃圾总数:
                 {{ environment_item.not_processed }}；②红星垃圾站垃圾总数: {{ environment_item.processing }}；</div>
 
               <div v-else-if="garbage_transport_selected == true" class="content-number">①年度收运量累积(吨): {{
-                  ccljData_year
+                ccljData_year
               }}；②当月收运量累积(吨):
                 {{ ccljData_month }}；③当日收运量累积(吨): {{ ccljData_day }}；④总收运点位数（个）:
                 {{ ccljData_sites }}</div>
@@ -350,7 +350,7 @@ garbage_classify_click();
 const garbage_transport_click = () => {
   environments.splice(0, environments.length);
 
-  garbage_transport['title'] = "厨余垃圾收运管家";
+  garbage_transport['title'] = "餐厨垃圾全生命周期管家";
   garbage_transport['title_en'] = "Food Waste Collection And Transportation Management";
   garbage_transport['not_accept'] = 123;
   garbage_transport['not_processed'] = 23;
@@ -367,7 +367,7 @@ const garbage_transport_click = () => {
 const garbage_compress_click = () => {
   environments.splice(0, environments.length);
 
-  garbage_compress['title'] = "垃圾数据归集管家";
+  garbage_compress['title'] = "生活垃圾全生命周期管家";
   garbage_compress['title_en'] = "Garbage Collection Management";
   garbage_compress['not_accept'] = total_jinniu.value + "吨";
   garbage_compress['not_processed'] = total_hongxing.value + "吨";
@@ -736,7 +736,7 @@ const garbage_compress_click = () => {
 }
 
 .transport-content-title {
-  width: 192px;
+  width: 282px;
   height: 33px;
   position: absolute;
   top: 57px;

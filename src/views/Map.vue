@@ -17,6 +17,7 @@
       <!-- 用户信息 -->
       <template #userinfo>
         <div class="router">
+          <el-button class="buttonToData" plain link color="fff" @click="changeArea()" size="large">切换区域显示</el-button>
           <el-button class="buttonToData" plain link color="fff" @click="toHome" size="large">前往数据主页</el-button>
         </div>
         <el-dropdown>
@@ -42,6 +43,7 @@
 
   </el-header> -->
   <MapContent />
+
   <el-amap :center="center" :zoom="zoom" scrollWheel="false" @init="init"
     mapStyle="amap://styles/249ec25184ddbae77f9ebf807a57cb58">
     <!-- <el-amap-geojson
@@ -58,46 +60,43 @@
         :fillOpacity="polygon.fillOpacity"
         @click="click"
       />  -->
-    <el-amap-polygon :path="polygonFuqin.path" v-model:fillColor="polygonFuqin.fillColor"
-      v-model:strokeColor="polygonFuqin.strokeColor" :strokeStyle="polygonFuqin.strokeStyle" @click="hoverFuqin()"
-      @mouseout="hoverbackFuqin()" />
-    <el-amap-polygon :path="polygonYingmenkou.path" v-model:fillColor="polygonYingmenkou.fillColor"
-      v-model:strokeColor="polygonYingmenkou.strokeColor" :strokeStyle="polygonYingmenkou.strokeStyle"
-      @click="hoverYingmenkou()" @mouseout="hoverbackYingmenkou()" />
+    <el-amap-polygon :visible="jinniuVisible" :path="polygon.path" v-model:fillColor="polygonFuqin.fillColor"
+      v-model:strokeColor="polygonFuqin.strokeColor" :strokeStyle="polygonFuqin.strokeStyle" />
 
-    <el-amap-polygon :path="polygonJiulidi.path" v-model:fillColor="polygonJiulidi.fillColor"
-      v-model:strokeColor="polygonJiulidi.strokeColor" :strokeStyle="polygonJiulidi.strokeStyle" @click="hoverJiulidi()"
-      @mouseout="hoverbackJiulidi()" />
-    <el-amap-polygon :path="polygonChadianzi.path" v-model:fillColor="polygonChadianzi.fillColor"
-      v-model:strokeColor="polygonChadianzi.strokeColor" :strokeStyle="polygonChadianzi.strokeStyle"
-      @click="hoverChadianzi()" @mouseout="hoverbackChadianzi()" />
-    <el-amap-polygon :path="polygonFenghuangshan.path" v-model:fillColor="polygonFenghuangshan.fillColor"
-      v-model:strokeColor="polygonFenghuangshan.strokeColor" :strokeStyle="polygonFenghuangshan.strokeStyle"
-      @click="hoverFenghuangshan()" @mouseout="hoverbackFenghuangshan()" />
-    <el-amap-polygon :path="polygonHehuachi.path" v-model:fillColor="polygonHehuachi.fillColor"
-      v-model:strokeColor="polygonHehuachi.strokeColor" :strokeStyle="polygonHehuachi.strokeStyle"
-      @click="hoverHehuachi()" @mouseout="hoverbackHehuachi()" />
-    <el-amap-polygon :path="polygonJinquan.path" v-model:fillColor="polygonJinquan.fillColor"
-      v-model:strokeColor="polygonJinquan.strokeColor" :strokeStyle="polygonJinquan.strokeStyle" @click="hoverJinquan()"
-      @mouseout="hoverbackJinquan()" />
-    <el-amap-polygon :path="polygonShaheyuan.path" v-model:fillColor="polygonShaheyuan.fillColor"
-      v-model:strokeColor="polygonShaheyuan.strokeColor" :strokeStyle="polygonShaheyuan.strokeStyle"
-      @click="hoverShaheyuan()" @mouseout="hoverbackShaheyuan()" />
-    <el-amap-polygon :path="polygonSimaqiao.path" v-model:fillColor="polygonSimaqiao.fillColor"
-      v-model:strokeColor="polygonSimaqiao.strokeColor" :strokeStyle="polygonSimaqiao.strokeStyle"
-      @click="hoverSimaqiao()" @mouseout="hoverbackSimaqiao()" />
-    <el-amap-polygon :path="polygonWukuaishi.path" v-model:fillColor="polygonWukuaishi.fillColor"
-      v-model:strokeColor="polygonWukuaishi.strokeColor" :strokeStyle="polygonWukuaishi.strokeStyle"
-      @click="hoverWukuaishi()" @mouseout="hoverbackWukuaishi()" />
-    <el-amap-polygon :path="polygonXihua.path" v-model:fillColor="polygonXihua.fillColor"
-      v-model:strokeColor="polygonXihua.strokeColor" :strokeStyle="polygonXihua.strokeStyle" @click="hoverXihua()"
-      @mouseout="hoverbackXihua()" />
-    <el-amap-polygon :path="polygonXianlu.path" v-model:fillColor="polygonXianlu.fillColor"
-      v-model:strokeColor="polygonXianlu.strokeColor" :strokeStyle="polygonXianlu.strokeStyle" @click="hoverXianlu()"
-      @mouseout="hoverbackXianlu()" />
-    <el-amap-polygon :path="polygonTianhuizhen.path" v-model:fillColor="polygonTianhuizhen.fillColor"
-      v-model:strokeColor="polygonTianhuizhen.strokeColor" :strokeStyle="polygonTianhuizhen.strokeStyle"
-      @click="hoverTianhuizhen()" @mouseout="hoverbackTianhuizhen()" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonFuqin.path" v-model:fillColor="polygonFuqin.fillColor"
+      v-model:strokeColor="polygonFuqin.strokeColor" :strokeStyle="polygonFuqin.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonYingmenkou.path"
+      v-model:fillColor="polygonYingmenkou.fillColor" v-model:strokeColor="polygonYingmenkou.strokeColor"
+      :strokeStyle="polygonYingmenkou.strokeStyle" />
+
+    <el-amap-polygon :visible="polygonVisible" :path="polygonJiulidi.path" v-model:fillColor="polygonJiulidi.fillColor"
+      v-model:strokeColor="polygonJiulidi.strokeColor" :strokeStyle="polygonJiulidi.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonChadianzi.path"
+      v-model:fillColor="polygonChadianzi.fillColor" v-model:strokeColor="polygonChadianzi.strokeColor"
+      :strokeStyle="polygonChadianzi.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonFenghuangshan.path"
+      v-model:fillColor="polygonFenghuangshan.fillColor" v-model:strokeColor="polygonFenghuangshan.strokeColor"
+      :strokeStyle="polygonFenghuangshan.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonHehuachi.path" v-model:fillColor="polygonHehuachi.fillColor"
+      v-model:strokeColor="polygonHehuachi.strokeColor" :strokeStyle="polygonHehuachi.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonJinquan.path" v-model:fillColor="polygonJinquan.fillColor"
+      v-model:strokeColor="polygonJinquan.strokeColor" :strokeStyle="polygonJinquan.strokeStyle" />
+    <!-- @click="hoverJinquan()"@mouseout="hoverbackJinquan()" -->
+    <el-amap-polygon :visible="polygonVisible" :path="polygonShaheyuan.path"
+      v-model:fillColor="polygonShaheyuan.fillColor" v-model:strokeColor="polygonShaheyuan.strokeColor"
+      :strokeStyle="polygonShaheyuan.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonSimaqiao.path" v-model:fillColor="polygonSimaqiao.fillColor"
+      v-model:strokeColor="polygonSimaqiao.strokeColor" :strokeStyle="polygonSimaqiao.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonWukuaishi.path"
+      v-model:fillColor="polygonWukuaishi.fillColor" v-model:strokeColor="polygonWukuaishi.strokeColor"
+      :strokeStyle="polygonWukuaishi.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonXihua.path" v-model:fillColor="polygonXihua.fillColor"
+      v-model:strokeColor="polygonXihua.strokeColor" :strokeStyle="polygonXihua.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonXianlu.path" v-model:fillColor="polygonXianlu.fillColor"
+      v-model:strokeColor="polygonXianlu.strokeColor" :strokeStyle="polygonXianlu.strokeStyle" />
+    <el-amap-polygon :visible="polygonVisible" :path="polygonTianhuizhen.path"
+      v-model:fillColor="polygonTianhuizhen.fillColor" v-model:strokeColor="polygonTianhuizhen.strokeColor"
+      :strokeStyle="polygonTianhuizhen.strokeStyle" />
 
 
     <!--营门口-->
@@ -265,8 +264,8 @@
     </el-amap-info-window>
 
     <!--西安路 -->
-    <el-amap-info-window v-model:visible="infoXianlu.infoVisible" :position="polygonXianlu.position"
-      anchor="bottom-right" direction="vertical" isCustom="true">
+    <el-amap-info-window v-model:visible="infoXianlu.infoVisible" :position="polygonXianlu.position" anchor="bottom-right"
+      direction="vertical" isCustom="true">
 
 
 
@@ -1409,6 +1408,7 @@ import { getMapDataSzcg } from '@/api/szcg.js'
 import { getMapDataYyxt } from '@/api/yyxt.js'
 
 import MapContent from "@/components/Mapcontent.vue"
+import MapContent1 from "@/components/Mapcontent1.vue"
 
 
 import geoDistrit from '@/assets/510106geo.json'
@@ -1424,6 +1424,8 @@ const geoJSON = geoDistrit;
 const tableInfoSzcg = ref([])
 const tableInfoYyxt = ref([])
 const tableInfoGgzp = ref([])
+const polygonVisible = ref(false)
+const jinniuVisible = ref(true)
 const tableVisibleFuin = ref(false)
 const tableVisibleYingmenkou = ref(false)
 const tableVisibleXianlu = ref(false)
@@ -1573,62 +1575,65 @@ const systemData = [{
 
 
 ]
-
+function changeArea() {
+  polygonVisible.value = !polygonVisible.value
+  jinniuVisible.value = !jinniuVisible.value
+}
 onBeforeMount(() => {
-  getMapDataSzcg().then(data => {
-    tableInfoSzcg.value = data
-    // 请求各个子系统要显示的数据
-    infoFuqin.tableInfoSzcg = tableInfoSzcg.value[0]
-    infoYingmenkou.tableInfoSzcg = tableInfoSzcg.value[1]
-    infoXianlu.tableInfoSzcg = tableInfoSzcg.value[2]
-    infoXihua.tableInfoSzcg = tableInfoSzcg.value[3]
-    infoHehuachi.tableInfoSzcg = tableInfoSzcg.value[4]
-    infoSimaqiao.tableInfoSzcg = tableInfoSzcg.value[5]
-    infoChadianzi.tableInfoSzcg = tableInfoSzcg.value[6]
-    infoJiulidi.tableInfoSzcg = tableInfoSzcg.value[7]
-    infoWukuaishi.tableInfoSzcg = tableInfoSzcg.value[8]
-    infoJinquan.tableInfoSzcg = tableInfoSzcg.value[9]
-    infoShaheyuan.tableInfoSzcg = tableInfoSzcg.value[10]
-    infoTianhuizhen.tableInfoSzcg = tableInfoSzcg.value[11]
-    infoFenghuangshan.tableInfoSzcg = tableInfoSzcg.value[12]
-  })
-  // getMapDataGgzp().then(data => {
-  //   tableInfoGgzp.value = data
-  //   console.log(tableInfoGgzp)
+  // getMapDataSzcg().then(data => {
+  //   tableInfoSzcg.value = data
   //   // 请求各个子系统要显示的数据
-  //   infoFuqin.tableInfoGgzp = tableInfoGgzp.value[0]
-  //   infoYingmenkou.tableInfoGgzp = tableInfoGgzp.value[1]
-  //   infoXianlu.tableInfoGgzp = tableInfoGgzp.value[2]
-  //   infoXihua.tableInfoGgzp = tableInfoGgzp.value[3]
-  //   infoHehuachi.tableInfoGgzp = tableInfoGgzp.value[4]
-  //   infoSimaqiao.tableInfoGgzp = tableInfoGgzp.value[5]
-  //   infoChadianzi.tableInfoGgzp = tableInfoGgzp.value[6]
-  //   infoJiulidi.tableInfoGgzp = tableInfoGgzp.value[7]
-  //   infoWukuaishi.tableInfoGgzp = tableInfoGgzp.value[8]
-  //   infoJinquan.tableInfoGgzp = tableInfoGgzp.value[9]
-  //   infoShaheyuan.tableInfoGgzp = tableInfoGgzp.value[10]
-  //   infoTianhuizhen.tableInfoGgzp = tableInfoGgzp.value[11]
-  //   infoFenghuangshan.tableInfoGgzp = tableInfoGgzp.value[12]
+  //   infoFuqin.tableInfoSzcg = tableInfoSzcg.value[0]
+  //   infoYingmenkou.tableInfoSzcg = tableInfoSzcg.value[1]
+  //   infoXianlu.tableInfoSzcg = tableInfoSzcg.value[2]
+  //   infoXihua.tableInfoSzcg = tableInfoSzcg.value[3]
+  //   infoHehuachi.tableInfoSzcg = tableInfoSzcg.value[4]
+  //   infoSimaqiao.tableInfoSzcg = tableInfoSzcg.value[5]
+  //   infoChadianzi.tableInfoSzcg = tableInfoSzcg.value[6]
+  //   infoJiulidi.tableInfoSzcg = tableInfoSzcg.value[7]
+  //   infoWukuaishi.tableInfoSzcg = tableInfoSzcg.value[8]
+  //   infoJinquan.tableInfoSzcg = tableInfoSzcg.value[9]
+  //   infoShaheyuan.tableInfoSzcg = tableInfoSzcg.value[10]
+  //   infoTianhuizhen.tableInfoSzcg = tableInfoSzcg.value[11]
+  //   infoFenghuangshan.tableInfoSzcg = tableInfoSzcg.value[12]
   // })
-  getMapDataYyxt().then(data => {
-    tableInfoYyxt.value = data
-    // 请求各个子系统要显示的数据
-    infoFuqin.tableInfoYyxt = tableInfoYyxt.value[0]
+  // // getMapDataGgzp().then(data => {
+  // //   tableInfoGgzp.value = data
+  // //   console.log(tableInfoGgzp)
+  // //   // 请求各个子系统要显示的数据
+  // //   infoFuqin.tableInfoGgzp = tableInfoGgzp.value[0]
+  // //   infoYingmenkou.tableInfoGgzp = tableInfoGgzp.value[1]
+  // //   infoXianlu.tableInfoGgzp = tableInfoGgzp.value[2]
+  // //   infoXihua.tableInfoGgzp = tableInfoGgzp.value[3]
+  // //   infoHehuachi.tableInfoGgzp = tableInfoGgzp.value[4]
+  // //   infoSimaqiao.tableInfoGgzp = tableInfoGgzp.value[5]
+  // //   infoChadianzi.tableInfoGgzp = tableInfoGgzp.value[6]
+  // //   infoJiulidi.tableInfoGgzp = tableInfoGgzp.value[7]
+  // //   infoWukuaishi.tableInfoGgzp = tableInfoGgzp.value[8]
+  // //   infoJinquan.tableInfoGgzp = tableInfoGgzp.value[9]
+  // //   infoShaheyuan.tableInfoGgzp = tableInfoGgzp.value[10]
+  // //   infoTianhuizhen.tableInfoGgzp = tableInfoGgzp.value[11]
+  // //   infoFenghuangshan.tableInfoGgzp = tableInfoGgzp.value[12]
+  // // })
+  // getMapDataYyxt().then(data => {
+  //   tableInfoYyxt.value = data
+  //   // 请求各个子系统要显示的数据
+  //   infoFuqin.tableInfoYyxt = tableInfoYyxt.value[0]
 
-    infoYingmenkou.tableInfoYyxt = tableInfoYyxt.value[1]
-    infoXianlu.tableInfoYyxt = tableInfoYyxt.value[2]
-    infoXihua.tableInfoYyxt = tableInfoYyxt.value[3]
-    infoHehuachi.tableInfoYyxt = tableInfoYyxt.value[4]
-    infoSimaqiao.tableInfoYyxt = tableInfoYyxt.value[5]
-    infoChadianzi.tableInfoYyxt = tableInfoYyxt.value[6]
-    infoJiulidi.tableInfoYyxt = tableInfoYyxt.value[7]
-    infoWukuaishi.tableInfoYyxt = tableInfoYyxt.value[8]
-    infoJinquan.tableInfoYyxt = tableInfoYyxt.value[9]
-    infoShaheyuan.tableInfoYyxt = tableInfoYyxt.value[10]
-    infoTianhuizhen.tableInfoYyxt = tableInfoYyxt.value[11]
-    infoFenghuangshan.tableInfoYyxt = tableInfoYyxt.value[12]
+  //   infoYingmenkou.tableInfoYyxt = tableInfoYyxt.value[1]
+  //   infoXianlu.tableInfoYyxt = tableInfoYyxt.value[2]
+  //   infoXihua.tableInfoYyxt = tableInfoYyxt.value[3]
+  //   infoHehuachi.tableInfoYyxt = tableInfoYyxt.value[4]
+  //   infoSimaqiao.tableInfoYyxt = tableInfoYyxt.value[5]
+  //   infoChadianzi.tableInfoYyxt = tableInfoYyxt.value[6]
+  //   infoJiulidi.tableInfoYyxt = tableInfoYyxt.value[7]
+  //   infoWukuaishi.tableInfoYyxt = tableInfoYyxt.value[8]
+  //   infoJinquan.tableInfoYyxt = tableInfoYyxt.value[9]
+  //   infoShaheyuan.tableInfoYyxt = tableInfoYyxt.value[10]
+  //   infoTianhuizhen.tableInfoYyxt = tableInfoYyxt.value[11]
+  //   infoFenghuangshan.tableInfoYyxt = tableInfoYyxt.value[12]
 
-  })
+  // })
 })
 function showTableFuqin() {
 

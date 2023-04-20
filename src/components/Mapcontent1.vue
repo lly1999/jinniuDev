@@ -6,7 +6,7 @@
         <!-- <div class="card text-white bg-primary mb-3 " style="max-width: 14rem;padding: 10px;height: 10vh;"> -->
         <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">环境卫生</h5>
 
-        <div class="card-body" style="padding:0px ; height: 40vh;width:100%;">
+        <div class="card-body" style="padding:0px ; height: 35vh;width:100%;">
           <!-- <el-tabs v-model="activeName" type="border-card" class="hwzy-tabs" @tab-click="handleClick" style="width:100%">
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
@@ -18,19 +18,17 @@
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->
-          <!-- <el-menu :default-active="activeIndex_hjws" class="el-menu-demo" mode="horizontal" @select="handleSelect_hjws"
+          <el-menu :default-active="activeIndex_hjws" class="el-menu-demo" mode="horizontal" @select="handleSelect_hjws"
             style="width: 100%;" active-text-color="#ffd04b" background-color="#2a2a2a" text-color="#fff">
             <el-menu-item index="1">环卫作业运行管家</el-menu-item>
             <el-menu-item index="2">餐厨垃圾全生命周期管家</el-menu-item>
             <el-menu-item index="3">生活垃圾全生命周期管家</el-menu-item>
-          </el-menu> -->
+          </el-menu>
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
-          <div style="display: flex;">
-            <div id="hwzy-Charts" v-show="echart_index_hjws === 1" style="width: 15vw; height: 20vh;"></div>
-            <div id="cclj-Charts" v-show="echart_index_hjws === 1" style="width: 15vw; height: 20vh;"> </div>
-          </div>
 
-          <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 30vw; height: 20vh;"> </div>
+          <div id="hwzy-Charts" v-show="echart_index_hjws === 1" style="width: 30vw; height: 30vh;"></div>
+          <div id="cclj-Charts" v-show="echart_index_hjws === 2" style="width: 30vw; height: 30vh;"> </div>
+          <div id="shlj-Charts" v-show="echart_index_hjws === 3" style="width: 30vw; height: 30vh;"> </div>
 
         </div>
         <!-- </div>  -->
@@ -39,7 +37,7 @@
       <dv-border-box7 style="height:40vh;padding:5px">
         <div dv-bg>
           <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">市容秩序</h5>
-          <div class="card-body" style="padding:0px ; height: 40vh;width:100%;" active-text-color="#ffd04b"
+          <div class="card-body" style="padding:0px ; height: 35vh;width:100%;" active-text-color="#ffd04b"
             background-color="#2a2a2a" text-color="#fff">
             <!-- <el-tabs v-model="activeName" type="border-card" class="hwzy-tabs" @tab-click="handleClick" style="width:100%">
             <el-tab-pane label="环卫作业运行管家" name="first">
@@ -121,9 +119,14 @@
           <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">招牌景观</h5>
           <div class="card-body" style="padding:0px ; height: 35vh;width:100%;">
 
+            <el-menu :default-active="activeIndex_jgzm" class="el-menu-demo" mode="horizontal" @select="handleSelect_jgzm"
+              style="width: 100%;" active-text-color="#ffd04b" background-color="#2a2a2a" text-color="#fff">
+              <el-menu-item index="1">景观照明管家</el-menu-item>
+              <el-menu-item index="2">临街店铺管家</el-menu-item>
+            </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
-            <div id="jgzm-Charts" v-show="echart_index_jgzm === 1" style="width: 30vw; height: 20vh;"></div>
-            <div id="ggzp-Charts" v-show="echart_index_jgzm === 1" style="width: 30vw; height: 20vh;"> </div>
+            <div id="jgzm-Charts" v-show="echart_index_jgzm === 1" style="width: 30vw; height: 30vh;"></div>
+            <div id="ggzp-Charts" v-show="echart_index_jgzm === 2" style="width: 30vw; height: 30vh;"> </div>
 
           </div>
         </div>
@@ -1190,167 +1193,6 @@ onMounted(() => {
   //document.getElementById("hwzy-Charts").removeAttribute("_echarts_instance_");
   echart_index_szcg.value = 1
   var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
-  var mychar_cclj = echarts.init(document.getElementById("cclj-Charts"));
-  var mychar_shlj = echarts.init(document.getElementById("shlj-Charts"));
-  getMain().then(data => {
-    var myChart_ljdp1 = echarts.init(document.getElementById("ggzp-Charts"));
-
-    var option_ljdp1 = {
-      title: {
-        text: '巡检店铺数量',
-        textStyle: {
-          color: '#ccc'
-        }
-      },
-      tooltip: {
-        trigger: 'item'
-      },
-      legend: {
-        top: '5%',
-        left: 'center',
-        textStyle: {
-          color: 'white'
-        }
-      },
-      series: [
-        {
-          name: '店铺',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 35,
-              fontWeight: 'bold',
-
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: data[3].infoVal, name: '总店铺数量' },
-            { value: data[0].infoVal, name: '巡检店铺数量' },
-            { value: data[2].infoVal, name: '未办证数量' },
-            // { value: 580, name: 'Email' },
-            // { value: 484, name: 'Union Ads' },
-            // { value: 300, name: 'Video Ads' }
-          ]
-        }
-      ]
-    }
-    myChart_ljdp1.setOption(option_ljdp1)
-    window.onresize = function () {
-      myChart_ljdp1.resize()
-
-    }
-  })
-  getMainShlj().then(tableData => {
-    var data1 = tableData[1].infoVal
-    data1 = (data1.substr(0, data1.length - 1)) * 1;
-    var data2 = tableData[2].infoVal
-    data2 = (data2.substr(0, data2.length - 1)) * 1;
-    var shlj_option = {
-      title: {
-        text: '金牛区垃圾净重',
-        left: 'center',
-        textStyle: {
-          color: '#ccc',
-          fontSize: '26'
-        },
-        subtextStyle: {
-          color: '#ccc',
-          fontSize: '20'
-        }
-      },
-      tooltip: {
-        trigger: 'item'
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left',
-        textStyle: {
-          color: '#ccc',
-          fontSize: '16'
-        }
-      },
-      series: [
-        {
-          name: '站点名',
-          type: 'pie',
-          radius: '70%',
-          data: [
-            { value: data1, name: '西华垃圾站数据' },
-            { value: data2, name: '红星垃圾站数据' },
-          ],
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-            },
-            textStyle: {
-              color: '#ccc',
-              fontSize: '16'
-            }
-          }
-        }
-      ]
-    }
-    window.onresize = function () {
-      mychar_shlj.resize()
-
-    }
-    mychar_shlj.setOption(shlj_option)
-  })
-  getMainCclj().then(tableData => {
-    var cclj_option = {
-      title: {
-        text: '餐厨垃圾全生命周期管家',
-        textStyle: {
-          color: '#ccc'
-        }
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: ['年度收运量累积(吨)', '当月收运量累积(吨)', '当日收运量累积(吨)']
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          data: [tableData[0].infoVal, tableData[1].infoVal, tableData[2].infoVal],
-          type: 'bar',
-          showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(180, 180, 180, 0.2)'
-          }
-        }
-      ]
-    }
-    window.onresize = function () {
-      mychar_cclj.resize()
-
-    }
-    mychar_cclj.setOption(cclj_option)
-  })
-
   getOverStandard().then(tableData => {
 
     var option_yyxt1 = {
@@ -1439,12 +1281,6 @@ onMounted(() => {
   })
   var mychar_hjws = echarts.init(document.getElementById("hwzy-Charts"));
   var hjws_option = {
-    title: {
-      text: '环卫作业运行管家',
-      textStyle: {
-        color: '#ccc'
-      }
-    },
     xAxis: {
       type: 'category',
       data: ['出勤车辆', '总车辆']
@@ -1503,68 +1339,68 @@ onMounted(() => {
 
 
 
-// const config = reactive({
-//   header: ['街道', '立案数', '处置数', '结案数', '结案率'],
-//   headerHeight: 25,
+const config = reactive({
+  header: ['街道', '立案数', '处置数', '结案数', '结案率'],
+  headerHeight: 25,
 
-//   align: ['center'],
-//   rowNum: 4,
-//   columnWidth: [200, 100, 100, 100, 100, 100],
-//   headerBGC: '#006400',
-//   oddRowBGC: '#3CB371',
-//   evenRowBGC: '#8FBC8F',
-//   data: [
+  align: ['center'],
+  rowNum: 4,
+  columnWidth: [200, 100, 100, 100, 100, 100],
+  headerBGC: '#006400',
+  oddRowBGC: '#3CB371',
+  evenRowBGC: '#8FBC8F',
+  data: [
 
-//   ],
+  ],
 
-// })
-// const config_ggzp = reactive({
-//   data: [
-
-
-//   ],
-//   colors: ['#e062ae', '#fb7293', '#e690d1', '#32c5e9', '#96bfff'],
-//   unit: '店铺'
-// })
-// const config_yyxt = reactive({
-//   data: [
-
-//     {
-//       name: '餐饮业',
-//       value: 167
-//     },
-//     {
-//       name: '零售业',
-//       value: 123
-//     },
-//   ], showValue: true,
-
-// })
-// const config_xzzf = reactive({
-//   data: [
+})
+const config_ggzp = reactive({
+  data: [
 
 
-//   ],
-//   colors: ['#e062ae', '#fb7293', '#e690d1', '#32c5e9', '#96bfff'],
-//   unit: '案件'
+  ],
+  colors: ['#e062ae', '#fb7293', '#e690d1', '#32c5e9', '#96bfff'],
+  unit: '店铺'
+})
+const config_yyxt = reactive({
+  data: [
 
-// })
-// const config_jgzm = reactive({
-//   title: {
-//     text: '耗电区域占比图'
-//   },
-//   series: [
-//     {
-//       type: 'pie',
-//       data: [
+    {
+      name: '餐饮业',
+      value: 167
+    },
+    {
+      name: '零售业',
+      value: 123
+    },
+  ], showValue: true,
 
-//       ],
-//       insideLabel: {
-//         show: true
-//       }
-//     }
-//   ]
-// })
+})
+const config_xzzf = reactive({
+  data: [
+
+
+  ],
+  colors: ['#e062ae', '#fb7293', '#e690d1', '#32c5e9', '#96bfff'],
+  unit: '案件'
+
+})
+const config_jgzm = reactive({
+  title: {
+    text: '耗电区域占比图'
+  },
+  series: [
+    {
+      type: 'pie',
+      data: [
+
+      ],
+      insideLabel: {
+        show: true
+      }
+    }
+  ]
+})
 
 
 

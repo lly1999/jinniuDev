@@ -1,5 +1,4 @@
 <template>
-
   <div class="login-container">
     <div class="login-header">
       <div class="login-header-title">成都市金牛区综合行政执法局</div>
@@ -47,8 +46,8 @@ const login = () => {
     password: params.password
   }
   getLogin(user).then(data => {
-    if (data) {
-
+    if (data.error_message == "success") {
+      console.log(data)
       params.isLogin = true
       params.token = data.token
       router.push({ name: "home" }); localStorage.setItem("username", params.username)

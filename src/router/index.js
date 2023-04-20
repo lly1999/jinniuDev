@@ -29,7 +29,7 @@ const routes = [
     { path: '/', component: Login, name: Login },
     { path: '/login', component: Login, name: Login },
     { name: 'home', path: '/home', component: Home, meta: { requestAuth: true }, },
-    { name: 'map', path: '/map', component: Map },
+    { name: 'map', path: '/map', component: Map, meta: { requestAuth: true } },
     { name: 'dept0', path: '/dept0', component: Dept0 },
     { name: 'dept1', path: '/dept1', component: Dept1 },
     { name: 'dept2', path: '/dept2', component: Dept2 },

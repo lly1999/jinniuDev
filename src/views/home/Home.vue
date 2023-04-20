@@ -59,8 +59,8 @@
         <div class="subsys" v-if="!showDepts">
           <div style="padding-left:15px;margin-top: 20px;">
             <el-icon color="#000000" size="20px" @click="switchShowDepts(-1)" style="cursor:pointer;">
-              <svg t="1656145922576" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="1267" width="32" height="32">
+              <svg t="1656145922576" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="1267" width="32" height="32">
                 <path
                   d="M587.776 961.536q-60.416 0-117.248-25.6t-101.376-69.632-71.168-101.888-26.624-122.368l0-39.936q0-23.552-0.512-50.688t-0.512-53.76l0-48.128q0-29.696-6.144-47.104t-26.624-16.384q-15.36 0-35.328-0.512t-36.352-0.512q-26.624 0-34.304-14.336t10.752-37.888q18.432-24.576 43.52-56.32t51.712-65.536 52.224-66.56 46.08-58.368q18.432-23.552 34.816-24.064t34.816 20.992q18.432 22.528 43.52 52.736t51.712 62.976 52.224 64.512 46.08 56.32q22.528 26.624 17.408 44.544t-32.768 17.92q-8.192 0-19.968 0.512t-25.088 1.024-25.6 1.024-21.504 0.512q-19.456 0-24.064 11.776t-4.608 32.256q1.024 46.08 1.024 103.424l0 106.496q0 23.552 10.752 47.104t28.672 43.008 41.472 31.744 50.176 12.288l71.68 0q40.96 0 79.36-0.512t67.072-0.512l35.84 0q22.528 0 37.376 13.824t22.528 34.816 7.68 45.568-7.168 45.568-20.992 34.816-34.304 13.824l-27.648 0-48.128 0q-26.624 0-56.832 0.512t-57.856 0.512l-47.104 0-28.672 0z"
                   p-id="1268"></path>
@@ -458,7 +458,7 @@
                 <div style="padding:10px">
                   <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">{{
                     item.infoKey + ": " +
-                      item.infoVal
+                    item.infoVal
                   }}
                   </li>
 
@@ -507,12 +507,11 @@
                 <div style="margin-top: 1%;">
                   <li v-for="item in item.data" style="font-size: 20px;padding: 5px;width:100%">{{
                     item.infoKey + ": "
-                      +
-                      item.infoVal
+                    +
+                    item.infoVal
                   }}
                   </li>
-                  <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm()
-                    trigger="click"
+                  <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
                     <template #reference>
                       <el-button class="el-button-succeed" link type="primary" style=" margin-top:10px;">
@@ -958,7 +957,7 @@ const echartInit_srzx = () => {
   getMainGxdc().then(gxdcData => {
     var option_gxdc1 = {
       title: {
-        text: '巡检店铺数量',
+        text: '单车统计',
         textStyle: {
           color: '#ccc'
         }
@@ -1024,7 +1023,7 @@ const echartInit_jgzm = () => {
   var myChart_jgzm1 = echarts.init(document.getElementById("container_jgzm"));
   // var myChart4 = echarts.init(document.getElementById("container_jgzm4"))
   getMainJgzm().then(data => {
-
+    console.log(data)
     var option_jgzm1 = {
       title: {
         text: '用电量统计',
@@ -1432,8 +1431,6 @@ const echartInit = () => {
   }
 
   getOverStandard().then(tableData => {
-    console.log(tableData[1].areaname)
-    console.log(tableData[0].areaname)
 
     var option_yyxt1 = {
       title: {
