@@ -35,3 +35,9 @@ export function changePassword(password) {
         data: password.new_password
     })
 }
+export function getTelephone(tel) {
+    return request({
+        url: '/csgj-to-ddzh/getTel?tel=' + tel,
+        method: 'get',
+    })
+}

@@ -1735,9 +1735,9 @@ function openSystem(item) {
 //   window.open(gxdc.url)
 // }
 //方法重写，摒弃三级页面，后续如果需要用上面这个
-function toSystem(item) {
+function toSystem(item) {  //每个子系统登录方式不一样
   console.log(item.systemId)
-  if (item.systemId != '14' && item.systemId != '16' && item.systemId != '17' && item.systemId != '4') {
+  if (item.systemId != '14' && item.systemId != '16' && item.systemId != '17' && item.systemId != '4' && item.systemId != '12') {
     console.log(item.systemName)
     if (item.url === '') {
 
@@ -1748,9 +1748,9 @@ function toSystem(item) {
     } else
       window.open(item.url)
   }
-  if (item.systemId == '14')
+  if (item.systemId == '14') //共享单车
     window.open(gxdc.url)
-  if (item.systemId == '16') {
+  if (item.systemId == '16') {   //诉易达
 
     getToken().then(data => {
       token.value = data
@@ -1770,6 +1770,37 @@ function toSystem(item) {
     })
 
   }
+  if (item.systemId == '12') {
+    var roles = []
+    roles = params.roleId.split(",")
+    console.log(roles.indexOf('84'))
+    // console.log(params.roleId)
+    if (roles.indexOf('84') != -1 || roles.indexOf('111') != -1 || roles.indexOf('83') != -1) {
+      var ddzh_url = "https://101.37.246.72:8079/map/?username=18008060886&pwd=MTIzNDU2"
+      window.open(ddzh_url)
+    }
+    if (roles.indexOf('93') != -1) {
+      var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061151&pwd=MTIzNDU2"
+      window.open(ddzh_url)
+    }
+
+    if (roles.indexOf('120') != -1) {
+      var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061081&pwd=MTIzNDU2"
+      window.open(ddzh_url)
+    }
+    if (roles.indexOf('96') != -1 || roles.indexOf('99') != -1 || roles.indexOf('102') != -1) {
+      var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061109&pwd=MTIzNDU2"
+      window.open(ddzh_url)
+    }
+    else {
+      var ddzh_url = "https://101.37.246.72:8079/map/?username=" + params.username + "&pwd=MTIzNDU2"
+      console.log(ddzh_url)
+      window.open(item.url)
+    }
+
+  } //调度指挥
+
+
 }
 //部门列表, 从后端获取
 const depts = ref([])

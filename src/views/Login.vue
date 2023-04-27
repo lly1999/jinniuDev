@@ -8,7 +8,7 @@
       <div class="login-box-title">城市管家</div>
       <input v-model="params.username" class="username-input" type="text" placeholder="请输入用户名">
       <input v-model="params.password" class="password-input" type="password" placeholder="请输入密码">
-      <input class="remember-password" type="checkbox">
+      <input class="remember-password" type="checkbox" @change="changeRememberUser">
       <div class="remember-password-text">记住密码</div>
       <el-button class="login-btn" type="primary" color="#0B9ED9" @click="login">登录</el-button>
     </div>
@@ -29,27 +29,36 @@ const Base64 = require("js-base64").Base64
 //   password: "123"
 // })
 onMounted(() => {
+  params.password = ""
   if (localStorage.getItem("username"))
     params.username = localStorage.getItem("username")
   if (localStorage.getItem("password"))
     params.password = localStorage.getItem("password")
 
 })
-
+const rememberUser = ref(false)
+const changeRememberUser = () => {
+  rememberUser.value = !rememberUser.value
+  console.log(rememberUser.value)
+}
 const login = () => {
   let passwordBase64 = Base64.encode(params.password)
-  console.log(passwordBase64)
-  localStorage.setItem("username", params.username)
-  localStorage.setItem("password", params.password)
+
+
   var user = {
     name: params.username,
     password: params.password
   }
   getLogin(user).then(data => {
     if (data.error_message == "success") {
-      console.log(data)
+      if (rememberUser.value == true) {
+        localStorage.setItem("username", params.username)
+        localStorage.setItem("password", params.password)
+      }
       params.isLogin = true
       params.token = data.token
+      params.roleId = data.role_id
+      //console.log(data.role_id)
       router.push({ name: "home" }); localStorage.setItem("username", params.username)
     }
     else {
