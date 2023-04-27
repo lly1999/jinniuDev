@@ -1,6 +1,6 @@
 <template>
   <el-container class="container">
-    <Header style="height:60px " :icon="null">
+    <Header style="height:60px;background-color:#061866; " :icon="null" >
 
       <!-- 系统名字 -->
       <template #title>
@@ -44,8 +44,8 @@
   </el-header> -->
   <MapContent />
 
-  <el-amap :center="center" :zoom="zoom" scrollWheel="false" @init="init"
-    mapStyle="amap://styles/249ec25184ddbae77f9ebf807a57cb58">
+  <el-amap mapStyle="amap://styles/darkblue" :center="center" :zoom="zoom" scrollWheel="false" @init="init"
+    >
     <!-- <el-amap-geojson
         :geo="geoJSON"
         :polygon-options="polygonOptions"
@@ -1418,7 +1418,7 @@ var a = new Array("日", "一", "二", "三", "四", "五", "六");
 var str = new Date().getDay();
 var week = "星期" + a[str];
 const center = ref([104.05740358713781, 30.697356042874134]);
-const mapStyle = "amap://styles/249ec25184ddbae77f9ebf807a57cb58"
+const mapStyle = "amap://styles/darkblue"
 let map = null;
 const geoJSON = geoDistrit;
 const tableInfoSzcg = ref([])
@@ -1773,7 +1773,7 @@ const init = (e) => {
   // );
   // e.add(marker);
   map = e;
-  map.setMapStyle('amap://styles/dark');
+  map.setMapStyle('amap://styles/darkblue');
   // console.log('map init: ', map)
 }
 const router = useRouter()
