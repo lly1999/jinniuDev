@@ -19,3 +19,9 @@ export function getMainJgzm() {
         method: 'get'
     })
 }
+export function getElectricity() {
+    return request({
+        url: '/jgzm/getElectricity',
+        method: 'get'
+    })
+}

@@ -71,7 +71,7 @@
 
       </el-header>
       <div class="background" v-if="showDepts">
-        <img src="@/assets/home/banner-red.jpg" width="10000" style="overflow-y:auto;overflow-x: auto;">
+        <img src="@/assets/home/banner-blue.jpg" width="10000" style="overflow-y:auto;overflow-x: auto;">
       </div>
       <!-- <div class="background" v-if="choosedDept === 0">
         <img src="@/assets/home/banner-hjws.png" width="10000" style="overflow-y:auto;overflow-x: auto;">
@@ -106,10 +106,207 @@
         </div>
         <el-divider v-if="choosedDept == -1 | choosedDept == 0" />
         <template v-for="(item, idx) in choosedSystems">
-          <main-info v-if="item.deptId == 0" :key="idx" :systemName="item.systemName" :url="item.url"
+          <!-- <main-info v-if="item.deptId == 0" :key="idx" :systemName="item.systemName" :url="item.url"
             :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId"
             :isLogin="item.isLogin">
-          </main-info>
+          </main-info> -->
+          <!--测试-->
+          <el-card v-if="item.systemName == '环卫作业运行管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size:20px" v-else>
+              <el-button class="el-button-null" type="text" disabled plain @click="toSystemHjws(item)"
+                style="margin-top:10px">
+                {{ item.systemName }}</el-button>
+            </div>
+            <div class="infoContainer" style="background-color:#1677D9;color:white">
+              <!-- logo -->
+              <!-- <div>
+        <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+        </div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+
+                </ul>
+
+                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  style="text-align: center;">
+                  <template #reference>
+                    <el-button class="el-button-hjws" link type="text" style=" margin-top:10px;color:#e6e6e6">
+                      查看详情 ></el-button>
+
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div style="display:flex">
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
+
+                        </div>
+
+                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
+                <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
+                      </div>
+                    </div>
+                  </template>
+                </el-popover>
+
+              </div>
+            </div>
+          </el-card>
+          <el-card v-if="item.systemName == '餐厨垃圾全生命周期管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size:20px" v-else>
+              <el-button class="el-button-null" type="text" disabled plain @click="toSystemHjws(item)"
+                style="margin-top:10px">
+                {{ item.systemName }}</el-button>
+            </div>
+            <div class="infoContainer" style="background-color:#1677D9;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+
+                </ul>
+
+                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  style="text-align: center;">
+                  <template #reference>
+                    <el-button class="el-button-hjws" link type="text" style=" margin-top:10px;color:#e6e6e6">
+                      查看详情 ></el-button>
+
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div style="display:flex">
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
+
+                        </div>
+
+                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
+    <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
+                      </div>
+                    </div>
+                  </template>
+                </el-popover>
+
+              </div>
+            </div>
+          </el-card><el-card v-if="item.systemName == '生活垃圾全生命周期管家'" class="card" shadow="hover"
+            :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size:20px" v-else>
+              <el-button class="el-button-null" type="text" disabled plain @click="toSystemHjws(item)"
+                style="margin-top:10px">
+                {{ item.systemName }}</el-button>
+            </div>
+            <div class="infoContainer" style="background-color:#1677D9;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+
+                </ul>
+
+                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  style="text-align: center;">
+                  <template #reference>
+                    <el-button class="el-button-hjws" link type="text" style=" margin-top:10px;color:#e6e6e6">
+                      查看详情 ></el-button>
+
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div style="display:flex">
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
+
+                        </div>
+
+                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
+    <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
+                      </div>
+                    </div>
+                  </template>
+                </el-popover>
+
+              </div>
+            </div>
+          </el-card>
+
         </template>
 
 
@@ -456,11 +653,39 @@
                   style="margin-top:10px;margin-left:10%">{{ item.systemName }}</el-button>
 
                 <div style="padding:10px">
-                  <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">{{
+
+                  <!-- <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">{{
                     item.infoKey + ": " +
                     item.infoVal
                   }}
-                  </li>
+                  </li> -->
+                  <el-popover v-for="(item, index) in item.data" placement="right-end" title="详情统计" :width="1200"
+                    trigger="hover" effect="dark">
+                    <template #reference>
+                      <li style="font-size: 20px;padding: 5px;width:100%">{{
+                        item.infoKey + ": "
+                        +
+                        item.infoVal
+                      }}
+                      </li>
+                    </template>
+                    <div v-if="item.infoKey === '零售类店铺数量'">
+                      <li v-for="(project, index) in retailCount" style="font-size: 20px;padding: 5px;width:100%"> {{
+                        project }} </li>
+                    </div>
+                    <div v-if="item.infoKey === '餐饮类店铺数量'">
+                      <li v-for="(project, index) in cateringCount" style="font-size: 20px;padding: 5px;width:100%"> {{
+                        project }}</li>
+                    </div>
+                    <div v-if="item.infoKey === '服务类店铺数量'">
+                      <li v-for="(project, index) in serviceCount" style="font-size: 20px;padding: 5px;width:100%"> {{
+                        project }}</li>
+                    </div>
+                    <div v-if="item.infoKey === '其他行业店铺数量'">
+                      <li v-for="(project, index) in otherCount" style="font-size: 20px;padding: 5px;width:100%"> {{
+                        project }}</li>
+                    </div>
+                  </el-popover>
 
                   <el-popover :width="1200" placement="top" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
@@ -505,12 +730,36 @@
                 <el-button v-if="item.url" class="el-button-succeed" type="text" @click="openSystem(item)"
                   style="margin-top:10px;margin-left:10%">{{ item.systemName }}</el-button>
                 <div style="margin-top: 1%;">
-                  <li v-for="item in item.data" style="font-size: 20px;padding: 5px;width:100%">{{
+
+                  <el-popover v-for="(item, index) in item.data" placement="right-end" title="详情统计" :width="1200"
+                    trigger="hover" effect="dark">
+                    <template #reference>
+                      <li style="font-size: 20px;padding: 5px;width:100%">{{
+                        item.infoKey + ": "
+                        +
+                        item.infoVal
+                      }}
+                      </li>
+                    </template>
+                    <div v-if="item.infoKey === '昨日电量统计'">
+                      <li v-for="(project, index) in jgzm_day_consumption"
+                        style="font-size: 20px;padding: 5px;width:100%"> {{ project }} </li>
+                    </div>
+                    <div v-if="item.infoKey === '月电量统计'">
+                      <li v-for="(project, index) in jgzm_month_consumption"
+                        style="font-size: 20px;padding: 5px;width:100%"> {{ project }}</li>
+                    </div>
+                    <div v-if="item.infoKey === '年电量统计'">
+                      <li v-for="(project, index) in jgzm_year_consumption"
+                        style="font-size: 20px;padding: 5px;width:100%"> {{ project }}</li>
+                    </div>
+                  </el-popover>
+                  <!-- <li v-for="item in item.data" style="font-size: 20px;padding: 5px;width:100%">{{
                     item.infoKey + ": "
                     +
                     item.infoVal
                   }}
-                  </li>
+                  </li> -->
                   <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
                     <template #reference>
@@ -852,8 +1101,8 @@ import * as echarts from "echarts";
 import { getRdfx, getSjqsfx } from "@/api/szcg.js";
 import { getOverStandard, getMonitor } from '@/api/yyxt';
 import { getAiUrl } from "@/api/ai";
-import { getMain } from "@/api/ggzp"
-import { getMainJgzm } from "@/api/jgzm"
+import { getMain, getCategory } from "@/api/ggzp"
+import { getMainJgzm, getElectricity } from "@/api/jgzm"
 import axios from 'axios'
 const aiUrl = ref('')
 const ruleFormRef = ref(null)
@@ -869,6 +1118,14 @@ const validatePass = (rules, value, callback) => {
     callback()
   }
 }
+const electricity = ref['一品天下', '城北体育中心', '枣子巷', '一环路内透']
+const jgzm_day_consumption = ref([])
+const jgzm_year_consumption = ref([])
+const jgzm_month_consumption = ref([])
+const retailCount = ref([])
+const cateringCount = ref([])
+const serviceCount = ref([])
+const otherCount = ref([])
 const validatePass2 = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('请再次输入密码！'))
@@ -1139,6 +1396,11 @@ const echartInit_jgzm = () => {
   //   }
   //   myChart_jgzm1.setOption(option_jgzm1)
   // })
+
+
+}
+function toSystemHjws(item) {
+  window.open(item.url)
 
 
 }
@@ -1809,12 +2071,19 @@ onBeforeMount(() => {
     .then(response => {
       depts.value = response
     })
+  getCategory().then(data => {
+    console.log(data[0])
+    console.log(data.零售业)
+    retailCount.value = data.零售业
+    cateringCount.value = data.餐饮
+    serviceCount.value = data.服务业
+    otherCount.value = data.其他行业
+  })
 })
 
 // 系统列表
 const systems = ref([])
 onMounted(() => {
-  console.log(params.isLogin)
   getSystemList().then(data => {
     systems.value = data
     // 请求各个子系统要显示的数据
@@ -1824,6 +2093,15 @@ onMounted(() => {
       }
     })
   })
+  getElectricity().then(data => {
+    console.log(data)
+    jgzm_day_consumption.value = data[0]
+    jgzm_month_consumption.value = data[1]
+    jgzm_year_consumption.value = data[2]
+
+
+  })
+
 })
 //选中的部门
 // -1表示全选，为默认值
@@ -2149,11 +2427,56 @@ function logout() {
   text-align: center;
 }
 
+.header {
+  text-align: center;
+
+  /* width:130px;
+  overflow: hidden;
+  white-space: nowrap; */
+
+
+}
+
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.card {
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  margin-right: 45px;
+  margin-top: 25px;
+  width: 400px;
+  background-color: #1677D9;
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1677D9;
+  padding: 20px;
+  margin-top: -10px;
+}
+
+.infoList {
+  list-style-type: none;
+}
+
+.image {
+  float: left;
+  height: 300px;
+  width: 100%;
+  border-radius: 5px;
+  display: block;
+}
+
+.el-button-hjws {
+  font-size: 20px;
+  color: white;
 }
 </style>

@@ -11,7 +11,7 @@ export function getXcgl() {
         url: '/ggzp/getXcgl',
         method: 'get'
     })
-}export function getMapDataGgzp(){
+} export function getMapDataGgzp() {
     return request({
         url: '/ggzp/getMapDataGgzp',
         method: 'get'
@@ -20,6 +20,12 @@ export function getXcgl() {
 export function getMain() {
     return request({
         url: '/ggzp/mainInfo',
+        method: 'get'
+    })
+}
+export function getCategory() {
+    return request({
+        url: '/ggzp/getCategory',
         method: 'get'
     })
 }
