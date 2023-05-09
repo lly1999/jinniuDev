@@ -53,6 +53,13 @@
                 margin: 0 auto;
                 margin-bottom: 10px;
               "></div>
+            <div class="no-md">
+              <ul>
+                <li>出勤车辆数：141</li>
+                <li>总车辆数：148</li>
+              </ul>
+
+            </div>
           </div>
           <!-- <div style="display: flex">
             <div
@@ -1969,5 +1976,35 @@ li {
   height: 50%;
   width: 0px;
   background: rgba(255, 255, 255, 0.2);
+}
+
+.no-md {
+  padding: 0px;
+  position: relative;
+  /* border:1px solid rgb(25,186,139); */
+}
+
+.no-md ul {
+  display: flex;
+}
+
+.no-md li {
+  position: relative;
+  flex: 1;
+  line-height: 1rem;
+  font-size: 1rem;
+  color: #fff;
+  font-family: heiti;
+  text-align: center;
+}
+
+.no-md li:nth-child(1) {
+  position: relative;
+  flex: 1;
+  line-height: 1rem;
+  font-size: 1rem;
+  color: rgb(232, 241, 152);
+  font-family: heiti;
+  text-align: center;
 }
 </style>
