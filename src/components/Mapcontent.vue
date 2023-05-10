@@ -53,13 +53,13 @@
                 margin: 0 auto;
                 margin-bottom: 10px;
               "></div>
-            <div class="no-md">
+            <!-- <div class="no-md">
               <ul>
                 <li>出勤车辆数：141</li>
                 <li>总车辆数：148</li>
               </ul>
 
-            </div>
+            </div> -->
           </div>
           <!-- <div style="display: flex">
             <div
@@ -78,7 +78,10 @@
             <div id="cclj-Charts" v-show="echart_index_hjws === 1"></div>
           </div>
 
-          <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 25vw; height: 27vh"></div>
+          <div style="display: flex">
+            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
+            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
+          </div>
         </div>
 
         <!-- </div>  -->
@@ -200,9 +203,9 @@
                   <li>{{ day_electricity }}</li>
                 </ul>
                 <ul>
-                  <li>昨日电量统计</li>
-                  <li>月电量统计</li>
                   <li>年电量统计</li>
+                  <li>月电量统计</li>
+                  <li>昨日电量统计</li>
                 </ul>
               </div>
               <div class="no-header" style="
@@ -315,6 +318,7 @@ const changeCyyyChart = (page) => {
       .removeAttribute("_echarts_instance_");
     var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     getOverStandard().then((tableData) => {
+      setTimeout(()=>{
       var option_yyxt1 = {
         title: {
           text: "超标企业街道分布",
@@ -382,7 +386,8 @@ const changeCyyyChart = (page) => {
           },
         ],
       };
-      myChart_cyyy.setOption(option_yyxt1);
+        myChart_cyyy.setOption(option_yyxt1);
+      },6)
     });
   }
   if (currentPageCyyy.value === 2) {
@@ -1417,6 +1422,7 @@ onMounted(() => {
   echart_index_szcg.value = 1;
   var mychar_cclj = echarts.init(document.getElementById("cclj-Charts"));
   var mychar_shlj = echarts.init(document.getElementById("shlj-Charts"));
+  var mychar_cqcl = echarts.init(document.getElementById("cqcl-Charts"));
   getMain().then((data) => {
     var myChart_ljdp1 = echarts.init(document.getElementById("ggzp-Charts"));
 
@@ -1501,6 +1507,7 @@ onMounted(() => {
       tooltip: {
         trigger: "item",
       },
+      color:["#E0847F","#CD8BECA9"],
       legend: {
         bottom: "0%",
         left: "center",
@@ -1519,6 +1526,78 @@ onMounted(() => {
             { value: data1, name: "西华" },
             { value: data2, name: "红星" },
           ],
+          
+          label: {
+            normal: {
+              show: false,
+            },
+                      labelLine:{
+              normal: {
+                position: "inner",
+                show:false,
+              }
+            },
+ },
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+            },
+            textStyle: {
+              color: "#ccc",
+              fontSize: "16",
+            },
+          },
+        },
+      ],
+    };
+
+        var cqcl_option = {
+      title: {
+        text: "车辆出勤情况",
+        left: "center",
+        textStyle: {
+          color: "#ccc",
+          fontSize: "15",
+        },
+        subtextStyle: {
+          color: "#ccc",
+          fontSize: "20",
+        },
+      },
+      tooltip: {
+        trigger: "item",
+      },
+      legend: {
+        bottom: "0%",
+        left: "center",
+        textStyle: {
+          color: "#ccc",
+          fontSize: "12",
+        },
+      },
+      series: [
+        {
+          name: "出勤车辆",
+          type: "pie",
+          radius: "70%",
+
+          data: [
+            { value: 121, name: "出勤" },
+            { value: 14, name: "未出勤" },
+
+          ],
+            label: {
+            normal: {
+              show: false,
+            },
+                      labelLine:{
+              normal: {
+                position: "inner",
+                show:false,
+              }
+            },
+ },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -1534,9 +1613,16 @@ onMounted(() => {
     };
     window.onresize = function () {
       mychar_shlj.resize();
+      mychar_cqcl.resize();
     };
     mychar_shlj.setOption(shlj_option);
+    mychar_cqcl.setOption(cqcl_option);
   });
+
+ 
+
+
+  
   getMainCclj().then((tableData) => {
     year_transport.value = Number(tableData[0].infoVal);
     month_transport.value = Number(tableData[1].infoVal);
@@ -1587,6 +1673,7 @@ onMounted(() => {
   });
 
   getOverStandard().then((tableData) => {
+    setTimeout(()=>{
     var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     var option_yyxt1 = {
       title: {
@@ -1662,7 +1749,8 @@ onMounted(() => {
         },
       ],
     };
-    myChart_cyyy.setOption(option_yyxt1);
+      myChart_cyyy.setOption(option_yyxt1);
+    },6)
   });
   var myChart_jgzm1 = echarts.init(document.getElementById("jgzm-Charts"));
 

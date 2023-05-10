@@ -135,7 +135,7 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
 
                 </ul>
 
@@ -200,7 +200,7 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
 
                 </ul>
 
@@ -260,7 +260,7 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
 
                 </ul>
 
@@ -320,7 +320,7 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
 
                 </ul>
 
@@ -2519,9 +2519,34 @@ function logout() {
 }
 
 .infoList {
+   color:#F0F0A8;
+  
   list-style-type: none;
+  /* font-style: italic; */
+
+}
+.infoList li:hover{
+  color:#E9E45D;
+  /* text-decoration: underline; */
+}
+.infoList li:nth-child(even){
+  color:#E9E287;  
+   font-family: '楷体';
+  
+  font-size: 1.1rem;
+line-height: 1.2;
 }
 
+.infoList li:nth-child(odd){
+    color:#97E6C2;  
+}
+
+.infoList li span{
+  font-family: '楷体';
+  font-weight: bold;
+  font-size:1.1rem;
+  color:#EA9AB5;
+}
 .image {
   float: left;
   height: 300px;
