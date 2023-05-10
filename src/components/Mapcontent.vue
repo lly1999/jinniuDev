@@ -1415,7 +1415,6 @@ onMounted(() => {
   echart_index_srzx.value = 1;
   //document.getElementById("hwzy-Charts").removeAttribute("_echarts_instance_");
   echart_index_szcg.value = 1;
-  var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
   var mychar_cclj = echarts.init(document.getElementById("cclj-Charts"));
   var mychar_shlj = echarts.init(document.getElementById("shlj-Charts"));
   getMain().then((data) => {
@@ -1588,6 +1587,7 @@ onMounted(() => {
   });
 
   getOverStandard().then((tableData) => {
+    var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     var option_yyxt1 = {
       title: {
         text: "超标企业街道分布",
