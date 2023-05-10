@@ -126,7 +126,7 @@
                 style="margin-top:10px">
                 {{ item.systemName }}</el-button>
             </div>
-            <div class="infoContainer" style="background-color:#1677D9;color:white">
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
               <!-- logo -->
               <!-- <div>
         <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
@@ -191,7 +191,7 @@
                 style="margin-top:10px">
                 {{ item.systemName }}</el-button>
             </div>
-            <div class="infoContainer" style="background-color:#1677D9;color:white">
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
               <!-- logo -->
               <!-- <div>
 <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
@@ -256,14 +256,9 @@
                 style="margin-top:10px">
                 {{ item.systemName }}</el-button>
             </div>
-            <div class="infoContainer" style="background-color:#1677D9;color:white">
-              <!-- logo -->
-              <!-- <div>
-<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
-</div> -->
-              <!-- 汇总数据列表 -->
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+
               <div>
-                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
                   <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
 
@@ -306,7 +301,66 @@
               </div>
             </div>
           </el-card>
+          <el-card v-if="item.systemName == '垃圾分类管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
 
+            <el-image class="image" :src="require('@/assets/home/img-ljfl1.jpg')"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size:20px" v-else>
+              <el-button class="el-button-null" type="text" disabled plain @click="toSystemHjws(item)"
+                style="margin-top:10px">
+                {{ item.systemName }}</el-button>
+            </div>
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+
+              <div>
+                <ul class="infoList">
+                  <li v-for="item in item.data">{{ item.infoKey + ": " + item.infoVal }}</li>
+
+                </ul>
+
+                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  style="text-align: center;">
+                  <template #reference>
+                    <el-button class="el-button-hjws" link type="text" style=" margin-top:10px;color:#e6e6e6">
+                      查看详情 ></el-button>
+
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div style="display:flex">
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
+
+                        </div>
+
+                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
+    <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
+                      </div>
+                    </div>
+                  </template>
+                </el-popover>
+
+              </div>
+            </div>
+          </el-card>
         </template>
 
 
@@ -2448,17 +2502,18 @@ function logout() {
 .card {
   border-radius: 3px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
-  margin-right: 45px;
+  margin-right: 25px;
   margin-top: 25px;
-  width: 400px;
-  background-color: #1677D9;
+  padding: 0px;
+  width: 350px;
+  background-color: #2775b6;
 }
 
 .infoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1677D9;
+  background-color: #2775b6;
   padding: 20px;
   margin-top: -10px;
 }
