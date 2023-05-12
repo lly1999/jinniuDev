@@ -3,7 +3,10 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh; width: 25vw">
         <!-- <div class="card text-white bg-primary mb-3 " style="max-width: 14rem;padding: 10px;height: 10vh;"> -->
-        <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+        <h5
+          class="card-title"
+          style="font-size: 25px; padding: 5px; text-align: center"
+        >
           环境卫生
         </h5>
 
@@ -27,13 +30,16 @@
           </el-menu> -->
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
           <div class="no">
-            <div class="no-header" style="
+            <div
+              class="no-header"
+              style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "></div>
+              "
+            ></div>
             <div class="no-hd">
               <ul>
                 <li>{{ year_transport.toFixed(2) }}</li>
@@ -46,13 +52,16 @@
                 <li>当日收运量累积(吨)</li>
               </ul>
             </div>
-            <div class="no-header" style="
+            <div
+              class="no-header"
+              style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "></div>
+              "
+            ></div>
             <!-- <div class="no-md">
               <ul>
                 <li>出勤车辆数：141</li>
@@ -79,8 +88,16 @@
           </div>
 
           <div style="display: flex">
-            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
-            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
+            <div
+              id="cqcl-Charts"
+              v-show="echart_index_hjws === 1"
+              style="width: 13vw; height: 27vh"
+            ></div>
+            <div
+              id="shlj-Charts"
+              v-show="echart_index_hjws === 1"
+              style="width: 13vw; height: 27vh"
+            ></div>
           </div>
         </div>
 
@@ -88,11 +105,19 @@
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             市容秩序
           </h5>
-          <div class="card-body" style="padding: 0px; height: 40vh; width: 100%" active-text-color="#ffd04b"
-            background-color="#2a2a2a" text-color="#fff">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 40vh; width: 100%"
+            active-text-color="#ffd04b"
+            background-color="#2a2a2a"
+            text-color="#fff"
+          >
             <!-- <el-tabs v-model="activeName" type="border-card" class="hwzy-tabs" @tab-click="handleClick" style="width:100%">
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
@@ -104,8 +129,16 @@
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->
-            <el-menu :default-active="activeIndex_srzx" class="el-menu-demo" mode="horizontal" @select="handleSelect_srzx"
-              style="width: 80%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
+            <el-menu
+              :default-active="activeIndex_srzx"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect_srzx"
+              style="width: 80%; margin: 0 auto"
+              active-text-color="#ffd04b"
+              background-color="#05103C"
+              text-color="#fff"
+            >
               <el-menu-item index="1">餐饮油烟管家</el-menu-item>
               <el-menu-item index="2">调度指挥管家</el-menu-item>
               <el-menu-item index="3">扬尘治理大数据协同管家</el-menu-item>
@@ -116,19 +149,43 @@
             <div v-show="echart_index_srzx === 1">
               <div id="cyyy-Charts" style="width: 26vw; height: 30vh"></div>
               <div style="width: 50%; margin: 0 auto">
-                <el-pagination layout="prev, pager, next" :total="4" background text-color="#fff" :page-size="1"
-                  @current-change="changeCyyyChart" small :current-page="currentPageCyyy" />
+                <el-pagination
+                  layout="prev, pager, next"
+                  :total="4"
+                  background
+                  text-color="#fff"
+                  :page-size="1"
+                  @current-change="changeCyyyChart"
+                  small
+                  :current-page="currentPageCyyy"
+                />
               </div>
             </div>
 
-            <div id="ddzh-Charts" v-show="echart_index_srzx === 2" style="width: 25vw; height: 30vh">
+            <div
+              id="ddzh-Charts"
+              v-show="echart_index_srzx === 2"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
-            <div id="ycxt-Charts" v-show="echart_index_srzx === 3" style="width: 25vw; height: 30vh">
+            <div
+              id="ycxt-Charts"
+              v-show="echart_index_srzx === 3"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
-            <div id="gxdc-Charts" v-show="echart_index_srzx === 4" style="width: 25vw; height: 30vh"></div>
-            <div id="jmtx-Charts" v-show="echart_index_srzx === 5" style="width: 25vw; height: 30vh">
+            <div
+              id="gxdc-Charts"
+              v-show="echart_index_srzx === 4"
+              style="width: 25vw; height: 30vh"
+            ></div>
+            <div
+              id="jmtx-Charts"
+              v-show="echart_index_srzx === 5"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
           </div>
@@ -177,10 +234,16 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             招牌景观
           </h5>
-          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 35vh; width: 100%"
+          >
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <!-- <div
               id="jgzm-Charts"
@@ -189,13 +252,16 @@
             ></div> -->
             <div id="jgzm-Charts" v-show="echart_index_jgzm === 1"></div>
             <div class="no">
-              <div class="no-header" style="
+              <div
+                class="no-header"
+                style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "></div>
+                "
+              ></div>
               <div class="no-hd">
                 <ul>
                   <li>{{ year_electricity }}</li>
@@ -208,46 +274,86 @@
                   <li>昨日电量统计</li>
                 </ul>
               </div>
-              <div class="no-header" style="
+              <div
+                class="no-header"
+                style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "></div>
+                "
+              ></div>
             </div>
-            <div id="ggzp-Charts" v-show="echart_index_jgzm === 1" style="width: 25vw; height: 30vh"></div>
+            <div
+              id="ggzp-Charts"
+              v-show="echart_index_jgzm === 1"
+              style="width: 25vw; height: 30vh"
+            ></div>
           </div>
         </div>
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             数字城管
           </h5>
-          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
-            <el-menu :default-active="activeIndex_jgzm" class="el-menu-demo" mode="horizontal" @select="handleSelect_szcg"
-              style="width: 90%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 35vh; width: 100%"
+          >
+            <el-menu
+              :default-active="activeIndex_jgzm"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect_szcg"
+              style="width: 90%; margin: 0 auto"
+              active-text-color="#ffd04b"
+              background-color="#05103C"
+              text-color="#fff"
+            >
               <el-menu-item index="1">突出问题管家</el-menu-item>
               <el-menu-item index="2">城管AI识别管家</el-menu-item>
               <el-menu-item index="3">数字化城市信息管家</el-menu-item>
               <el-menu-item index="4">城管诉易达管家</el-menu-item>
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
-            <div id="tcwt-Charts" v-show="echart_index_szcg === 1" style="width: 24vw; height: 36vh; margin-left: 0px">
-            </div>
-            <div id="ai-Charts" v-show="echart_index_szcg === 2" style="width: 25vw; height: 30vh">
+            <div
+              id="tcwt-Charts"
+              v-show="echart_index_szcg === 1"
+              style="width: 24vw; height: 36vh; margin-left: 0px"
+            ></div>
+            <div
+              id="ai-Charts"
+              v-show="echart_index_szcg === 2"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
             <div v-show="echart_index_szcg === 3">
               <div id="szcg-Charts" style="width: 25vw; height: 30vh"></div>
               <div style="width: 40%; margin: 0 auto">
-                <el-pagination layout="prev, pager, next" :total="3" background text-color="#fff" :page-size="1"
-                  @current-change="changeSzcgChart" small :current-page="currentPageSzcg" />
+                <el-pagination
+                  layout="prev, pager, next"
+                  :total="3"
+                  background
+                  text-color="#fff"
+                  :page-size="1"
+                  @current-change="changeSzcgChart"
+                  small
+                  :current-page="currentPageSzcg"
+                />
               </div>
             </div>
 
-            <div id="syd-Charts" v-show="echart_index_szcg === 4" style="width: 25vw; height: 30vh">
+            <div
+              id="syd-Charts"
+              v-show="echart_index_szcg === 4"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
           </div>
@@ -318,7 +424,6 @@ const changeCyyyChart = (page) => {
       .removeAttribute("_echarts_instance_");
     var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     getOverStandard().then((tableData) => {
-      setTimeout(()=>{
       var option_yyxt1 = {
         title: {
           text: "超标企业街道分布",
@@ -386,8 +491,7 @@ const changeCyyyChart = (page) => {
           },
         ],
       };
-        myChart_cyyy.setOption(option_yyxt1);
-      },6)
+      myChart_cyyy.setOption(option_yyxt1);
     });
   }
   if (currentPageCyyy.value === 2) {
@@ -872,6 +976,9 @@ const changeSzcgChart = (page) => {
 const handleSelect_srzx = (key, keypath) => {
   if (key === "1") {
     echart_index_srzx.value = 1;
+    document
+      .getElementById("cyyy-Charts")
+      .removeAttribute("_echarts_instance_");
     var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     getOverStandard().then((tableData) => {
       var option_yyxt1 = {
@@ -880,7 +987,7 @@ const handleSelect_srzx = (key, keypath) => {
           textStyle: {
             color: "#ccc",
           },
-          left: "5%"
+          left: "5%",
         },
         tooltip: {
           trigger: "axis",
@@ -1507,7 +1614,7 @@ onMounted(() => {
       tooltip: {
         trigger: "item",
       },
-      color:["#E0847F","#CD8BECA9"],
+      color: ["#E0847F", "#CD8BECA9"],
       legend: {
         bottom: "0%",
         left: "center",
@@ -1526,18 +1633,18 @@ onMounted(() => {
             { value: data1, name: "西华" },
             { value: data2, name: "红星" },
           ],
-          
+
           label: {
             normal: {
               show: false,
             },
-                      labelLine:{
+            labelLine: {
               normal: {
                 position: "inner",
-                show:false,
-              }
+                show: false,
+              },
             },
- },
+          },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -1552,7 +1659,7 @@ onMounted(() => {
       ],
     };
 
-        var cqcl_option = {
+    var cqcl_option = {
       title: {
         text: "车辆出勤情况",
         left: "center",
@@ -1585,19 +1692,18 @@ onMounted(() => {
           data: [
             { value: 121, name: "出勤" },
             { value: 14, name: "未出勤" },
-
           ],
-            label: {
+          label: {
             normal: {
               show: false,
             },
-                      labelLine:{
+            labelLine: {
               normal: {
                 position: "inner",
-                show:false,
-              }
+                show: false,
+              },
             },
- },
+          },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -1619,10 +1725,6 @@ onMounted(() => {
     mychar_cqcl.setOption(cqcl_option);
   });
 
- 
-
-
-  
   getMainCclj().then((tableData) => {
     year_transport.value = Number(tableData[0].infoVal);
     month_transport.value = Number(tableData[1].infoVal);
@@ -1673,7 +1775,9 @@ onMounted(() => {
   });
 
   getOverStandard().then((tableData) => {
-    setTimeout(()=>{
+    document
+      .getElementById("cyyy-Charts")
+      .removeAttribute("_echarts_instance_");
     var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
     var option_yyxt1 = {
       title: {
@@ -1681,7 +1785,7 @@ onMounted(() => {
         textStyle: {
           color: "#ccc",
         },
-        left: "5%"
+        left: "5%",
       },
       tooltip: {
         trigger: "axis",
@@ -1749,8 +1853,7 @@ onMounted(() => {
         },
       ],
     };
-      myChart_cyyy.setOption(option_yyxt1);
-    },6)
+    myChart_cyyy.setOption(option_yyxt1);
   });
   var myChart_jgzm1 = echarts.init(document.getElementById("jgzm-Charts"));
 
