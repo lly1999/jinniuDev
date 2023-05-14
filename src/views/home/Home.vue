@@ -135,7 +135,7 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
 
                 </ul>
 
@@ -200,7 +200,7 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
 
                 </ul>
 
@@ -260,7 +260,7 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
 
                 </ul>
 
@@ -320,7 +320,7 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": "}}<span>{{  item.infoVal }}</span></li>
+                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
 
                 </ul>
 
@@ -713,8 +713,8 @@
                     item.infoVal
                   }}
                   </li> -->
-                  <el-popover v-for="(item, index) in item.data" placement="right-end" title="详情统计" :width="1200"
-                    trigger="hover" effect="dark">
+                  <el-popover v-for="(item, index) in item.data" placement="right-end" :width="600" trigger="hover"
+                    effect="dark" popper-style="background-color: #1677D9;color: white;">
                     <template #reference>
                       <li style="font-size: 20px;padding: 5px;width:100%">{{
                         item.infoKey + ": "
@@ -723,6 +723,9 @@
                       }}
                       </li>
                     </template>
+                    <div v-if="item.infoKey === '店铺数量'">
+                      <li style="font-size: 20px;padding: 5px;width:100%">暂无详细统计 </li>
+                    </div>
                     <div v-if="item.infoKey === '零售类店铺数量'">
                       <li v-for="(project, index) in retailCount" style="font-size: 20px;padding: 5px;width:100%"> {{
                         project }} </li>
@@ -785,8 +788,8 @@
                   style="margin-top:10px;margin-left:10%">{{ item.systemName }}</el-button>
                 <div style="margin-top: 1%;">
 
-                  <el-popover v-for="(item, index) in item.data" placement="right-end" title="详情统计" :width="1200"
-                    trigger="hover" effect="dark">
+                  <el-popover v-for="(item, index) in item.data" placement="right-end" :width="500" trigger="hover"
+                    popper-class="my-el-popover" popper-style="background-color: #1677D9;color: white;">
                     <template #reference>
                       <li style="font-size: 20px;padding: 5px;width:100%">{{
                         item.infoKey + ": "
@@ -795,6 +798,10 @@
                       }}
                       </li>
                     </template>
+                    <div v-if="item.infoKey === '报警照明设备数'">
+                      <li v-for="(project, index) in jgzm_alarm_projrect" style="font-size: 20px;padding: 5px;width:100%">
+                        {{ project }} </li>
+                    </div>
                     <div v-if="item.infoKey === '昨日电量统计'">
                       <li v-for="(project, index) in jgzm_day_consumption"
                         style="font-size: 20px;padding: 5px;width:100%"> {{ project }} </li>
@@ -1173,6 +1180,7 @@ const validatePass = (rules, value, callback) => {
   }
 }
 const electricity = ref['一品天下', '城北体育中心', '枣子巷', '一环路内透']
+const jgzm_alarm_projrect = ref([])
 const jgzm_day_consumption = ref([])
 const jgzm_year_consumption = ref([])
 const jgzm_month_consumption = ref([])
@@ -2127,11 +2135,10 @@ onBeforeMount(() => {
     })
   getCategory().then(data => {
     console.log(data[0])
-    console.log(data.零售业)
-    retailCount.value = data.零售业
-    cateringCount.value = data.餐饮
-    serviceCount.value = data.服务业
-    otherCount.value = data.其他行业
+    retailCount.value = data[0]
+    cateringCount.value = data[1]
+    serviceCount.value = data[2]
+    otherCount.value = data[3]
   })
 })
 
@@ -2149,9 +2156,10 @@ onMounted(() => {
   })
   getElectricity().then(data => {
     console.log(data)
-    jgzm_day_consumption.value = data[0]
-    jgzm_month_consumption.value = data[1]
-    jgzm_year_consumption.value = data[2]
+    jgzm_alarm_projrect.value = data[0]
+    jgzm_day_consumption.value = data[1]
+    jgzm_month_consumption.value = data[2]
+    jgzm_year_consumption.value = data[3]
 
 
   })
@@ -2225,6 +2233,10 @@ function logout() {
 </script>
 
 <style scoped>
+.my-el-popover {
+  background-color: #1677D9;
+}
+
 .AI {
   text-align: center;
   height: 292px;
@@ -2519,34 +2531,37 @@ function logout() {
 }
 
 .infoList {
-   color:#F0F0A8;
-  
+  color: #F0F0A8;
+
   list-style-type: none;
   /* font-style: italic; */
 
 }
-.infoList li:hover{
-  color:#E9E45D;
+
+.infoList li:hover {
+  color: #E9E45D;
   /* text-decoration: underline; */
 }
-.infoList li:nth-child(even){
-  color:#E9E287;  
-   font-family: '楷体';
-  
+
+.infoList li:nth-child(even) {
+  color: #E9E287;
+  font-family: '楷体';
+
   font-size: 1.1rem;
-line-height: 1.2;
+  line-height: 1.2;
 }
 
-.infoList li:nth-child(odd){
-    color:#97E6C2;  
+.infoList li:nth-child(odd) {
+  color: #97E6C2;
 }
 
-.infoList li span{
+.infoList li span {
   font-family: '楷体';
   font-weight: bold;
-  font-size:1.1rem;
-  color:#EA9AB5;
+  font-size: 1.1rem;
+  color: #EA9AB5;
 }
+
 .image {
   float: left;
   height: 300px;
