@@ -19,7 +19,6 @@ import Dept0 from "@/views/home/dept0.vue"
 import Dept1 from "@/views/home/dept1.vue"
 import Dept2 from "@/views/home/dept2.vue"
 import Dept3 from "@/views/home/dept3.vue"
-import WarningThings from "@/views/home/WarningThings.vue"
 import Lzj from "@/views/lzj/Content.vue"
 import Ddzh from "@/views/ddzh/Ddzh.vue"
 import { params } from "@/store/store";
@@ -35,7 +34,6 @@ const routes = [
     { name: 'dept1', path: '/dept1', component: Dept1 },
     { name: 'dept2', path: '/dept2', component: Dept2 },
     { name: 'dept3', path: '/dept3', component: Dept3 },
-    { name: 'warningthings', path: '/warningthings', component: WarningThings},
 
     // { name: 'mapop', path: '/mapop', component: MapOp },
     {
