@@ -313,18 +313,19 @@
               <li>地点纬度：{{latitude}}</li>
               <li>地点经度：{{longitude}}</li>
               <li>发生时间：{{eventTime}}</li>
-              <li>所属街道：{{street}}</li>
-              <li>上报角色：{{reportRole}}</li>
+              
+
             </ul>
             <ul style="display: inline-block;padding-left:40px;">
-              
-              <li>上报附件：{{uploadFiles}}</li>
+              <li>所属街道：{{street}}</li>
+              <li>上报角色：{{reportRole}}</li>
+              <!-- <li>上报附件：{{uploadFiles}}</li> -->
               <li>事件描述：{{eventDesc}}</li>
               <li>事件状态：{{eventStatus}}</li>
               <li>更新时间：{{updateTime}}</li>
               <li>事件等级：{{eventLevel}}</li>
               <li>事件备注：{{tags}}</li>
-              <li>处置附件：{{handleFile}}</li>
+              <!-- <li>处置附件：{{handleFile}}</li> -->
               <li>事件编号：{{eventNo}}</li>
             </ul>
           </div>
@@ -524,10 +525,10 @@ const longitude = ref("");
 const eventTime = ref("");
 const gridName = ref("");
 const reportRole = ref("");
-const uploadFiles = ref("");
+// const uploadFiles = ref("");
 const eventDesc = ref("");
 const eventStatus = ref("");
-const handleFile = ref("");
+// const handleFile = ref("");
 const dealTime = ref("");
 const verifyStatus = ref("");
 const verifyOrg = ref("");
@@ -653,8 +654,8 @@ const handleEdit = (warningType) => {
         id.value ="";
         place.value = "";
         longitude.value ="";
-        uploadFiles.value = "";
-        handleFile.value = "";
+        // uploadFiles.value = "";
+        // handleFile.value = "";
         tags.value ="";
         street.value = "";
         updateTime.value ="";
@@ -689,8 +690,8 @@ const warningDetail = (index, row) => {
         id.value = data.id;
         place.value = data.place;
         longitude.value = data.longitude;
-        uploadFiles.value = data.uploadFiles;
-        handleFile.value = data.handleFiles;
+        // uploadFiles.value = data.uploadFiles;
+        // handleFile.value = data.handleFiles;
         tags.value = data.tags;
         street.value = data.street;
         updateTime.value = data.updateTime;
