@@ -193,43 +193,145 @@
       </dv-border-box7>
     </div>
   </div>
-  <!-- <dv-border-box7 style="height:30vh;padding:5px">
-        <div dv-bg>
-          <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">招牌景观</h5>
-          <div>
-            <dv-conical-column-chart :config="config_yyxt" style="width:25vw;height:20vh;" />
-          </div>
+  <div class="content_middle_top">
+    <dv-border-box7 style="height: 14vh">
+      <div class="no-middle" style="padding-top: 3vh">
+        <div class="no-middle-hd">
+          <ul>
+            <li @click="handleEdit(warningReported)">{{reportedNum}}</li>
+            <li @click="handleEdit(warningUnregistered)">{{unregisteredNum}}</li>
+            <li @click="handleEdit(warningRegistered)">{{registeredNum}}</li>
+            <li @click="handleEdit(warningDistributed)">{{distributedNum}}</li>
+            <li @click="handleEdit(warningUndisposed)">{{undisposedNum}}</li>
+            <li @click="handleEdit(warningDisposed)">{{disposedNum}}</li>
+            <li @click="handleEdit(warningVerified)">{{verifiedNum}}</li>
+          </ul>
+          <ul>
+            <li @click="handleEdit(warningReported)">已上报事件数</li>
+            <li @click="handleEdit(warningUnregistered)">待立案事件数</li>
+            <li @click="handleEdit(warningRegistered)">已立案事件数</li>
+            <li @click="handleEdit(warningDistributed)">已派发事件数</li>
+            <li @click="handleEdit(warningUndisposed)">待处置事件数</li>
+            <li @click="handleEdit(warningDisposed)">已处置事件数</li>
+            <li @click="handleEdit(warningVerified)">已核查事件数</li>
+          </ul>
         </div>
-      </dv-border-box7> -->
-  <!-- <dv-border-box1 ref="borderRef">
-      <div :style="`width: 40rem`" h18rem color-white flex justify-center items-center>
-        dv-border-box1
+
+        <el-dialog v-model="alarmEvent" title="告警事件统计分析" append-to-body="true">
+          <!-- <WarningThings style="width:100%" /> -->
+          <div class="warning-header">
+            {{ warningTitle }}事件数
+          </div>
+          <el-date-picker
+            v-model="changeValue"
+            type="daterange"
+            unlink-panels
+            range-separator="到"
+            start-placeholder="选择开始时间"
+            end-placeholder="选择结束时间"
+            :disabled-date="disabledDate"
+            :shortcuts="shortcuts"
+            @change="changeDate"
+            size="large"
+            style="margin: 0.5rem 0 0.5rem"
+          />
+          <el-table
+            :data="data_total.slice((currentPage - 1) * 6, currentPage * 6)"
+            :size="large"
+            width="100%"
+            id="#vcfResult"
+            :row-class-name="tableRowClassName"
+          >
+            <el-table-column property="uuid" label="事件uuid" width="260">
+              <template #default="scope" >
+                <el-tooltip class="item" effect="dark" content="点击查看事件详情" placement="top-start">
+                <el-button
+                  size="medium"
+                  type="primary"
+                  link
+                  @click="warningDetail(scope.$index, scope.row)"
+                  >{{ scope.row.uuid }}
+                </el-button>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column property="event_no" label="事件编号" width="150" />
+            <el-table-column
+              property="event_name"
+              label="事件名称"
+              width="120"
+            />
+            <el-table-column
+              property="event_time"
+              label="事件发生时间"
+              width="160"
+            />
+            <el-table-column
+              property="map_info"
+              label="事件发生地点"
+              width="150"
+            >
+            </el-table-column>
+            <el-table-column
+              property="submit_time"
+              label="事件登记时间"
+              width="160"
+            />
+            <el-table-column
+              property="handle_deadline"
+              label="事件处理截至时间"
+              width="160"
+            />
+
+            <el-table-column
+              property="event_type_pid"
+              label="事件类型编号"
+              width="80"
+            />
+            <el-table-column property="tags" label="事件处理备注" width="150" />
+
+          </el-table>
+          <div class="float-end" >
+            <el-pagination
+              background
+              layout="->,total, prev, pager, next, jumper"
+              :total="totalRecords"
+              :current-page="currentPage"
+              @current-change="getTransport"
+            />
+          </div>
+          <div class="warning-header" style="padding-top:30px;">
+            事件详情
+          </div>
+          <div class="warning-detail" style="padding-top:20px;padding-left:20px;">
+            <ul style="display: inline-block;">
+              <li>事件id：{{id}}</li>
+              <li>事件名称：{{eventName}}</li>
+              <li>事件来源：{{eventSource}}</li>
+              <li>事件类型：{{eventType}}</li>
+              <li>发生地点：{{place}}</li>
+              <li>地点纬度：{{latitude}}</li>
+              <li>地点经度：{{longitude}}</li>
+              <li>发生时间：{{eventTime}}</li>
+              <li>所属街道：{{street}}</li>
+              <li>上报角色：{{reportRole}}</li>
+            </ul>
+            <ul style="display: inline-block;padding-left:40px;">
+              
+              <li>上报附件：{{uploadFiles}}</li>
+              <li>事件描述：{{eventDesc}}</li>
+              <li>事件状态：{{eventStatus}}</li>
+              <li>更新时间：{{updateTime}}</li>
+              <li>事件等级：{{eventLevel}}</li>
+              <li>事件备注：{{tags}}</li>
+              <li>处置附件：{{handleFile}}</li>
+              <li>事件编号：{{eventNo}}</li>
+            </ul>
+          </div>
+        </el-dialog>
       </div>
-    </dv-border-box1> -->
-
-  <!-- <div class="card text-dark bg-info mb-3 " style="max-width: 18rem;">
-                    <div class="card-header">协管人员实时情况(含服务外包人员)</div>
-                    <div class="card-body">
-                        <div>在编：1人</div>
-                        <div>抽调：1人</div>
-                        <p></p>
-                        <div>补休：1人</div>
-                        <div>在岗在位：1人</div>
-                        <div>未按时打卡人员：1人</div>
-                    </div>
-
-                </div>
-                </div> -->
-  <!-- </div>
-  </div> -->
-  <!-- <div class="content-mid">
-
-    <div class="card text-white bg-primary mb-3 person-box ">
-      <div class="card-body">
-        <h5 class="card-title">城市管家</h5>
-      </div>
-    </div>
-  </div> -->
+    </dv-border-box7>
+  </div>
   <div class="content-r">
     <div class="container">
       <dv-border-box7 style="height: 46vh">
@@ -392,6 +494,217 @@ import { getMainShlj } from "@/api/shlj";
 import { stubString } from "lodash";
 import { getMainCclj } from "@/api/cclj";
 
+//=====================================================================sunny 告警事件
+
+import moment from "moment";
+import axios from "axios";
+
+const warningReported = ref("上报");
+const warningUnregistered = ref("待立案");
+const warningRegistered = ref("立案");
+const warningDistributed = ref("派发");
+const warningDisposed = ref("处置");
+const warningUndisposed = ref("待处置");
+const warningVerified = ref("核查");
+const reportedNum = ref(0);
+const unregisteredNum = ref(0);
+const registeredNum = ref(0);
+const distributedNum = ref(0);
+const disposedNum = ref(0);
+const undisposedNum = ref(0);
+const verifiedNum = ref(0);
+
+const id = ref("");
+const eventName = ref("");
+const eventSource = ref("");
+const eventType = ref("");
+const place = ref("");
+const latitude = ref("");
+const longitude = ref("");
+const eventTime = ref("");
+const gridName = ref("");
+const reportRole = ref("");
+const uploadFiles = ref("");
+const eventDesc = ref("");
+const eventStatus = ref("");
+const handleFile = ref("");
+const dealTime = ref("");
+const verifyStatus = ref("");
+const verifyOrg = ref("");
+const verifyTime = ref("");
+const eventNo = ref("");
+const eventLevel = ref("");
+const street = ref("");
+const tags = ref("");
+const updateTime = ref("");
+
+
+ 
+
+const alarmEvent = ref(false);
+
+
+const data_total = reactive([]);
+const queryCarNum = ref("");
+let totalRecords = ref(1000);
+let currentPage = ref(1);
+let pageCount = 0;
+let start = ref("");
+let end = ref("");
+const tomorrow = moment()
+  .add(+1, "d")
+  .format("YYYY-MM-DD");
+const today =
+  new Date().getFullYear() +
+  "-" +
+  (new Date().getMonth() + 1) +
+  "-" +
+  new Date().getDate();
+let startTime = ref("2023-05-01");
+let endTime = ref("2023-05-02");
+let changeValue = ref([today, tomorrow]);
+const warningTitle = ref("");
+
+// 禁选今天以后的日期以及没有数据的
+const disabledDate = (time) => {
+  return (
+    // time.getTime() < new Date("2022-8-31").getTime() ||
+    time.getTime() > new Date().getTime()
+  );
+};
+
+function changeDate() {
+  console.log("changeDate:" + start + "sdf" + end);
+  start =
+    changeValue.value[0].getFullYear() +
+    "-" +
+    (changeValue.value[0].getMonth() + 1) +
+    "-" +
+    changeValue.value[0].getDate();
+  end =
+    changeValue.value[1].getFullYear() +
+    "-" +
+    (changeValue.value[1].getMonth() + 1) +
+    "-" +
+    changeValue.value[1].getDate();
+  console.log("changeDate:" + start + "sdf" + end);
+  getAllWarning(start, end, 1);
+}
+
+const getAllWarning = (startTime, endTime, pageNum,warningType) => {
+  axios({
+    url: "http://175.153.176.27:18801/api/event/getEventsByStatus",
+    params: {
+      status:warningType,
+      startTime: startTime,
+      endTime: endTime,
+    },
+    method: "get",
+  }).then(function (resp) {
+    if (resp.status == 200) {
+      var data = resp.data.data;
+      data_total.splice(0, data_total.length);
+      for (var i in data) {
+        console.log("modify_time:" + data[i].modify_time);
+        var warningThings = {
+          event_no: data[i].event_no,
+          event_name: data[i].event_name,
+          event_time: data[i].event_time,
+          map_info: data[i].map_info,
+          submit_time: data[i].submit_time,
+          handle_deadline: data[i].handle_deadline,
+          event_type_pid: data[i].event_type_pid,
+          tags: data[i].tags,
+          uuid: data[i].uuid,
+        };
+        data_total.push(warningThings);
+      }
+      console.log("数据长度：" + data.length);
+      totalRecords.value = data_total.length;
+      pageCount = parseInt(data_total.length) % 6;
+      currentPage.value = pageNum;
+    }
+  });
+};
+getAllWarning(today, tomorrow, 1);
+
+const getTransport = (pageNum) => {
+  // 当前页
+  currentPage.value = pageNum;
+};
+
+const handleEdit = (warningType) => {
+  alarmEvent.value = true;
+  warningTitle.value = warningType;
+  changeValue.value[0] = today;
+  changeValue.value[1] = tomorrow;
+  getAllWarning(today, tomorrow, 1,warningType);
+         latitude.value= "";
+        eventSource.value= "";
+        eventType.value= "";
+        eventNo.value= "";
+        // handleFile= data.handleFiles;
+        eventDesc.value = "";
+        eventLevel.value = "";
+        eventStatus.value ="";
+        reportRole.value = "";
+        eventTime.value = "";
+        eventName.value = "";
+        id.value ="";
+        place.value = "";
+        longitude.value ="";
+        uploadFiles.value = "";
+        handleFile.value = "";
+        tags.value ="";
+        street.value = "";
+        updateTime.value ="";
+};
+
+// 点击事件的uuid显示详细信息
+const warningDetail = (index, row) => {
+  var  uuid = row.uuid;
+  console.log("事件的uuid是：" + uuid);
+   axios({
+    url: "http://175.153.176.27:18801/api/event/getEventFromUuid",
+    params: {
+      uuid: uuid,
+    },
+    method: "get",
+  }).then(function (resp) {
+    if (resp.status == 200) {
+      var data = resp.data.data.data;
+        console.log("latitude:" + data.latitude);
+        // uploadFiles= data.uploadFiles;
+        latitude.value= data.latitude;
+        eventSource.value= data.eventSource;
+        eventType.value= data.eventType1 + " "+ data.eventType2;
+        eventNo.value= data.eventNo;
+        // handleFile= data.handleFiles;
+        eventDesc.value = data.eventDesc;
+        eventLevel.value = data.eventLevel;
+        eventStatus.value = data.eventStatus;
+        reportRole.value = data.reportRole;
+        eventTime.value = data.eventTime;
+        eventName.value = data.eventName;
+        id.value = data.id;
+        place.value = data.place;
+        longitude.value = data.longitude;
+        uploadFiles.value = data.uploadFiles;
+        handleFile.value = data.handleFiles;
+        tags.value = data.tags;
+        street.value = data.street;
+        updateTime.value = data.updateTime;
+
+  
+      console.log("数据长度：" + data.length);
+      totalRecords.value = data_total.length;
+      pageCount = parseInt(data_total.length) % 6;
+      currentPage.value = pageNum;
+    }
+  });
+};
+
+//===================================================================================
 const currentPageSzcg = ref(1);
 const currentPageCyyy = ref(1);
 const year_transport = ref(0);
@@ -416,6 +729,7 @@ const echart_index_hjws = ref("1");
 const echart_index_srzx = ref("1");
 const echart_index_jgzm = ref("1");
 const echart_index_szcg = ref("1");
+
 const changeCyyyChart = (page) => {
   currentPageCyyy.value = page;
   if (currentPageCyyy.value === 1) {
@@ -1522,6 +1836,34 @@ const handleSelect_jgzm = (key, keyPath) => {
 //   }
 // };
 onMounted(() => {
+
+  //===========================================sunny 告警事件
+   axios({
+    url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
+    params: {
+      startTime: today,
+      endTime: tomorrow,
+    },
+    method: "get",
+  }).then(function (resp) {
+    if (resp.status == 200) {
+      var data = resp.data.data;
+      unregisteredNum.value=data.待立案,
+      registeredNum.value= data.已立案,
+      reportedNum.value= data.已上报,
+        distributedNum.value = data.已派发,
+      undisposedNum.value=data.待处置,
+      disposedNum.value= data.已处置,
+        verifiedNum.value = data.已核查,
+      
+      console.log("数据长度：" + data.length);
+      totalRecords.value = data_total.length;
+      pageCount = parseInt(data_total.length) % 6;
+      currentPage.value = pageNum;
+    }
+  });
+
+  //=====================================================
   echart_index_hjws.value = 1;
   echart_index_jgzm.value = 1;
   echart_index_srzx.value = 1;
@@ -2026,7 +2368,7 @@ onMounted(() => {
 // })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* .content {
     position: absolute;
     top: 7vh;
@@ -2044,7 +2386,7 @@ onMounted(() => {
   flex-direction: column;
   height: 93vh;
   position: absolute;
-  z-index: 20;
+  z-index: 10;
   user-select: none;
   color: white;
   /* background-color: #2a2a2a; */
@@ -2053,8 +2395,27 @@ onMounted(() => {
   opacity: 0.9;
 }
 
-.content-l-top {
+/* .content-l-top {
   height: 150px;
+} */
+
+.content_middle_top {
+  left: 28vw;
+
+  width: 40.7vw;
+  height: 14vh;
+  padding: 3vh;
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  z-index: 40;
+  user-select: none;
+  color: white;
+  /* background-color: #2a2a2a; */
+  background-image: url("/public/images/bg.jpg");
+
+  opacity: 0.9;
 }
 
 /* .content-mid {
@@ -2086,7 +2447,7 @@ onMounted(() => {
   flex-direction: column;
   height: 93vh;
   position: absolute;
-  z-index: 20;
+  z-index: 10;
   user-select: none;
   opacity: 0.9;
   color: white;
@@ -2197,5 +2558,74 @@ li {
   color: rgb(232, 241, 152);
   font-family: heiti;
   text-align: center;
+}
+
+.no-middle {
+  width: 100%;
+  /* padding: 10px; */
+}
+
+.no-middle-hd {
+  /* padding: 5px; */
+  position: relative;
+  /* border:1px solid rgb(25,186,139); */
+}
+
+.no-middle-hd ul {
+  display: flex;
+}
+
+.no-middle-hd li {
+  position: relative;
+  flex: 1;
+  line-height: 2rem;
+  font-size: 2rem;
+  color: #fff;
+  font-family: heiti;
+  text-align: center;
+}
+
+.no-middle-hd ul:nth-child(2) li {
+  font-size: 0.9rem;
+  padding-top: 8px;
+}
+
+.no-middle-hd ul:nth-child(1) li::after {
+  position: absolute;
+  top: 25%;
+  right: 0;
+  height: 50%;
+  content: "";
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.no-middle-hd ul:nth-child(1) li:nth-child(5)::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  right: 0;
+  height: 50%;
+  width: 0px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.warning-header {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.warning-detail li{
+  min-height:30px;
+  max-height:100px;
+  width:400px;
+  padding-top:20px;
+  font-size: 16px;
+  // font-weight:bold;
+}
+
+/* dialog弹框代码可复制 */
+/deep/ .el-dialog__body{
+  user-select:none;
 }
 </style>
