@@ -7,3 +7,9 @@ export function getMainCclj() {
         method: 'get'
     })
 }
+export function getSitesData() {
+    return request({
+        url: '/cclj/getSitesData',
+        method: 'get'
+    })
+}

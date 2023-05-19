@@ -10,7 +10,7 @@ module.exports = defineConfig({
         //target: 'http://101.37.246.72:8084',//服务器
         //target: 'http://192.168.43.39:8084',
         //target: 'http://192.168.50.7:8084',
-        target: 'http://192.168.31.220:8084',
+        target: 'http://192.168.12.106:8084',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''//将url中起始的'/api'替换成''，比如将/api/getDeptList替换成/getDeptList

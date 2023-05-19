@@ -122,16 +122,16 @@
                         alt=""></el-image>
                 </div>
                 <div class="number">
-                    <el-image v-if="zero_selected == true" class="number"
-                        :src="require('@/assets/images/szcg/number1.png')" alt="" fit="cover">
+                    <el-image v-if="zero_selected == true" class="number" :src="require('@/assets/images/szcg/number1.png')"
+                        alt="" fit="cover">
                     </el-image>
                     <div v-if="zero_selected == true" class="text" style="color:white;padding:10px;z-index:2">突出问题管家
                     </div>
                     <div v-if="zero_selected == true" class="text"
                         style="color:white;padding:10px;z-index:2 ;font-size:14px">Highlight Problem Management
                         System </div>
-                    <el-image v-if="one_selected == true" class="number"
-                        :src="require('@/assets/images/szcg/number2.png')" alt="" fit="cover">
+                    <el-image v-if="one_selected == true" class="number" :src="require('@/assets/images/szcg/number2.png')"
+                        alt="" fit="cover">
                     </el-image>
                     <div v-if="one_selected == true" class="text" style="color:white;padding:10px;z-index:2">城管AI识别管家
                     </div>
@@ -139,8 +139,8 @@
                         style="color:white;padding:10px;z-index:2 ;font-size:14px">City Administration AI Identification
                         System </div>
 
-                    <el-image v-if="two_selected == true" class="number"
-                        :src="require('@/assets/images/szcg/number3.png')" alt=""></el-image>
+                    <el-image v-if="two_selected == true" class="number" :src="require('@/assets/images/szcg/number3.png')"
+                        alt=""></el-image>
                     <div v-if="two_selected == true" class="text" style="color:white;padding:10px;z-index:2">数字化城市信息管家
                     </div>
                     <div v-if="two_selected == true" class="text"
@@ -164,12 +164,15 @@
 
                     </div>
                     <div class="info-list" v-if="one_selected == true"
-                        style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
+                        style="color:white;margin-left:150px;width:1000px;padding: 14px;line-height: 30px;">
 
-                        <li>①今日发现案件数:{{ ai_info.case_today }} ；</li>
-                        <li>②今日应处置案件数:{{ ai_info.case_today_need }}；</li>
-                        <li>③今日已处置案件数: {{ ai_info.case_end }}；</li>
-                        <li>④本月超期处置案件数: {{ ai_info.case_out }}；</li>
+                        <template v-for="tableItem in szcg_statics">
+                            <el-table :data="tableItem.data" class="table" :fit="false" :row-style="{ height: '80px' }"
+                                :cell-style="cellstyle" max-height="300">
+                                <el-table-column v-for="i in tableItem.headerNames.length"
+                                    :label="tableItem.headerNames[i - 1]" :prop="tableItem.dataNames[i - 1]" width="200" />
+                            </el-table>
+                        </template>
                     </div>
                     <div class="info-list" v-if="two_selected == true"
                         style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
@@ -221,7 +224,7 @@ import MainInfo from '@/views/home/components/MainInfo.vue'
 import ClassItem from '@/views/home/components/ClassItem.vue'
 import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
-import { getMainSzcg } from '@/api/szcg.js'
+import { getMainSzcg, getCase, getStatics } from '@/api/szcg.js'
 import { getToken } from "@/api/syd";
 import { params } from '@/store/store.js'
 import { getMainTcwt } from '@/api/tcwt';
@@ -302,6 +305,7 @@ function syd_click() {
     two_selected.value = false;
     three_selected.value = true;
 }
+const szcg_statics = ref([])
 //部门列表, 从后端获取
 const depts = ref([])
 onBeforeMount(() => {
@@ -333,6 +337,9 @@ onBeforeMount(() => {
         ai_info.case_end = data[2].infoVal
         ai_info.case_out = data[3].infoVal
         console.log(ai_info)
+    })
+    getStatics().then(data => {
+        szcg_statics.value = data
     })
 })
 
