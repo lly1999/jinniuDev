@@ -5,9 +5,9 @@ module.exports = defineConfig({
     proxy: {
       '/api': {
         //target: 'http://192.168.12.112:8084',
-        //target: 'http://localhost:8084',
+        // target: 'http://localhost:8084',
         // target: 'http://175.153.176.27:18801',
-        //target: 'http://101.37.246.72:8084',//服务器
+        target: 'http://101.37.246.72:8084',//服务器
         //target: 'http://192.168.43.39:8084',
         //target: 'http://192.168.50.7:8084',
         target: 'http://192.168.12.106:8084',
