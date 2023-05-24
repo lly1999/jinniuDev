@@ -2619,7 +2619,7 @@ li {
 .warning-detail li{
   min-height:30px;
   max-height:100px;
-  width:400px;
+  width:350px;
   padding-top:20px;
   font-size: 16px;
   // font-weight:bold;
@@ -2629,4 +2629,6 @@ li {
 /deep/ .el-dialog__body{
   user-select:none;
 }
+
+
 </style>
