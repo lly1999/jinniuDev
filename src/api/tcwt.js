@@ -7,3 +7,9 @@ export function getMainTcwt() {
         method: 'get'
     })
 }
+export function getAllEvents(startTime, endTime) {
+    return request({
+        url: '/event/getAllEvents' + '?startTime=' + startTime + '&endTime=' + endTime,
+        method: 'get'
+    })
+}

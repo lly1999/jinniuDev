@@ -188,12 +188,12 @@
                             alt="">
                         <img v-if="two_selected == true" class="right-number-img" src="@/assets/images/city/number2.png"
                             alt="">
-                        <img v-if="three_selected == true" class="right-number-img"
-                            src="@/assets/images/city/number3.png" alt="">
-                        <img v-if="four_selected == true" class="right-number-img"
-                            src="@/assets/images/city/number4.png" alt="">
-                        <img v-if="five_selected == true" class="right-number-img"
-                            src="@/assets/images/city/number5.png" alt="">
+                        <img v-if="three_selected == true" class="right-number-img" src="@/assets/images/city/number3.png"
+                            alt="">
+                        <img v-if="four_selected == true" class="right-number-img" src="@/assets/images/city/number4.png"
+                            alt="">
+                        <img v-if="five_selected == true" class="right-number-img" src="@/assets/images/city/number5.png"
+                            alt="">
                         <img v-if="six_selected == true" class="right-number-img" src="@/assets/images/city/number6.png"
                             alt="">
 
@@ -212,8 +212,8 @@
                                 alt="">
                             <img v-if="two_selected == true" class="content-bg" src="@/assets/images/city/content2.png"
                                 alt="">
-                            <img v-if="three_selected == true" class="content-bg"
-                                src="@/assets/images/city/content3.png" alt="">
+                            <img v-if="three_selected == true" class="content-bg" src="@/assets/images/city/content3.png"
+                                alt="">
                             <img v-if="four_selected == true" class="content-bg" src="@/assets/images/city/content4.png"
                                 alt="">
                             <img v-if="five_selected == true" class="content-bg" src="@/assets/images/city/content5.png"
@@ -393,10 +393,39 @@ function show(id, url) {
         })
     } else {
         // router.push({ name: to, params: { subsysName } })
-        if (id != '14')
+        if (id != '14' && id != '12')
             window.open(url)
         if (id == '14')
             window.open(gxdc.url)
+        if (id == '12') {
+            var roles = []
+            roles = params.roleId.split(",")
+            console.log(roles.indexOf('84'))
+            // console.log(params.roleId)
+            if (roles.indexOf('84') != -1 || roles.indexOf('111') != -1 || roles.indexOf('83') != -1) {
+                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008060886&pwd=MTIzNDU2"
+                window.open(ddzh_url)
+            }
+            if (roles.indexOf('93') != -1) {
+                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061151&pwd=MTIzNDU2"
+                window.open(ddzh_url)
+            }
+
+            if (roles.indexOf('120') != -1) {
+                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061081&pwd=MTIzNDU2"
+                window.open(ddzh_url)
+            }
+            if (roles.indexOf('96') != -1 || roles.indexOf('99') != -1 || roles.indexOf('102') != -1) {
+                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061109&pwd=MTIzNDU2"
+                window.open(ddzh_url)
+            }
+            else {
+                var ddzh_url = "https://101.37.246.72:8079/map/?username=" + params.username + "&pwd=MTIzNDU2"
+                console.log(ddzh_url)
+                window.open(url)
+            }
+
+        } //调度指挥
     }
     // if (to === '') {
     //     ll

@@ -140,7 +140,7 @@
 
                 </ul>
 
-                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                <el-popover :width="800" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center;">
                   <template #reference>
@@ -205,7 +205,7 @@
 
                 </ul>
 
-                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                <el-popover :width="1000" placement="top" effect="dark" @after-enter=echartInit_cclj() trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center;">
                   <template #reference>
@@ -223,13 +223,10 @@
                           style="margin: 0; font-size: 18px; color: var(--el-color-info)">
                           @详情统计
                         </p>
-                        <div style="display:flex">
-                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                            <div>{{ item.infoKey }}</div>
-                            <div style="text-align:center">{{ item.infoVal }}</div>
-                          </dv-border-box6>
+                        <div id="container_cclj" style="width: 1000px; height: 400px;"></div>
+                        <div id="container_cclj1" style="width: 1000px; height: 400px;"></div>
 
-                        </div>
+
 
                         <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
     <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
@@ -265,7 +262,7 @@
 
                 </ul>
 
-                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_ljz() trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center;">
                   <template #reference>
@@ -283,13 +280,8 @@
                           style="margin: 0; font-size: 18px; color: var(--el-color-info)">
                           @详情统计
                         </p>
-                        <div style="display:flex">
-                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                            <div>{{ item.infoKey }}</div>
-                            <div style="text-align:center">{{ item.infoVal }}</div>
-                          </dv-border-box6>
+                        <div id="container_ljz1" style="width: 800px; height: 400px;"></div>
 
-                        </div>
 
                         <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
     <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
@@ -616,7 +608,8 @@
                         style="margin: 0; font-size: 18px; color: var(--el-color-info)">
                         @详情统计
                       </p>
-                      <div id="container_gxdc1" style="width: 1000px; height: 350px"></div>
+                      <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
+                      <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
 
 
                       <div style="display:flex ;clear:left">
@@ -994,6 +987,24 @@
                             </dv-border-box6>
 
                           </div>
+                          <p class="demo-rich-content__mention"
+                            style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                            @事件列表
+                          </p>
+                          <el-table :data="tcwtTableData" stripe style="width: 100%" max-height="500" :header-cell-style="{
+                            'font-size': '18px',
+                            'background': '#303133 !important',
+                            'color': '#ffffff',
+                            'border': 'none !important'
+                          }" :cell-style=changeCellStyle>
+                            <el-table-column prop="event_name" label="事件名称" width="180" />
+                            <el-table-column prop="modify_time" label="确认时间" width="280" />
+                            <el-table-column prop="description" label="问题描述" width="180" />
+                            <el-table-column prop="create_time" label="创建时间" width="280" />
+                            <el-table-column prop="creator" label="创建者" width="180" />
+                            <el-table-column prop="tags" label="标签" />
+
+                          </el-table>
                           <!-- <p><dv-charts :option="config_szcg" style="width:200px;height: 200px;" />a</p> -->
                         </div>
 
@@ -1157,7 +1168,7 @@ import ClassItem from '@/views/home/components/ClassItem.vue'
 import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList, changePassword } from '@/api/home.js'
 import { getToken } from "@/api/syd";
-import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
+import { getTokenGxdc, getMainGxdc, getCompany } from "@/api/gxdc";
 import { params } from '@/store/store.js'
 import * as echarts from "echarts";
 import { getRdfx, getSjqsfx } from "@/api/szcg.js";
@@ -1165,6 +1176,10 @@ import { getOverStandard, getMonitor } from '@/api/yyxt';
 import { getAiUrl } from "@/api/ai";
 import { getMain, getCategory } from "@/api/ggzp"
 import { getMainJgzm, getElectricity } from "@/api/jgzm"
+import { getAllEvents } from "@/api/tcwt";
+import { getSitesData } from "@/api/cclj";
+import { getMainLjz } from "@/api/ljz";
+
 import axios from 'axios'
 const aiUrl = ref('')
 const ruleFormRef = ref(null)
@@ -1180,6 +1195,8 @@ const validatePass = (rules, value, callback) => {
     callback()
   }
 }
+const cclj_sites = ref([])
+const gxdc_company = ref([])
 const electricity = ref['一品天下', '城北体育中心', '枣子巷', '一环路内透']
 const jgzm_alarm_projrect = ref([])
 const jgzm_day_consumption = ref([])
@@ -1273,6 +1290,85 @@ const echartInit_srzx = () => {
   document.getElementById("container_gxdc1").removeAttribute("_echarts_instance_");
 
   var myChart_gxdc = echarts.init(document.getElementById("container_gxdc1"));
+  var myChart_gxdc1 = echarts.init(document.getElementById("container_gxdc2"));
+  var option_gxdc2 = {
+    title: {
+      text: '公司统计',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+
+
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        // Use axis to trigger tooltip
+        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+      }
+    },
+    legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'value'
+    },
+    yAxis: {
+      type: 'category',
+      data: ['美团', '哈啰', '青桔']
+    },
+    series: [
+      {
+        name: '正常停放',
+        type: 'bar',
+        stack: 'total',
+        label: {
+          show: true
+        },
+        textStyle: {
+          color: '#ccc'
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [18244, 14765, 19339]
+      },
+      {
+        name: '异常停放',
+        type: 'bar',
+        stack: 'total',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: '#ccc'
+        },
+        data: [2231, 4902, 1872]
+      },
+      {
+        name: '正常行驶',
+        type: 'bar',
+        stack: 'total',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: '#ccc'
+        },
+        data: [1537, 932, 1948]
+      },
+
+    ]
+  };
+  myChart_gxdc1.setOption(option_gxdc2)
 
   getMainGxdc().then(gxdcData => {
     var option_gxdc1 = {
@@ -1333,6 +1429,171 @@ const echartInit_srzx = () => {
   })
 
 }
+
+
+const echartInit_ljz = () => {
+
+  document.getElementById("container_ljz1").removeAttribute("_echarts_instance_");
+  var myChart_ljz1 = echarts.init(document.getElementById("container_ljz1"));
+  console.log(ljz_table1.value[1].infoVal.slice(0, -2))
+  var option1 = {
+    title: {
+      text: '垃圾分布统计',
+      left: 'center',
+      textStyle: {
+        color: 'white'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    series: [
+      {
+        name: '垃圾分布统计',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: ljz_table1.value[1].infoVal.slice(0, -2), name: ljz_table1.value[1].infoKey.slice(0, -2) },
+          { value: ljz_table1.value[2].infoVal.slice(0, -2), name: ljz_table1.value[2].infoKey.slice(0, -2) },
+          // { value: 111, name: 222 },
+          // { value: 111, name: 222 },
+
+        ],
+        label: {
+          show: true,
+          formatter(param) {
+            // correct the percentage
+            return param.name + ' (' + param.percent + '%)';
+          }
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  myChart_ljz1.setOption(option1)
+
+}
+
+const echartInit_cclj = () => {
+  document.getElementById("container_cclj").removeAttribute("_echarts_instance_");
+  var myChart_cclj = echarts.init(document.getElementById("container_cclj"));
+  document.getElementById("container_cclj1").removeAttribute("_echarts_instance_");
+  var myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
+  var option = {
+    title: {
+      text: '收运点位统计',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: [cclj_sites.value[0].street, cclj_sites.value[1].street, cclj_sites.value[2].street, cclj_sites.value[3].street
+        , cclj_sites.value[4].street, cclj_sites.value[5].street, cclj_sites.value[6].street,
+      cclj_sites.value[7].street,
+      cclj_sites.value[8].street, cclj_sites.value[9].street, cclj_sites.value[10].street, cclj_sites.value[11].street, cclj_sites.value[12].street
+      ]
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [cclj_sites.value[0].street, cclj_sites.value[1].street_site_num, cclj_sites.value[2].street_site_num, cclj_sites.value[3].street_site_num
+          , cclj_sites.value[4].street_site_num, cclj_sites.value[5].street_site_num, cclj_sites.value[6].street_site_num,
+        cclj_sites.value[7].street_site_num,
+        cclj_sites.value[8].street_site_num, cclj_sites.value[9].street_site_num, cclj_sites.value[10].street_site_num, cclj_sites.value[11].street_site_num, cclj_sites.value[12].street_site_num],
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        }
+      }
+    ]
+  };
+  var option1 = {
+    title: {
+      text: '收运点位统计',
+      left: 'center',
+      textStyle: {
+        color: 'white'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    series: [
+      {
+        name: '街道点位统计',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: cclj_sites.value[0].street_site_num, name: cclj_sites.value[0].street },
+          { value: cclj_sites.value[1].street_site_num, name: cclj_sites.value[1].street },
+          { value: cclj_sites.value[2].street_site_num, name: cclj_sites.value[2].street },
+          { value: cclj_sites.value[3].street_site_num, name: cclj_sites.value[3].street },
+          { value: cclj_sites.value[4].street_site_num, name: cclj_sites.value[4].street },
+          { value: cclj_sites.value[5].street_site_num, name: cclj_sites.value[5].street },
+          { value: cclj_sites.value[6].street_site_num, name: cclj_sites.value[6].street },
+          { value: cclj_sites.value[7].street_site_num, name: cclj_sites.value[7].street },
+          { value: cclj_sites.value[8].street_site_num, name: cclj_sites.value[8].street },
+          { value: cclj_sites.value[9].street_site_num, name: cclj_sites.value[9].street },
+          { value: cclj_sites.value[10].street_site_num, name: cclj_sites.value[10].street },
+          { value: cclj_sites.value[11].street_site_num, name: cclj_sites.value[11].street },
+          { value: cclj_sites.value[12].street_site_num, name: cclj_sites.value[12].street },
+
+
+        ],
+        label: {
+          show: true,
+          formatter(param) {
+            // correct the percentage
+            return param.name + ' (' + param.percent + '%)';
+          }
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  myChart_cclj.setOption(option)
+  myChart_cclj1.setOption(option1)
+
+}
+
+
+
 const echartInit_jgzm = () => {
   document.getElementById("container_ljdp1").removeAttribute("_echarts_instance_");
   document.getElementById("container_ljdp2").removeAttribute("_echarts_instance_");
@@ -2020,15 +2281,41 @@ const config_szcg = {
     }
   ]
 }
+function changeCellStyle(row) {
+  // 可自行输出row查看样式
+  const styleObject = {
+    'background': '#303133 !important',
+    'color': '#ffffff',
+    'font-size': '18px',
+  }
+  return styleObject
+}
 
+var time = new Date().getTime();
 //setInterval(refreshSydToken, 1000 * 61)
+const today =
+  new Date().getFullYear() +
+  "-" +
+  (new Date().getMonth() + 1) +
+  "-" +
+  new Date().getDate();
+const tomorrow =
+  new Date(time + 1 * 24 * 60 * 60 * 1000).getFullYear() +
+  "-" +
+  (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
+  "-" +
+  new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
 const token = ref('')
 const gxdc = reactive({ url: '' })
 const syd = reactive({ url: '' })
 const gxdcUrl = ref('')
+const tcwtTableData = ref([])
 const sydUrl = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=")
 onBeforeMount(() => {
 
+  getAllEvents(today, tomorrow).then(data => {
+    tcwtTableData.value = data
+  })
   config_szcg.series[0].data[0].value = 90 %
     console.log(config_szcg.series[0].data[0].value)
   getTokenGxdc().then(data => {
@@ -2043,6 +2330,8 @@ const user = reactive({
   role: '管理员'
 })
 //日期 周
+
+
 let date = new Date().toLocaleDateString();
 var a = new Array("日", "一", "二", "三", "四", "五", "六");
 var str = new Date().getDay();
@@ -2127,6 +2416,8 @@ function toSystem(item) {  //每个子系统登录方式不一样
 
 
 }
+const ljz_table1 = ref([])
+
 //部门列表, 从后端获取
 const depts = ref([])
 onBeforeMount(() => {
@@ -2135,14 +2426,22 @@ onBeforeMount(() => {
       depts.value = response
     })
   getCategory().then(data => {
-    console.log(data[0])
     retailCount.value = data[0]
     cateringCount.value = data[1]
     serviceCount.value = data[2]
     otherCount.value = data[3]
   })
-})
+  getElectricity().then(data => {
+    jgzm_alarm_projrect.value = data[0]
+    jgzm_day_consumption.value = data[1]
+    jgzm_month_consumption.value = data[2]
+    jgzm_year_consumption.value = data[3]
+  })
+  getSitesData().then(data => {
+    cclj_sites.value = data
+  })
 
+})
 // 系统列表
 const systems = ref([])
 onMounted(() => {
@@ -2152,18 +2451,20 @@ onMounted(() => {
     systems.value.forEach(system => {
       if (system.api !== '') {
         get(system.api).then(data => system.data = data)
+        // if (system.systemId == '8') {//垃圾站获取主页+图表数据
+        //   console.log(data)
+        //   ljz_table1 = data[5]
+        //   // console.log(ljz_table1)
+        // }
       }
     })
   })
-  getElectricity().then(data => {
-    console.log(data)
-    jgzm_alarm_projrect.value = data[0]
-    jgzm_day_consumption.value = data[1]
-    jgzm_month_consumption.value = data[2]
-    jgzm_year_consumption.value = data[3]
 
-
+  getMainLjz().then(data => {
+    ljz_table1.value = data
+    console.log(ljz_table1.value[0])
   })
+
 
 })
 //选中的部门

@@ -50,9 +50,8 @@
         </div> -->
                 <div class="subsys" v-if="!showDepts">
 
-                    <class-item v-for="system in choosedSystems" :key="system.systemId"
-                        @click="show(system.to, system.url)" :logo="system.systemLogo" :name="system.systemName"
-                        styleName="subsysName">
+                    <class-item v-for="system in choosedSystems" :key="system.systemId" @click="show(system.to, system.url)"
+                        :logo="system.systemLogo" :name="system.systemName" styleName="subsysName">
                     </class-item>
                 </div>
                 <div class="subsys" v-if="!showDepts">
@@ -91,22 +90,26 @@
                     <!-- <main-info v-if="item.deptId==2" :key="idx" :systemName="item.systemName" :url="item.url"
           :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId">
         </main-info> -->
-                    <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName"
-                        :url="item.url" :logo="item.systemLogo" :infoList="item.data" :image="item.image" :to="item.to"
+                    <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName" :url="item.url"
+                        :logo="item.systemLogo" :infoList="item.data" :image="item.image" :to="item.to"
                         :deptId="item.deptId">
 
                         <div v-if="item.systemName == '景观照明管家'" style="display: flex;">
-                            <el-image :src="require('@/assets/jgzm/' + idx + '-1.jpg')" style="width:25%"
-                                fit="scale-down">
+                            <el-image :src="require('@/assets/jgzm/' + idx + '-1.jpg')" style="width:30%" fit="scale-down">
                             </el-image>
-                            <div style="padding:5px ;margin-top:2%;font-size: 25px;margin-left: 3%;">
+                            <div style="padding:5px ;margin-top:0%;font-size: 25px;margin-left: 3%;width:1000px">
                                 <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                                    style="margin-top:10px;margin-left:10%">{{ item.systemName }}</el-button>
+                                    style="margin-top:0px;margin-left:0%">{{ item.systemName }} 设备报警信息</el-button>
 
-                                <div style="padding:10px">
-                                    <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">
-                                        {{ item.infoKey + ": " + item.infoVal }}
-                                    </li>
+                                <div style="padding:5px">
+                                    <template v-for="tableItem in tableData_jbgl">
+                                        <el-table :data="tableItem.data" class="table" :fit="false"
+                                            :row-style="{ height: '80px' }" :cell-style="cellstyle" max-height="300">
+                                            <el-table-column v-for="i in tableItem.headerNames.length"
+                                                :label="tableItem.headerNames[i - 1]" :prop="tableItem.dataNames[i - 1]"
+                                                width="200" />
+                                        </el-table>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -119,8 +122,8 @@
                     <div>QR Code Management of Advertising Signs</div>
                 </div>
                 <template v-for="(item, idx) in choosedSystems">
-                    <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName"
-                        :url="item.url" :logo="item.systemLogo" :infoList="item.data" :image="item.image" :to="item.to"
+                    <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName" :url="item.url"
+                        :logo="item.systemLogo" :infoList="item.data" :image="item.image" :to="item.to"
                         :deptId="item.deptId">
 
                         <div v-if="item.systemName == '临街店铺管家'" style="display: flex;background-color:#e6e6e6;">
@@ -177,6 +180,7 @@ import ClassItem from '@/views/home/components/ClassItem.vue'
 import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { params } from '@/store/store.js'
+import { getAlarm } from '@/api/jgzm.js';
 
 const imgVisible = ref(true)
 //用户信息
@@ -212,11 +216,18 @@ onBeforeMount(() => {
         .then(response => {
             depts.value = response
         })
+    getAlarm().then(data => {
+        tableData_jbgl.value = data
+        console.log(tableData_jbgl)
+    })
 })
 
 // 系统列表
 const systems = ref([])
+const tableData_jbgl = ref([]) //警报管理
+
 onMounted(() => {
+
     getSystemList().then(data => {
         systems.value = data
         // 请求各个子系统要显示的数据

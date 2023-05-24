@@ -13,3 +13,9 @@ export function getMainGxdc() {
         method: 'get'
     })
 }
+export function getCompany() {
+    return request({
+        url: '/gxdc/getCompany',
+        method: 'get'
+    })
+}
