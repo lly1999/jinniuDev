@@ -97,7 +97,7 @@
                     <div @click="szcg_click" class="szcg_in" style="height:10vh">
                         <img class="szcg-icon" src="@/assets/images/szcg/szcg.png" alt="">
 
-                        <div class="szcg-text" style="color:white;padding:10px">
+                        <div class="szcg-text" style="color:white;padding:10px;">
                             数字化城市信息管家</div>
                         <div v-if="two_selected == true" class="col-line-selected"></div>
                     </div>
@@ -130,21 +130,25 @@
                     <div v-if="zero_selected == true" class="text"
                         style="color:white;padding:10px;z-index:2 ;font-size:14px">Highlight Problem Management
                         System </div>
-                    <el-image v-if="one_selected == true" class="number" :src="require('@/assets/images/szcg/number2.png')"
-                        alt="" fit="cover">
+                    <el-image v-if="one_selected == true" class="number" style=";margin-left: 400px"
+                        :src="require('@/assets/images/szcg/number2.png')" alt="" fit="cover">
                     </el-image>
-                    <div v-if="one_selected == true" class="text" style="color:white;padding:10px;z-index:2">城管AI识别管家
+                    <div v-if="one_selected == true" class="text"
+                        style="color:white;padding:10px;z-index:2;margin-left: 400px">城管AI识别管家
                     </div>
                     <div v-if="one_selected == true" class="text"
-                        style="color:white;padding:10px;z-index:2 ;font-size:14px">City Administration AI Identification
+                        style="color:white;padding:10px;z-index:2 ;font-size:14px;margin-left: 400px;">City Administration
+                        AI Identification
                         System </div>
 
                     <el-image v-if="two_selected == true" class="number" :src="require('@/assets/images/szcg/number3.png')"
-                        alt=""></el-image>
-                    <div v-if="two_selected == true" class="text" style="color:white;padding:10px;z-index:2">数字化城市信息管家
+                        alt="" style="margin-left:400px"></el-image>
+                    <div v-if="two_selected == true" class="text"
+                        style="color:white;padding:10px;z-index:2;margin-left:400px">数字化城市信息管家
                     </div>
                     <div v-if="two_selected == true" class="text"
-                        style="color:white;padding:10px;z-index:2 ;font-size:14px">Digital City Management Information
+                        style="color:white;padding:10px;z-index:2 ;font-size:14px;margin-left:400px">Digital City Management
+                        Information
                         System </div>
 
                     <el-image v-if="three_selected == true" class="number"
@@ -156,6 +160,7 @@
                     </div>
                     <div class="info-list" v-if="zero_selected == true"
                         style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
+
                         <li>①本月案件数:{{ tcwt_info.case }} ； </li>
                         <li>②本月已结案问题数:{{ tcwt_info.case_end }}；</li>
                         <li>③待处置问题数: {{ tcwt_info.case_need }}；</li>
@@ -163,33 +168,50 @@
                         <li>⑤超期办理问题数: {{ tcwt_info.case_today }}</li>
 
                     </div>
+
                     <div class="info-list" v-if="one_selected == true"
-                        style="color:white;margin-left:150px;width:1000px;padding: 14px;line-height: 30px;">
+                        style="color:white;margin-right:50px;width:1350px;padding: 14px;line-height: 30px;display: flex;">
+                        <div>
+                            <li> ①今日上报案件数:{{ szcg_info.case }}； </li>
+                            <li> ②今日结案数:{{ szcg_info.case_end }}； </li>
+                            <li> ③今日结案率:{{ szcg_info.rate }} ； </li>
+                            <li> ④今日上报问题数:{{ szcg_info.question }} </li>
+                        </div>
+                        <el-table :data="tcwtTableData" stripe style="width: 1050px;margin-left: 25px;" max-height="300"
+                            :header-cell-style="{
+                                'font-size': '18px',
+                                'background': '#303133 !important',
+                                'color': '#ffffff',
+                                'border': 'none !important'
+                            }" :cell-style=changeCellStyle>
+                            <el-table-column prop="event_name" label="事件名称" width="150" />
+                            <el-table-column prop="modify_time" label="确认时间" width="220" />
+                            <el-table-column prop="description" label="问题描述" width="150" />
+                            <el-table-column prop="create_time" label="创建时间" width="220" />
+                            <el-table-column prop="creator" label="创建者" width="180" />
+                            <el-table-column prop="tags" label="标签" />
+
+                        </el-table>
+
+                    </div>
+                    <div class="info-list" v-if="two_selected == true"
+                        style="color:white;margin-left:350px;width:600px;padding: 14px;line-height: 26px;">
+
 
                         <template v-for="tableItem in szcg_statics">
                             <el-table :data="tableItem.data" class="table" :fit="false" :row-style="{ height: '80px' }"
-                                :cell-style="cellstyle" max-height="300">
+                                :cell-style=cellstyle max-height="200">
                                 <el-table-column v-for="i in tableItem.headerNames.length"
-                                    :label="tableItem.headerNames[i - 1]" :prop="tableItem.dataNames[i - 1]" width="200" />
+                                    :label="tableItem.headerNames[i - 1]" :prop="tableItem.dataNames[i - 1]" width="150" />
                             </el-table>
                         </template>
                     </div>
-                    <div class="info-list" v-if="two_selected == true"
-                        style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
-
-
-                        <li> ①今日上报案件数:{{ szcg_info.case }}； </li>
-                        <li> ②今日结案数:{{ szcg_info.case_end }}； </li>
-                        <li> ③今日结案率:{{ szcg_info.rate }} ； </li>
-                        <li> ④今日上报问题数:{{ szcg_info.question }} </li>
-                    </div>
                     <div class="info-list" v-if="three_selected == true"
                         style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
-                        <li>①未受理案件: ；</li>
-                        <li>②未处理案件:；</li>
-                        <li>③处理中案件: ；</li>
-                        <li>④已处理案件: ；</li>
-                        <li>⑤已退回案件: </li>
+                        <li>①今日受理案件数量: {{ syd_case_today }}；</li>
+                        <li>②本月受理案件数量:{{ syd_case_month }}；</li>
+                        <li>③今日办结案件数量: {{ syd_case_end_today }}；</li>
+                        <li>④本月办结案件数量: {{ syd_case_end_month }}；</li>
                     </div>
                 </div>
 
@@ -225,9 +247,9 @@ import ClassItem from '@/views/home/components/ClassItem.vue'
 import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { getMainSzcg, getCase, getStatics } from '@/api/szcg.js'
-import { getToken } from "@/api/syd";
+import { getToken, getMainSyd } from "@/api/syd";
 import { params } from '@/store/store.js'
-import { getMainTcwt } from '@/api/tcwt';
+import { getMainTcwt, getAllEvents } from '@/api/tcwt';
 import { getMainAI } from '@/api/ai';
 import { getAiUrl } from '@/api/ai'
 const syd = reactive({ url: '' })
@@ -235,13 +257,32 @@ const token = ref('')
 const sydUrl = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=")
 const aiUrl = ref('')
 const imgVisible = ref(true)
+const tcwtTableData = ref([])
+
 //用户信息
 let zero_selected = ref(false);
 
 let one_selected = ref(true);
 let two_selected = ref(false);
 let three_selected = ref(false);
-
+function changeCellStyle(row) {
+    // 可自行输出row查看样式
+    const styleObject = {
+        'background': '#303133 !important',
+        'color': '#ffffff',
+        'font-size': '18px',
+    }
+    return styleObject
+}
+function cellStyle(row) {
+    // 可自行输出row查看样式
+    const styleObject = {
+        'background': '#303133 !important',
+        'color': '#ffffff',
+        'font-size': '18px',
+    }
+    return styleObject
+}
 const user = reactive({
     username: '张三',
     role: '管理员'
@@ -254,6 +295,20 @@ var week = "星期" + a[str];
 function toSystem(item) {
     router.push({ name: item.to, params: item.systemName })
 }
+var time = new Date().getTime();
+//setInterval(refreshSydToken, 1000 * 61)
+const today =
+    new Date().getFullYear() +
+    "-" +
+    (new Date().getMonth() + 1) +
+    "-" +
+    new Date().getDate();
+const tomorrow =
+    new Date(time + 1 * 24 * 60 * 60 * 1000).getFullYear() +
+    "-" +
+    (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
+    "-" +
+    new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
 const szcg_info = reactive(
     {
         case: '',
@@ -278,6 +333,12 @@ const ai_info = reactive(
         case_out: '',
     }
 )
+
+const syd_case_today = ref(0)
+const syd_case_month = ref(0)
+const syd_case_end_today = ref(0)
+const syd_case_end_month = ref(0)
+
 function tcwt_click() {
     one_selected.value = false;
     two_selected.value = false;
@@ -336,11 +397,22 @@ onBeforeMount(() => {
         ai_info.case_today_need = data[1].infoVal
         ai_info.case_end = data[2].infoVal
         ai_info.case_out = data[3].infoVal
-        console.log(ai_info)
     })
     getStatics().then(data => {
         szcg_statics.value = data
     })
+    getMainSyd().then(data => {
+        console.log(data[0].infoVal)
+        syd_case_today.value = data[0].infoVal
+        syd_case_month.value = data[1].infoVal
+        syd_case_end_today.value = data[2].infoVal
+        syd_case_end_month.value = data[3].infoVal
+    })
+
+    getAllEvents(today, tomorrow).then(data => {
+        tcwtTableData.value = data
+    })
+
 })
 
 // 系统列表

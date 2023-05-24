@@ -3,10 +3,7 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh; width: 25vw">
         <!-- <div class="card text-white bg-primary mb-3 " style="max-width: 14rem;padding: 10px;height: 10vh;"> -->
-        <h5
-          class="card-title"
-          style="font-size: 25px; padding: 5px; text-align: center"
-        >
+        <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
           环境卫生
         </h5>
 
@@ -30,16 +27,13 @@
           </el-menu> -->
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
           <div class="no">
-            <div
-              class="no-header"
-              style="
+            <div class="no-header" style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "
-            ></div>
+              "></div>
             <div class="no-hd">
               <ul>
                 <li>{{ year_transport.toFixed(2) }}</li>
@@ -52,16 +46,13 @@
                 <li>当日收运量累积(吨)</li>
               </ul>
             </div>
-            <div
-              class="no-header"
-              style="
+            <div class="no-header" style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "
-            ></div>
+              "></div>
             <!-- <div class="no-md">
               <ul>
                 <li>出勤车辆数：141</li>
@@ -88,16 +79,8 @@
           </div>
 
           <div style="display: flex">
-            <div
-              id="cqcl-Charts"
-              v-show="echart_index_hjws === 1"
-              style="width: 13vw; height: 27vh"
-            ></div>
-            <div
-              id="shlj-Charts"
-              v-show="echart_index_hjws === 1"
-              style="width: 13vw; height: 27vh"
-            ></div>
+            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
+            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
           </div>
         </div>
 
@@ -105,19 +88,11 @@
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5
-            class="card-title"
-            style="font-size: 25px; padding: 5px; text-align: center"
-          >
+          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
             市容秩序
           </h5>
-          <div
-            class="card-body"
-            style="padding: 0px; height: 40vh; width: 100%"
-            active-text-color="#ffd04b"
-            background-color="#2a2a2a"
-            text-color="#fff"
-          >
+          <div class="card-body" style="padding: 0px; height: 40vh; width: 100%" active-text-color="#ffd04b"
+            background-color="#2a2a2a" text-color="#fff">
             <!-- <el-tabs v-model="activeName" type="border-card" class="hwzy-tabs" @tab-click="handleClick" style="width:100%">
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
@@ -129,16 +104,8 @@
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->
-            <el-menu
-              :default-active="activeIndex_srzx"
-              class="el-menu-demo"
-              mode="horizontal"
-              @select="handleSelect_srzx"
-              style="width: 80%; margin: 0 auto"
-              active-text-color="#ffd04b"
-              background-color="#05103C"
-              text-color="#fff"
-            >
+            <el-menu :default-active="activeIndex_srzx" class="el-menu-demo" mode="horizontal" @select="handleSelect_srzx"
+              style="width: 80%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
               <el-menu-item index="1">餐饮油烟管家</el-menu-item>
               <el-menu-item index="2">调度指挥管家</el-menu-item>
               <el-menu-item index="3">扬尘治理大数据协同管家</el-menu-item>
@@ -149,43 +116,19 @@
             <div v-show="echart_index_srzx === 1">
               <div id="cyyy-Charts" style="width: 26vw; height: 30vh"></div>
               <div style="width: 50%; margin: 0 auto">
-                <el-pagination
-                  layout="prev, pager, next"
-                  :total="4"
-                  background
-                  text-color="#fff"
-                  :page-size="1"
-                  @current-change="changeCyyyChart"
-                  small
-                  :current-page="currentPageCyyy"
-                />
+                <el-pagination layout="prev, pager, next" :total="4" background text-color="#fff" :page-size="1"
+                  @current-change="changeCyyyChart" small :current-page="currentPageCyyy" />
               </div>
             </div>
 
-            <div
-              id="ddzh-Charts"
-              v-show="echart_index_srzx === 2"
-              style="width: 25vw; height: 30vh"
-            >
+            <div id="ddzh-Charts" v-show="echart_index_srzx === 2" style="width: 25vw; height: 30vh">
               待接入
             </div>
-            <div
-              id="ycxt-Charts"
-              v-show="echart_index_srzx === 3"
-              style="width: 25vw; height: 30vh"
-            >
+            <div id="ycxt-Charts" v-show="echart_index_srzx === 3" style="width: 25vw; height: 30vh">
               待接入
             </div>
-            <div
-              id="gxdc-Charts"
-              v-show="echart_index_srzx === 4"
-              style="width: 25vw; height: 30vh"
-            ></div>
-            <div
-              id="jmtx-Charts"
-              v-show="echart_index_srzx === 5"
-              style="width: 25vw; height: 30vh"
-            >
+            <div id="gxdc-Charts" v-show="echart_index_srzx === 4" style="width: 25vw; height: 30vh"></div>
+            <div id="jmtx-Charts" v-show="echart_index_srzx === 5" style="width: 25vw; height: 30vh">
               待接入
             </div>
           </div>
@@ -198,13 +141,13 @@
       <div class="no-middle" style="padding-top: 3vh">
         <div class="no-middle-hd">
           <ul>
-            <li @click="handleEdit(warningReported)">{{reportedNum}}</li>
-            <li @click="handleEdit(warningUnregistered)">{{unregisteredNum}}</li>
-            <li @click="handleEdit(warningRegistered)">{{registeredNum}}</li>
-            <li @click="handleEdit(warningDistributed)">{{distributedNum}}</li>
-            <li @click="handleEdit(warningUndisposed)">{{undisposedNum}}</li>
-            <li @click="handleEdit(warningDisposed)">{{disposedNum}}</li>
-            <li @click="handleEdit(warningVerified)">{{verifiedNum}}</li>
+            <li @click="handleEdit(warningReported)">{{ reportedNum }}</li>
+            <li @click="handleEdit(warningUnregistered)">{{ unregisteredNum }}</li>
+            <li @click="handleEdit(warningRegistered)">{{ registeredNum }}</li>
+            <li @click="handleEdit(warningDistributed)">{{ distributedNum }}</li>
+            <li @click="handleEdit(warningUndisposed)">{{ undisposedNum }}</li>
+            <li @click="handleEdit(warningDisposed)">{{ disposedNum }}</li>
+            <li @click="handleEdit(warningVerified)">{{ verifiedNum }}</li>
           </ul>
           <ul>
             <li @click="handleEdit(warningReported)">已上报事件数</li>
@@ -222,111 +165,63 @@
           <div class="warning-header">
             {{ warningTitle }}事件数
           </div>
-          <el-date-picker
-            v-model="changeValue"
-            type="daterange"
-            unlink-panels
-            range-separator="到"
-            start-placeholder="选择开始时间"
-            end-placeholder="选择结束时间"
-            :disabled-date="disabledDate"
-            :shortcuts="shortcuts"
-            @change="changeDate"
-            size="large"
-            style="margin: 0.5rem 0 0.5rem"
-          />
-          <el-table
-            :data="data_total.slice((currentPage - 1) * 6, currentPage * 6)"
-            :size="large"
-            width="100%"
-            id="#vcfResult"
-            :row-class-name="tableRowClassName"
-          >
+          <el-date-picker v-model="changeValue" type="daterange" unlink-panels range-separator="到"
+            start-placeholder="选择开始时间" end-placeholder="选择结束时间" :disabled-date="disabledDate" :shortcuts="shortcuts"
+            @change="changeDate" size="large" style="margin: 0.5rem 0 0.5rem" />
+          <el-table :data="data_total.slice((currentPage - 1) * 6, currentPage * 6)" :size="large" width="100%"
+            id="#vcfResult" :row-class-name="tableRowClassName">
             <el-table-column property="uuid" label="事件uuid" width="260">
-              <template #default="scope" >
+              <template #default="scope">
                 <el-tooltip class="item" effect="dark" content="点击查看事件详情" placement="top-start">
-                <el-button
-                  size="medium"
-                  type="primary"
-                  link
-                  @click="warningDetail(scope.$index, scope.row)"
-                  >{{ scope.row.uuid }}
-                </el-button>
+                  <el-button size="medium" type="primary" link @click="warningDetail(scope.$index, scope.row)">{{
+                    scope.row.uuid }}
+                  </el-button>
                 </el-tooltip>
               </template>
             </el-table-column>
             <el-table-column property="event_no" label="事件编号" width="150" />
-            <el-table-column
-              property="event_name"
-              label="事件名称"
-              width="120"
-            />
-            <el-table-column
-              property="event_time"
-              label="事件发生时间"
-              width="160"
-            />
-            <el-table-column
-              property="map_info"
-              label="事件发生地点"
-              width="150"
-            >
+            <el-table-column property="event_name" label="事件名称" width="120" />
+            <el-table-column property="event_time" label="事件发生时间" width="160" />
+            <el-table-column property="map_info" label="事件发生地点" width="150">
             </el-table-column>
-            <el-table-column
-              property="submit_time"
-              label="事件登记时间"
-              width="160"
-            />
-            <el-table-column
-              property="handle_deadline"
-              label="事件处理截至时间"
-              width="160"
-            />
+            <el-table-column property="submit_time" label="事件登记时间" width="160" />
+            <el-table-column property="handle_deadline" label="事件处理截至时间" width="160" />
 
-            <el-table-column
-              property="event_type_pid"
-              label="事件类型编号"
-              width="80"
-            />
+            <el-table-column property="event_type_pid" label="事件类型编号" width="80" />
             <el-table-column property="tags" label="事件处理备注" width="150" />
 
           </el-table>
-          <div class="float-end" >
-            <el-pagination
-              background
-              layout="->,total, prev, pager, next, jumper"
-              :total="totalRecords"
-              :current-page="currentPage"
-              @current-change="getTransport"
-            />
+          <div class="float-end">
+            <el-pagination background layout="->,total, prev, pager, next, jumper" :total="totalRecords"
+              :current-page="currentPage" @current-change="getTransport" />
           </div>
           <div class="warning-header" style="padding-top:30px;">
             事件详情
           </div>
           <div class="warning-detail" style="padding-top:20px;padding-left:20px;">
             <ul style="display: inline-block;">
-              <li>事件id：{{id}}</li>
-              <li>事件名称：{{eventName}}</li>
-              <li>事件来源：{{eventSource}}</li>
-              <li>事件类型：{{eventType}}</li>
-              <li>发生地点：{{place}}</li>
-              <li>地点纬度：{{latitude}}</li>
-              <li>地点经度：{{longitude}}</li>
-              <li>发生时间：{{eventTime}}</li>
-              
+              <li>事件id：{{ id }}</li>
+              <li>事件名称：{{ eventName }}</li>
+              <li>事件来源：{{ eventSource }}</li>
+              <li>事件类型：{{ eventType }}</li>
+              <li>发生地点：{{ place }}</li>
+              <li>地点纬度：{{ latitude }}</li>
+              <li>地点经度：{{ longitude }}</li>
+              <li>发生时间：{{ eventTime }}</li>
+
 
             </ul>
             <ul style="display: inline-block;padding-left:40px;">
-              <li>所属街道：{{street}}</li>
-              <li>上报角色：{{reportRole}}</li>
+              <li>所属街道：{{ street }}</li>
+              <li>上报角色：{{ reportRole }}</li>
               <!-- <li>上报附件：{{uploadFiles}}</li> -->
-              <li>事件描述：{{eventDesc}}</li>
-              <li>事件状态：{{eventStatus}}</li>
-              <li>更新时间：{{updateTime}}</li>
-              <li>事件等级：{{eventLevel}}</li>
-              <li>事件备注：{{tags}}</li>
+              <li>事件描述：{{ eventDesc }}</li>
+              <li>事件状态：{{ eventStatus }}</li>
+              <li>更新时间：{{ updateTime }}</li>
+              <li>事件等级：{{ eventLevel }}</li>
+              <li>事件备注：{{ tags }}</li>
               <!-- <li>处置附件：{{handleFile}}</li> -->
-              <li>事件编号：{{eventNo}}</li>
+              <li>事件编号：{{ eventNo }}</li>
             </ul>
           </div>
         </el-dialog>
@@ -337,16 +232,10 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh">
         <div dv-bg>
-          <h5
-            class="card-title"
-            style="font-size: 25px; padding: 5px; text-align: center"
-          >
+          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
             招牌景观
           </h5>
-          <div
-            class="card-body"
-            style="padding: 0px; height: 35vh; width: 100%"
-          >
+          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <!-- <div
               id="jgzm-Charts"
@@ -355,16 +244,13 @@
             ></div> -->
             <div id="jgzm-Charts" v-show="echart_index_jgzm === 1"></div>
             <div class="no">
-              <div
-                class="no-header"
-                style="
+              <div class="no-header" style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "
-              ></div>
+                "></div>
               <div class="no-hd">
                 <ul>
                   <li>{{ year_electricity }}</li>
@@ -377,86 +263,46 @@
                   <li>昨日电量统计</li>
                 </ul>
               </div>
-              <div
-                class="no-header"
-                style="
+              <div class="no-header" style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "
-              ></div>
+                "></div>
             </div>
-            <div
-              id="ggzp-Charts"
-              v-show="echart_index_jgzm === 1"
-              style="width: 25vw; height: 30vh"
-            ></div>
+            <div id="ggzp-Charts" v-show="echart_index_jgzm === 1" style="width: 25vw; height: 30vh"></div>
           </div>
         </div>
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5
-            class="card-title"
-            style="font-size: 25px; padding: 5px; text-align: center"
-          >
+          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
             数字城管
           </h5>
-          <div
-            class="card-body"
-            style="padding: 0px; height: 35vh; width: 100%"
-          >
-            <el-menu
-              :default-active="activeIndex_jgzm"
-              class="el-menu-demo"
-              mode="horizontal"
-              @select="handleSelect_szcg"
-              style="width: 90%; margin: 0 auto"
-              active-text-color="#ffd04b"
-              background-color="#05103C"
-              text-color="#fff"
-            >
+          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
+            <el-menu :default-active="activeIndex_jgzm" class="el-menu-demo" mode="horizontal" @select="handleSelect_szcg"
+              style="width: 90%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
               <el-menu-item index="1">突出问题管家</el-menu-item>
               <el-menu-item index="2">城管AI识别管家</el-menu-item>
               <el-menu-item index="3">数字化城市信息管家</el-menu-item>
               <el-menu-item index="4">城管诉易达管家</el-menu-item>
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
-            <div
-              id="tcwt-Charts"
-              v-show="echart_index_szcg === 1"
-              style="width: 24vw; height: 36vh; margin-left: 0px"
-            ></div>
-            <div
-              id="ai-Charts"
-              v-show="echart_index_szcg === 2"
-              style="width: 25vw; height: 30vh"
-            >
+            <div id="tcwt-Charts" v-show="echart_index_szcg === 1" style="width: 24vw; height: 36vh; margin-left: 0px">
+            </div>
+            <div id="ai-Charts" v-show="echart_index_szcg === 2" style="width: 25vw; height: 30vh">
               待接入
             </div>
             <div v-show="echart_index_szcg === 3">
               <div id="szcg-Charts" style="width: 25vw; height: 30vh"></div>
               <div style="width: 40%; margin: 0 auto">
-                <el-pagination
-                  layout="prev, pager, next"
-                  :total="3"
-                  background
-                  text-color="#fff"
-                  :page-size="1"
-                  @current-change="changeSzcgChart"
-                  small
-                  :current-page="currentPageSzcg"
-                />
+                <el-pagination layout="prev, pager, next" :total="3" background text-color="#fff" :page-size="1"
+                  @current-change="changeSzcgChart" small :current-page="currentPageSzcg" />
               </div>
             </div>
 
-            <div
-              id="syd-Charts"
-              v-show="echart_index_szcg === 4"
-              style="width: 25vw; height: 30vh"
-            >
+            <div id="syd-Charts" v-show="echart_index_szcg === 4" style="width: 25vw; height: 30vh">
               待接入
             </div>
           </div>
@@ -540,7 +386,7 @@ const tags = ref("");
 const updateTime = ref("");
 
 
- 
+
 
 const alarmEvent = ref(false);
 
@@ -592,11 +438,11 @@ function changeDate() {
   getAllWarning(start, end, 1);
 }
 
-const getAllWarning = (startTime, endTime, pageNum,warningType) => {
+const getAllWarning = (startTime, endTime, pageNum, warningType) => {
   axios({
     url: "http://175.153.176.27:18801/api/event/getEventsByStatus",
     params: {
-      status:warningType,
+      status: warningType,
       startTime: startTime,
       endTime: endTime,
     },
@@ -639,33 +485,33 @@ const handleEdit = (warningType) => {
   warningTitle.value = warningType;
   changeValue.value[0] = today;
   changeValue.value[1] = tomorrow;
-  getAllWarning(today, tomorrow, 1,warningType);
-         latitude.value= "";
-        eventSource.value= "";
-        eventType.value= "";
-        eventNo.value= "";
-        // handleFile= data.handleFiles;
-        eventDesc.value = "";
-        eventLevel.value = "";
-        eventStatus.value ="";
-        reportRole.value = "";
-        eventTime.value = "";
-        eventName.value = "";
-        id.value ="";
-        place.value = "";
-        longitude.value ="";
-        // uploadFiles.value = "";
-        // handleFile.value = "";
-        tags.value ="";
-        street.value = "";
-        updateTime.value ="";
+  getAllWarning(today, tomorrow, 1, warningType);
+  latitude.value = "";
+  eventSource.value = "";
+  eventType.value = "";
+  eventNo.value = "";
+  // handleFile= data.handleFiles;
+  eventDesc.value = "";
+  eventLevel.value = "";
+  eventStatus.value = "";
+  reportRole.value = "";
+  eventTime.value = "";
+  eventName.value = "";
+  id.value = "";
+  place.value = "";
+  longitude.value = "";
+  // uploadFiles.value = "";
+  // handleFile.value = "";
+  tags.value = "";
+  street.value = "";
+  updateTime.value = "";
 };
 
 // 点击事件的uuid显示详细信息
 const warningDetail = (index, row) => {
-  var  uuid = row.uuid;
+  var uuid = row.uuid;
   console.log("事件的uuid是：" + uuid);
-   axios({
+  axios({
     url: "http://175.153.176.27:18801/api/event/getEventFromUuid",
     params: {
       uuid: uuid,
@@ -674,29 +520,29 @@ const warningDetail = (index, row) => {
   }).then(function (resp) {
     if (resp.status == 200) {
       var data = resp.data.data.data;
-        console.log("latitude:" + data.latitude);
-        // uploadFiles= data.uploadFiles;
-        latitude.value= data.latitude;
-        eventSource.value= data.eventSource;
-        eventType.value= data.eventType1 + " "+ data.eventType2;
-        eventNo.value= data.eventNo;
-        // handleFile= data.handleFiles;
-        eventDesc.value = data.eventDesc;
-        eventLevel.value = data.eventLevel;
-        eventStatus.value = data.eventStatus;
-        reportRole.value = data.reportRole;
-        eventTime.value = data.eventTime;
-        eventName.value = data.eventName;
-        id.value = data.id;
-        place.value = data.place;
-        longitude.value = data.longitude;
-        // uploadFiles.value = data.uploadFiles;
-        // handleFile.value = data.handleFiles;
-        tags.value = data.tags;
-        street.value = data.street;
-        updateTime.value = data.updateTime;
+      console.log("latitude:" + data.latitude);
+      // uploadFiles= data.uploadFiles;
+      latitude.value = data.latitude;
+      eventSource.value = data.eventSource;
+      eventType.value = data.eventType1 + " " + data.eventType2;
+      eventNo.value = data.eventNo;
+      // handleFile= data.handleFiles;
+      eventDesc.value = data.eventDesc;
+      eventLevel.value = data.eventLevel;
+      eventStatus.value = data.eventStatus;
+      reportRole.value = data.reportRole;
+      eventTime.value = data.eventTime;
+      eventName.value = data.eventName;
+      id.value = data.id;
+      place.value = data.place;
+      longitude.value = data.longitude;
+      // uploadFiles.value = data.uploadFiles;
+      // handleFile.value = data.handleFiles;
+      tags.value = data.tags;
+      street.value = data.street;
+      updateTime.value = data.updateTime;
 
-  
+
       console.log("数据长度：" + data.length);
       totalRecords.value = data_total.length;
       pageCount = parseInt(data_total.length) % 6;
@@ -1839,7 +1685,7 @@ const handleSelect_jgzm = (key, keyPath) => {
 onMounted(() => {
 
   //===========================================sunny 告警事件
-   axios({
+  axios({
     url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
     params: {
       startTime: today,
@@ -1849,15 +1695,15 @@ onMounted(() => {
   }).then(function (resp) {
     if (resp.status == 200) {
       var data = resp.data.data;
-      unregisteredNum.value=data.待立案,
-      registeredNum.value= data.已立案,
-      reportedNum.value= data.已上报,
+      unregisteredNum.value = data.待立案,
+        registeredNum.value = data.已立案,
+        reportedNum.value = data.已上报,
         distributedNum.value = data.已派发,
-      undisposedNum.value=data.待处置,
-      disposedNum.value= data.已处置,
+        undisposedNum.value = data.待处置,
+        disposedNum.value = data.已处置,
         verifiedNum.value = data.已核查,
-      
-      console.log("数据长度：" + data.length);
+
+        console.log("数据长度：" + data.length);
       totalRecords.value = data_total.length;
       pageCount = parseInt(data_total.length) % 6;
       currentPage.value = pageNum;
@@ -2616,17 +2462,17 @@ li {
   font-weight: bold;
 }
 
-.warning-detail li{
-  min-height:30px;
-  max-height:100px;
-  width:400px;
-  padding-top:20px;
+.warning-detail li {
+  min-height: 30px;
+  max-height: 100px;
+  width: 400px;
+  padding-top: 20px;
   font-size: 16px;
   // font-weight:bold;
 }
 
 /* dialog弹框代码可复制 */
-/deep/ .el-dialog__body{
-  user-select:none;
+/deep/ .el-dialog__body {
+  user-select: none;
 }
 </style>

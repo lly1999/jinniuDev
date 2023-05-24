@@ -135,11 +135,12 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
 
                 </ul>
 
-                <el-popover :width="800" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                <el-popover :width="1000" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center;">
                   <template #reference>
@@ -164,7 +165,40 @@
                           </dv-border-box6>
 
                         </div>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @AI报警事件处置
+                        </p>
+                        <el-table :data="hwzy_tableData1" stripe style="width: 100%" max-height="500" :header-cell-style="{
+                          'font-size': '18px',
+                          'background': '#303133 !important',
+                          'color': '#ffffff',
+                          'border': 'none !important'
+                        }" :cell-style=changeCellStyle>
+                          <el-table-column prop="e_alarm_name" label="报警名称" width="180" />
+                          <el-table-column prop="e_alarm_create_time" label="报送时间" width="280" />
+                          <el-table-column prop="e_alarm_sanitation_task_truck" label="处置车辆" width="180" />
+                          <el-table-column prop="e_alarm_from" label="地点" />
 
+
+                        </el-table>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @清运车辆列表
+                        </p>
+                        <el-table :data="hwzy_tableData" stripe style="width: 100%" max-height="500" :header-cell-style="{
+                          'font-size': '18px',
+                          'background': '#303133 !important',
+                          'color': '#ffffff',
+                          'border': 'none !important'
+                        }" :cell-style=changeCellStyle>
+                          <el-table-column prop="teamName" label="名称" width="180" />
+                          <el-table-column prop="carName" label="车辆名称" width="280" />
+                          <el-table-column prop="cmpName" label="公司名称" width="180" />
+                          <el-table-column prop="onlineTime" label="在线时间" />
+
+
+                        </el-table>
                         <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
                 <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
 
@@ -200,7 +234,8 @@
               <div>
                 <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
 
                 </ul>
 
@@ -257,11 +292,12 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
 
                 </ul>
 
-                <el-popover :width="800" placement="left" effect="dark" @after-enter=echartInit_ljz() trigger="click"
+                <el-popover :width="1000" placement="left" effect="dark" @after-enter=echartInit_ljz() trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center;">
                   <template #reference>
@@ -279,8 +315,8 @@
                           style="margin: 0; font-size: 18px; color: var(--el-color-info)">
                           @详情统计
                         </p>
-                        <div id="container_ljz1" style="width: 800px; height: 400px;"></div>
-
+                        <div id="container_ljz1" style="width: 1000px; height: 400px;"></div>
+                        <div id="container_ljz2" style="width: 1000px; height: 400px;"></div>
 
                         <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
     <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
@@ -312,7 +348,8 @@
 
               <div>
                 <ul class="infoList">
-                  <li v-for="item in item.data">{{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span></li>
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
 
                 </ul>
 
@@ -734,6 +771,9 @@
                     <div v-if="item.infoKey === '其他行业店铺数量'">
                       <li v-for="(project, index) in otherCount" style="font-size: 20px;padding: 5px;width:100%"> {{
                         project }}</li>
+                    </div>
+                    <div v-if="item.infoKey === '店铺数店铺空置率量'">
+                      <li style="font-size: 20px;padding: 5px;width:100%">暂无详细统计 </li>
                     </div>
                   </el-popover>
 
@@ -1177,7 +1217,8 @@ import { getMain, getCategory } from "@/api/ggzp"
 import { getMainJgzm, getElectricity } from "@/api/jgzm"
 import { getAllEvents } from "@/api/tcwt";
 import { getSitesData } from "@/api/cclj";
-import { getMainLjz } from "@/api/ljz";
+import { getMainLjz, getSum, getWarning } from "@/api/ljz";
+import { getCarLists, getAiAlarm } from "@/api/hwzy";
 
 import axios from 'axios'
 const aiUrl = ref('')
@@ -1205,6 +1246,8 @@ const retailCount = ref([])
 const cateringCount = ref([])
 const serviceCount = ref([])
 const otherCount = ref([])
+const ljz_table2 = ref([])
+const hwzy_tableData = ref([])
 const validatePass2 = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('请再次输入密码！'))
@@ -1434,7 +1477,8 @@ const echartInit_ljz = () => {
 
   document.getElementById("container_ljz1").removeAttribute("_echarts_instance_");
   var myChart_ljz1 = echarts.init(document.getElementById("container_ljz1"));
-  console.log(ljz_table1.value[1].infoVal.slice(0, -2))
+  document.getElementById("container_ljz2").removeAttribute("_echarts_instance_");
+  var myChart_ljz2 = echarts.init(document.getElementById("container_ljz2"));
   var option1 = {
     title: {
       text: '垃圾分布统计',
@@ -1482,7 +1526,82 @@ const echartInit_ljz = () => {
       }
     ]
   };
+  var option2 = {
+    title: {
+      text: '垃圾统计',
+      textStyle: {
+        color: 'white'
+      }
+    },
+    tooltip: {
+
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {
+      textStyle: {
+        color: 'white'
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+      textStyle: {
+        color: 'white'
+      }
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '九月', '十月', '十一月', '十二月',]
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+
+
+      {
+        name: '红星站',
+        type: 'bar',
+        stack: 'Ad',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: 'white'
+        },
+        data: [ljz_table2.value[3][0], ljz_table2.value[3][1], ljz_table2.value[3][2], ljz_table2.value[3][3], ljz_table2.value[3][4], ljz_table2.value[3][5], ljz_table2.value[3][6], ljz_table2.value[3][7], ljz_table2.value[3][8], ljz_table2.value[3][9], ljz_table2.value[3][10], ljz_table2.value[3][11]]
+      },
+      {
+        name: '西华站',
+        type: 'bar',
+        stack: 'Ad', label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: 'white'
+        },
+        data: [ljz_table2.value[4][0], ljz_table2.value[4][1], ljz_table2.value[4][2], ljz_table2.value[4][3], ljz_table2.value[4][4], ljz_table2.value[4][5], ljz_table2.value[4][6], ljz_table2.value[4][7], ljz_table2.value[4][8], ljz_table2.value[4][9], ljz_table2.value[4][10], ljz_table2.value[4][11]]
+      },
+
+
+
+    ]
+  };
   myChart_ljz1.setOption(option1)
+  myChart_ljz2.setOption(option2)
 
 }
 
@@ -2309,6 +2428,7 @@ const gxdc = reactive({ url: '' })
 const syd = reactive({ url: '' })
 const gxdcUrl = ref('')
 const tcwtTableData = ref([])
+const hwzy_tableData1 = ref([])
 const sydUrl = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=")
 onBeforeMount(() => {
 
@@ -2320,6 +2440,10 @@ onBeforeMount(() => {
   getTokenGxdc().then(data => {
     gxdcUrl.value = data
     gxdc.url = 'http://1.14.108.100/manage/?token=' + gxdcUrl.value
+  })
+  getAiAlarm().then(data => {
+    hwzy_tableData1.value = data
+    console.log(hwzy_tableData1.value)
   })
 })
 const imgVisible = ref(true)
@@ -2461,10 +2585,15 @@ onMounted(() => {
 
   getMainLjz().then(data => {
     ljz_table1.value = data
-    console.log(ljz_table1.value[0])
+  })
+  getSum().then(data => {
+    ljz_table2.value = data
+
   })
 
-
+  getCarLists().then(data => {
+    hwzy_tableData.value = data
+  })
 })
 //选中的部门
 // -1表示全选，为默认值

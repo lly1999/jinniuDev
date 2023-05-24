@@ -1,20 +1,21 @@
 import request from '@/utils/request.js'
 
-export function getMainLjz() {
+
+export function getMainHwzy() {
     return request({
-        url: '/lzj/mainInfo',
+        url: '/hwzy/mainInfo',
         method: 'get'
     })
 }
-export function getSum() {
+export function getCarLists() {
     return request({
-        url: '/lzj/getSum',
+        url: '/hwzy/getCarLists',
         method: 'get'
     })
 }
-export function getWarning() {
+export function getAiAlarm() {
     return request({
-        url: '/lzj/getWarning',
+        url: '/hwzy/getAiAlarm',
         method: 'get'
     })
 }
