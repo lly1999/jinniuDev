@@ -130,9 +130,16 @@
               :class="garbage_collect_selected == false ? 'garbage-collect-text' : 'garbage-collect-text garbage-collect-text-select'">
               垃圾分类管家</div>
           </div>
-          <div
-            :class="garbage_classify_selected == true ? 'environment-right classify-select' : garbage_transport_selected == true ? 'environment-right transport-select' : 'environment-right compress-select'">
-            <div class="environment-right-content" v-for="environment_item in environments" :key="environment_item.id">
+          <div :class="garbage_classify_selected == true ? 'environment-right classify-select'
+            : garbage_transport_selected == true ? 'environment-right transport-select'
+              : garbage_compress_selected == true ? 'environment-right compress-select'
+                : garbage_collect_selected == true ? 'environment-right collect-select'
+                  : 'environment-right default'">
+            <div v-if="garbage_classify_selected == true ||
+              garbage_transport_selected == true ||
+              garbage_compress_selected == true ||
+              garbage_collect_selected == true" class=" environment-right-content"
+              v-for="environment_item in  environments " :key="environment_item.id">
               <img v-if="garbage_classify_selected == true" class="content-number-img"
                 src="@/assets/images/environment/1.png" alt="">
               <img v-else-if="garbage_transport_selected == true" class="content-number-img"
@@ -141,8 +148,27 @@
                 src="@/assets/images/environment/3.png" alt="">
               <img v-else-if="garbage_collect_selected == true" class="content-number-img"
                 src="@/assets/images/environment/4.png" alt="">
-              <div class="transport-content-title">{{ environment_item.title }}</div>
-              <div class="content-title-en">{{ environment_item.title_en }}</div>
+              <div v-if="garbage_classify_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_classify_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+
+              <div v-if="garbage_transport_selected == true" class="transport-content-title">{{ environment_item.title
+              }}
+              </div>
+              <div v-if="garbage_transport_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+              <div v-if="garbage_compress_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_compress_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+              <div v-if="garbage_collect_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_collect_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+
+
+
 
               <div v-if="garbage_classify_selected == true" class="content-number">①车辆总数: {{
                 hwzy_car_all
@@ -163,7 +189,32 @@
 
               <div v-else-if="garbage_collect_selected == true" class="content-number">①查询记录总重: {{ shlj_data }}；②垃圾记录总数:
                 {{ shlj_num }}； </div>
-              <div class="check-details"><el-button> 查看详情</el-button></div>
+
+              <div v-if="garbage_classify_selected == true" class="classify_detail">
+                <el-table :data="hwzy_tableData1" stripe style="width: 100%" max-height="500">
+                  <el-table-column prop="e_alarm_name" label="报警名称" width="180" />
+                  <el-table-column prop="e_alarm_create_time" label="报送时间" width="280" />
+                  <el-table-column prop="e_alarm_sanitation_task_truck" label="处置车辆" width="180" />
+                  <el-table-column prop="e_alarm_from" label="地点" />
+                  <el-table :data="hwzy_tableData" stripe style="width: 100%" max-height="500">
+                    <el-table-column prop="teamName" label="名称" width="180" />
+                    <el-table-column prop="carName" label="车辆名称" width="280" />
+                    <el-table-column prop="cmpName" label="公司名称" width="180" />
+                    <el-table-column prop="onlineTime" label="在线时间" />
+
+
+                  </el-table>
+
+                </el-table>
+              </div>
+
+              <div class="check-details">
+                <div v-if="garbage_classify_selected == true" @click="showHwzy">查看详情</div>
+                <div v-if="garbage_transport_selected == true" @click="showCclj">查看详情</div>
+                <div v-if="garbage_compress_selected == true" @click="showLjz">查看详情</div>
+                <div v-if="garbage_collect_selected == true" @click="showLjfl">查看详情</div>
+
+              </div>
               <img class="detail-img" src="@/assets/images/environment/more-detail.png" alt="">
             </div>
           </div>
@@ -203,6 +254,7 @@ import { getMainGarbage } from '@/api/garbage';
 import { getMainCclj } from '@/api/cclj.js';
 import { getMainHwzy } from '@/api/hwzy.js';
 import { params } from '@/store/store.js'
+import { getCarLists, getAiAlarm } from "@/api/hwzy";
 
 const data = ref([])
 
@@ -234,6 +286,8 @@ const hwzy_car_offline = ref(0)
 const hwzy_car_alarm = ref(0)
 const hwzy_car_moving = ref(0)
 const hwzy_car_stop = ref(0)
+const hwzy_tableData1 = ref([])
+const hwzy_tableData = ref([])
 
 function toSystem(item) {
   router.push({ name: item.to, params: item.systemName })
@@ -271,6 +325,14 @@ onBeforeMount(() => {
     hwzy_car_alarm.value = data[2].infoVal
     hwzy_car_moving.value = data[3].infoVal
     hwzy_car_stop.value = data[4].infoVal
+  })
+  getAiAlarm().then(data => {
+    hwzy_tableData1.value = data
+    console.log(hwzy_tableData1.value)
+  })
+  getCarLists().then(data => {
+    hwzy_tableData.value = data
+    console.log(hwzy_tableData.value)
   })
 })
 // 系统列表
@@ -359,6 +421,10 @@ let garbage_classify = reactive({});
 let garbage_transport = reactive({});
 let garbage_compress = reactive({});
 let garbage_collect = reactive({});
+let garbage_classify_detail = ref(true);
+let garbage_transport_detail = ref(false);
+let garbage_compress_detail = ref(false); //
+let garbage_collect_detail = ref(false);
 const garbage_classify_click = () => {
   environments.splice(0, environments.length);
 
@@ -380,6 +446,20 @@ const garbage_classify_click = () => {
 
 garbage_classify_click();
 
+const showHwzy = () => {
+  garbage_classify_selected.value = false;
+  garbage_classify_detail.value = true
+  console.log(garbage_classify_detail)
+}
+const showCclj = () => {
+  garbage_transport_selected.value = false;
+}
+const showLjz = () => {
+  garbage_compress_selected.value = false;
+}
+const showLjfl = () => {
+  garbage_collect_selected.value = false;
+}
 const garbage_transport_click = () => {
   environments.splice(0, environments.length);
 
