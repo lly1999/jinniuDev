@@ -155,10 +155,7 @@
                         <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
                           {{ item.systemName }}
                         </p>
-                        <p class="demo-rich-content__mention"
-                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                          @详情统计
-                        </p>
+
                         <div style="display:flex">
                           <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
                             <div>{{ item.infoKey }}</div>
@@ -548,6 +545,9 @@
                         style="margin: 0; font-size: 18px; color: var(--el-color-info)">
                         @详情统计
                       </p>
+
+                      <div id="container_ddzh1" style="width: 1000px; height: 400px;float: left;"></div>
+                      <div id="container_ddzh2" style="width: 1000px; height: 400px ;float:left"></div>
 
 
                       <div style="display:flex ;clear:left">
@@ -3005,6 +3005,4 @@ function logout() {
   font-size: 20px;
   color: white;
 }
-
-
 </style>
