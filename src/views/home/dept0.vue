@@ -56,8 +56,8 @@
         <div class="subsys" v-if="!showDepts">
           <div style="padding-left:15px;margin-top: 20px;">
             <el-icon color="#000000" size="20px" @click="backtoHome()" style="cursor:pointer;">
-              <svg t="1656145922576" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="1267" width="32" height="32">
+              <svg t="1656145922576" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="1267" width="32" height="32">
                 <path
                   d="M587.776 961.536q-60.416 0-117.248-25.6t-101.376-69.632-71.168-101.888-26.624-122.368l0-39.936q0-23.552-0.512-50.688t-0.512-53.76l0-48.128q0-29.696-6.144-47.104t-26.624-16.384q-15.36 0-35.328-0.512t-36.352-0.512q-26.624 0-34.304-14.336t10.752-37.888q18.432-24.576 43.52-56.32t51.712-65.536 52.224-66.56 46.08-58.368q18.432-23.552 34.816-24.064t34.816 20.992q18.432 22.528 43.52 52.736t51.712 62.976 52.224 64.512 46.08 56.32q22.528 26.624 17.408 44.544t-32.768 17.92q-8.192 0-19.968 0.512t-25.088 1.024-25.6 1.024-21.504 0.512q-19.456 0-24.064 11.776t-4.608 32.256q1.024 46.08 1.024 103.424l0 106.496q0 23.552 10.752 47.104t28.672 43.008 41.472 31.744 50.176 12.288l71.68 0q40.96 0 79.36-0.512t67.072-0.512l35.84 0q22.528 0 37.376 13.824t22.528 34.816 7.68 45.568-7.168 45.568-20.992 34.816-34.304 13.824l-27.648 0-48.128 0q-26.624 0-56.832 0.512t-57.856 0.512l-47.104 0-28.672 0z"
                   p-id="1268"></path>
@@ -120,19 +120,62 @@
               :class="garbage_compress_selected == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
               生活垃圾全生命周期管家</div>
           </div>
-
-          <div
-            :class="garbage_classify_selected == true ? 'environment-right classify-select' : garbage_transport_selected == true ? 'environment-right transport-select' : 'environment-right compress-select'">
-            <div class="environment-right-content" v-for="environment_item in environments" :key="environment_item.id">
+          <div @click="garbage_collect_click"
+            :class="garbage_collect_selected == false ? 'garbage-collect' : 'garbage-collect garbage-collect-select'">
+            <img v-if="garbage_collect_selected == false" class="garbage-collect-icon"
+              src="@/assets/images/environment/garbage-collect-default.png" alt="">
+            <img v-if="garbage_collect_selected == true" class="garbage-collect-icon"
+              src="@/assets/images/environment/garbage-collect-selected.png" alt="">
+            <div
+              :class="garbage_collect_selected == false ? 'garbage-collect-text' : 'garbage-collect-text garbage-collect-text-select'">
+              垃圾分类管家</div>
+          </div>
+          <div :class="garbage_classify_selected == true ? 'environment-right classify-select'
+            : garbage_transport_selected == true ? 'environment-right transport-select'
+              : garbage_compress_selected == true ? 'environment-right compress-select'
+                : garbage_collect_selected == true ? 'environment-right collect-select'
+                  : 'environment-right default'">
+            <div v-if="garbage_classify_selected == true ||
+              garbage_transport_selected == true ||
+              garbage_compress_selected == true ||
+              garbage_collect_selected == true" class=" environment-right-content"
+              v-for="environment_item in  environments " :key="environment_item.id">
               <img v-if="garbage_classify_selected == true" class="content-number-img"
                 src="@/assets/images/environment/1.png" alt="">
               <img v-else-if="garbage_transport_selected == true" class="content-number-img"
                 src="@/assets/images/environment/2.png" alt="">
               <img v-else-if="garbage_compress_selected == true" class="content-number-img"
                 src="@/assets/images/environment/3.png" alt="">
+              <img v-else-if="garbage_collect_selected == true" class="content-number-img"
+                src="@/assets/images/environment/4.png" alt="">
+              <div v-if="garbage_classify_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_classify_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
 
-              <div class="transport-content-title">{{ environment_item.title }}</div>
-              <div class="content-title-en">{{ environment_item.title_en }}</div>
+              <div v-if="garbage_transport_selected == true" class="transport-content-title">{{ environment_item.title
+              }}
+              </div>
+              <div v-if="garbage_transport_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+              <div v-if="garbage_compress_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_compress_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+              <div v-if="garbage_collect_selected == true" class="transport-content-title">{{ environment_item.title }}
+              </div>
+              <div v-if="garbage_collect_selected == true" class="content-title-en">{{ environment_item.title_en }}
+              </div>
+
+
+
+
+              <div v-if="garbage_classify_selected == true" class="content-number">①车辆总数: {{
+                hwzy_car_all
+              }}；②离线车辆:
+                {{ hwzy_car_offline }}；②报警车辆: {{ hwzy_car_alarm }}；③移动中车辆: {{ hwzy_car_moving }};④停止中车辆:: {{
+                  hwzy_car_stop }}</div>
+
               <div v-if="garbage_compress_selected == true" class="content-number">①金牛区今日垃圾总数: {{
                 environment_item.not_accept
               }}；②红星垃圾站垃圾总数:
@@ -144,9 +187,34 @@
                 {{ ccljData_month }}；③当日收运量累积(吨): {{ ccljData_day }}；④总收运点位数（个）:
                 {{ ccljData_sites }}</div>
 
-              <div v-else class="content-number">①查询记录总重: {{ shlj_data }}；②垃圾记录总数:
+              <div v-else-if="garbage_collect_selected == true" class="content-number">①查询记录总重: {{ shlj_data }}；②垃圾记录总数:
                 {{ shlj_num }}； </div>
-              <div class="check-details">查看详情</div>
+
+              <div v-if="garbage_classify_selected == true" class="classify_detail">
+                <el-table :data="hwzy_tableData1" stripe style="width: 100%" max-height="500">
+                  <el-table-column prop="e_alarm_name" label="报警名称" width="180" />
+                  <el-table-column prop="e_alarm_create_time" label="报送时间" width="280" />
+                  <el-table-column prop="e_alarm_sanitation_task_truck" label="处置车辆" width="180" />
+                  <el-table-column prop="e_alarm_from" label="地点" />
+                  <el-table :data="hwzy_tableData" stripe style="width: 100%" max-height="500">
+                    <el-table-column prop="teamName" label="名称" width="180" />
+                    <el-table-column prop="carName" label="车辆名称" width="280" />
+                    <el-table-column prop="cmpName" label="公司名称" width="180" />
+                    <el-table-column prop="onlineTime" label="在线时间" />
+
+
+                  </el-table>
+
+                </el-table>
+              </div>
+
+              <div class="check-details">
+                <div v-if="garbage_classify_selected == true" @click="showHwzy">查看详情</div>
+                <div v-if="garbage_transport_selected == true" @click="showCclj">查看详情</div>
+                <div v-if="garbage_compress_selected == true" @click="showLjz">查看详情</div>
+                <div v-if="garbage_collect_selected == true" @click="showLjfl">查看详情</div>
+
+              </div>
               <img class="detail-img" src="@/assets/images/environment/more-detail.png" alt="">
             </div>
           </div>
@@ -184,8 +252,9 @@ import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { getMainGarbage } from '@/api/garbage';
 import { getMainCclj } from '@/api/cclj.js';
-import { getMainShlj } from '@/api/shlj.js';
+import { getMainHwzy } from '@/api/hwzy.js';
 import { params } from '@/store/store.js'
+import { getCarLists, getAiAlarm } from "@/api/hwzy";
 
 const data = ref([])
 
@@ -212,6 +281,14 @@ const ccljData_day = ref(0)
 const ccljData_sites = ref(0)
 const shlj_data = ref(0)
 const shlj_num = ref(0)
+const hwzy_car_all = ref(0)
+const hwzy_car_offline = ref(0)
+const hwzy_car_alarm = ref(0)
+const hwzy_car_moving = ref(0)
+const hwzy_car_stop = ref(0)
+const hwzy_tableData1 = ref([])
+const hwzy_tableData = ref([])
+
 function toSystem(item) {
   router.push({ name: item.to, params: item.systemName })
 }
@@ -240,6 +317,22 @@ onBeforeMount(() => {
     ccljData_sites.value = data[3].infoVal
 
 
+  })
+
+  getMainHwzy().then(data => {
+    hwzy_car_all.value = data[0].infoVal
+    hwzy_car_offline.value = data[1].infoVal
+    hwzy_car_alarm.value = data[2].infoVal
+    hwzy_car_moving.value = data[3].infoVal
+    hwzy_car_stop.value = data[4].infoVal
+  })
+  getAiAlarm().then(data => {
+    hwzy_tableData1.value = data
+    console.log(hwzy_tableData1.value)
+  })
+  getCarLists().then(data => {
+    hwzy_tableData.value = data
+    console.log(hwzy_tableData.value)
   })
 })
 // 系统列表
@@ -321,13 +414,17 @@ function backtoHome() {
 }
 let garbage_classify_selected = ref(true);
 let garbage_transport_selected = ref(false);
-let garbage_compress_selected = ref(false);
-let garbage_collect_selected = ref(false);
+let garbage_compress_selected = ref(false); //
+let garbage_collect_selected = ref(false); //垃圾分类管家
 let environments = reactive([]);
 let garbage_classify = reactive({});
 let garbage_transport = reactive({});
 let garbage_compress = reactive({});
 let garbage_collect = reactive({});
+let garbage_classify_detail = ref(true);
+let garbage_transport_detail = ref(false);
+let garbage_compress_detail = ref(false); //
+let garbage_collect_detail = ref(false);
 const garbage_classify_click = () => {
   environments.splice(0, environments.length);
 
@@ -343,10 +440,26 @@ const garbage_classify_click = () => {
   garbage_classify_selected.value = true;
   garbage_transport_selected.value = false;
   garbage_compress_selected.value = false;
+  garbage_collect_selected.value = false;
+
 }
 
 garbage_classify_click();
 
+const showHwzy = () => {
+  garbage_classify_selected.value = false;
+  garbage_classify_detail.value = true
+  console.log(garbage_classify_detail)
+}
+const showCclj = () => {
+  garbage_transport_selected.value = false;
+}
+const showLjz = () => {
+  garbage_compress_selected.value = false;
+}
+const showLjfl = () => {
+  garbage_collect_selected.value = false;
+}
 const garbage_transport_click = () => {
   environments.splice(0, environments.length);
 
@@ -362,6 +475,8 @@ const garbage_transport_click = () => {
   garbage_classify_selected.value = false;
   garbage_transport_selected.value = true;
   garbage_compress_selected.value = false;
+  garbage_collect_selected.value = false;
+
 }
 
 const garbage_compress_click = () => {
@@ -379,6 +494,25 @@ const garbage_compress_click = () => {
   garbage_classify_selected.value = false;
   garbage_transport_selected.value = false;
   garbage_compress_selected.value = true;
+  garbage_collect_selected.value = false;
+
+}
+const garbage_collect_click = () => {
+  environments.splice(0, environments.length);
+
+  garbage_compress['title'] = "垃圾分类管家";
+  garbage_compress['title_en'] = "Garbage Collection Management";
+  garbage_compress['not_accept'] = total_jinniu.value + "吨";
+  garbage_compress['not_processed'] = total_hongxing.value + "吨";
+  garbage_compress['processing'] = total_xihua.value + "吨";
+  garbage_compress['processed'] = 23;
+  garbage_compress['returned'] = 23;
+
+  environments.push(garbage_compress);
+  garbage_classify_selected.value = false;
+  garbage_transport_selected.value = false;
+  garbage_compress_selected.value = false;
+  garbage_collect_selected.value = true;
 }
 
 </script>
@@ -565,7 +699,7 @@ const garbage_compress_click = () => {
 .environment-box {
   margin-top: 10vh;
   margin-right: 70vw;
-  height: 60vh;
+  height: 70vh;
   position: relative;
 }
 
@@ -604,6 +738,20 @@ const garbage_compress_click = () => {
   cursor: pointer;
 }
 
+.garbage-collect {
+  width: 256px;
+  height: 156px;
+  top: 528px;
+  background: #F5F7F9;
+  position: absolute;
+  cursor: pointer;
+}
+
+.garbage-collect-select {
+  background-image: url("@/assets/images/environment/garbage-compression.png");
+
+}
+
 .garbage-compress-select {
   background-image: url("@/assets/images/environment/garbage-compression.png");
 }
@@ -628,6 +776,25 @@ const garbage_compress_click = () => {
   position: absolute;
 }
 
+.garbage-collect-text-select {
+  font-family: PingFangSC-Semibold;
+  font-size: 18px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.garbage-collect-text {
+  width: 108px;
+  height: 25px;
+  top: 88px;
+  left: 74px;
+  font-family: PingFangSC-Regular;
+  font-size: 18px;
+  color: #333333;
+  text-align: center;
+  position: absolute;
+}
+
 .garbage-classify-text-select {
   font-family: PingFangSC-Semibold;
   font-size: 18px;
@@ -636,6 +803,14 @@ const garbage_compress_click = () => {
 }
 
 .garbage-transport-icon {
+  width: 32px;
+  height: 32px;
+  top: 44px;
+  left: 112px;
+  position: absolute;
+}
+
+.garbage-collect-icon {
   width: 32px;
   height: 32px;
   top: 44px;
@@ -706,6 +881,10 @@ const garbage_compress_click = () => {
 
 .compress-select {
   background-image: url('@/assets/images/environment/compress.png');
+}
+
+.collect-select {
+  background-image: url('@/assets/images/environment/collect.png');
 }
 
 .environment-right-content {
