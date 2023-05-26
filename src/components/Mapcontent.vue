@@ -589,12 +589,12 @@ function changeDate() {
     "-" +
     changeValue.value[1].getDate();
   console.log("changeDate:" + start + "sdf" + end);
-  getAllWarning(start, end, 1);
+  getAllWarning(start, end, 1,warningTitle.value);
 }
 
 const getAllWarning = (startTime, endTime, pageNum,warningType) => {
   axios({
-    url: "http://175.153.176.27:18801/api/event/getEventsByStatus",
+    url: "/api/event/getEventsByStatus",
     params: {
       status:warningType,
       startTime: startTime,
@@ -666,7 +666,7 @@ const warningDetail = (index, row) => {
   var  uuid = row.uuid;
   console.log("事件的uuid是：" + uuid);
    axios({
-    url: "http://175.153.176.27:18801/api/event/getEventFromUuid",
+    url: "/api/event/getEventFromUuid",
     params: {
       uuid: uuid,
     },
@@ -1840,7 +1840,7 @@ onMounted(() => {
 
   //===========================================sunny 告警事件
    axios({
-    url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
+    url: "/api/event/getEventsStatusNum",
     params: {
       startTime: today,
       endTime: tomorrow,
