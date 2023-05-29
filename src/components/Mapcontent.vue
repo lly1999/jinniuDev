@@ -401,12 +401,7 @@ let end = ref("");
 const tomorrow = moment()
   .add(+1, "d")
   .format("YYYY-MM-DD");
-const today =
-  new Date().getFullYear() +
-  "-" +
-  (new Date().getMonth() + 1) +
-  "-" +
-  new Date().getDate();
+const today =moment().format("YYYY-MM-DD");
 let startTime = ref("2023-05-01");
 let endTime = ref("2023-05-02");
 let changeValue = ref([today, tomorrow]);
@@ -1686,7 +1681,7 @@ onMounted(() => {
 
   //===========================================sunny 告警事件
    axios({
-    url: "/api/event/getEventsStatusNum",
+    url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
     params: {
       startTime: today,
       endTime: tomorrow,
@@ -1695,6 +1690,7 @@ onMounted(() => {
   }).then(function (resp) {
     if (resp.status == 200) {
       var data = resp.data.data;
+      console.log("案件数量："+tomorrow);
       unregisteredNum.value = data.待立案,
         registeredNum.value = data.已立案,
         reportedNum.value = data.已上报,
