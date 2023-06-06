@@ -23,7 +23,7 @@
             <div
               style="text-align: center; font-size: x-large; font-weight: bold"
             >
-              <!-- 事故原因：{{ cause }} -->
+              未处理的事件
             </div>
             <el-table
               :data="defaultList"
@@ -32,8 +32,16 @@
               class="data-table"
             >
               <el-table-column
+                prop="event_id"
+                label="事件编号"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column
                 prop="site_name"
-                label="名称"
+                label="事件来源"
                 min-width="80"
                 header-align="center"
                 align="center"
@@ -42,13 +50,192 @@
               </el-table-column>
               <el-table-column
                 prop="Accident_cause"
-                label="事故详情"
+                label="事件详情"
                 min-width="250"
                 header-align="center"
                 align="center"
                 :show-overflow-tooltip="true"
               />
+              <el-table-column>
+                <template #default="scope">
+                  <el-button
+                    v-show="params.username == '18008061151'"
+                    size="small"
+                    type="danger"
+                    @click="handleClick(scope.$index, scope.row)"
+                    >处理</el-button
+                  >
+                </template>
+              </el-table-column>
             </el-table>
+
+            <div
+              style="text-align: center; font-size: x-large; font-weight: bold"
+            >
+              历史告警事件
+            </div>
+            <el-table
+              :data="EventHistoryList"
+              style="width: 100%"
+              size="large"
+              class="data-table"
+            >
+              <el-table-column
+                prop="event_id"
+                label="事件编号"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_source"
+                label="事件来源"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_cause"
+                label="事件详情"
+                min-width="450"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column
+                prop="event_disposed"
+                label="事件是否已处理"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_time"
+                label="发生时间"
+                min-width="250"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+
+              <el-table-column
+                prop="administrator"
+                label="派发人"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="instruction_time"
+                label="指令下达时间"
+                min-width="250"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="administrator_phone"
+                label="派发人电话"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="instruction_content"
+                label="指令内容"
+                min-width="450"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_handler"
+                label="事件处理人"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="handler_phone"
+                label="处理人电话"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="handler_work"
+                label="处理人工作单位"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+            </el-table>
+          </el-dialog>
+
+          <el-dialog
+            v-model="handleEvent"
+            title="事故处理"
+            @close="handleClose"
+          >
+            <div
+              style="text-align: center; font-size: x-large; font-weight: bold"
+            ></div>
+
+            <el-form
+              ref="ruleFormRef"
+              :model="ruleForm"
+              status-icon
+              :rules="rules"
+              label-width="120px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="处置人姓名：" prop="name">
+                <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="处置人电话号码：" prop="phone">
+                <el-input
+                  v-model="ruleForm.phone"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="工作单位：" prop="place">
+                <el-input
+                  v-model="ruleForm.place"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="处置指令内容：" prop="content">
+                <el-input
+                  v-model="ruleForm.content"
+                  type="textarea"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submitForm(ruleFormRef)"
+                  >提交</el-button
+                >
+              </el-form-item>
+            </el-form>
           </el-dialog>
         </div>
       </template>
@@ -2151,6 +2338,8 @@ import { getMapDataYyxt } from "@/api/yyxt.js";
 import MapContent from "@/components/Mapcontent.vue";
 import MapContent1 from "@/components/Mapcontent1.vue";
 import axios from "axios";
+import request from "@/utils/request.js";
+import moment from "moment";
 
 import geoDistrit from "@/assets/510106geo.json";
 const zoom = ref(12);
@@ -2312,38 +2501,200 @@ const systemData = [
 ];
 
 // ===============================================告警事件
-
+const ruleFormRef = ref(null);
 const defaultList = reactive([]);
+const EventHistoryList = reactive([]);
 const defaultVisible = ref(false);
+const handleEvent = ref(false);
+const token = ref("");
+const event_uuid = ref("");
+const rowIndex = ref("");
+// const instructTime = ref("");
+const ruleForm = reactive({
+  name: "",
+  phone: "",
+  place: "",
+  content: "",
+});
+
+const rules = reactive({
+  name: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
+  phone: [{ required: "true", message: "电话不能为空", trigger: "blur" }],
+  place: [{ required: "true", message: "工作单位不能为空", trigger: "blur" }],
+  content: [{ required: "true", message: "指令内容不能为空", trigger: "blur" }],
+});
+
+const submitForm = async () => {
+  if (!ruleFormRef) return;
+
+  ruleFormRef.value.validate((valid) => {
+    if (valid) {
+      var telph = ruleForm.phone;
+      var res = confirm("确认提交？");
+      if (res) {
+        var re = /^1[3,4,5,6,7,8,9][0-9]{9}$/;
+        if (re.test(telph) == false) {
+          alert("电话号码输入有误！");
+          return false;
+        }
+      }
+      // instructTime.value = moment().format("YYYY-MM-DD HH:mm:ss");
+
+      axios({
+        url: "/ddzh/ws-message/single/web",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token.value,
+        },
+        data: JSON.stringify({
+          patrolTelephone: ruleForm.phone,
+          message: ruleForm.content,
+        }),
+        method: "post",
+      }).then(function (resp) {
+        console.log(2, resp);
+        console.log(
+          "发送给了电话为：" +
+            ruleForm.phone +
+            "，指令内容为：" +
+            ruleForm.content
+        );
+      });
+
+      axios({
+        url: "/api/event-query/updateHandleEvent",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + params.token,
+        },
+        method: "POST",
+        data: JSON.parse(
+          JSON.stringify({
+            id: event_uuid.value,
+            eventHandler: ruleForm.name,
+            handlerPhone: ruleForm.phone,
+            handlerWork: ruleForm.place,
+            instructionContent: ruleForm.content,
+          })
+        ),
+        method: "post",
+      }).then(function (resp) {
+        systemData.out.println("event_uuid:" + event_uuid);
+      });
+      console.log("submit!");
+      alert("提交成功！");
+      handleEvent.value = false;
+      // defaultList.pop(rowIndex);
+      // for(let i = 0;i < defaultList.length; i++){
+      // if(defaultList[i].event_id == event_uuid.value){
+      //   defaultList.pop(defaultList[i-1])
+      //     }
+      //  }
+      changeColor();
+    } else {
+      alert("提交失败！");
+      return false;
+    }
+  });
+};
+
+const handleClick = (index, row) => {
+  event_uuid.value = row.event_id;
+  rowIndex.value = index;
+  console.log("event_uuid:" + event_uuid.value);
+  handleEvent.value = true;
+  ruleForm.phone = "";
+  ruleForm.name = "";
+  ruleForm.place = "";
+  ruleForm.content = "";
+};
 const fault_details = () => {
   var div = document.getElementById("dotClass");
   console.log("div.style.backgroundColor" + div.style.backgroundColor);
   if (div.style.backgroundColor == "rgb(17, 225, 176)") {
-    defaultVisible.value = false;
+    console.log(params.username);
+    //     if (params.username="13752148440") {
+    //     document.getElementById('handleButton').style.display="block";
+
+    // }
+    defaultVisible.value = true;
+    //   if (params.username="13752148440") {
+    //   document.getElementById('handleButton').style.display="block";
+
+    // }
   }
   // 出现事故
   if (div.style.backgroundColor == "rgb(225, 41, 17)") {
+    console.log(params.username);
+
     defaultVisible.value = true;
+    //   if (params.username="13752148440") {
+    //   document.getElementById('handleButton').style.display="block";
+
+    // }
     console.log(defaultVisible.value);
   }
 };
 
 const changeColor = () => {
   axios({
-    url: "/api/lzj/getWarning",
+    url: "/api/event-query/getAllGarbageEvent",
     method: "get",
-    
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
   }).then(function (resp) {
-    defaultList.splice(0, defaultList.length);
-    var data = resp.data.data.data;
-    console.log("resp.code：" + resp.data.message);
+    // console.log(222,"Bearer"+params.token);
+    var data = resp.data.data;
+    EventHistoryList.splice(0, EventHistoryList.length);
+    // console.log(111, resp.data.data);
     for (var key in data) {
       var default_site = {
-        site_name: key,
-        Accident_cause: data[key],
+        event_source: data[key].eventSource,
+        event_cause: data[key].eventCause,
+        administrator: data[key].administrator,
+        administrator_phone: data[key].administratorPhone,
+        instruction_time: data[key].instructionTime,
+        instruction_content: data[key].instructionContent,
+        event_handler: data[key].eventHandler,
+        handler_phone: data[key].handlerPhone,
+        handler_work: data[key].handlerWork,
+        event_id: data[key].id,
+        event_time: data[key].eventTime,
+        event_disposed: data[key].disposedSign,
+      };
+      EventHistoryList.push(default_site);
+    }
+  });
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/event-query/getNeedHandleEvent",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    defaultList.splice(0, defaultList.length);
+    console.log(resp);
+    var data = resp.data.data;
+    console.log("resp.code：" + data);
+    for (var key in data) {
+      var default_site = {
+        site_name: data[key].eventSource,
+        Accident_cause: data[key].eventCause,
+        event_id: data[key].id,
       };
       defaultList.push(default_site);
     }
+
+    // var default_site = {
+    //   site_name: "西华",
+    //   Accident_cause: "数据服务器断开！",
+    // };
+    // defaultList.push(default_site);
+
+    // console.log(3, defaultList.length);
+
     // if (defaultList.length == 5) {
     //   cause.value = "数据采集服务器断开！";
     // }
@@ -2368,6 +2719,22 @@ function changeArea() {
   jinniuVisible.value = !jinniuVisible.value;
 }
 onBeforeMount(() => {
+  axios({
+    url: "/ddzh/auth/login",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify({
+      phone: "18008061151",
+      password: "123456",
+    }),
+    method: "post",
+  }).then(function (resp) {
+    console.log(1, resp);
+    var data = resp.data.data;
+    token.value = data.tokenHead + data.token;
+    console.log("得到的token:" + token.value);
+  });
   // getMapDataSzcg().then(data => {
   //   tableInfoSzcg.value = data
   //   // 请求各个子系统要显示的数据
