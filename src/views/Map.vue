@@ -59,7 +59,7 @@
               <el-table-column>
                 <template #default="scope">
                   <el-button
-                    v-show="params.username == '18008061151'"
+                   
                     size="small"
                     type="danger"
                     @click="handleClick(scope.$index, scope.row)"
@@ -74,8 +74,11 @@
             >
               历史告警事件
             </div>
+            <el-date-picker v-model="changeValue" type="daterange" unlink-panels range-separator="到"
+            start-placeholder="选择开始时间" end-placeholder="选择结束时间" :disabled-date="disabledDate" :shortcuts="shortcuts"
+            @change="changeDate" size="large" style="margin: 0.5rem 0 0.5rem" />
             <el-table
-              :data="EventHistoryList"
+              :data="EventHistoryList.slice((currentPage - 1) * 5, currentPage * 5)"
               style="width: 100%"
               size="large"
               class="data-table"
@@ -189,6 +192,10 @@
               >
               </el-table-column>
             </el-table>
+            <div class="float-end">
+            <el-pagination background layout="->,total, prev, pager, next, jumper" :total="totalRecords"
+              :current-page="currentPage" :page-size="5" @current-change="getTransport" />
+          </div>
           </el-dialog>
 
           <el-dialog
@@ -2501,6 +2508,33 @@ const systemData = [
 ];
 
 // ===============================================告警事件
+const totalRecords = ref(1000);
+let currentPage = ref(1);
+let pageCount = 0;
+
+let start = ref("");
+let end = ref("");
+const tomorrow = moment()
+  .add(+1, "d")
+  .format("YYYY-MM-DD");
+const today =moment().format("YYYY-MM-DD");
+let changeValue = ref(["", ""]);
+// 禁选今天以后的日期以及没有数据的
+const disabledDate = (time) => {
+  return (
+    // time.getTime() < new Date("2022-8-31").getTime() ||
+    time.getTime() > new Date().getTime()
+  );
+};
+function changeDate() {
+  start =
+    moment(changeValue.value[0]).format("YYYY-MM-DD")
+  end =
+    moment(changeValue.value[1]).format("YYYY-MM-DD")
+  // end =  new Date();
+  queryAllWarning(start,end,1);
+}
+
 const ruleFormRef = ref(null);
 const defaultList = reactive([]);
 const EventHistoryList = reactive([]);
@@ -2635,13 +2669,16 @@ const fault_details = () => {
     console.log(defaultVisible.value);
   }
 };
-
-const changeColor = () => {
-  axios({
+const queryAllWarning = (startTime, endTime, pageNum) => {
+   axios({
     url: "/api/event-query/getAllGarbageEvent",
     method: "get",
     headers: {
       Authorization: "Bearer " + params.token,
+    },
+     params: {
+      startTime: startTime,
+      endTime: endTime,
     },
   }).then(function (resp) {
     // console.log(222,"Bearer"+params.token);
@@ -2664,8 +2701,20 @@ const changeColor = () => {
         event_disposed: data[key].disposedSign,
       };
       EventHistoryList.push(default_site);
+ 
     }
+      totalRecords.value = EventHistoryList.length;
+      // pageCount = parseInt(EventHistoryList.length) % 5;
+      currentPage.value = pageNum;
   });
+}
+ queryAllWarning("start","end",1);
+const getTransport = (pageNum) => {
+  // 当前页
+  currentPage.value = pageNum;
+};
+const changeColor = () => {
+ 
   axios({
     // url: "/api/lzj/getWarning",
     url: "/api/event-query/getNeedHandleEvent",
