@@ -121,11 +121,21 @@
               </div>
             </div>
 
-            <div id="ddzh-Charts" v-show="echart_index_srzx === 2" style="width: 25vw; height: 30vh">
-              待接入
+            <div id="ddzh-Charts" v-show="echart_index_srzx === 2" style="width: 25vw; height: 35vh">
+
             </div>
             <div id="ycxt-Charts" v-show="echart_index_srzx === 3" style="width: 25vw; height: 30vh">
-              待接入
+              <p class="demo-rich-content__mention" style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                @工地运企信息
+              </p>
+              <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500">
+                <el-table-column prop="名称" label="名称" width="160" />
+                <el-table-column prop="联系人" label="联系人" width="180" />
+                <el-table-column prop="车辆数" label="车辆数" width="180" />
+                <el-table-column prop="联系电话" label="联系电话" />
+
+
+              </el-table>
             </div>
             <div id="gxdc-Charts" v-show="echart_index_srzx === 4" style="width: 25vw; height: 30vh"></div>
             <div id="jmtx-Charts" v-show="echart_index_srzx === 5" style="width: 25vw; height: 30vh">
@@ -292,7 +302,18 @@
             <div id="tcwt-Charts" v-show="echart_index_szcg === 1" style="width: 24vw; height: 36vh; margin-left: 0px">
             </div>
             <div id="ai-Charts" v-show="echart_index_szcg === 2" style="width: 25vw; height: 30vh">
-              待接入
+              <p class="demo-rich-content__mention" style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                @事件列表
+              </p>
+              <el-table :data="tcwtTableData" stripe style="width: 100%" max-height="500">
+                <el-table-column prop="event_name" label="事件名称" width="80" />
+                <el-table-column prop="description" label="问题描述" width="80" />
+                <el-table-column prop="creator" label="创建者" width="80" />
+                <el-table-column prop="modify_time" label="确认时间" width="120" />
+
+                <el-table-column prop="tags" label="标签" />
+
+              </el-table>
             </div>
             <div v-show="echart_index_szcg === 3">
               <div id="szcg-Charts" style="width: 25vw; height: 30vh"></div>
@@ -303,7 +324,7 @@
             </div>
 
             <div id="syd-Charts" v-show="echart_index_szcg === 4" style="width: 25vw; height: 30vh">
-              待接入
+
             </div>
           </div>
         </div>
@@ -328,18 +349,21 @@ import { ScrollBoard, DigitalFlop } from "@kjgl77/datav-vue3";
 import { BorderBox6 as DvBorderBox6 } from "@kjgl77/datav-vue3";
 import { BorderBox7 as DvBorderBox7 } from "@kjgl77/datav-vue3";
 import { getQypjCg } from "@/api/szcg.js";
-import { getCompanyList } from "@/api/yyxt.js";
 import { getMain } from "@/api/ggzp.js";
 import { getMainXzzf } from "@/api/xzzf.js";
 import { getMainJgzm } from "@/api/jgzm";
 import Charts from "@jiaminghi/charts";
 import * as echarts from "echarts";
 import { getRdfx, getSjqsfx } from "@/api/szcg.js";
-import { getOverStandard, getMonitor } from "@/api/yyxt";
+import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { getMainShlj } from "@/api/shlj";
 import { stubString } from "lodash";
 import { getMainCclj } from "@/api/cclj";
+import { getOverStandard, getMonitor, getCompanyType, getTouSU } from '@/api/yyxt';
+import { getCheckRate, getCntStatus } from "@/api/ddzh";
+import { getToken, getMainSyd } from "@/api/syd";
+import { getAllEvents, getResourceTcwt, getTrend } from "@/api/tcwt";
 
 //=====================================================================sunny 告警事件
 
@@ -360,6 +384,7 @@ const distributedNum = ref(0);
 const disposedNum = ref(0);
 const undisposedNum = ref(0);
 const verifiedNum = ref(0);
+const tcwtTableData = ref([])
 
 const id = ref("");
 const eventName = ref("");
@@ -384,13 +409,176 @@ const eventLevel = ref("");
 const street = ref("");
 const tags = ref("");
 const updateTime = ref("");
+const ddzh_tableData1 = ref([])
+const ycxt_tableData1 = ref([])
+const syd_data = ref([])
 
+onBeforeMount(() => {
 
+  getMainSyd().then(data => {
+    syd_data.value = data
+    echartInit_syd()
+  })
+  getCheckRate().then(data => {
+    ddzh_tableData1.value = data
+    console.log(ddzh_tableData1.value)
+    echartInit_ddzh()
+  })
+  getCompanyDust().then(data => {
+    ycxt_tableData1.value = data
+  })
+  getAllEvents(today, tomorrow).then(data => {
+    tcwtTableData.value = data
+  })
+})
 
 
 const alarmEvent = ref(false);
 
+const echartInit_ddzh = () => {
 
+  document.getElementById("ddzh-Charts").removeAttribute("_echarts_instance_");
+  var myChart_ddzh1 = echarts.init(document.getElementById("ddzh-Charts"));
+
+  var option1 = {
+    title: {
+      text: '打卡率统计',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    yAxis: {
+      type: 'category',
+      data: [ddzh_tableData1.value[0].department, ddzh_tableData1.value[1].department, ddzh_tableData1.value[2].department, ddzh_tableData1.value[3].department
+        , ddzh_tableData1.value[4].department, ddzh_tableData1.value[5].department, ddzh_tableData1.value[6].department,
+      ddzh_tableData1.value[7].department,
+      ddzh_tableData1.value[8].department, ddzh_tableData1.value[9].department, ddzh_tableData1.value[10].department, ddzh_tableData1.value[11].department, ddzh_tableData1.value[12].department,
+      ddzh_tableData1.value[13].department, ddzh_tableData1.value[14].department, ddzh_tableData1.value[15].department, ddzh_tableData1.value[16].department,
+      ddzh_tableData1.value[17].department, ddzh_tableData1.value[18].department, ddzh_tableData1.value[19].department, ddzh_tableData1.value[20].department,
+      ddzh_tableData1.value[21].department, ddzh_tableData1.value[22].department, ddzh_tableData1.value[23].department, ddzh_tableData1.value[24].department,
+      ddzh_tableData1.value[25].department, ddzh_tableData1.value[26].department, ddzh_tableData1.value[27].department, ddzh_tableData1.value[28].department,
+      ],
+      axisLabel: {
+        //x轴文字的配置
+        show: true,
+        interval: 0,//使x轴文字显示全
+        rotate: 20
+      }
+
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+      textStyle: {
+        color: 'white'
+      }
+    },
+    xAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [(ddzh_tableData1.value[0].checkRate * 100).toFixed(2), (ddzh_tableData1.value[1].checkRate * 100).toFixed(2), (ddzh_tableData1.value[2].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[3].checkRate * 100).toFixed(2), (ddzh_tableData1.value[4].checkRate * 100).toFixed(2), (ddzh_tableData1.value[5].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[6].checkRate * 100).toFixed(2), (ddzh_tableData1.value[7].checkRate * 100).toFixed(2), (ddzh_tableData1.value[8].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[9].checkRate * 100).toFixed(2), (ddzh_tableData1.value[10].checkRate * 100).toFixed(2), (ddzh_tableData1.value[11].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[12].checkRate * 100).toFixed(2), (ddzh_tableData1.value[13].checkRate * 100).toFixed(2), (ddzh_tableData1.value[14].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[15].checkRate * 100).toFixed(2), (ddzh_tableData1.value[16].checkRate * 100).toFixed(2), (ddzh_tableData1.value[17].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[18].checkRate * 100).toFixed(2), (ddzh_tableData1.value[19].checkRate * 100).toFixed(2), (ddzh_tableData1.value[20].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[21].checkRate * 100).toFixed(2), (ddzh_tableData1.value[22].checkRate * 100).toFixed(2), (ddzh_tableData1.value[23].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[24].checkRate * 100).toFixed(2), (ddzh_tableData1.value[25].checkRate * 100).toFixed(2), (ddzh_tableData1.value[26].checkRate * 100).toFixed(2),
+        (ddzh_tableData1.value[27].checkRate * 100).toFixed(2), (ddzh_tableData1.value[28].checkRate * 100).toFixed(2)]
+        ,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: 'white'
+        },
+        label: {
+          show: true
+        },
+
+      }]
+  }
+
+  myChart_ddzh1.setOption(option1)
+
+
+
+}
+const echartInit_syd = () => {
+
+  document.getElementById("syd-Charts").removeAttribute("_echarts_instance_");
+  var myChart_syd2 = echarts.init(document.getElementById("syd-Charts"));
+
+  var option_syd2 = {
+    title: {
+      text: '案件分析月统计',
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center',
+      textStyle: {
+        color: 'white'
+      }
+    },
+    series: [
+      {
+        name: '案件',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: true,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 35,
+            fontWeight: 'bold',
+
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: syd_data.value[3].infoVal, name: '本月办结案件数量' },
+          { value: syd_data.value[1].infoVal - syd_data.value[3].infoVal, name: '本月待办案件数量' },
+          // { value: 580, name: 'Email' },
+          // { value: 484, name: 'Union Ads' },
+          // { value: 300, name: 'Video Ads' }
+        ]
+      }
+    ]
+  }
+  myChart_syd2.setOption(option_syd2)
+}
 const data_total = reactive([]);
 const queryCarNum = ref("");
 let totalRecords = ref(1000);
@@ -401,7 +589,7 @@ let end = ref("");
 const tomorrow = moment()
   .add(+1, "d")
   .format("YYYY-MM-DD");
-const today =moment().format("YYYY-MM-DD");
+const today = moment().format("YYYY-MM-DD");
 let startTime = ref("2023-05-01");
 let endTime = ref("2023-05-02");
 let changeValue = ref([today, tomorrow]);
@@ -430,7 +618,7 @@ function changeDate() {
     "-" +
     changeValue.value[1].getDate();
   console.log("changeDate:" + start + "sdf" + end);
-  getAllWarning(start, end, 1,warningTitle.value);
+  getAllWarning(start, end, 1, warningTitle.value);
 }
 
 const getAllWarning = (startTime, endTime, pageNum, warningType) => {
@@ -506,7 +694,7 @@ const handleEdit = (warningType) => {
 const warningDetail = (index, row) => {
   var uuid = row.uuid;
   console.log("事件的uuid是：" + uuid);
-   axios({
+  axios({
     url: "/api/event/getEventFromUuid",
     params: {
       uuid: uuid,
@@ -651,78 +839,91 @@ const changeCyyyChart = (page) => {
     });
   }
   if (currentPageCyyy.value === 2) {
-    document
-      .getElementById("cyyy-Charts")
-      .removeAttribute("_echarts_instance_");
-    var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
-    var option_yyxt2 = {
-      title: {
-        text: "油烟投诉趋势图",
-        left: "5%",
-        textStyle: {
-          color: "#ccc",
-        },
-      },
-      tooltip: {
-        trigger: "axis",
-      },
-      legend: {
-        textStyle: {
-          color: "#ccc",
-        },
-        data: ["2020", "2021", "2022", ""],
-        right: "5%",
-      },
-      grid: {
-        left: "3%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true,
-      },
 
-      xAxis: {
-        type: "category",
-        boundaryGap: false,
-        data: [
-          "01",
-          "02",
-          "03",
-          "04",
-          "05",
-          "06",
-          "07",
-          "08",
-          "09",
-          "10",
-          "11",
-          "12",
-        ],
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          name: "2020",
-          type: "line",
-          stack: "Total",
-          data: [16, 37, 82, 129, 150, 106, 128, 142, 125, 217, 117, 117],
+    getTouSU().then(data => {
+      document
+        .getElementById("cyyy-Charts")
+        .removeAttribute("_echarts_instance_");
+      var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
+      if (data.tsLastNow.length < 12) {
+        for (let i = 0; i < 20; i++) {
+          var tmp = { count: 0 }
+          data.tsLastNow.push(tmp)
+        }
+
+      }
+      var option_yyxt2 = {
+
+        title: {
+          text: '油烟投诉趋势图',
+          textStyle: {
+            color: '#ccc'
+          }
         },
-        {
-          name: "2021",
-          type: "line",
-          stack: "Total",
-          data: [57, 71, 133, 215, 207, 167, 94, 106, 154, 115, 92, 85],
+        tooltip: {
+          trigger: 'axis'
         },
-        {
-          name: "2022",
-          type: "line",
-          stack: "Total",
-          data: [54, 32, 85, 94, 91, 93, 57, 61, 26, 59, 27, 26],
+        legend: {
+          textStyle: {
+            color: '#ccc'
+          },
+          data: ['2021', '2022', '2023',]
         },
-      ],
-    };
-    myChart_cyyy.setOption(option_yyxt2);
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '2021',
+            type: 'line',
+
+            data: [data.tsLastTow[0].count, data.tsLastTow[1].count, data.tsLastTow[2].count,
+            data.tsLastTow[3].count, data.tsLastTow[4].count,
+            data.tsLastTow[5].count, data.tsLastTow[6].count, data.tsLastTow[7].count,
+            data.tsLastTow[8].count, data.tsLastTow[9].count,
+            data.tsLastTow[10].count, data.tsLastTow[11].count]
+          },
+          {
+            name: '2022',
+            type: 'line',
+
+            data: [data.tsLast[0].count, data.tsLast[1].count, data.tsLast[2].count,
+            data.tsLast[3].count, data.tsLast[4].count,
+            data.tsLast[5].count, data.tsLast[6].count, data.tsLast[7].count,
+            data.tsLast[8].count, data.tsLast[9].count,
+            data.tsLast[10].count, data.tsLast[11].count]
+          },
+          {
+            name: '2023',
+            type: 'line',
+
+            data: [data.tsLastNow[0].count, data.tsLastNow[1].count, data.tsLastNow[2].count,
+            data.tsLastNow[3].count, data.tsLastNow[4].count,
+            data.tsLastNow[5].count, data.tsLastNow[6].count, data.tsLastNow[7].count, data.tsLastNow[8].count,
+            data.tsLastNow[9].count, data.tsLastNow[10].count, data.tsLastNow[11].count]
+          },
+
+        ]
+      };
+      myChart_cyyy.setOption(option_yyxt2);
+    })
+
   }
   if (currentPageCyyy.value === 3) {
     document
@@ -786,71 +987,74 @@ const changeCyyyChart = (page) => {
     });
   }
   if (currentPageCyyy.value === 4) {
-    document
-      .getElementById("cyyy-Charts")
-      .removeAttribute("_echarts_instance_");
-    var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
-    var option_yyxt4 = {
-      title: {
-        text: "餐饮企业类型分布",
-        textStyle: {
-          color: "#ccc",
-        },
-        left: "5%",
-      },
-      tooltip: {
-        trigger: "item",
-      },
-      legend: {
-        top: "8%",
-        right: "5%",
-        textStyle: {
-          color: "white",
-        },
-      },
-      series: [
-        {
-          name: "企业",
-          type: "pie",
-          top: "20%",
-          radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: "#fff",
-            borderWidth: 2,
-          },
-          label: {
-            show: false,
-            position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 35,
-              fontWeight: "bold",
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data: [
-            { value: 2187, name: "中餐" },
-            { value: 726, name: "火锅" },
-            { value: 371, name: "烧烤" },
-            { value: 39, name: "西餐" },
-            { value: 507, name: "面食" },
-            { value: 134, name: "中式包点" },
-            { value: 151, name: "饮品" },
-            { value: 1532, name: "其他（干锅快餐等）" },
 
-            // { value: 484, name: 'Union Ads' },
-            // { value: 300, name: 'Video Ads' }
-          ],
+    getCompanyType().then(data => {
+      document
+        .getElementById("cyyy-Charts")
+        .removeAttribute("_echarts_instance_");
+      var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
+      var option_yyxt4 = {
+        title: {
+          text: '餐饮企业类型分布',
+          textStyle: {
+            color: '#ccc'
+          }
         },
-      ],
-    };
-    myChart_cyyy.setOption(option_yyxt4);
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center',
+          textStyle: {
+            color: 'white'
+          }
+        },
+        series: [
+          {
+            name: '企业',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 35,
+                fontWeight: 'bold',
+
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: data[0].num, name: data[0].sub_text },
+              { value: data[1].num, name: data[1].sub_text },
+              { value: data[2].num, name: data[2].sub_text },
+              { value: data[3].num, name: data[3].sub_text },
+              { value: data[4].num, name: data[4].sub_text },
+              { value: data[5].num, name: data[5].sub_text },
+              { value: data[6].num, name: data[6].sub_text },
+
+
+              // { value: 484, name: 'Union Ads' },
+              // { value: 300, name: 'Video Ads' }
+            ]
+          }
+        ]
+      }
+      myChart_cyyy.setOption(option_yyxt4);
+    })
+
   }
 };
 const changeSzcgChart = (page) => {
@@ -1286,43 +1490,46 @@ const handleSelect_srzx = (key, keypath) => {
 };
 const handleSelect_szcg = (key, keypath) => {
   if (key === "1") {
-    var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
-    echart_index_szcg.value = 1;
-    var option = {
-      title: {
-        text: "事件趋势分析",
-        textStyle: {
-          color: "#ccc",
+    getTrend().then(data => {
+      var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
+
+      echart_index_szcg.value = 1;
+      var option = {
+        title: {
+          text: '事件趋势分析',
+          textStyle: {
+            color: '#ccc'
+          }
         },
-        left: "5%",
-      },
-      grid: { left: "2%", right: "2%", bottom: "10%", containLabel: true },
-      //这里的yAxis就是竖轴，xAxis就是横轴
-      // yAxis and xAxis 交换可以改变横向或竖向
-      yAxis: {
-        data: ["积存垃圾", "占道经营", "其他", "非机动车", "油烟", "无照"],
-        width: 60,
-        overflow: "truncate",
-        truncate: "...",
-      },
-      xAxis: {},
-      // 数据的来源
-      series: [
-        {
-          name: "source",
-          // bar就是柱状图
-          type: "bar",
-          color: "#68C4DB",
-          // 数据
-          data: [2, 3, 4, 4, 5, 7],
+        //这里的yAxis就是竖轴，xAxis就是横轴
+        // yAxis and xAxis 交换可以改变横向或竖向
+        xAxis: {
+          data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
         },
-      ],
-    };
-    myChart_tcwt.setOption(option);
-    window.onresize = function () {
-      myChart_cyyy.resize();
-    };
+        yAxis: {
+
+        },
+        // 数据的来源
+        series: [
+          {
+            name: 'source',
+            // bar就是柱状图
+            type: 'bar',
+            color: '#dd6b66',
+            // 数据
+            data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
+            data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+          }
+        ]
+      }
+      myChart_tcwt.setOption(option);
+      window.onresize = function () {
+        myChart_cyyy.resize();
+      };
+    })
+
+
   }
   if (key === "2") {
     echart_index_szcg.value = 2;
@@ -1680,7 +1887,7 @@ const handleSelect_jgzm = (key, keyPath) => {
 onMounted(() => {
 
   //===========================================sunny 告警事件
-   axios({
+  axios({
     url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
     params: {
       startTime: today,
@@ -1690,7 +1897,7 @@ onMounted(() => {
   }).then(function (resp) {
     if (resp.status == 200) {
       var data = resp.data.data;
-      console.log("案件数量："+tomorrow);
+      console.log("案件数量：" + tomorrow);
       unregisteredNum.value = data.待立案,
         registeredNum.value = data.已立案,
         reportedNum.value = data.已上报,
@@ -2113,40 +2320,64 @@ onMounted(() => {
   //   mychar_hjws.resize();
   // };
   // mychar_hjws.setOption(hjws_option);
-  var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
+  getTrend().then(data => {
+    var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
-  echart_index_szcg.value = 1;
-  var option = {
-    title: {
-      text: "事件趋势分析",
-      textStyle: {
-        color: "#ccc",
+    echart_index_szcg.value = 1;
+    var option = {
+      title: {
+        text: '事件趋势分析',
+        textStyle: {
+          color: '#ccc'
+        }
+      }, tooltip: {
+        trigger: 'item'
       },
-      left: "5%",
-    },
-    grid: { left: "2%", right: "2%", bottom: "10%", containLabel: true },
-    //这里的yAxis就是竖轴，xAxis就是横轴
-    // yAxis and xAxis 交换可以改变横向或竖向
-    yAxis: {
-      data: ["积存垃圾", "占道经营", "其他", "非机动车", "油烟", "无照"],
-      width: 60,
-      overflow: "truncate",
-      truncate: "...",
-    },
-    xAxis: {},
-    // 数据的来源
-    series: [
-      {
-        name: "source",
-        // bar就是柱状图
-        type: "bar",
-        color: "#68C4DB",
-        // 数据
-        data: [2, 3, 4, 4, 5, 7],
+      //这里的yAxis就是竖轴，xAxis就是横轴
+      // yAxis and xAxis 交换可以改变横向或竖向
+      xAxis: {
+        axisLabel: {
+          //x轴文字的配置
+          show: true,
+          interval: 0,//使x轴文字显示全
+          rotate: 20
+        },
+        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
       },
-    ],
-  };
-  myChart_tcwt.setOption(option);
+      yAxis: {
+
+      },
+      // 数据的来源
+      series: [
+        {
+          name: '来源',
+          // bar就是柱状图
+          type: 'bar',
+          color: '#dd6b66',
+          label: {
+            show: true,
+
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 35,
+              fontWeight: 'bold',
+
+            }
+          },
+          // 数据
+          data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
+          data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+        }
+      ]
+    }
+    myChart_tcwt.setOption(option);
+    window.onresize = function () {
+      myChart_cyyy.resize();
+    };
+  })
+
 });
 
 // const config = reactive({

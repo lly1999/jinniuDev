@@ -13,3 +13,15 @@ export function getAllEvents(startTime, endTime) {
         method: 'get'
     })
 }
+export function getResourceTcwt() {
+    return request({
+        url: '/tcwt/getResource',
+        method: 'get'
+    })
+}
+export function getTrend() {
+    return request({
+        url: '/tcwt/getTrend',
+        method: 'get'
+    })
+}

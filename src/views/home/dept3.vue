@@ -152,20 +152,19 @@
                         System </div>
 
                     <el-image v-if="three_selected == true" class="number"
-                        :src="require('@/assets/images/szcg/number4.png')" alt=""></el-image>
-                    <div v-if="three_selected == true" class="text" style="color:white;padding:10px;z-index:2">城管诉易达管家
+                        :src="require('@/assets/images/szcg/number4.png')" style="margin-left:400px" alt=""></el-image>
+                    <div v-if="three_selected == true" class="text"
+                        style="color:white;;margin-left:400px;padding:10px;z-index:2">城管诉易达管家
                     </div>
                     <div v-if="three_selected == true" class="text"
-                        style="color:white;padding:10px;z-index:2 ;font-size:14px">City Management Suggestion Platform
+                        style="color:white;padding:10px;z-index:2 ;font-size:14px;margin-left:400px">City Management
+                        Suggestion Platform
                     </div>
-                    <div class="info-list" v-if="zero_selected == true"
+
+                    <div class="info-list" v-show="zero_selected == true"
                         style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
 
-                        <li>①本月案件数:{{ tcwt_info.case }} ； </li>
-                        <li>②本月已结案问题数:{{ tcwt_info.case_end }}；</li>
-                        <li>③待处置问题数: {{ tcwt_info.case_need }}；</li>
-                        <li>④超期办理问题数: {{ tcwt_info.out_date }}；</li>
-                        <li>⑤超期办理问题数: {{ tcwt_info.case_today }}</li>
+                        <div id="container" style="width: 600px; height: 400px;float: left;"></div>
 
                     </div>
 
@@ -206,13 +205,10 @@
                             </el-table>
                         </template>
                     </div>
-                    <div class="info-list" v-if="three_selected == true"
-                        style="color:white;margin-left:150px;width:300px;padding: 14px;line-height: 30px;">
-                        <li>①今日受理案件数量: {{ syd_case_today }}；</li>
-                        <li>②本月受理案件数量:{{ syd_case_month }}；</li>
-                        <li>③今日办结案件数量: {{ syd_case_end_today }}；</li>
-                        <li>④本月办结案件数量: {{ syd_case_end_month }}；</li>
-                    </div>
+
+                    <div v-show="three_selected == true" id="container_syd2"
+                        style="width: 500px; height: 300px;float:right;margin-left:450px;"></div>
+
                 </div>
 
 
@@ -249,7 +245,9 @@ import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { getMainSzcg, getCase, getStatics } from '@/api/szcg.js'
 import { getToken, getMainSyd } from "@/api/syd";
 import { params } from '@/store/store.js'
-import { getMainTcwt, getAllEvents } from '@/api/tcwt';
+import { getMainTcwt, getAllEvents, getTrend } from '@/api/tcwt';
+import * as echarts from "echarts";
+
 import { getMainAI } from '@/api/ai';
 import { getAiUrl } from '@/api/ai'
 const syd = reactive({ url: '' })
@@ -258,7 +256,177 @@ const sydUrl = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_log
 const aiUrl = ref('')
 const imgVisible = ref(true)
 const tcwtTableData = ref([])
+const syd_data = ref([])
+const echartInit_syd = () => {
+    //   document.getElementById("container_syd1").removeAttribute("_echarts_instance_");
+    //   var myChart_syd1 = echarts.init(document.getElementById("container_syd1"));
+    //document.getElementById("container_syd2").removeAttribute("_echarts_instance_");
+    var myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
+    var option_syd1 = {
+        title: {
+            text: '案件分析日统计',
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center',
+            textStyle: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '案件',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: true,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 35,
+                        fontWeight: 'bold',
 
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: syd_data.value[2].infoVal, name: '今日办结案件数量' },
+                    { value: syd_data.value[0].infoVal - syd_data.value[2].infoVal, name: '今日待办案件数量' },
+                    // { value: 580, name: 'Email' },
+                    // { value: 484, name: 'Union Ads' },
+                    // { value: 300, name: 'Video Ads' }
+                ]
+            }
+        ]
+    }
+    //   myChart_syd1.setOption(option_syd1)
+    var option_syd2 = {
+        title: {
+            text: '案件分析月统计',
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center',
+            textStyle: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '案件',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: true,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 35,
+                        fontWeight: 'bold',
+
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: syd_data.value[3].infoVal, name: '本月办结案件数量' },
+                    { value: syd_data.value[1].infoVal - syd_data.value[3].infoVal, name: '本月待办案件数量' },
+                    // { value: 580, name: 'Email' },
+                    // { value: 484, name: 'Union Ads' },
+                    // { value: 300, name: 'Video Ads' }
+                ]
+            }
+        ]
+    }
+    myChart_syd2.setOption(option_syd2)
+}
+function echartInit_tcwt() {
+    var myChart = echarts.init(document.getElementById("container"));
+    getTrend().then(data => {
+        var option = {
+            title: {
+                text: '事件趋势分析',
+                textStyle: {
+                    color: 'white'
+                }
+            },
+            legend: {
+                top: '5%',
+                left: 'center',
+                textStyle: {
+                    color: 'white'
+                }
+            },
+            //这里的yAxis就是竖轴，xAxis就是横轴
+            // yAxis and xAxis 交换可以改变横向或竖向
+            yAxis: {
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: 'white',  //更改坐标轴文字颜色
+                        fontSize: 14      //更改坐标轴文字大小
+                    }
+                },
+                data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
+            },
+            xAxis: {
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: 'white',  //更改坐标轴文字颜色
+                        fontSize: 14      //更改坐标轴文字大小
+                    }
+                },
+            },
+            // 数据的来源
+            series: [
+                {
+                    name: '事件',
+                    // bar就是柱状图
+                    type: 'bar',
+                    color: '#dd6b66', textStyle: {
+                        color: 'white'
+                    },
+                    // 数据
+                    data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
+                    data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+                }
+            ]
+        }
+        myChart.setOption(option);
+    })
+}
 //用户信息
 let zero_selected = ref(false);
 
@@ -402,11 +570,13 @@ onBeforeMount(() => {
         szcg_statics.value = data
     })
     getMainSyd().then(data => {
+        syd_data.value = data
         console.log(data[0].infoVal)
         syd_case_today.value = data[0].infoVal
         syd_case_month.value = data[1].infoVal
         syd_case_end_today.value = data[2].infoVal
         syd_case_end_month.value = data[3].infoVal
+        echartInit_syd()
     })
 
     getAllEvents(today, tomorrow).then(data => {
@@ -427,6 +597,8 @@ onMounted(() => {
             }
         })
     })
+    echartInit_tcwt()
+
 })
 //选中的部门
 // -1表示全选，为默认值

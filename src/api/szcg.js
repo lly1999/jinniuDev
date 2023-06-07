@@ -163,3 +163,9 @@ export function getSjqsfx() {
         method: 'get'
     })
 }
+export function getResourceSzcg() {
+    return request({
+        url: '/szcg/getResource',
+        method: 'get'
+    })
+}

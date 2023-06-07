@@ -121,7 +121,13 @@
                     </div>
                     <div>QR Code Management of Advertising Signs</div>
                 </div>
-                <template v-for="(item, idx) in choosedSystems">
+                <div class="jgzmInfo">
+                    <div id="container_ggzp1" style="width: 900px; height: 350px"></div>
+                    <el-image fit="scale-down" :src="require('@/assets/jgzm/7-1.jpg')"
+                        style="width:30%;float: right;margin-left: 50%;">
+                    </el-image>
+                </div>
+                <!-- <template v-for="(item, idx) in choosedSystems">
                     <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName" :url="item.url"
                         :logo="item.systemLogo" :infoList="item.data" :image="item.image" :to="item.to"
                         :deptId="item.deptId">
@@ -144,7 +150,7 @@
 
                     </div>
 
-                </template>
+                </template> -->
 
 
 
@@ -181,6 +187,8 @@ import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { params } from '@/store/store.js'
 import { getAlarm } from '@/api/jgzm.js';
+import { getMain } from '@/api/ggzp.js';
+import * as echarts from "echarts";
 
 const imgVisible = ref(true)
 //用户信息
@@ -197,6 +205,51 @@ var week = "星期" + a[str];
 // function toSystem(item) {
 //     router.push({ name: item.to, params: item.systemName })
 // }
+function echartInit_ggzp() {
+    var myChart_ggzp1 = echarts.init(document.getElementById("container_ggzp1"));
+    var option_ggzp1 = {
+        title: {
+            text: '店铺统计',
+            subtext: '店铺详细分类统计',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left'
+        },
+        series: [
+            {
+                name: '店铺详细分类统计',
+                type: 'pie',
+                radius: '50%',
+                data: [
+                    { value: ggzp_tableData.value[1].infoVal, name: ggzp_tableData.value[1].infoKey },
+                    { value: ggzp_tableData.value[2].infoVal, name: ggzp_tableData.value[2].infoKey },
+                    { value: ggzp_tableData.value[3].infoVal, name: ggzp_tableData.value[3].infoKey },
+                    { value: ggzp_tableData.value[4].infoVal, name: ggzp_tableData.value[4].infoKey },
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }, label: {
+                    show: true,
+                    formatter(param) {
+                        // correct the percentage
+                        return param.name + ' (' + param.percent + '%)';
+                    }
+                },
+            }
+        ]
+    };
+    myChart_ggzp1.setOption(option_ggzp1)
+
+}
 function toSystem(item) {
     if (item.url === '') {
 
@@ -208,10 +261,12 @@ function toSystem(item) {
         window.open(item.url)
 }
 
-
+const ggzp_tableData = ref([])
 //部门列表, 从后端获取
 const depts = ref([])
 onBeforeMount(() => {
+
+
     getDeptList()
         .then(response => {
             depts.value = response
@@ -227,6 +282,10 @@ const systems = ref([])
 const tableData_jbgl = ref([]) //警报管理
 
 onMounted(() => {
+    getMain().then(data => {
+        ggzp_tableData.value = data
+        echartInit_ggzp();
+    })
 
     getSystemList().then(data => {
         systems.value = data

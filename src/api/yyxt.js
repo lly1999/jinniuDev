@@ -50,3 +50,15 @@ export function getOverStandard() {
         method: 'get'
     })
 }
+export function getCompanyType() {
+    return request({
+        url: '/yyxt/getCompanyType',
+        method: 'get'
+    })
+}
+export function getTouSU() {
+    return request({
+        url: '/yyxt/getTouSU',
+        method: 'get'
+    })
+}

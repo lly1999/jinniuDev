@@ -78,7 +78,9 @@
       <!-- 页面显示区域 -->
       <el-main class="main">
 
-
+        <!-- <div v-if="garbage_classify_detail == true" class="map-page-container">
+          <el-amap :center="center" :zoom="zoom" @init="init" />
+        </div> -->
 
         <!-- <div class="classification-title" v-if="choosedDept==-1|choosedDept==0">
             环境卫生
@@ -94,7 +96,7 @@
             :class="garbage_classify_selected == false ? 'garbage-classify' : 'garbage-classify garbage-classify-select'">
             <img v-if="garbage_classify_selected == false" class="garbage-classify-icon"
               src="@/assets/images/environment/garbage-classify-default.png" alt="">
-            <img v-if="garbage_classify_selected == true" class="garbage-classify-icon"
+            <img v-if="garbage_classify_selected == true || garbage_classify_detail" class="garbage-classify-icon"
               src="@/assets/images/environment/garbage-classify-selected.png" alt="">
             <div
               :class="garbage_classify_selected == false ? 'garbage-classify-text' : 'garbage-classify-text garbage-classify-text-select'">
@@ -114,7 +116,7 @@
             :class="garbage_compress_selected == false ? 'garbage-compress' : 'garbage-compress garbage-compress-select'">
             <img v-if="garbage_compress_selected == false" class="garbage-compress-icon"
               src="@/assets/images/environment/garbage-compress-default.png" alt="">
-            <img v-if="garbage_compress_selected == true" class="garbage-compress-icon"
+            <img v-if="garbage_compress_selected == true || garbage_compress_detail" class="garbage-compress-icon"
               src="@/assets/images/environment/garbage-compress-selected.png" alt="">
             <div
               :class="garbage_compress_selected == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
@@ -124,17 +126,44 @@
             :class="garbage_collect_selected == false ? 'garbage-collect' : 'garbage-collect garbage-collect-select'">
             <img v-if="garbage_collect_selected == false" class="garbage-collect-icon"
               src="@/assets/images/environment/garbage-collect-default.png" alt="">
-            <img v-if="garbage_collect_selected == true" class="garbage-collect-icon"
+            <img v-if="garbage_collect_selected == true || garbage_collect_detail == true" class="garbage-collect-icon"
               src="@/assets/images/environment/garbage-collect-selected.png" alt="">
             <div
               :class="garbage_collect_selected == false ? 'garbage-collect-text' : 'garbage-collect-text garbage-collect-text-select'">
               垃圾分类管家</div>
           </div>
+
+
           <div :class="garbage_classify_selected == true ? 'environment-right classify-select'
             : garbage_transport_selected == true ? 'environment-right transport-select'
               : garbage_compress_selected == true ? 'environment-right compress-select'
                 : garbage_collect_selected == true ? 'environment-right collect-select'
                   : 'environment-right default'">
+            <div v-if="garbage_classify_detail == true" class="classify_detail">
+              <el-table :data="hwzy_tableData1" stripe style="width: 100%" max-height="300">
+                <el-table-column prop="e_alarm_name" label="报警名称" width="180" />
+                <el-table-column prop="e_alarm_create_time" label="报送时间" width="280" />
+                <el-table-column prop="e_alarm_sanitation_task_truck" label="处置车辆" width="180" />
+                <el-table-column prop="e_alarm_from" label="地点" />
+              </el-table>
+              <div v-if="garbage_classify_detail == true" class="map-page-container" style="height:400px;width:900px">
+                <el-amap :center="center" :zoom="zoom" scrollWheel="false" @init="init">
+                  <el-amap-marker v-for="marker in markers" :position=marker.position :visible="componentMarker.visible"
+                    :content="componentMarker.content" :title="marker.title">
+                    <div style="padding: 5px 10px;white-space: nowrap;background: red;color: #fff;">
+                      {{ marker.title }}
+                    </div>
+                  </el-amap-marker>
+                </el-amap>
+              </div>
+            </div>
+
+            <div v-show="garbage_transport_detail == true" class="transport_detail">
+              <div id="container_cclj" style="width: 900px; height: 300px;"></div>
+              <div id="container_cclj1" style="width: 900px; height: 300px;"></div>
+            </div>
+            <div v-show="garbage_compress_detail == true" id="container_ljz1" style="width: 900px; height: 300px;"></div>
+            <div v-show="garbage_compress_detail == true" id="container_ljz2" style="width: 900px; height: 300px;"></div>
             <div v-if="garbage_classify_selected == true ||
               garbage_transport_selected == true ||
               garbage_compress_selected == true ||
@@ -190,23 +219,7 @@
               <div v-else-if="garbage_collect_selected == true" class="content-number">①查询记录总重: {{ shlj_data }}；②垃圾记录总数:
                 {{ shlj_num }}； </div>
 
-              <div v-if="garbage_classify_selected == true" class="classify_detail">
-                <el-table :data="hwzy_tableData1" stripe style="width: 100%" max-height="500">
-                  <el-table-column prop="e_alarm_name" label="报警名称" width="180" />
-                  <el-table-column prop="e_alarm_create_time" label="报送时间" width="280" />
-                  <el-table-column prop="e_alarm_sanitation_task_truck" label="处置车辆" width="180" />
-                  <el-table-column prop="e_alarm_from" label="地点" />
-                  <el-table :data="hwzy_tableData" stripe style="width: 100%" max-height="500">
-                    <el-table-column prop="teamName" label="名称" width="180" />
-                    <el-table-column prop="carName" label="车辆名称" width="280" />
-                    <el-table-column prop="cmpName" label="公司名称" width="180" />
-                    <el-table-column prop="onlineTime" label="在线时间" />
 
-
-                  </el-table>
-
-                </el-table>
-              </div>
 
               <div class="check-details">
                 <div v-if="garbage_classify_selected == true" @click="showHwzy">查看详情</div>
@@ -251,10 +264,12 @@ import ClassItem from '@/views/home/components/ClassItem.vue'
 import Header from "@/components/Header.vue"
 import { get, getDeptList, getSystemList } from '@/api/home.js'
 import { getMainGarbage } from '@/api/garbage';
-import { getMainCclj } from '@/api/cclj.js';
+import { getMainCclj, getSitesData } from '@/api/cclj.js';
 import { getMainHwzy } from '@/api/hwzy.js';
 import { params } from '@/store/store.js'
 import { getCarLists, getAiAlarm } from "@/api/hwzy";
+import * as echarts from "echarts";
+import { getMainLjz, getSum, getWarning } from "@/api/ljz";
 
 const data = ref([])
 
@@ -267,7 +282,31 @@ const user = reactive({
   username: '张三',
   role: '管理员'
 })
-//日期 周
+//日期 周const zoom = ref(12);
+const center = reactive([104.041309, 30.677844]); let map = null; const zoom = ref(12);
+const init = (e) => {
+  // const marker = new AMap.Marker({
+  //   position: [104.05740358713781, 30.697356042874134],
+  // },
+  // );
+  // e.add(marker);
+  map = e;
+
+  // console.log('map init: ', map)
+};
+const add = () => {
+  const marker = new AMap.Marker({
+    position: [121.59996, 31.177646]
+  });
+  map.add(marker);
+}
+const componentMarker = reactive({
+  position: [121.5273285, 31.21315058],
+  visible: true,
+  draggable: false,
+  content: 'hello world'
+})
+const position1 = reactive([104.05740358713781, 30.747356042874134])
 let date = new Date().toLocaleDateString();
 var a = new Array("日", "一", "二", "三", "四", "五", "六");
 var str = new Date().getDay();
@@ -288,6 +327,7 @@ const hwzy_car_moving = ref(0)
 const hwzy_car_stop = ref(0)
 const hwzy_tableData1 = ref([])
 const hwzy_tableData = ref([])
+const markers = reactive([])
 
 function toSystem(item) {
   router.push({ name: item.to, params: item.systemName })
@@ -310,6 +350,13 @@ onBeforeMount(() => {
   //   shlj_data.value = data[0].infoVal
 
   // })
+  getMainLjz().then(data => {
+    ljz_table1.value = data
+  })
+  getSum().then(data => {
+    ljz_table2.value = data
+
+  })
   getMainCclj().then(data => {
     ccljData_year.value = data[0].infoVal
     ccljData_month.value = data[1].infoVal
@@ -318,7 +365,9 @@ onBeforeMount(() => {
 
 
   })
-
+  getSitesData().then(data => {
+    cclj_sites.value = data
+  })
   getMainHwzy().then(data => {
     hwzy_car_all.value = data[0].infoVal
     hwzy_car_offline.value = data[1].infoVal
@@ -329,13 +378,22 @@ onBeforeMount(() => {
   getAiAlarm().then(data => {
     hwzy_tableData1.value = data
     console.log(hwzy_tableData1.value)
+    for (let i = 0; i < hwzy_tableData1.value.length; i++) {
+      const marker = reactive({
+        position: [hwzy_tableData1.value[i].e_alarm_wgs84_lng * 1, hwzy_tableData1.value[i].e_alarm_wgs84_lat * 1],
+        title: hwzy_tableData1.value[i].e_alarm_from + ' ' + hwzy_tableData1.value[i].e_alarm_name
+
+      })
+      markers.push(marker)
+
+    }
   })
   getCarLists().then(data => {
     hwzy_tableData.value = data
-    console.log(hwzy_tableData.value)
   })
 })
 // 系统列表
+
 const systems = ref([])
 onMounted(() => {
   getSystemList().then(data => {
@@ -421,7 +479,7 @@ let garbage_classify = reactive({});
 let garbage_transport = reactive({});
 let garbage_compress = reactive({});
 let garbage_collect = reactive({});
-let garbage_classify_detail = ref(true);
+let garbage_classify_detail = ref(false);
 let garbage_transport_detail = ref(false);
 let garbage_compress_detail = ref(false); //
 let garbage_collect_detail = ref(false);
@@ -441,6 +499,10 @@ const garbage_classify_click = () => {
   garbage_transport_selected.value = false;
   garbage_compress_selected.value = false;
   garbage_collect_selected.value = false;
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
 
 }
 
@@ -449,16 +511,21 @@ garbage_classify_click();
 const showHwzy = () => {
   garbage_classify_selected.value = false;
   garbage_classify_detail.value = true
-  console.log(garbage_classify_detail)
 }
 const showCclj = () => {
+  echartInit_cclj()
   garbage_transport_selected.value = false;
+  garbage_transport_detail.value = true
 }
 const showLjz = () => {
+  echartInit_ljz()
+
   garbage_compress_selected.value = false;
+  garbage_compress_detail.value = true
 }
 const showLjfl = () => {
   garbage_collect_selected.value = false;
+  garbage_collect_detail.value = true
 }
 const garbage_transport_click = () => {
   environments.splice(0, environments.length);
@@ -476,7 +543,10 @@ const garbage_transport_click = () => {
   garbage_transport_selected.value = true;
   garbage_compress_selected.value = false;
   garbage_collect_selected.value = false;
-
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
 }
 
 const garbage_compress_click = () => {
@@ -495,7 +565,10 @@ const garbage_compress_click = () => {
   garbage_transport_selected.value = false;
   garbage_compress_selected.value = true;
   garbage_collect_selected.value = false;
-
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
 }
 const garbage_collect_click = () => {
   environments.splice(0, environments.length);
@@ -513,11 +586,267 @@ const garbage_collect_click = () => {
   garbage_transport_selected.value = false;
   garbage_compress_selected.value = false;
   garbage_collect_selected.value = true;
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
 }
+const cclj_sites = ref([])
 
+const echartInit_cclj = () => {
+  //document.getElementById("container_cclj").removeAttribute("_echarts_instance_");
+  var myChart_cclj = echarts.init(document.getElementById("container_cclj"));
+  //document.getElementById("container_cclj1").removeAttribute("_echarts_instance_");
+  var myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
+  var option = {
+    title: {
+      text: '收运点位统计',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    xAxis: {
+      type: 'category',
+      axisLabel: {
+        //x轴文字的配置
+        show: true,
+        interval: 0,//使x轴文字显示全
+        rotate: 20
+      },
+      data: [cclj_sites.value[0].street, cclj_sites.value[1].street, cclj_sites.value[2].street, cclj_sites.value[3].street
+        , cclj_sites.value[4].street, cclj_sites.value[5].street, cclj_sites.value[6].street,
+      cclj_sites.value[7].street,
+      cclj_sites.value[8].street, cclj_sites.value[9].street, cclj_sites.value[10].street, cclj_sites.value[11].street, cclj_sites.value[12].street
+      ]
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [cclj_sites.value[0].street_site_num, cclj_sites.value[1].street_site_num, cclj_sites.value[2].street_site_num, cclj_sites.value[3].street_site_num
+          , cclj_sites.value[4].street_site_num, cclj_sites.value[5].street_site_num, cclj_sites.value[6].street_site_num,
+        cclj_sites.value[7].street_site_num,
+        cclj_sites.value[8].street_site_num, cclj_sites.value[9].street_site_num, cclj_sites.value[10].street_site_num, cclj_sites.value[11].street_site_num, cclj_sites.value[12].street_site_num],
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        }
+      }
+    ]
+  };
+  var option1 = {
+    title: {
+      text: '收运点位统计',
+      left: 'center',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    series: [
+      {
+        name: '街道点位统计',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: cclj_sites.value[0].street_site_num, name: cclj_sites.value[0].street },
+          { value: cclj_sites.value[1].street_site_num, name: cclj_sites.value[1].street },
+          { value: cclj_sites.value[2].street_site_num, name: cclj_sites.value[2].street },
+          { value: cclj_sites.value[3].street_site_num, name: cclj_sites.value[3].street },
+          { value: cclj_sites.value[4].street_site_num, name: cclj_sites.value[4].street },
+          { value: cclj_sites.value[5].street_site_num, name: cclj_sites.value[5].street },
+          { value: cclj_sites.value[6].street_site_num, name: cclj_sites.value[6].street },
+          { value: cclj_sites.value[7].street_site_num, name: cclj_sites.value[7].street },
+          { value: cclj_sites.value[8].street_site_num, name: cclj_sites.value[8].street },
+          { value: cclj_sites.value[9].street_site_num, name: cclj_sites.value[9].street },
+          { value: cclj_sites.value[10].street_site_num, name: cclj_sites.value[10].street },
+          { value: cclj_sites.value[11].street_site_num, name: cclj_sites.value[11].street },
+          { value: cclj_sites.value[12].street_site_num, name: cclj_sites.value[12].street },
+
+
+        ],
+        label: {
+          show: true,
+          formatter(param) {
+            // correct the percentage
+            return param.name + ' (' + param.percent + '%)';
+          }
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  myChart_cclj.setOption(option)
+  myChart_cclj1.setOption(option1)
+
+}
+const ljz_table1 = ref([]) //垃圾站
+const ljz_table2 = ref([]) //垃圾站
+
+const echartInit_ljz = () => {
+
+  document.getElementById("container_ljz1").removeAttribute("_echarts_instance_");
+  var myChart_ljz1 = echarts.init(document.getElementById("container_ljz1"));
+  document.getElementById("container_ljz2").removeAttribute("_echarts_instance_");
+  var myChart_ljz2 = echarts.init(document.getElementById("container_ljz2"));
+  var option1 = {
+    title: {
+      text: '垃圾分布统计',
+      left: 'center',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    series: [
+      {
+        name: '垃圾分布统计',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: ljz_table1.value[1].infoVal.slice(0, -2), name: ljz_table1.value[1].infoKey.slice(0, -2) },
+          { value: ljz_table1.value[2].infoVal.slice(0, -2), name: ljz_table1.value[2].infoKey.slice(0, -2) },
+          // { value: 111, name: 222 },
+          // { value: 111, name: 222 },
+
+        ],
+        label: {
+          show: true,
+          formatter(param) {
+            // correct the percentage
+            return param.name + ' (' + param.percent + '%)';
+          }
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+  };
+  var option2 = {
+    title: {
+      text: '垃圾统计',
+      textStyle: {
+        color: 'black'
+      }
+    },
+    tooltip: {
+
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {
+      textStyle: {
+        color: 'black'
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+      textStyle: {
+        color: 'white'
+      }
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '九月', '十月', '十一月', '十二月',]
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        axisLabel: {
+          formatter: '{value} 吨'
+        },
+      }
+    ],
+    series: [
+
+
+      {
+        name: '红星站',
+        type: 'bar',
+        stack: 'Ad',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: 'white'
+        },
+        data: [ljz_table2.value[3][0], ljz_table2.value[3][1], ljz_table2.value[3][2], ljz_table2.value[3][3], ljz_table2.value[3][4], ljz_table2.value[3][5], ljz_table2.value[3][6], ljz_table2.value[3][7], ljz_table2.value[3][8], ljz_table2.value[3][9], ljz_table2.value[3][10], ljz_table2.value[3][11]]
+      },
+      {
+        name: '西华站',
+        type: 'bar',
+        stack: 'Ad', label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        }, textStyle: {
+          color: 'white'
+        },
+        data: [ljz_table2.value[4][0], ljz_table2.value[4][1], ljz_table2.value[4][2], ljz_table2.value[4][3], ljz_table2.value[4][4], ljz_table2.value[4][5], ljz_table2.value[4][6], ljz_table2.value[4][7], ljz_table2.value[4][8], ljz_table2.value[4][9], ljz_table2.value[4][10], ljz_table2.value[4][11]]
+      },
+
+
+
+    ]
+  };
+  myChart_ljz1.setOption(option1)
+  myChart_ljz2.setOption(option2)
+
+}
 </script>
   
 <style scoped>
+.map-page-container {
+  height: 580px;
+}
+
 .img-wrapper {
   background-image: url('@/assets/srzx/total.png');
   background-size: 100%;
@@ -865,6 +1194,20 @@ const garbage_collect_click = () => {
 }
 
 .environment-right {
+  width: 904px;
+  height: 508px;
+  left: 296px;
+  position: absolute;
+}
+
+.environment-right default {
+  width: 904px;
+  height: 508px;
+  left: 296px;
+  position: absolute;
+}
+
+.default {
   width: 904px;
   height: 508px;
   left: 296px;
