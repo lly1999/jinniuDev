@@ -2714,7 +2714,7 @@ const getTransport = (pageNum) => {
   currentPage.value = pageNum;
 };
 const changeColor = () => {
- 
+ queryAllWarning("start","end",1);
   axios({
     // url: "/api/lzj/getWarning",
     url: "/api/event-query/getNeedHandleEvent",
