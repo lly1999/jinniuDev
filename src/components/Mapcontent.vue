@@ -2343,7 +2343,7 @@ onMounted(() => {
           interval: 0,//使x轴文字显示全
           rotate: 20
         },
-        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
+        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type]
       },
       yAxis: {
 
@@ -2369,7 +2369,7 @@ onMounted(() => {
           },
           // 数据
           data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-          data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+          data[4].lian_value, data[5].lian_value]
         }
       ]
     }
