@@ -108,9 +108,9 @@
               style="width: 80%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
               <el-menu-item index="1">餐饮油烟管家</el-menu-item>
               <el-menu-item index="2">调度指挥管家</el-menu-item>
-              <el-menu-item index="3">扬尘治理大数据协同管家</el-menu-item>
               <el-menu-item index="4">共享单车管家</el-menu-item>
-              <el-menu-item index="5">街面图像综合应用管家</el-menu-item>
+              <el-menu-item index="3">扬尘治理大数据协同管家</el-menu-item>
+
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <div v-show="echart_index_srzx === 1">
@@ -295,8 +295,9 @@
               style="width: 90%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
               <el-menu-item index="1">突出问题管家</el-menu-item>
               <el-menu-item index="2">城管AI识别管家</el-menu-item>
-              <el-menu-item index="3">数字化城市信息管家</el-menu-item>
               <el-menu-item index="4">城管诉易达管家</el-menu-item>
+              <el-menu-item index="3">数字化城市信息管家</el-menu-item>
+
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <div id="tcwt-Charts" v-show="echart_index_szcg === 1" style="width: 24vw; height: 36vh; margin-left: 0px">

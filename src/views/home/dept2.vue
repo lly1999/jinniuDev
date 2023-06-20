@@ -122,9 +122,9 @@
                     <div>QR Code Management of Advertising Signs</div>
                 </div>
                 <div class="jgzmInfo">
-                    <div id="container_ggzp1" style="width: 900px; height: 350px"></div>
-                    <el-image fit="scale-down" :src="require('@/assets/jgzm/7-1.jpg')"
-                        style="width:30%;float: right;margin-left: 50%;">
+                    <div id="container_ggzp1" style="width: 900px; height: 350px;margin-left: 200px;"></div>
+                    <el-image fit="scale-down" :src="require('@/assets/jgzm/6-1.jpg')"
+                        style="width:30%;float: right;margin-left: 30%;">
                     </el-image>
                 </div>
                 <!-- <template v-for="(item, idx) in choosedSystems">

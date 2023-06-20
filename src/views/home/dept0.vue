@@ -92,44 +92,44 @@
 
 
         <div class="environment-box">
-          <div @click="garbage_classify_click"
-            :class="garbage_classify_selected == false ? 'garbage-classify' : 'garbage-classify garbage-classify-select'">
-            <img v-if="garbage_classify_selected == false" class="garbage-classify-icon"
+          <div @click="showHwzy"
+            :class="garbage_classify_detail == false ? 'garbage-classify' : 'garbage-classify garbage-classify-select'">
+            <img v-if="garbage_classify_detail == false" class="garbage-classify-icon"
               src="@/assets/images/environment/garbage-classify-default.png" alt="">
-            <img v-if="garbage_classify_selected == true || garbage_classify_detail" class="garbage-classify-icon"
+            <img v-if="garbage_classify_detail == true || garbage_classify_detail" class="garbage-classify-icon"
               src="@/assets/images/environment/garbage-classify-selected.png" alt="">
             <div
-              :class="garbage_classify_selected == false ? 'garbage-classify-text' : 'garbage-classify-text garbage-classify-text-select'">
+              :class="garbage_classify_detail == false ? 'garbage-classify-text' : 'garbage-classify-text garbage-classify-text-select'">
               环卫作业运行管家</div>
           </div>
-          <div @click="garbage_transport_click"
-            :class="garbage_transport_selected == false ? 'garbage-transport' : 'garbage-transport garbage-transport-select'">
-            <img v-if="garbage_transport_selected == false" class="garbage-transport-icon"
+          <div @click="showCclj"
+            :class="garbage_transport_detail == false ? 'garbage-transport' : 'garbage-transport garbage-transport-select'">
+            <img v-if="garbage_transport_detail == false" class="garbage-transport-icon"
               src="@/assets/images/environment/garbage-transport-default.png" alt="">
-            <img v-if="garbage_transport_selected == true" class="garbage-transport-icon"
+            <img v-if="garbage_transport_detail == true" class="garbage-transport-icon"
               src="@/assets/images/environment/truck.png" alt="">
             <div
-              :class="garbage_transport_selected == false ? 'garbage-transport-text' : 'garbage-transport-text garbage-transport-text-select'">
+              :class="garbage_transport_detail == false ? 'garbage-transport-text' : 'garbage-transport-text garbage-transport-text-select'">
               餐厨垃圾全生命周期管家</div>
           </div>
-          <div @click="garbage_compress_click"
-            :class="garbage_compress_selected == false ? 'garbage-compress' : 'garbage-compress garbage-compress-select'">
-            <img v-if="garbage_compress_selected == false" class="garbage-compress-icon"
+          <div @click="showLjz"
+            :class="garbage_compress_detail == false ? 'garbage-compress' : 'garbage-compress garbage-compress-select'">
+            <img v-if="garbage_compress_detail == false" class="garbage-compress-icon"
               src="@/assets/images/environment/garbage-compress-default.png" alt="">
-            <img v-if="garbage_compress_selected == true || garbage_compress_detail" class="garbage-compress-icon"
+            <img v-if="garbage_compress_detail == true || garbage_compress_detail" class="garbage-compress-icon"
               src="@/assets/images/environment/garbage-compress-selected.png" alt="">
             <div
-              :class="garbage_compress_selected == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
+              :class="garbage_compress_detail == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
               生活垃圾全生命周期管家</div>
           </div>
-          <div @click="garbage_collect_click"
-            :class="garbage_collect_selected == false ? 'garbage-collect' : 'garbage-collect garbage-collect-select'">
-            <img v-if="garbage_collect_selected == false" class="garbage-collect-icon"
+          <div @click="showLjfl"
+            :class="garbage_collect_detail == false ? 'garbage-collect' : 'garbage-collect garbage-collect-select'">
+            <img v-if="garbage_collect_detail == false" class="garbage-collect-icon"
               src="@/assets/images/environment/garbage-collect-default.png" alt="">
-            <img v-if="garbage_collect_selected == true || garbage_collect_detail == true" class="garbage-collect-icon"
+            <img v-if="garbage_collect_detail == true || garbage_collect_detail == true" class="garbage-collect-icon"
               src="@/assets/images/environment/garbage-collect-selected.png" alt="">
             <div
-              :class="garbage_collect_selected == false ? 'garbage-collect-text' : 'garbage-collect-text garbage-collect-text-select'">
+              :class="garbage_collect_detail == false ? 'garbage-collect-text' : 'garbage-collect-text garbage-collect-text-select'">
               垃圾分类管家</div>
           </div>
 
@@ -173,11 +173,11 @@
                 src="@/assets/images/environment/1.png" alt="">
               <img v-else-if="garbage_transport_selected == true" class="content-number-img"
                 src="@/assets/images/environment/2.png" alt="">
-              <img v-else-if="garbage_compress_selected == true" class="content-number-img"
+              <img v-else-if="garbage_compress_detail == true" class="content-number-img"
                 src="@/assets/images/environment/3.png" alt="">
               <img v-else-if="garbage_collect_selected == true" class="content-number-img"
                 src="@/assets/images/environment/4.png" alt="">
-              <div v-if="garbage_classify_selected == true" class="transport-content-title">{{ environment_item.title }}
+              <!-- <div v-if="garbage_classify_selected == true" class="transport-content-title">{{ environment_item.title }}
               </div>
               <div v-if="garbage_classify_selected == true" class="content-title-en">{{ environment_item.title_en }}
               </div>
@@ -194,7 +194,7 @@
               <div v-if="garbage_collect_selected == true" class="transport-content-title">{{ environment_item.title }}
               </div>
               <div v-if="garbage_collect_selected == true" class="content-title-en">{{ environment_item.title_en }}
-              </div>
+              </div> -->
 
 
 
@@ -396,6 +396,8 @@ onBeforeMount(() => {
 
 const systems = ref([])
 onMounted(() => {
+  showHwzy();
+
   getSystemList().then(data => {
     systems.value = data
     // 请求各个子系统要显示的数据
@@ -506,25 +508,38 @@ const garbage_classify_click = () => {
 
 }
 
-garbage_classify_click();
 
 const showHwzy = () => {
   garbage_classify_selected.value = false;
   garbage_classify_detail.value = true
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
+
+
 }
 const showCclj = () => {
   echartInit_cclj()
   garbage_transport_selected.value = false;
+  garbage_classify_detail.value = false
   garbage_transport_detail.value = true
+  garbage_compress_detail.value = false
+  garbage_collect_detail.value = false
 }
 const showLjz = () => {
   echartInit_ljz()
 
   garbage_compress_selected.value = false;
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
   garbage_compress_detail.value = true
+  garbage_collect_detail.value = false
 }
 const showLjfl = () => {
   garbage_collect_selected.value = false;
+  garbage_classify_detail.value = false
+  garbage_transport_detail.value = false
+  garbage_compress_detail.value = false
   garbage_collect_detail.value = true
 }
 const garbage_transport_click = () => {

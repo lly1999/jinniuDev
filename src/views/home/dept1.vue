@@ -46,13 +46,12 @@
                         styleName="subsysName"></class-item>
                 </div>
                 <!-- <div class="subsys" v-if="!showDepts">
-          <div class="subdepts">{{choosedDeptName}}</div>
-        </div> -->
+      <div class="subdepts">{{choosedDeptName}}</div>
+    </div> -->
                 <div class="subsys" v-if="!showDepts">
 
-                    <class-item v-for="system in choosedSystems" :key="system.systemId"
-                        @click="show(system.systemId, system.url)" :logo="system.systemLogo" :name="system.systemName"
-                        styleName="subsysName">
+                    <class-item v-for="system in choosedSystems" :key="system.systemId" @click="show(system.to, system.url)"
+                        :logo="system.systemLogo" :name="system.systemName" styleName="subsysName">
                     </class-item>
                 </div>
                 <div class="subsys" v-if="!showDepts">
@@ -92,7 +91,7 @@
 
                 <div class="city-scape">
                     <div class="city-scape-left">
-                        <div class="city-scape-left-one" @click="one_clicked">
+                        <!-- <div class="city-scape-left-one" @click="one_clicked">
                             <div
                                 :class="one_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
                                 <div
@@ -105,6 +104,20 @@
                                 <p>管理执法智慧服务管家</p>
                             </div>
                             <div :class="one_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                        </div> -->
+
+                        <div class="city-scape-left-one" @click="one_clicked">
+                            <div
+                                :class="one_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
+                                <div
+                                    :class="one_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
+                                    1</div>
+                            </div>
+                            <div :class="one_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
+                                style="top: 38px; left: 60px">
+                                餐饮油烟管家
+                            </div>
+                            <div :class="one_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
                         </div>
 
                         <div class="city-scape-left-two" @click="two_clicked">
@@ -112,28 +125,14 @@
                                 :class="two_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
                                 <div
                                     :class="two_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
-                                    2</div>
+                                    2
+                                </div>
                             </div>
                             <div :class="two_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
                                 style="top: 38px; left: 60px">
-                                餐饮油烟管家
-                            </div>
-                            <div :class="two_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
-                        </div>
-
-                        <div class="city-scape-left-three" @click="three_clicked">
-                            <div
-                                :class="three_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
-                                <div
-                                    :class="three_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
-                                    3
-                                </div>
-                            </div>
-                            <div :class="three_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
-                                style="top: 38px; left: 60px">
                                 调度指挥管家
                             </div>
-                            <div :class="three_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="two_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
                         </div>
 
                         <div class="city-scape-left-four" @click="four_clicked">
@@ -152,22 +151,22 @@
                             <div :class="four_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
                         </div>
 
-                        <div class="city-scape-left-five" @click="five_clicked">
+                        <div class="city-scape-left-three" @click="three_clicked">
                             <div
-                                :class="five_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
+                                :class="three_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
                                 <div
-                                    :class="five_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
-                                    5
+                                    :class="three_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
+                                    3
                                 </div>
                             </div>
-                            <div :class="five_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
+                            <div :class="three_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
                                 style="top: 37px; left: 60px">
                                 共享单车管家
                             </div>
-                            <div :class="five_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="three_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
                         </div>
 
-                        <div class="city-scape-left-six" @click="six_clicked">
+                        <!-- <div class="city-scape-left-" @click="six_clicked">
                             <div
                                 :class="six_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
                                 <div
@@ -179,7 +178,7 @@
                                 街面图像综合应用管家
                             </div>
                             <div :class="six_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
-                        </div>
+                        </div> -->
                         <div class="extra-col-line"></div>
                     </div>
 
@@ -200,15 +199,15 @@
                         <div class="system-name">{{ system_info.name }}</div>
                         <div class="system-name-en">{{ system_info.name_en }}</div>
 
-                        <img v-if="one_selected == true" class="right-bg" src="@/assets/images/city/bg1.png" alt="">
+                        <!-- <img v-if="one_selected == true" class="right-bg" src="@/assets/images/city/bg1.png" alt=""> -->
                         <!-- <img v-if="two_selected == true" class="right-bg" src="@/assets/images/city/bg2.png" alt=""> -->
-                        <div v-show="two_selected == true" class="right-bg-yyxt">
+                        <div v-show="one_selected == true" class="right-bg-yyxt">
                             <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
                             <div id="container_yyxt2" style="width: 600px; height: 350px;float:left"></div>
                             <div id="container_yyxt3" style="width: 500px; height: 350px;float:left"></div>
                         </div>
                         <!-- <img v-if="three_selected == true" class="right-bg" src="@/assets/images/city/bg3.png" alt=""> -->
-                        <template v-if="three_selected == true">
+                        <template v-if="two_selected == true">
                             <div class="right-bg">
                                 <el-collapse v-model="activeNames" @change="handleChange" accordion>
                                     <el-collapse-item title="金泉中队 定位异常情况" name="1">
@@ -296,6 +295,10 @@
                             </div>
                         </template>
                         <!-- <img v-if="four_selected == true" class="right-bg" src="@/assets/images/city/bg4.png" alt=""> -->
+                        <div v-show="three_selected == true" class="right-bg">
+                            <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
+                            <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
+                        </div>
                         <div v-if="four_selected == true" class="right-bg">
                             <p class="demo-rich-content__mention"
                                 style="margin: 0; font-size: 18px; color: var(--el-color-info)">
@@ -325,10 +328,7 @@
                         </div>
 
                         <!-- <img v-if="five_selected == true" class="right-bg" src="@/assets/images/city/bg5.png" alt=""> -->
-                        <div v-show="five_selected == true" class="right-bg">
-                            <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
-                            <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
-                        </div>
+
                         <img v-if="six_selected == true" class="right-bg" src="@/assets/images/city/bg6.png" alt="">
 
                         <div class="system-content">
@@ -415,7 +415,12 @@ const ddzh_tianhui = ref([])
 const ddzh_simaqiao = ref([])
 const ddzh_fenghuanshan = ref([])
 function echartInit_gxdc() {
+    if (document.getElementById("container_gxdc1").hasAttribute("_echarts_instance_"))
+        document.getElementById("container_gxdc1").removeAttribute("_echarts_instance_");
     var myChart_gxdc = echarts.init(document.getElementById("container_gxdc1"));
+
+    if (document.getElementById("container_gxdc2").hasAttribute("_echarts_instance_"))
+        document.getElementById("container_gxdc2").removeAttribute("_echarts_instance_");
     var myChart_gxdc1 = echarts.init(document.getElementById("container_gxdc2"));
     var option_gxdc2 = {
         title: {
@@ -555,9 +560,15 @@ function echartInit_gxdc() {
     })
 }
 function echartInit_yyxt() {
-    document.getElementById("container_yyxt1").removeAttribute("_echarts_instance_");
-    document.getElementById("container_yyxt2").removeAttribute("_echarts_instance_");
-    document.getElementById("container_yyxt3").removeAttribute("_echarts_instance_");
+    console.log(document.getElementById("container_yyxt1"))
+    if (document.getElementById("container_yyxt1").hasAttribute("_echarts_instance_"))
+        document.getElementById("container_yyxt1").removeAttribute("_echarts_instance_");
+    if (document.getElementById("container_yyxt2").hasAttribute("_echarts_instance_"))
+
+        document.getElementById("container_yyxt2").removeAttribute("_echarts_instance_");
+    if (document.getElementById("container_yyxt3").hasAttribute("_echarts_instance_"))
+
+        document.getElementById("container_yyxt3").removeAttribute("_echarts_instance_");
     var myChart_yyxt1 = echarts.init(document.getElementById("container_yyxt1"))
     var myChart_yyxt2 = echarts.init(document.getElementById("container_yyxt2"))
     var myChart_yyxt3 = echarts.init(document.getElementById("container_yyxt3"))
@@ -761,6 +772,7 @@ const ycxt_tableData2 = ref([]) //扬尘系统
 //部门列表, 从后端获取
 const depts = ref([])
 onBeforeMount(() => {
+    one_clicked();
     console.log(route.params.num)
     // console.log(route.params.name[0])
 
@@ -831,8 +843,7 @@ onBeforeMount(() => {
 // 系统列表
 const systemss = ref([])
 onMounted(() => {
-    echartInit_yyxt()
-    echartInit_gxdc()
+
     getSystemList().then(data => {
         systemss.value = data
         // 请求各个子系统要显示的数据
@@ -842,6 +853,8 @@ onMounted(() => {
             }
         })
     })
+    echartInit_yyxt()
+    echartInit_gxdc()
 })
 //选中的部门
 // -1表示全选，为默认值
@@ -886,6 +899,7 @@ function switchShowDepts(deptId, deptName) {
 const router = useRouter()
 // 跳转到to指定的子系统汇总页面
 function show(id, url) {
+    console.log(id)
     if (url === '') {
 
         ElMessage({
@@ -894,11 +908,11 @@ function show(id, url) {
         })
     } else {
         // router.push({ name: to, params: { subsysName } })
-        if (id != '14' && id != '12')
+        if (id != '13' && id != 'ddzh')
             window.open(url)
-        if (id == '14')
+        if (id == '13')
             window.open(gxdc.url)
-        if (id == '12') {
+        if (id == 'ddzh') {
             var roles = []
             roles = params.roleId.split(",")
             console.log(roles.indexOf('84'))
@@ -982,26 +996,26 @@ let danche_info = [
     { desc: "行驶中车辆", value: '2767' },
     { desc: "分值", value: '0.829' }
 ]
+// const one_clicked = () => {
+//     systems.splice(0, systems.length);
+
+//     system_zonghe.name = "成都市综合行政管理执法智慧服务平台";
+//     system_zonghe.name_en = "Intelligent Service Platform For Comprehensive Administrative Management And Law Enforcement";
+
+
+//     system_zonghe['items'] = zonghe_info;
+//     systems.push(system_zonghe);
+//     one_selected.value = true;
+//     two_selected.value = false;
+//     three_selected.value = false;
+//     four_selected.value = false;
+//     five_selected.value = false;
+//     six_selected.value = false;
+// }
+
+// one_clicked();
+
 const one_clicked = () => {
-    systems.splice(0, systems.length);
-
-    system_zonghe.name = "成都市综合行政管理执法智慧服务平台";
-    system_zonghe.name_en = "Intelligent Service Platform For Comprehensive Administrative Management And Law Enforcement";
-
-
-    system_zonghe['items'] = zonghe_info;
-    systems.push(system_zonghe);
-    one_selected.value = true;
-    two_selected.value = false;
-    three_selected.value = false;
-    four_selected.value = false;
-    five_selected.value = false;
-    six_selected.value = false;
-}
-
-one_clicked();
-
-const two_clicked = () => {
     systems.splice(0, systems.length);
 
     system_canyin.name = "餐饮油烟监测服务";
@@ -1011,15 +1025,15 @@ const two_clicked = () => {
     system_canyin['items'] = canyin_info;
 
     systems.push(system_canyin);
-    one_selected.value = false;
-    two_selected.value = true;
+    one_selected.value = true;
+    two_selected.value = false;
     three_selected.value = false;
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
 }
 
-const three_clicked = () => {
+const two_clicked = () => {
     systems.splice(0, systems.length);
 
     system_diaodu.name = "调度指挥管家";
@@ -1036,18 +1050,18 @@ const three_clicked = () => {
 
     systems.push(system_diaodu);
     one_selected.value = false;
-    two_selected.value = false;
-    three_selected.value = true;
+    two_selected.value = true;
+    three_selected.value = false;
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
 }
 
-const four_clicked = () => {
+const three_clicked = () => {
     systems.splice(0, systems.length);
 
-    system_yangchen.name = "扬尘治理大数据协同管理中心  ";
-    system_yangchen.name_en = "Catering Lampblack Monitoring Service"
+    system_yangchen.name = "共享单车管理平台  ";
+    system_yangchen.name_en = "Shared Bicycle Management Platform"
 
     let yangchen_info = [
         { desc: "未受理案件", value: "33" },
@@ -1061,17 +1075,17 @@ const four_clicked = () => {
     systems.push(system_yangchen);
     one_selected.value = false;
     two_selected.value = false;
-    three_selected.value = false;
-    four_selected.value = true;
+    three_selected.value = true;
+    four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
 }
 
-const five_clicked = () => {
+const four_clicked = () => {
     systems.splice(0, systems.length);
 
-    system_danche.name = "共享单车管理平台";
-    system_danche.name_en = "Shared Bicycle Management Platform"
+    system_danche.name = "扬尘治理大数据协同管理中心";
+    system_danche.name_en = "Catering Lampblack Monitoring Service"
 
 
     system_danche['items'] = danche_info;
@@ -1080,8 +1094,8 @@ const five_clicked = () => {
     one_selected.value = false;
     two_selected.value = false;
     three_selected.value = false;
-    four_selected.value = false;
-    five_selected.value = true;
+    four_selected.value = true;
+    five_selected.value = false;
     six_selected.value = false;
 }
 
@@ -1306,7 +1320,7 @@ const six_clicked = () => {
 .city-scape {
     position: relative;
     margin-top: 10vh;
-    margin-right: 60vw;
+    margin-right: 70vw;
     height: 1000px;
 }
 

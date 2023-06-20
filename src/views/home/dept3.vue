@@ -94,19 +94,20 @@
                             城管AI识别管家</div>
                         <div v-if="one_selected == true" class="col-line-selected"></div>
                     </div>
+                    <div @click="syd_click" class="syd" style="height:10vh;margin-right:5vw">
+                        <img class="syd-icon" src="@/assets/images/szcg/syd.png" alt="">
+                        <div class="syd-text" style="color:white;padding:10px;">
+                            城管诉易达管家</div>
+                        <div v-if="two_selected == true" class="col-line-selected"></div>
+                    </div>
                     <div @click="szcg_click" class="szcg_in" style="height:10vh">
                         <img class="szcg-icon" src="@/assets/images/szcg/szcg.png" alt="">
 
                         <div class="szcg-text" style="color:white;padding:10px;">
                             数字化城市信息管家</div>
-                        <div v-if="two_selected == true" class="col-line-selected"></div>
-                    </div>
-                    <div @click="syd_click" class="syd" style="height:10vh;margin-left:5vw">
-                        <img class="syd-icon" src="@/assets/images/szcg/syd.png" alt="">
-                        <div class="syd-text" style="color:white;padding:10px;">
-                            城管诉易达管家</div>
                         <div v-if="three_selected == true" class="col-line-selected"></div>
                     </div>
+
 
 
                 </div>
@@ -141,22 +142,22 @@
                         AI Identification
                         System </div>
 
-                    <el-image v-if="two_selected == true" class="number" :src="require('@/assets/images/szcg/number3.png')"
-                        alt="" style="margin-left:400px"></el-image>
-                    <div v-if="two_selected == true" class="text"
+                    <el-image v-if="three_selected == true" class="number"
+                        :src="require('@/assets/images/szcg/number4.png')" alt="" style="margin-left:400px"></el-image>
+                    <div v-if="three_selected == true" class="text"
                         style="color:white;padding:10px;z-index:2;margin-left:400px">数字化城市信息管家
                     </div>
-                    <div v-if="two_selected == true" class="text"
+                    <div v-if="three_selected == true" class="text"
                         style="color:white;padding:10px;z-index:2 ;font-size:14px;margin-left:400px">Digital City Management
                         Information
                         System </div>
 
-                    <el-image v-if="three_selected == true" class="number"
-                        :src="require('@/assets/images/szcg/number4.png')" style="margin-left:400px" alt=""></el-image>
-                    <div v-if="three_selected == true" class="text"
+                    <el-image v-if="two_selected == true" class="number" :src="require('@/assets/images/szcg/number3.png')"
+                        style="margin-left:400px" alt=""></el-image>
+                    <div v-if="two_selected == true" class="text"
                         style="color:white;;margin-left:400px;padding:10px;z-index:2">城管诉易达管家
                     </div>
-                    <div v-if="three_selected == true" class="text"
+                    <div v-if="two_selected == true" class="text"
                         style="color:white;padding:10px;z-index:2 ;font-size:14px;margin-left:400px">City Management
                         Suggestion Platform
                     </div>
@@ -193,7 +194,7 @@
                         </el-table>
 
                     </div>
-                    <div class="info-list" v-if="two_selected == true"
+                    <div class="info-list" v-if="three_selected == true"
                         style="color:white;margin-left:350px;width:600px;padding: 14px;line-height: 26px;">
 
 
@@ -206,7 +207,7 @@
                         </template>
                     </div>
 
-                    <div v-show="three_selected == true" id="container_syd2"
+                    <div v-show="two_selected == true" id="container_syd2"
                         style="width: 500px; height: 300px;float:right;margin-left:450px;"></div>
 
                 </div>
@@ -398,7 +399,7 @@ function echartInit_tcwt() {
                         fontSize: 14      //更改坐标轴文字大小
                     }
                 },
-                data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
+                data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type]
             },
             xAxis: {
                 axisLabel: {
@@ -420,7 +421,7 @@ function echartInit_tcwt() {
                     },
                     // 数据
                     data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-                    data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+                    data[4].lian_value, data[5].lian_value,]
                 }
             ]
         }
@@ -524,15 +525,15 @@ function AI_click() {
 function szcg_click() {
     zero_selected.value = false;
     one_selected.value = false;
-    two_selected.value = true;
-    three_selected.value = false;
+    three_selected.value = true;
+    two_selected.value = false;
 
 }
 function syd_click() {
     zero_selected.value = false;
     one_selected.value = false;
-    two_selected.value = false;
-    three_selected.value = true;
+    two_selected.value = true;
+    three_selected.value = false;
 }
 const szcg_statics = ref([])
 //部门列表, 从后端获取
@@ -598,6 +599,7 @@ onMounted(() => {
         })
     })
     echartInit_tcwt()
+    tcwt_click()
 
 })
 //选中的部门

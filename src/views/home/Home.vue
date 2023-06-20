@@ -72,7 +72,7 @@
 
       </el-header>
       <div class="background" v-if="showDepts">
-        <img src="@/assets/home/banner-blue.jpg" width="10000" style="overflow-y:auto;overflow-x: auto;">
+        <img src="@/assets/home/banner-new1.jpg" width="10000" style="overflow-y:auto;overflow-x: auto;">
       </div>
       <!-- <div class="background" v-if="choosedDept === 0">
         <img src="@/assets/home/banner-hjws.png" width="10000" style="overflow-y:auto;overflow-x: auto;">
@@ -114,7 +114,7 @@
           <!--测试-->
           <el-card v-if="item.systemName == '环卫作业运行管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
 
-            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <el-image class="image" :src="require('@/assets/home/img-hwzy2.jpg')"> </el-image>
             <ul v-if="item.url">
               <div class="header">
                 <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
@@ -210,7 +210,7 @@
           </el-card>
           <el-card v-if="item.systemName == '餐厨垃圾全生命周期管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
 
-            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <el-image class="image" :src="require('@/assets/home/img-cclj2.jpg')"> </el-image>
             <ul v-if="item.url">
               <div class="header">
                 <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
@@ -273,7 +273,7 @@
           </el-card><el-card v-if="item.systemName == '生活垃圾全生命周期管家'" class="card" shadow="hover"
             :body-style="{ padding: '0px' }">
 
-            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <el-image class="image" :src="require('@/assets/home/img-ljz2.jpg')"> </el-image>
             <ul v-if="item.url">
               <div class="header">
                 <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
@@ -329,7 +329,7 @@
           </el-card>
           <el-card v-if="item.systemName == '垃圾分类管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
 
-            <el-image class="image" :src="require('@/assets/home/img-ljfl1.jpg')"> </el-image>
+            <el-image class="image" :src="require('@/assets/home/img-ljfl2.jpg')"> </el-image>
             <ul v-if="item.url">
               <div class="header">
                 <el-button class="el-button-hjws" type="text" @click="toSystemHjws(item)" style="margin-top:10px">{{
@@ -397,14 +397,14 @@
         <div class="description">
           利用智慧化、科技化信息手段，开展市容秩序、餐饮油烟、共享单车、扬尘污染的智能监管，执法人员精细管理和执法案件线上办理。 </div>
         <el-divider v-if="choosedDept == -1 | choosedDept == 1" />
-        <div class="img-wrapper" v-if="imgVisible">
-          <!-- <el-carousel :interval="4000" type="card" height="200px">
+        <!-- <div class="img-wrapper" v-if="imgVisible"> -->
+        <!-- <el-carousel :interval="4000" type="card" height="200px">
     <el-carousel-item v-for="item in 6" :key="item">
       <h3 text="2xl" justify="center">{{ item }}</h3>
     </el-carousel-item>
   </el-carousel> -->
-          <template v-for="(item, idx) in choosedSystems">
-            <!-- <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName != '餐饮油烟管家'" :key="idx"
+        <template v-for="(item, idx) in choosedSystems">
+          <!-- <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName != '餐饮油烟管家'" :key="idx"
               :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
               :image="item.image" :to="item.to" :deptId="item.deptId">
               <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
@@ -418,336 +418,298 @@
               <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{ item.infoKey + ": " + item.infoVal
               }}</li>
             </div> -->
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '餐饮油烟管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
+          <el-card v-if="item.systemName == '餐饮油烟管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
 
-
+            <el-image class="image" :src="require('@/assets/home/img-yyxt.png')"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystem(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
               </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
+            </ul>
+
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
+
+                </ul>
 
 
-              <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="right-end"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @详情统计
-                      </p>
-                      <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
-                      <div id="container_yyxt2" style="width: 1000px; height: 350px"></div>
-                      <div id="container_yyxt3" style="width: 500px; height: 350px;float:left"></div>
-                      <div id="container_yyxt4" style="width: 500px; height: 350px;float:left"></div>
+                <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="right-end"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+                  <template #reference>
+                    <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
+                    </el-button>
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
+                        <div id="container_yyxt2" style="width: 1000px; height: 350px"></div>
+                        <div id="container_yyxt3" style="width: 500px; height: 350px;float:left"></div>
+                        <div id="container_yyxt4" style="width: 500px; height: 350px;float:left"></div>
 
-                      <div style="display:flex ;clear:left">
+                        <div style="display:flex ;clear:left">
 
-                        <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
 
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
-
-                </template>
-              </el-popover>
-            </div>
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '综合行政管理执法智慧管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-
-
+                  </template>
+                </el-popover>
               </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
+            </div>
+          </el-card>
+
+          <el-card v-if="item.systemName == '调度指挥管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/img-ddzh2.jpg')"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystem(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
+
+                </ul>
 
 
-              <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="right-end"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @详情统计
-                      </p>
+                <el-popover :width="1400" effect="dark" @after-enter=echartInit_ddzh() trigger="click" placement="top"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+                  <template #reference>
+                    <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
+                    </el-button>
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+
+                        <div id="container_ddzh1" style="width: 1400px; height: 400px;"></div>
+                        <!-- <div id="container_ddzh2" style="width: 1200px; height: 400px ;float:left"></div> -->
+                        <div id="container_ddzh2" style="width: 500px; height: 350px;float:left" @click="toDdzh"></div>
+                        <div id="container_ddzh3" style="width: 500px; height: 350px;float:left" @click="toDdzh"></div>
 
 
-                      <div style="display:flex ;clear:left">
+                        <div style="display:flex ;clear:left">
 
-                        <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
 
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
-
-                </template>
-              </el-popover>
-            </div>
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '调度指挥管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-
-
+                  </template>
+                </el-popover>
               </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
+            </div>
+          </el-card>
+          <el-card v-if="item.systemName == '共享单车管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/' + item.image)"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystem(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
+
+                </ul>
+
+                <el-popover :width="1200" effect="dark" @after-enter=echartInit_srzx() trigger="click" placement="left"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+                  <template #reference>
+                    <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
+                    </el-button>
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @详情统计
+                        </p>
+                        <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
+                        <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
 
 
-              <el-popover :width="1400" effect="dark" @after-enter=echartInit_ddzh() trigger="click" placement="top"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @详情统计
-                      </p>
+                        <div style="display:flex ;clear:left">
 
-                      <div id="container_ddzh1" style="width: 1400px; height: 400px;"></div>
-                      <!-- <div id="container_ddzh2" style="width: 1200px; height: 400px ;float:left"></div> -->
-                      <div id="container_ddzh2" style="width: 500px; height: 350px;float:left" @click="toDdzh"></div>
-                      <div id="container_ddzh3" style="width: 500px; height: 350px;float:left" @click="toDdzh"></div>
+                          <dv-border-box6 v-for="item in item.data"
+                            style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
 
-
-                      <div style="display:flex ;clear:left">
-
-                        <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
-
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
-
-                </template>
-              </el-popover>
-            </div>
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '扬尘治理大数据协同管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-
-
+                  </template>
+                </el-popover>
               </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
+            </div>
+          </el-card>
+          <el-card v-if="item.systemName == '扬尘治理大数据协同管家'" class="card" shadow="hover" :body-style="{ padding: '0px' }">
+
+            <el-image class="image" :src="require('@/assets/home/img-ycxt.png')"> </el-image>
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button class="el-button-hjws" type="text" @click="toSystem(item)" style="margin-top:10px">{{
+                  item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+
+            <div class="infoContainer" style="background-color:#2775b6;color:white">
+              <!-- logo -->
+              <!-- <div>
+<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
+</div> -->
+              <!-- 汇总数据列表 -->
+              <div>
+                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
+                <ul class="infoList">
+                  <li v-for="item in item.data" style="font-size:20px">{{ item.infoKey + ": " }}<span>{{ item.infoVal
+                  }}</span></li>
+
+                </ul>
 
 
-              <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="top"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @工地运企信息
-                      </p>
-                      <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500" :header-cell-style="{
-                        'font-size': '18px',
-                        'background': '#303133 !important',
-                        'color': '#ffffff',
-                        'border': 'none !important'
-                      }" :cell-style=changeCellStyle>
-                        <el-table-column prop="名称" label="名称" width="180" />
-                        <el-table-column prop="更新时间" label="更新时间" width="240" />
-                        <el-table-column prop="联系人" label="联系人" width="180" />
-                        <el-table-column prop="车辆数" label="车辆数" width="180" />
-                        <el-table-column prop="联系电话" label="联系电话" />
+                <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="top"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+                  <template #reference>
+                    <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
+                    </el-button>
+                  </template>
+                  <template #default>
+                    <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
+                      <div>
+                        <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
+                          {{ item.systemName }}
+                        </p>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @工地运企信息
+                        </p>
+                        <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500" :header-cell-style="{
+                          'font-size': '18px',
+                          'background': '#303133 !important',
+                          'color': '#ffffff',
+                          'border': 'none !important'
+                        }" :cell-style=changeCellStyle>
+                          <el-table-column prop="名称" label="名称" width="180" />
+                          <el-table-column prop="更新时间" label="更新时间" width="240" />
+                          <el-table-column prop="联系人" label="联系人" width="180" />
+                          <el-table-column prop="车辆数" label="车辆数" width="180" />
+                          <el-table-column prop="联系电话" label="联系电话" />
 
 
-                      </el-table>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @今日超速车辆列表
-                      </p>
-                      <el-table :data="ycxt_tableData2" stripe style="width: 100%" max-height="500" :header-cell-style="{
-                        'font-size': '18px',
-                        'background': '#303133 !important',
-                        'color': '#ffffff',
-                        'border': 'none !important'
-                      }" :cell-style=changeCellStyle>
-                        <el-table-column prop="超速位置" label="超速位置" width="180" />
-                        <el-table-column prop="速度" label="速度" width="280" />
-                        <el-table-column prop="车牌号" label="车牌号" width="180" />
-                        <el-table-column prop="超速时间" label="超速时间" />
+                        </el-table>
+                        <p class="demo-rich-content__mention"
+                          style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+                          @今日超速车辆列表
+                        </p>
+                        <el-table :data="ycxt_tableData2" stripe style="width: 100%" max-height="500" :header-cell-style="{
+                          'font-size': '18px',
+                          'background': '#303133 !important',
+                          'color': '#ffffff',
+                          'border': 'none !important'
+                        }" :cell-style=changeCellStyle>
+                          <el-table-column prop="超速位置" label="超速位置" width="180" />
+                          <el-table-column prop="速度" label="速度" width="280" />
+                          <el-table-column prop="车牌号" label="车牌号" width="180" />
+                          <el-table-column prop="超速时间" label="超速时间" />
 
 
-                      </el-table>
-                      <!-- <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
+                        </el-table>
+                        <!-- <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
                       <div id="container_yyxt2" style="width: 1000px; height: 350px"></div>
                       <div id="container_yyxt3" style="width: 500px; height: 350px;float:left"></div>
                       <div id="container_yyxt4" style="width: 500px; height: 350px;float:left"></div> -->
 
-                      <div style="display:flex ;clear:left">
+                        <div style="display:flex ;clear:left">
 
-                        <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
+                          <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
+                            <div>{{ item.infoKey }}</div>
+                            <div style="text-align:center">{{ item.infoVal }}</div>
+                          </dv-border-box6>
 
+                        </div>
                       </div>
+
                     </div>
 
-                  </div>
-
-                </template>
-              </el-popover>
-            </div>
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '共享单车管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-
-
+                  </template>
+                </el-popover>
               </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
-
-
-              <el-popover :width="1200" effect="dark" @after-enter=echartInit_srzx() trigger="click" placement="left"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @详情统计
-                      </p>
-                      <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
-                      <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
-
-
-                      <div style="display:flex ;clear:left">
-
-                        <dv-border-box6 v-for="item in item.data"
-                          style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </template>
-              </el-popover>
             </div>
-            <div class="srzxInfo" v-if="item.deptId == 1 && item.systemName == '街面图像综合应用管家'" :key="idx"
-              :systemName="item.systemName" :url="item.url" :logo="item.systemLogo" :infoList="item.data"
-              :image="item.image" :to="item.to" :deptId="item.deptId">
-              <div style="margin-bottom:15%;margin-top: 10%;font-size: 25px;">
-                <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                  style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-                <el-button v-else class="el-button-null" type="text" @click="toSystem(item)" style="margin-top:10px">
-                  {{ item.systemName }}</el-button>
+          </el-card>
 
-              </div>
-              <li v-for="item in item.data" style="padding:10px;font-size: 25px;">{{
-                item.infoKey + ": " + item.infoVal
-              }}</li>
-
-
-              <el-popover :width="1000" effect="dark" @after-enter=echartInit() trigger="click" placement="left"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                <template #reference>
-                  <el-button size="medium" style="padding:10pxx;font-size: 25px;" type="primary" link> 查看详情 >
-                  </el-button>
-                </template>
-                <template #default>
-                  <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                    <div>
-                      <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                        {{ item.systemName }}
-                      </p>
-                      <p class="demo-rich-content__mention"
-                        style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                        @详情统计
-                      </p>
-
-
-                      <div style="display:flex ;clear:left">
-
-                        <dv-border-box6 style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                          <div>{{ item.infoKey }}</div>
-                          <div style="text-align:center">{{ item.infoVal }}</div>
-                        </dv-border-box6>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </template>
-              </el-popover>
-            </div>
-          </template>
-        </div>
+        </template>
+        <!-- </div> -->
 
         <div class="classification-title" v-if="choosedDept == -1 | choosedDept == 2">
           招牌景观
@@ -811,7 +773,7 @@
                     </div>
                   </el-popover>
 
-                  <el-popover :width="1200" placement="top" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  <!-- <el-popover :width="1200" placement="top" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
                     <template #reference>
                       <el-button class="el-button-succeed" link type="primary" style=" margin-top:10px;">
@@ -844,7 +806,7 @@
                         </div>
                       </div>
                     </template>
-                  </el-popover>
+                  </el-popover> -->
                 </div>
               </div>
             </div>
@@ -888,7 +850,7 @@
                     item.infoVal
                   }}
                   </li> -->
-                  <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
+                  <!-- <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
                     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
                     <template #reference>
                       <el-button class="el-button-succeed" link type="primary" style=" margin-top:10px;">
@@ -917,12 +879,11 @@
 
 
 
-                          <!-- <div id="container_jgzm4" style="width: 600px; height: 400px ;float:left"></div> -->
 
                         </div>
                       </div>
                     </template>
-                  </el-popover>
+                  </el-popover> -->
                 </div>
               </div>
               <el-image fit="scale-down" :src="require('@/assets/jgzm/' + idx + '-1.jpg')"
@@ -2214,6 +2175,7 @@ const echartInit = () => {
 
   // 指定图表的配置项和数据
   getTrend().then(data => {
+    console.log(data)
     var option = {
       title: {
         text: '事件趋势分析',
@@ -2224,7 +2186,7 @@ const echartInit = () => {
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
       yAxis: {
-        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
+        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type]
       },
       xAxis: {
 
@@ -2238,7 +2200,7 @@ const echartInit = () => {
           color: '#dd6b66',
           // 数据
           data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-          data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+          data[4].lian_value, data[5].lian_value,]
         }
       ]
     }
@@ -2439,6 +2401,11 @@ const echartInit = () => {
 
   })
   getResourceSzcg().then(data => {
+    console.log(data.length)
+    if (data.length == 0) {
+      var default_data = { value: 0, wtly: "城管平台" }
+      data.push(default_data)
+    }
     var option3 = {
       title: {
         text: '来源分析',
@@ -2832,7 +2799,6 @@ onBeforeMount(() => {
   getCntStatus().then(data => {
     ddzh_tableData2.value = data
 
-    console.log(ddzh_tableData2.value)
 
   })
   getAllEvents(today, tomorrow).then(data => {
@@ -2882,7 +2848,7 @@ function openSystem(item) {
 //方法重写，摒弃三级页面，后续如果需要用上面这个
 function toSystem(item) {  //每个子系统登录方式不一样
   console.log(item.systemId)
-  if (item.systemId != '14' && item.systemId != '16' && item.systemId != '17' && item.systemId != '4' && item.systemId != '12') {
+  if (item.systemId != '13' && item.systemId != '16' && item.systemId != '17' && item.systemId != '4' && item.systemId != '12') {
     console.log(item.systemName)
     if (item.url === '') {
 
@@ -2893,7 +2859,7 @@ function toSystem(item) {  //每个子系统登录方式不一样
     } else
       window.open(item.url)
   }
-  if (item.systemId == '14') //共享单车
+  if (item.systemId == '13') //共享单车
     window.open(gxdc.url)
   if (item.systemId == '16') {   //诉易达
 
@@ -3137,7 +3103,6 @@ function logout() {
 }
 
 .img-wrapper {
-  background-image: url('@/assets/srzx/total.png');
   background-size: 100%;
   width: 100%;
   display: flex;
