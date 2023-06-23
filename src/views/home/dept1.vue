@@ -560,7 +560,6 @@ function echartInit_gxdc() {
     })
 }
 function echartInit_yyxt() {
-    console.log(document.getElementById("container_yyxt1"))
     if (document.getElementById("container_yyxt1").hasAttribute("_echarts_instance_"))
         document.getElementById("container_yyxt1").removeAttribute("_echarts_instance_");
     if (document.getElementById("container_yyxt2").hasAttribute("_echarts_instance_"))
@@ -823,7 +822,7 @@ onBeforeMount(() => {
     // })
     getTokenGxdc().then(data => {
         gxdcUrl.value = data
-        gxdc.url = 'http://1.14.108.100/manage/?token=' + gxdcUrl.value
+        gxdc.url = 'http://172.30.19.17:80/manage/?token=' + gxdcUrl.value
         console.log(gxdc.url)
     })
     getMainGxdc().then(data => {
@@ -908,9 +907,9 @@ function show(id, url) {
         })
     } else {
         // router.push({ name: to, params: { subsysName } })
-        if (id != '13' && id != 'ddzh')
+        if (id != 'gxdc' && id != 'ddzh')
             window.open(url)
-        if (id == '13')
+        if (id == 'gxdc')
             window.open(gxdc.url)
         if (id == 'ddzh') {
             var roles = []

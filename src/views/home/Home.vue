@@ -1476,6 +1476,10 @@ const echartInit_srzx = () => {
 }
 
 const echartInit_ddzh = () => {
+  console.log(ddzh_tableData2)
+  if (ddzh_tableData2.value.length == 3) {
+    ddzh_tableData2.value.unshift({ isNormal: false, identity: "办公室人员", num: 0 })
+  }
   if (ddzh_tableData2.value.length == 4) {
     ddzh_tableData2.value.push({ isNormal: false, identity: "执法人员", num: 0 })
   }
@@ -2807,7 +2811,7 @@ onBeforeMount(() => {
   config_szcg.series[0].data[0].value = 90 %
     getTokenGxdc().then(data => {
       gxdcUrl.value = data
-      gxdc.url = 'http://1.14.108.100/manage/?token=' + gxdcUrl.value
+      gxdc.url = 'http://172.30.19.17:80/manage/?token=' + gxdcUrl.value
     })
   getAiAlarm().then(data => {
     hwzy_tableData1.value = data
