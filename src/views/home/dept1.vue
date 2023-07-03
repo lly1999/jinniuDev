@@ -97,98 +97,98 @@
 
                         <div class="city-scape-left-one" @click="one_clicked">
                             <div :class="one_selected == true
-                                    ? 'city-scape-left-number left-number-selected'
-                                    : 'city-scape-left-number'
+                                ? 'city-scape-left-number left-number-selected'
+                                : 'city-scape-left-number'
                                 ">
                                 <div :class="one_selected == true
-                                        ? 'left-number left-number-text-selected'
-                                        : 'left-number'
+                                    ? 'left-number left-number-text-selected'
+                                    : 'left-number'
                                     ">
                                     1
                                 </div>
                             </div>
                             <div :class="one_selected == true
-                                    ? 'city-scape-left-name left-name-selected'
-                                    : 'city-scape-left-name'
+                                ? 'city-scape-left-name left-name-selected'
+                                : 'city-scape-left-name'
                                 " style="top: 38px; left: 60px">
                                 餐饮油烟管家
                             </div>
                             <div :class="one_selected == true
-                                    ? 'col-line col-line-selected'
-                                    : 'col-line'
+                                ? 'col-line col-line-selected'
+                                : 'col-line'
                                 "></div>
                         </div>
 
                         <div class="city-scape-left-two" @click="two_clicked">
                             <div :class="two_selected == true
-                                    ? 'city-scape-left-number left-number-selected'
-                                    : 'city-scape-left-number'
+                                ? 'city-scape-left-number left-number-selected'
+                                : 'city-scape-left-number'
                                 ">
                                 <div :class="two_selected == true
-                                        ? 'left-number left-number-text-selected'
-                                        : 'left-number'
+                                    ? 'left-number left-number-text-selected'
+                                    : 'left-number'
                                     ">
                                     2
                                 </div>
                             </div>
                             <div :class="two_selected == true
-                                    ? 'city-scape-left-name left-name-selected'
-                                    : 'city-scape-left-name'
+                                ? 'city-scape-left-name left-name-selected'
+                                : 'city-scape-left-name'
                                 " style="top: 38px; left: 60px">
                                 调度指挥管家
                             </div>
                             <div :class="two_selected == true
-                                    ? 'col-line col-line-selected'
-                                    : 'col-line'
+                                ? 'col-line col-line-selected'
+                                : 'col-line'
                                 "></div>
                         </div>
 
                         <div class="city-scape-left-four" @click="four_clicked">
                             <div :class="four_selected == true
-                                    ? 'city-scape-left-number left-number-selected'
-                                    : 'city-scape-left-number'
+                                ? 'city-scape-left-number left-number-selected'
+                                : 'city-scape-left-number'
                                 ">
                                 <div :class="four_selected == true
-                                        ? 'left-number left-number-text-selected'
-                                        : 'left-number'
+                                    ? 'left-number left-number-text-selected'
+                                    : 'left-number'
                                     ">
                                     4
                                 </div>
                             </div>
                             <div :class="four_selected == true
-                                    ? 'city-scape-left-name left-name-selected'
-                                    : 'city-scape-left-name'
+                                ? 'city-scape-left-name left-name-selected'
+                                : 'city-scape-left-name'
                                 " style="top: 25px; left: 60px">
                                 <p>扬尘治理</p>
                                 <p>大数据协同管家</p>
                             </div>
                             <div :class="four_selected == true
-                                    ? 'col-line col-line-selected'
-                                    : 'col-line'
+                                ? 'col-line col-line-selected'
+                                : 'col-line'
                                 "></div>
                         </div>
 
                         <div class="city-scape-left-three" @click="three_clicked">
                             <div :class="three_selected == true
-                                    ? 'city-scape-left-number left-number-selected'
-                                    : 'city-scape-left-number'
+                                ? 'city-scape-left-number left-number-selected'
+                                : 'city-scape-left-number'
                                 ">
                                 <div :class="three_selected == true
-                                        ? 'left-number left-number-text-selected'
-                                        : 'left-number'
+                                    ? 'left-number left-number-text-selected'
+                                    : 'left-number'
                                     ">
                                     3
                                 </div>
                             </div>
                             <div :class="three_selected == true
-                                    ? 'city-scape-left-name left-name-selected'
-                                    : 'city-scape-left-name'
+                                ? 'city-scape-left-name left-name-selected'
+                                : 'city-scape-left-name'
                                 " style="top: 37px; left: 60px">
                                 共享单车管家
                             </div>
                             <div :class="three_selected == true
-                                    ? 'col-line col-line-selected'
-                                    : 'col-line'
+                                ? 'col-line col-line-selected'
+                                : 'col-line'
                                 "></div>
                         </div>
 
@@ -393,6 +393,8 @@ import { getMainXzzf } from "@/api/xzzf.js";
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { params } from "@/store/store.js";
 import { getGroup } from "@/api/ddzh";
+import axios from "axios";
+
 import {
     getOverStandard,
     getMonitor,
@@ -422,6 +424,7 @@ const ddzh_hehuachi = ref([]);
 const ddzh_tianhui = ref([]);
 const ddzh_simaqiao = ref([]);
 const ddzh_fenghuanshan = ref([]);
+
 function echartInit_gxdc() {
     if (
         document
@@ -858,93 +861,117 @@ function echartInit_ycxt() {
 
     var myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
     var myChart_ycxt2 = echarts.init(document.getElementById("container_ycxt2"))
-    var option_ycxt1 = {
-        title: {
-            text: '分类工地数量',
-            textStyle: {
-                color: 'black'
-            }
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        xAxis: {
-            type: 'category',
-            data: ["准备开工", "土方开挖", "主体施工", "装饰装修", "总草绿化", "完工"],
+    axios({
+        url: "/api/dust_sys/classified_gps_rate",
+        headers: { 'Authorization': "Bearer" + params.token },
+        method: "get",
+    }).then(resp => {
+
+        var option_ycxt2 = {
+            title: {
+                text: '公司在线率',
+                textStyle: {
+                    color: 'black'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: ["四川省丰戈运输有限责任公司", "成都三胜物流有限公司", "四川明杨运输有限责任公司", "四川唐龙运输有限责任公司"
+                    , "成都垚石物流有限公司", "四川连运能汇物流有限公司", "四川祥骏达物流有限公司"],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: {
+                    //x轴文字的配置
+                    show: true,
+                    interval: 0,//使x轴文字显示全
+                    rotate: 20
+                },
+
+            },
+
+            yAxis: {
+                type: 'value'
+            },
             axisTick: {
                 alignWithLabel: true
             },
-            axisLabel: { interval: 0 },
-
-        },
-
-        yAxis: {
-            type: 'value'
-        },
-        axisTick: {
-            alignWithLabel: true
-        },
-        series: [
-            {
-                data: [12, 22, 42, 32, 12, 15],
-                type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                    color: 'rgba(180, 180, 180, 0.2)'
+            series: [
+                {
+                    data: [resp.data.四川省丰戈运输有限责任公司 * 100,
+                    resp.data.成都三胜物流有限公司 * 100, resp.data.四川明杨运输有限责任公司 * 100,
+                    resp.data.四川唐龙运输有限责任公司 * 100,
+                    resp.data.成都垚石物流有限公司 * 100,
+                    resp.data.四川连运能汇物流有限公司 * 100, resp.data.四川祥骏达物流有限公司 * 100],
+                    type: 'bar',
+                    showBackground: true,
+                    backgroundStyle: {
+                        color: 'rgba(180, 180, 180, 0.2)'
+                    }
                 }
-            }
-        ]
-    };
-    myChart_ycxt1.setOption(option_ycxt1)
-    var option_ycxt2 = {
-        title: {
-            text: '公司在线率',
-            textStyle: {
-                color: 'black'
-            }
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        xAxis: {
-            type: 'category',
-            data: ["四川省丰戈运输有限责任公司", "成都三胜物流有限公司", "四川明杨运输有限责任公司", "四川唐龙运输有限责任公司", "成都垚石物流有限公司", "四川连运能汇物流有限公司", "四川祥骏达物流有限公司"],
+            ]
+        };
+        myChart_ycxt2.setOption(option_ycxt2)
+    })
+    axios({
+        url: "/api/dust_sys/classified_sites_amount",
+        headers: { 'Authorization': "Bearer" + params.token },
+        method: "get",
+    }).then(resp => {
+        console.log(resp.data)
+        var option_ycxt1 = {
+            title: {
+                text: '分类工地数量',
+                textStyle: {
+                    color: 'black'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: ["准备开工", "土方开挖", "主体施工", "装饰装修", "总坪绿化", "完工"],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: { interval: 0 },
+
+            },
+
+            yAxis: {
+                type: 'value'
+            },
             axisTick: {
                 alignWithLabel: true
             },
-            axisLabel: {
-                //x轴文字的配置
-                show: true,
-                interval: 0,//使x轴文字显示全
-                rotate: 20
-            },
-
-        },
-
-        yAxis: {
-            type: 'value'
-        },
-        axisTick: {
-            alignWithLabel: true
-        },
-        series: [
-            {
-                data: [80, 70, 90, 80, 80, 70, 80],
-                type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                    color: 'rgba(180, 180, 180, 0.2)'
+            series: [
+                {
+                    data: [resp.data.准备开工, resp.data.土方开挖,
+                    resp.data.主体施工, resp.data.装饰装修,
+                    resp.data.总坪绿化, resp.data.完工],
+                    type: 'bar',
+                    showBackground: true,
+                    backgroundStyle: {
+                        color: 'rgba(180, 180, 180, 0.2)'
+                    }
                 }
-            }
-        ]
-    };
-    myChart_ycxt2.setOption(option_ycxt2)
+            ]
+        };
+        myChart_ycxt1.setOption(option_ycxt1)
+    })
+
+
+
     // getOverStandard().then(tableData => {
 
     //     var option_yyxt1 = {
@@ -1012,8 +1039,7 @@ const ycxt_tableData2 = ref([]); //扬尘系统
 const depts = ref([]);
 onBeforeMount(() => {
     one_clicked();
-    console.log(route.params.num);
-    // console.log(route.params.name[0])
+
 
     if (route.params.num == "3") three_clicked();
     getCompanyDust().then((data) => {
@@ -1060,10 +1086,8 @@ onBeforeMount(() => {
     getTokenGxdc().then((data) => {
         gxdcUrl.value = data;
         gxdc.url = "http://175.153.176.27:8080/manage/?token=" + gxdcUrl.value;
-        console.log(gxdc.url);
     });
     getMainGxdc().then((data) => {
-        console.log("数据：" + data);
         tableDataGxdc.value = data;
         danche_info[0].value = data[0].infoVal;
         danche_info[1].value = data[1].infoVal;
@@ -1073,9 +1097,9 @@ onBeforeMount(() => {
     });
 });
 
-}
 
-)
+
+
 
 
 // 系统列表
@@ -1093,6 +1117,7 @@ onMounted(() => {
     })
     echartInit_yyxt()
     echartInit_gxdc()
+    echartInit_ycxt()
 })
 //选中的部门
 // -1表示全选，为默认值
