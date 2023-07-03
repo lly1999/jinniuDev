@@ -299,32 +299,13 @@
                             <div id="container_gxdc1" style="width: 500px; height: 350px;float:left"></div>
                             <div id="container_gxdc2" style="width: 700px; height: 350px;float:left"></div>
                         </div>
-                        <div v-if="four_selected == true" class="right-bg">
-                            <p class="demo-rich-content__mention"
-                                style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                                @工地运企信息
-                            </p>
-                            <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500">
-                                <el-table-column prop="名称" label="名称" width="180" />
-                                <el-table-column prop="更新时间" label="更新时间" width="240" />
-                                <el-table-column prop="联系人" label="联系人" width="100" />
-                                <el-table-column prop="车辆数" label="车辆数" width="80" />
-                                <el-table-column prop="联系电话" label="联系电话" />
+                        <div v-show="four_selected == true" class="right-bg">
+
+                            <div id="container_ycxt1" style="width: 700px; height: 350px;"></div>
 
 
-                            </el-table>
-                            <p class="demo-rich-content__mention"
-                                style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                                @今日超速车辆列表
-                            </p>
-                            <el-table :data="ycxt_tableData2" stripe style="width: 100%" max-height="500">
-                                <el-table-column prop="超速位置" label="超速位置" width="180" />
-                                <el-table-column prop="速度" label="速度" width="280" />
-                                <el-table-column prop="车牌号" label="车牌号" width="180" />
-                                <el-table-column prop="超速时间" label="超速时间" />
+                            <div id="container_ycxt2" style="width: 1000px; height: 350px;"></div>
 
-
-                            </el-table>
                         </div>
 
                         <!-- <img v-if="five_selected == true" class="right-bg" src="@/assets/images/city/bg5.png" alt=""> -->
@@ -392,7 +373,7 @@ import { params } from '@/store/store.js'
 import { getGroup } from '@/api/ddzh'
 import { getOverStandard, getMonitor, getCompanyType, getTouSU } from '@/api/yyxt';
 import * as echarts from "echarts";
-import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
+import { getCompanyDust, getOverSpeed, getClassifiedGpsRate, getClassifiedSitesAmount } from "@/api/ycxt";
 
 const tableDataYyxt = ref([])
 const tableDataXzzf = ref([])
@@ -753,6 +734,150 @@ function echartInit_yyxt() {
         myChart_yyxt2.setOption(option_yyxt2)
     })
 }
+function echartInit_ycxt() {
+    if (document.getElementById("container_ycxt1").hasAttribute("_echarts_instance_"))
+        document.getElementById("container_ycxt1").removeAttribute("_echarts_instance_");
+    if (document.getElementById("container_ycxt2").hasAttribute("_echarts_instance_"))
+
+        document.getElementById("container_ycxt2").removeAttribute("_echarts_instance_");
+
+    var myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
+    var myChart_ycxt2 = echarts.init(document.getElementById("container_ycxt2"))
+    var option_ycxt1 = {
+        title: {
+            text: '分类工地数量',
+            textStyle: {
+                color: 'black'
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: ["准备开工", "土方开挖", "主体施工", "装饰装修", "总草绿化", "完工"],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: { interval: 0 },
+
+        },
+
+        yAxis: {
+            type: 'value'
+        },
+        axisTick: {
+            alignWithLabel: true
+        },
+        series: [
+            {
+                data: [12, 22, 42, 32, 12, 15],
+                type: 'bar',
+                showBackground: true,
+                backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                }
+            }
+        ]
+    };
+    myChart_ycxt1.setOption(option_ycxt1)
+    var option_ycxt2 = {
+        title: {
+            text: '公司在线率',
+            textStyle: {
+                color: 'black'
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: ["四川省丰戈运输有限责任公司", "成都三胜物流有限公司", "四川明杨运输有限责任公司", "四川唐龙运输有限责任公司", "成都垚石物流有限公司", "四川连运能汇物流有限公司", "四川祥骏达物流有限公司"],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: {
+                //x轴文字的配置
+                show: true,
+                interval: 0,//使x轴文字显示全
+                rotate: 20
+            },
+
+        },
+
+        yAxis: {
+            type: 'value'
+        },
+        axisTick: {
+            alignWithLabel: true
+        },
+        series: [
+            {
+                data: [80, 70, 90, 80, 80, 70, 80],
+                type: 'bar',
+                showBackground: true,
+                backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                }
+            }
+        ]
+    };
+    myChart_ycxt2.setOption(option_ycxt2)
+    // getOverStandard().then(tableData => {
+
+    //     var option_yyxt1 = {
+    //         title: {
+    //             text: '超标企业街道分布',
+    //             textStyle: {
+    //                 color: 'black'
+    //             }
+    //         },
+    //         tooltip: {
+    //             trigger: 'axis',
+    //             axisPointer: {
+    //                 type: 'shadow'
+    //             }
+    //         },
+    //         xAxis: {
+    //             type: 'category',
+    //             data: [tableData[0].areaname, tableData[1].areaname, tableData[2].areaname, tableData[3].areaname, tableData[4].areaname, tableData[5].areaname, tableData[6].areaname, tableData[7].areaname, tableData[8].areaname, tableData[9].areaname, tableData[10].areaname, tableData[11].areaname, tableData[12].areaname],
+    //             axisTick: {
+    //                 alignWithLabel: true
+    //             },
+    //             axisLabel: { interval: 0 },
+
+    //         },
+
+    //         yAxis: {
+    //             type: 'value'
+    //         },
+    //         axisTick: {
+    //             alignWithLabel: true
+    //         },
+    //         series: [
+    //             {
+    //                 data: [tableData[0].value, tableData[1].value, tableData[2].value, tableData[3].value, tableData[4].value, tableData[5].value, tableData[6].value, tableData[7].value, tableData[8].value, tableData[9].value, tableData[10].value, tableData[11].value, tableData[12].value],
+    //                 type: 'bar',
+    //                 showBackground: true,
+    //                 backgroundStyle: {
+    //                     color: 'rgba(180, 180, 180, 0.2)'
+    //                 }
+    //             }
+    //         ]
+    //     };
+    //     myChart_yyxt1.setOption(option_yyxt1)
+
+    // })
+
+
+}
 //用户信息
 const user = reactive({
     username: '张三',
@@ -836,8 +961,8 @@ onBeforeMount(() => {
 
 }
 
-
 )
+
 
 // 系统列表
 const systemss = ref([])
@@ -854,6 +979,8 @@ onMounted(() => {
     })
     echartInit_yyxt()
     echartInit_gxdc()
+    echartInit_ycxt()
+
 })
 //选中的部门
 // -1表示全选，为默认值

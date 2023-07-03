@@ -12,3 +12,16 @@ export function getOverSpeed() {
         method: 'get'
     })
 }
+export function getClassifiedGpsRate() {
+    return request({
+        url: '/dust_sys/classified_gps_rate',
+        method: 'get'
+    })
+}
+
+export function getClassifiedSitesAmount() {
+    return request({
+        url: '/dust_sys/classified_sites_amount',
+        method: 'get'
+    })
+}
