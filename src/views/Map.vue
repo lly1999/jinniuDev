@@ -34,6 +34,14 @@
               <el-table-column
                 prop="event_id"
                 label="事件编号"
+                min-width="80"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+               <el-table-column
+                prop="event_time"
+                label="事件时间"
                 min-width="150"
                 header-align="center"
                 align="center"
@@ -51,7 +59,7 @@
               <el-table-column
                 prop="Accident_cause"
                 label="事件详情"
-                min-width="250"
+                min-width="200"
                 header-align="center"
                 align="center"
                 :show-overflow-tooltip="true"
@@ -2729,6 +2737,7 @@ const changeColor = () => {
     console.log("resp.code：" + data);
     for (var key in data) {
       var default_site = {
+        event_time:data[key].eventTime,
         site_name: data[key].eventSource,
         Accident_cause: data[key].eventCause,
         event_id: data[key].id,

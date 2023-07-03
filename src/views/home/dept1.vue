@@ -1,7 +1,6 @@
 <template>
     <el-container class="container">
-        <Header style="height:60px " :icon="null">
-
+        <Header style="height: 60px" :icon="null">
             <!-- 系统名字 -->
             <template #title>
                 <span class="text-title">成都市金牛区综合行政执法局,欢迎您~</span>
@@ -9,9 +8,7 @@
             <!-- 时间 -->
 
             <template #time>
-                <div class="text-week">
-                    今天是: {{ date }} {{ week }}
-                </div>
+                <div class="text-week">今天是: {{ date }} {{ week }}</div>
             </template>
 
             <!-- 用户信息 -->
@@ -49,14 +46,13 @@
       <div class="subdepts">{{choosedDeptName}}</div>
     </div> -->
                 <div class="subsys" v-if="!showDepts">
-
                     <class-item v-for="system in choosedSystems" :key="system.systemId" @click="show(system.to, system.url)"
                         :logo="system.systemLogo" :name="system.systemName" styleName="subsysName">
                     </class-item>
                 </div>
                 <div class="subsys" v-if="!showDepts">
-                    <div style="padding-left:15px;margin-top: 20px;">
-                        <el-icon color="#000000" size="20px" @click="backtoHome()" style="cursor:pointer;">
+                    <div style="padding-left: 15px; margin-top: 20px">
+                        <el-icon color="#000000" size="20px" @click="backtoHome()" style="cursor: pointer">
                             <svg t="1656145922576" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="1267" width="32" height="32">
                                 <path
@@ -66,21 +62,14 @@
                         </el-icon>
                     </div>
                 </div>
-
             </el-header>
 
             <div class="background" v-if="choosedDept === 1">
-                <img src="@/assets/home/banner-srzx.png" width="10000" style="overflow-y:auto;overflow-x: auto;">
+                <img src="@/assets/home/banner-srzx.png" width="10000" style="overflow-y: auto; overflow-x: auto" />
             </div>
-
-
-
 
             <!-- 页面显示区域 -->
             <el-main class="main">
-
-
-
                 <!-- <div class="classification-title" v-if="choosedDept==-1|choosedDept==0">
           环境卫生
           <main-info v-for="(item, idx) in choosedSystems" :key="idx" :systemName="item.systemName" :url="item.url"
@@ -107,63 +96,100 @@
                         </div> -->
 
                         <div class="city-scape-left-one" @click="one_clicked">
-                            <div
-                                :class="one_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
-                                <div
-                                    :class="one_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
-                                    1</div>
+                            <div :class="one_selected == true
+                                    ? 'city-scape-left-number left-number-selected'
+                                    : 'city-scape-left-number'
+                                ">
+                                <div :class="one_selected == true
+                                        ? 'left-number left-number-text-selected'
+                                        : 'left-number'
+                                    ">
+                                    1
+                                </div>
                             </div>
-                            <div :class="one_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
-                                style="top: 38px; left: 60px">
+                            <div :class="one_selected == true
+                                    ? 'city-scape-left-name left-name-selected'
+                                    : 'city-scape-left-name'
+                                " style="top: 38px; left: 60px">
                                 餐饮油烟管家
                             </div>
-                            <div :class="one_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="one_selected == true
+                                    ? 'col-line col-line-selected'
+                                    : 'col-line'
+                                "></div>
                         </div>
 
                         <div class="city-scape-left-two" @click="two_clicked">
-                            <div
-                                :class="two_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
-                                <div
-                                    :class="two_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
+                            <div :class="two_selected == true
+                                    ? 'city-scape-left-number left-number-selected'
+                                    : 'city-scape-left-number'
+                                ">
+                                <div :class="two_selected == true
+                                        ? 'left-number left-number-text-selected'
+                                        : 'left-number'
+                                    ">
                                     2
                                 </div>
                             </div>
-                            <div :class="two_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
-                                style="top: 38px; left: 60px">
+                            <div :class="two_selected == true
+                                    ? 'city-scape-left-name left-name-selected'
+                                    : 'city-scape-left-name'
+                                " style="top: 38px; left: 60px">
                                 调度指挥管家
                             </div>
-                            <div :class="two_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="two_selected == true
+                                    ? 'col-line col-line-selected'
+                                    : 'col-line'
+                                "></div>
                         </div>
 
                         <div class="city-scape-left-four" @click="four_clicked">
-                            <div
-                                :class="four_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
-                                <div
-                                    :class="four_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
+                            <div :class="four_selected == true
+                                    ? 'city-scape-left-number left-number-selected'
+                                    : 'city-scape-left-number'
+                                ">
+                                <div :class="four_selected == true
+                                        ? 'left-number left-number-text-selected'
+                                        : 'left-number'
+                                    ">
                                     4
                                 </div>
                             </div>
-                            <div :class="four_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
-                                style="top: 25px; left: 60px">
+                            <div :class="four_selected == true
+                                    ? 'city-scape-left-name left-name-selected'
+                                    : 'city-scape-left-name'
+                                " style="top: 25px; left: 60px">
                                 <p>扬尘治理</p>
                                 <p>大数据协同管家</p>
                             </div>
-                            <div :class="four_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="four_selected == true
+                                    ? 'col-line col-line-selected'
+                                    : 'col-line'
+                                "></div>
                         </div>
 
                         <div class="city-scape-left-three" @click="three_clicked">
-                            <div
-                                :class="three_selected == true ? 'city-scape-left-number left-number-selected' : 'city-scape-left-number'">
-                                <div
-                                    :class="three_selected == true ? 'left-number left-number-text-selected' : 'left-number'">
+                            <div :class="three_selected == true
+                                    ? 'city-scape-left-number left-number-selected'
+                                    : 'city-scape-left-number'
+                                ">
+                                <div :class="three_selected == true
+                                        ? 'left-number left-number-text-selected'
+                                        : 'left-number'
+                                    ">
                                     3
                                 </div>
                             </div>
-                            <div :class="three_selected == true ? 'city-scape-left-name left-name-selected' : 'city-scape-left-name'"
-                                style="top: 37px; left: 60px">
+                            <div :class="three_selected == true
+                                    ? 'city-scape-left-name left-name-selected'
+                                    : 'city-scape-left-name'
+                                " style="top: 37px; left: 60px">
                                 共享单车管家
                             </div>
-                            <div :class="three_selected == true ? 'col-line col-line-selected' : 'col-line'"></div>
+                            <div :class="three_selected == true
+                                    ? 'col-line col-line-selected'
+                                    : 'col-line'
+                                "></div>
                         </div>
 
                         <!-- <div class="city-scape-left-" @click="six_clicked">
@@ -182,19 +208,19 @@
                         <div class="extra-col-line"></div>
                     </div>
 
-                    <div class="city-scape-right" v-for="system_info in  systems " :key="system_info.id">
+                    <div class="city-scape-right" v-for="system_info in systems" :key="system_info.id">
                         <img v-if="one_selected == true" class="right-number-img" src="@/assets/images/city/number1.png"
-                            alt="">
+                            alt="" />
                         <img v-if="two_selected == true" class="right-number-img" src="@/assets/images/city/number2.png"
-                            alt="">
+                            alt="" />
                         <img v-if="three_selected == true" class="right-number-img" src="@/assets/images/city/number3.png"
-                            alt="">
+                            alt="" />
                         <img v-if="four_selected == true" class="right-number-img" src="@/assets/images/city/number4.png"
-                            alt="">
+                            alt="" />
                         <img v-if="five_selected == true" class="right-number-img" src="@/assets/images/city/number5.png"
-                            alt="">
+                            alt="" />
                         <img v-if="six_selected == true" class="right-number-img" src="@/assets/images/city/number6.png"
-                            alt="">
+                            alt="" />
 
                         <div class="system-name">{{ system_info.name }}</div>
                         <div class="system-name-en">{{ system_info.name_en }}</div>
@@ -310,7 +336,7 @@
 
                         <!-- <img v-if="five_selected == true" class="right-bg" src="@/assets/images/city/bg5.png" alt=""> -->
 
-                        <img v-if="six_selected == true" class="right-bg" src="@/assets/images/city/bg6.png" alt="">
+                        <img v-if="six_selected == true" class="right-bg" src="@/assets/images/city/bg6.png" alt="" />
 
                         <div class="system-content">
                             <!-- <img v-if="one_selected == true" class="content-bg" src="@/assets/images/city/content1.png"
@@ -334,12 +360,8 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </el-main>
             <el-image class="banner" :src="require('@/assets/home/banner.jpg')" style="">
-
             </el-image>
         </el-container>
         <!-- 底部信息栏 -->
@@ -355,384 +377,477 @@
     </el-container> -->
     </el-container>
 </template>
-  
+
 <script setup>
-import 'element-plus/theme-chalk/display.css'
-import { ArrowDown } from '@element-plus/icons-vue'
+import "element-plus/theme-chalk/display.css";
+import { ArrowDown } from "@element-plus/icons-vue";
 import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
-import { ElMessage } from 'element-plus';
-import { useRouter, useRoute } from 'vue-router';
-import MainInfo from '@/views/home/components/MainInfo.vue'
-import ClassItem from '@/views/home/components/ClassItem.vue'
-import Header from "@/components/Header.vue"
-import { get, getDeptList, getSystemList } from '@/api/home.js'
-import { getMainInfoYyxt } from '@/api/yyxt.js'
-import { getMainXzzf } from '@/api/xzzf.js'
+import { ElMessage } from "element-plus";
+import { useRouter, useRoute } from "vue-router";
+import MainInfo from "@/views/home/components/MainInfo.vue";
+import ClassItem from "@/views/home/components/ClassItem.vue";
+import Header from "@/components/Header.vue";
+import { get, getDeptList, getSystemList } from "@/api/home.js";
+import { getMainInfoYyxt } from "@/api/yyxt.js";
+import { getMainXzzf } from "@/api/xzzf.js";
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
-import { params } from '@/store/store.js'
-import { getGroup } from '@/api/ddzh'
-import { getOverStandard, getMonitor, getCompanyType, getTouSU } from '@/api/yyxt';
+import { params } from "@/store/store.js";
+import { getGroup } from "@/api/ddzh";
+import {
+    getOverStandard,
+    getMonitor,
+    getCompanyType,
+    getTouSU,
+} from "@/api/yyxt";
 import * as echarts from "echarts";
 import { getCompanyDust, getOverSpeed, getClassifiedGpsRate, getClassifiedSitesAmount } from "@/api/ycxt";
 
-const tableDataYyxt = ref([])
-const tableDataXzzf = ref([])
-const tableDataGxdc = ref([])
-const gxdc = reactive({ url: '' })
-const gxdcUrl = ref('')
+const tableDataYyxt = ref([]);
+const tableDataXzzf = ref([]);
+const tableDataGxdc = ref([]);
+const gxdc = reactive({ url: "" });
+const gxdcUrl = ref("");
 let route = useRoute();
-const imgVisible = ref(true)
-const ddzh_jinquan = ref([])
-const ddzh_fuqin = ref([])
-const ddzh_xianlu = ref([])
-const ddzh_chadianzi = ref([])
-const ddzh_shaheyuan = ref([])
-const ddzh_xihua = ref([])
-const ddzh_yingmenkou = ref([])
-const ddzh_jiulidi = ref([])
-const ddzh_wukuaishi = ref([])
-const ddzh_hehuachi = ref([])
-const ddzh_tianhui = ref([])
-const ddzh_simaqiao = ref([])
-const ddzh_fenghuanshan = ref([])
+const imgVisible = ref(true);
+const ddzh_jinquan = ref([]);
+const ddzh_fuqin = ref([]);
+const ddzh_xianlu = ref([]);
+const ddzh_chadianzi = ref([]);
+const ddzh_shaheyuan = ref([]);
+const ddzh_xihua = ref([]);
+const ddzh_yingmenkou = ref([]);
+const ddzh_jiulidi = ref([]);
+const ddzh_wukuaishi = ref([]);
+const ddzh_hehuachi = ref([]);
+const ddzh_tianhui = ref([]);
+const ddzh_simaqiao = ref([]);
+const ddzh_fenghuanshan = ref([]);
 function echartInit_gxdc() {
-    if (document.getElementById("container_gxdc1").hasAttribute("_echarts_instance_"))
-        document.getElementById("container_gxdc1").removeAttribute("_echarts_instance_");
+    if (
+        document
+            .getElementById("container_gxdc1")
+            .hasAttribute("_echarts_instance_")
+    )
+        document
+            .getElementById("container_gxdc1")
+            .removeAttribute("_echarts_instance_");
     var myChart_gxdc = echarts.init(document.getElementById("container_gxdc1"));
 
-    if (document.getElementById("container_gxdc2").hasAttribute("_echarts_instance_"))
-        document.getElementById("container_gxdc2").removeAttribute("_echarts_instance_");
+    if (
+        document
+            .getElementById("container_gxdc2")
+            .hasAttribute("_echarts_instance_")
+    )
+        document
+            .getElementById("container_gxdc2")
+            .removeAttribute("_echarts_instance_");
     var myChart_gxdc1 = echarts.init(document.getElementById("container_gxdc2"));
     var option_gxdc2 = {
         title: {
-            text: '公司统计',
+            text: "公司统计",
             textStyle: {
-                color: 'black'
-            }
+                color: "black",
+            },
         },
 
-
         tooltip: {
-            trigger: 'axis',
+            trigger: "axis",
             axisPointer: {
                 // Use axis to trigger tooltip
-                type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-            }
+                type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+            },
         },
         legend: {},
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
         },
         xAxis: {
-            type: 'value'
+            type: "value",
         },
         yAxis: {
-            type: 'category',
-            data: ['美团', '哈啰', '青桔']
+            type: "category",
+            data: ["美团", "哈啰", "青桔"],
         },
         series: [
             {
-                name: '正常停放',
-                type: 'bar',
-                stack: 'total',
+                name: "正常停放",
+                type: "bar",
+                stack: "total",
                 label: {
-                    show: true
+                    show: true,
                 },
                 textStyle: {
-                    color: '#ccc'
+                    color: "#ccc",
                 },
                 emphasis: {
-                    focus: 'series'
+                    focus: "series",
                 },
-                data: [18244, 14765, 19339]
+                data: [18244, 14765, 19339],
             },
             {
-                name: '异常停放',
-                type: 'bar',
-                stack: 'total',
+                name: "异常停放",
+                type: "bar",
+                stack: "total",
                 label: {
-                    show: true
+                    show: true,
                 },
                 emphasis: {
-                    focus: 'series'
-                }, textStyle: {
-                    color: '#ccc'
+                    focus: "series",
                 },
-                data: [2231, 4902, 1872]
+                textStyle: {
+                    color: "#ccc",
+                },
+                data: [2231, 4902, 1872],
             },
             {
-                name: '正常行驶',
-                type: 'bar',
-                stack: 'total',
+                name: "正常行驶",
+                type: "bar",
+                stack: "total",
                 label: {
-                    show: true
+                    show: true,
                 },
                 emphasis: {
-                    focus: 'series'
-                }, textStyle: {
-                    color: '#ccc'
+                    focus: "series",
                 },
-                data: [1537, 932, 1948]
+                textStyle: {
+                    color: "#ccc",
+                },
+                data: [1537, 932, 1948],
             },
-
-        ]
+        ],
     };
-    myChart_gxdc1.setOption(option_gxdc2)
+    myChart_gxdc1.setOption(option_gxdc2);
 
-    getMainGxdc().then(gxdcData => {
+    getMainGxdc().then((gxdcData) => {
         var option_gxdc1 = {
             title: {
-                text: '单车统计',
+                text: "单车统计",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             tooltip: {
-                trigger: 'item'
+                trigger: "item",
             },
             legend: {
-                top: '5%',
-                left: 'center',
+                top: "5%",
+                left: "center",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             series: [
                 {
-                    name: '单车',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
+                    name: "单车",
+                    type: "pie",
+                    radius: ["40%", "70%"],
                     avoidLabelOverlap: false,
                     itemStyle: {
                         borderRadius: 10,
-                        borderColor: '#fff',
-                        borderWidth: 2
+                        borderColor: "#fff",
+                        borderWidth: 2,
                     },
                     label: {
                         show: false,
-                        position: 'center'
+                        position: "center",
                     },
                     emphasis: {
                         label: {
                             show: true,
                             fontSize: 35,
-                            fontWeight: 'bold',
-
-                        }
+                            fontWeight: "bold",
+                        },
                     },
                     labelLine: {
-                        show: false
+                        show: false,
                     },
                     data: [
-                        { value: gxdcData[2].infoVal, name: '正常停放车辆' },
-                        { value: gxdcData[1].infoVal, name: '异常停放车辆' },
-                        { value: gxdcData[3].infoVal, name: '行驶中车辆' },
+                        { value: gxdcData[2].infoVal, name: "正常停放车辆" },
+                        { value: gxdcData[1].infoVal, name: "异常停放车辆" },
+                        { value: gxdcData[3].infoVal, name: "行驶中车辆" },
                         // { value: 580, name: 'Email' },
                         // { value: 484, name: 'Union Ads' },
                         // { value: 300, name: 'Video Ads' }
-                    ]
-                }
-            ]
-        }
-        myChart_gxdc.setOption(option_gxdc1)
-    })
+                    ],
+                },
+            ],
+        };
+        myChart_gxdc.setOption(option_gxdc1);
+    });
 }
 function echartInit_yyxt() {
-    if (document.getElementById("container_yyxt1").hasAttribute("_echarts_instance_"))
-        document.getElementById("container_yyxt1").removeAttribute("_echarts_instance_");
-    if (document.getElementById("container_yyxt2").hasAttribute("_echarts_instance_"))
-
-        document.getElementById("container_yyxt2").removeAttribute("_echarts_instance_");
-    if (document.getElementById("container_yyxt3").hasAttribute("_echarts_instance_"))
-
-        document.getElementById("container_yyxt3").removeAttribute("_echarts_instance_");
-    var myChart_yyxt1 = echarts.init(document.getElementById("container_yyxt1"))
-    var myChart_yyxt2 = echarts.init(document.getElementById("container_yyxt2"))
-    var myChart_yyxt3 = echarts.init(document.getElementById("container_yyxt3"))
-    getOverStandard().then(tableData => {
-
+    if (
+        document
+            .getElementById("container_yyxt1")
+            .hasAttribute("_echarts_instance_")
+    )
+        document
+            .getElementById("container_yyxt1")
+            .removeAttribute("_echarts_instance_");
+    if (
+        document
+            .getElementById("container_yyxt2")
+            .hasAttribute("_echarts_instance_")
+    )
+        document
+            .getElementById("container_yyxt2")
+            .removeAttribute("_echarts_instance_");
+    if (
+        document
+            .getElementById("container_yyxt3")
+            .hasAttribute("_echarts_instance_")
+    )
+        document
+            .getElementById("container_yyxt3")
+            .removeAttribute("_echarts_instance_");
+    var myChart_yyxt1 = echarts.init(document.getElementById("container_yyxt1"));
+    var myChart_yyxt2 = echarts.init(document.getElementById("container_yyxt2"));
+    var myChart_yyxt3 = echarts.init(document.getElementById("container_yyxt3"));
+    getOverStandard().then((tableData) => {
         var option_yyxt1 = {
             title: {
-                text: '超标企业街道分布',
+                text: "超标企业街道分布",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             tooltip: {
-                trigger: 'axis',
+                trigger: "axis",
                 axisPointer: {
-                    type: 'shadow'
-                }
+                    type: "shadow",
+                },
             },
             xAxis: {
-                type: 'category',
-                data: [tableData[0].areaname, tableData[1].areaname, tableData[2].areaname, tableData[3].areaname, tableData[4].areaname, tableData[5].areaname, tableData[6].areaname, tableData[7].areaname, tableData[8].areaname, tableData[9].areaname, tableData[10].areaname, tableData[11].areaname, tableData[12].areaname],
+                type: "category",
+                data: [
+                    tableData[0].areaname,
+                    tableData[1].areaname,
+                    tableData[2].areaname,
+                    tableData[3].areaname,
+                    tableData[4].areaname,
+                    tableData[5].areaname,
+                    tableData[6].areaname,
+                    tableData[7].areaname,
+                    tableData[8].areaname,
+                    tableData[9].areaname,
+                    tableData[10].areaname,
+                    tableData[11].areaname,
+                    tableData[12].areaname,
+                ],
                 axisTick: {
-                    alignWithLabel: true
+                    alignWithLabel: true,
                 },
                 axisLabel: { interval: 0 },
-
             },
 
             yAxis: {
-                type: 'value'
+                type: "value",
             },
             axisTick: {
-                alignWithLabel: true
+                alignWithLabel: true,
             },
             series: [
                 {
-                    data: [tableData[0].value, tableData[1].value, tableData[2].value, tableData[3].value, tableData[4].value, tableData[5].value, tableData[6].value, tableData[7].value, tableData[8].value, tableData[9].value, tableData[10].value, tableData[11].value, tableData[12].value],
-                    type: 'bar',
+                    data: [
+                        tableData[0].value,
+                        tableData[1].value,
+                        tableData[2].value,
+                        tableData[3].value,
+                        tableData[4].value,
+                        tableData[5].value,
+                        tableData[6].value,
+                        tableData[7].value,
+                        tableData[8].value,
+                        tableData[9].value,
+                        tableData[10].value,
+                        tableData[11].value,
+                        tableData[12].value,
+                    ],
+                    type: "bar",
                     showBackground: true,
                     backgroundStyle: {
-                        color: 'rgba(180, 180, 180, 0.2)'
-                    }
-                }
-            ]
+                        color: "rgba(180, 180, 180, 0.2)",
+                    },
+                },
+            ],
         };
-        myChart_yyxt1.setOption(option_yyxt1)
-
-    })
-    getMonitor().then(tableData => {
+        myChart_yyxt1.setOption(option_yyxt1);
+    });
+    getMonitor().then((tableData) => {
         var option_yyxt3 = {
             title: {
-                text: '餐饮企业监控级别',
+                text: "餐饮企业监控级别",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             tooltip: {
-                trigger: 'item'
+                trigger: "item",
             },
             legend: {
-                top: '5%',
-                left: 'center',
+                top: "5%",
+                left: "center",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             series: [
                 {
-                    name: '企业',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
+                    name: "企业",
+                    type: "pie",
+                    radius: ["40%", "70%"],
                     avoidLabelOverlap: false,
                     itemStyle: {
                         borderRadius: 10,
-                        borderColor: '#fff',
-                        borderWidth: 2
+                        borderColor: "#fff",
+                        borderWidth: 2,
                     },
                     label: {
                         show: false,
-                        position: 'center'
+                        position: "center",
                     },
                     emphasis: {
                         label: {
                             show: true,
                             fontSize: 35,
-                            fontWeight: 'bold',
-
-                        }
+                            fontWeight: "bold",
+                        },
                     },
                     labelLine: {
-                        show: false
+                        show: false,
                     },
                     data: [
-                        { value: tableData[0].ct, name: '常态' },
-                        { value: tableData[0].yb, name: '一般' },
-                        { value: tableData[0].zd, name: '重点' },
+                        { value: tableData[0].ct, name: "常态" },
+                        { value: tableData[0].yb, name: "一般" },
+                        { value: tableData[0].zd, name: "重点" },
                         // { value: 484, name: 'Union Ads' },
                         // { value: 300, name: 'Video Ads' }
-                    ]
-                }
-            ]
-        }
-        myChart_yyxt3.setOption(option_yyxt3)
-    })
-    getTouSU().then(data => {
-
+                    ],
+                },
+            ],
+        };
+        myChart_yyxt3.setOption(option_yyxt3);
+    });
+    getTouSU().then((data) => {
         if (data.tsLastNow.length < 12) {
             for (let i = 0; i < 20; i++) {
-                var tmp = { count: 0 }
-                data.tsLastNow.push(tmp)
+                var tmp = { count: 0 };
+                data.tsLastNow.push(tmp);
             }
-
         }
         var option_yyxt2 = {
-
             title: {
-                text: '油烟投诉趋势图',
+                text: "油烟投诉趋势图",
                 textStyle: {
-                    color: 'black'
-                }
+                    color: "black",
+                },
             },
             tooltip: {
-                trigger: 'axis'
+                trigger: "axis",
             },
             legend: {
                 textStyle: {
-                    color: 'black'
+                    color: "black",
                 },
-                data: ['2021', '2022', '2023',]
+                data: ["2021", "2022", "2023"],
             },
             grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
+                left: "3%",
+                right: "4%",
+                bottom: "3%",
+                containLabel: true,
             },
             toolbox: {
                 feature: {
-                    saveAsImage: {}
-                }
+                    saveAsImage: {},
+                },
             },
             xAxis: {
-                type: 'category',
+                type: "category",
                 boundaryGap: false,
-                data: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+                data: [
+                    "01",
+                    "02",
+                    "03",
+                    "04",
+                    "05",
+                    "06",
+                    "07",
+                    "08",
+                    "09",
+                    "10",
+                    "11",
+                    "12",
+                ],
             },
             yAxis: {
-                type: 'value'
+                type: "value",
             },
             series: [
                 {
-                    name: '2021',
-                    type: 'line',
+                    name: "2021",
+                    type: "line",
 
-                    data: [data.tsLastTow[0].count, data.tsLastTow[1].count, data.tsLastTow[2].count,
-                    data.tsLastTow[3].count, data.tsLastTow[4].count,
-                    data.tsLastTow[5].count, data.tsLastTow[6].count, data.tsLastTow[7].count,
-                    data.tsLastTow[8].count, data.tsLastTow[9].count,
-                    data.tsLastTow[10].count, data.tsLastTow[11].count]
+                    data: [
+                        data.tsLastTow[0].count,
+                        data.tsLastTow[1].count,
+                        data.tsLastTow[2].count,
+                        data.tsLastTow[3].count,
+                        data.tsLastTow[4].count,
+                        data.tsLastTow[5].count,
+                        data.tsLastTow[6].count,
+                        data.tsLastTow[7].count,
+                        data.tsLastTow[8].count,
+                        data.tsLastTow[9].count,
+                        data.tsLastTow[10].count,
+                        data.tsLastTow[11].count,
+                    ],
                 },
                 {
-                    name: '2022',
-                    type: 'line',
+                    name: "2022",
+                    type: "line",
 
-                    data: [data.tsLast[0].count, data.tsLast[1].count, data.tsLast[2].count,
-                    data.tsLast[3].count, data.tsLast[4].count,
-                    data.tsLast[5].count, data.tsLast[6].count, data.tsLast[7].count,
-                    data.tsLast[8].count, data.tsLast[9].count,
-                    data.tsLast[10].count, data.tsLast[11].count]
+                    data: [
+                        data.tsLast[0].count,
+                        data.tsLast[1].count,
+                        data.tsLast[2].count,
+                        data.tsLast[3].count,
+                        data.tsLast[4].count,
+                        data.tsLast[5].count,
+                        data.tsLast[6].count,
+                        data.tsLast[7].count,
+                        data.tsLast[8].count,
+                        data.tsLast[9].count,
+                        data.tsLast[10].count,
+                        data.tsLast[11].count,
+                    ],
                 },
                 {
-                    name: '2023',
-                    type: 'line',
+                    name: "2023",
+                    type: "line",
 
-                    data: [data.tsLastNow[0].count, data.tsLastNow[1].count, data.tsLastNow[2].count,
-                    data.tsLastNow[3].count, data.tsLastNow[4].count,
-                    data.tsLastNow[5].count, data.tsLastNow[6].count, data.tsLastNow[7].count, data.tsLastNow[8].count,
-                    data.tsLastNow[9].count, data.tsLastNow[10].count, data.tsLastNow[11].count]
+                    data: [
+                        data.tsLastNow[0].count,
+                        data.tsLastNow[1].count,
+                        data.tsLastNow[2].count,
+                        data.tsLastNow[3].count,
+                        data.tsLastNow[4].count,
+                        data.tsLastNow[5].count,
+                        data.tsLastNow[6].count,
+                        data.tsLastNow[7].count,
+                        data.tsLastNow[8].count,
+                        data.tsLastNow[9].count,
+                        data.tsLastNow[10].count,
+                        data.tsLastNow[11].count,
+                    ],
                 },
-
-            ]
+            ],
         };
-        myChart_yyxt2.setOption(option_yyxt2)
-    })
+        myChart_yyxt2.setOption(option_yyxt2);
+    });
 }
 function echartInit_ycxt() {
     if (document.getElementById("container_ycxt1").hasAttribute("_echarts_instance_"))
@@ -880,62 +995,59 @@ function echartInit_ycxt() {
 }
 //用户信息
 const user = reactive({
-    username: '张三',
-    role: '管理员'
-})
+    username: "张三",
+    role: "管理员",
+});
 //日期 周
 let date = new Date().toLocaleDateString();
 var a = new Array("日", "一", "二", "三", "四", "五", "六");
 var str = new Date().getDay();
 var week = "星期" + a[str];
 function toSystem(item) {
-    router.push({ name: item.to, params: item.systemName })
+    router.push({ name: item.to, params: item.systemName });
 }
-const ycxt_tableData1 = ref([])
-const ycxt_tableData2 = ref([]) //扬尘系统
+const ycxt_tableData1 = ref([]);
+const ycxt_tableData2 = ref([]); //扬尘系统
 //部门列表, 从后端获取
-const depts = ref([])
+const depts = ref([]);
 onBeforeMount(() => {
     one_clicked();
-    console.log(route.params.num)
+    console.log(route.params.num);
     // console.log(route.params.name[0])
 
-    if (route.params.num == '3') three_clicked();
-    getCompanyDust().then(data => {
-        ycxt_tableData1.value = data
-    })
-    getOverSpeed().then(data => {
-        if (data.length != 0)
-            ycxt_tableData2.value = data
-    })
-    getGroup().then(data => {
-        ddzh_jinquan.value = data.金泉中队
-        ddzh_shaheyuan.value = data.沙河源中队
-        ddzh_chadianzi.value = data.茶店子中队
-        ddzh_xihua.value = data.西华中队
-        ddzh_yingmenkou.value = data.营门口中队
-        ddzh_jiulidi.value = data.九里堤中队
-        ddzh_hehuachi.value = data.荷花池中队
-        ddzh_wukuaishi.value = data.五块石中队
-        ddzh_tianhui.value = data.天回中队
-        ddzh_simaqiao.value = data.驷马桥中队
-        ddzh_fenghuanshan.value = data.凤凰山中队
-        ddzh_xianlu.value = data.西安路中队
-        ddzh_fuqin.value = data.抚琴中队
-    })
-    getDeptList()
-        .then(response => {
-            depts.value = response
-        })
-    getMainInfoYyxt().then(data => {
-        tableDataYyxt.value = data
-        canyin_info[0].value = tableDataYyxt.value[0].infoVal
-        canyin_info[1].value = tableDataYyxt.value[1].infoVal
-        canyin_info[2].value = tableDataYyxt.value[2].infoVal
-        canyin_info[3].value = tableDataYyxt.value[3].infoVal
-        canyin_info[4].value = tableDataYyxt.value[4].infoVal
-
-    })
+    if (route.params.num == "3") three_clicked();
+    getCompanyDust().then((data) => {
+        ycxt_tableData1.value = data;
+    });
+    getOverSpeed().then((data) => {
+        if (data.length != 0) ycxt_tableData2.value = data;
+    });
+    getGroup().then((data) => {
+        ddzh_jinquan.value = data.金泉中队;
+        ddzh_shaheyuan.value = data.沙河源中队;
+        ddzh_chadianzi.value = data.茶店子中队;
+        ddzh_xihua.value = data.西华中队;
+        ddzh_yingmenkou.value = data.营门口中队;
+        ddzh_jiulidi.value = data.九里堤中队;
+        ddzh_hehuachi.value = data.荷花池中队;
+        ddzh_wukuaishi.value = data.五块石中队;
+        ddzh_tianhui.value = data.天回中队;
+        ddzh_simaqiao.value = data.驷马桥中队;
+        ddzh_fenghuanshan.value = data.凤凰山中队;
+        ddzh_xianlu.value = data.西安路中队;
+        ddzh_fuqin.value = data.抚琴中队;
+    });
+    getDeptList().then((response) => {
+        depts.value = response;
+    });
+    getMainInfoYyxt().then((data) => {
+        tableDataYyxt.value = data;
+        canyin_info[0].value = tableDataYyxt.value[0].infoVal;
+        canyin_info[1].value = tableDataYyxt.value[1].infoVal;
+        canyin_info[2].value = tableDataYyxt.value[2].infoVal;
+        canyin_info[3].value = tableDataYyxt.value[3].infoVal;
+        canyin_info[4].value = tableDataYyxt.value[4].infoVal;
+    });
     // getMainXzzf().then(data => {
     //     tableDataXzzf.value = data
     //     zonghe_info[0].value = data[0].infoVal
@@ -945,19 +1057,21 @@ onBeforeMount(() => {
     //     zonghe_info[4].value = data[4].infoVal
 
     // })
-    getTokenGxdc().then(data => {
-        gxdcUrl.value = data
-        gxdc.url = 'http://172.30.19.17:80/manage/?token=' + gxdcUrl.value
-        console.log(gxdc.url)
-    })
-    getMainGxdc().then(data => {
-        tableDataGxdc.value = data
-        danche_info[0].value = data[0].infoVal
-        danche_info[1].value = data[1].infoVal
-        danche_info[2].value = data[2].infoVal
-        danche_info[3].value = data[3].infoVal
-        danche_info[4].value = data[4].infoVal
-    })
+    getTokenGxdc().then((data) => {
+        gxdcUrl.value = data;
+        gxdc.url = "http://175.153.176.27:8080/manage/?token=" + gxdcUrl.value;
+        console.log(gxdc.url);
+    });
+    getMainGxdc().then((data) => {
+        console.log("数据：" + data);
+        tableDataGxdc.value = data;
+        danche_info[0].value = data[0].infoVal;
+        danche_info[1].value = data[1].infoVal;
+        danche_info[2].value = data[2].infoVal;
+        danche_info[3].value = data[3].infoVal;
+        danche_info[4].value = data[4].infoVal;
+    });
+});
 
 }
 
@@ -965,7 +1079,7 @@ onBeforeMount(() => {
 
 
 // 系统列表
-const systemss = ref([])
+const systemss = ref([]);
 onMounted(() => {
 
     getSystemList().then(data => {
@@ -979,93 +1093,99 @@ onMounted(() => {
     })
     echartInit_yyxt()
     echartInit_gxdc()
-    echartInit_ycxt()
-
 })
 //选中的部门
 // -1表示全选，为默认值
-const choosedDept = ref(1)
-const choosedDeptName = ref()
+const choosedDept = ref(1);
+const choosedDeptName = ref();
 //选中部门对应的子系统
 const choosedSystems = computed(() => {
     //过滤函数
     let filterFun = (system) => {
         // 只显示选中部门的子系统
-        return system.deptId === choosedDept.value
-    }
+        return system.deptId === choosedDept.value;
+    };
     //显示所有部门的子系统
     if (choosedDept.value === -1) {
-        filterFun = () => true
+        filterFun = () => true;
     }
 
-    return systemss.value
-        .filter(filterFun)
+    return systemss.value.filter(filterFun);
     // .filter(system => {
     //   console.log(system)
     //   // 只显示有数据的子系统
     //   return system.data && system.data.length != 0
     // })
-})
+});
 
 // 切换显示部门和子系统
-const showDepts = ref(false)
+const showDepts = ref(false);
 function switchShowDepts(deptId, deptName) {
-    choosedDept.value = deptId
-    showDepts.value = !showDepts.value
-    choosedDeptName.value = deptName
+    choosedDept.value = deptId;
+    showDepts.value = !showDepts.value;
+    choosedDeptName.value = deptName;
     if (deptId != 1) {
-        imgVisible.value = false
+        imgVisible.value = false;
     }
     if (deptId == -1) {
-        imgVisible.value = true
-
+        imgVisible.value = true;
     }
 }
 
-const router = useRouter()
+const router = useRouter();
 // 跳转到to指定的子系统汇总页面
 function show(id, url) {
-    console.log(id)
-    if (url === '') {
-
+    console.log(id);
+    if (url === "") {
         ElMessage({
             showClose: true,
-            message: '正在开发中...'
-        })
+            message: "正在开发中...",
+        });
     } else {
         // router.push({ name: to, params: { subsysName } })
-        if (id != 'gxdc' && id != 'ddzh')
-            window.open(url)
-        if (id == 'gxdc')
-            window.open(gxdc.url)
-        if (id == 'ddzh') {
-            var roles = []
-            roles = params.roleId.split(",")
-            console.log(roles.indexOf('84'))
+        if (id != "gxdc" && id != "ddzh") window.open(url);
+        if (id == "gxdc") window.open(gxdc.url);
+        if (id == "ddzh") {
+            var roles = [];
+            roles = params.roleId.split(",");
+            console.log(roles.indexOf("84"));
             // console.log(params.roleId)
-            if (roles.indexOf('84') != -1 || roles.indexOf('111') != -1 || roles.indexOf('83') != -1) {
-                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008060886&pwd=MTIzNDU2"
-                window.open(ddzh_url)
+            if (
+                roles.indexOf("84") != -1 ||
+                roles.indexOf("111") != -1 ||
+                roles.indexOf("83") != -1
+            ) {
+                var ddzh_url =
+                    "https://101.37.246.72:8079/map/?username=18008060886&pwd=MTIzNDU2";
+                window.open(ddzh_url);
             }
-            if (roles.indexOf('93') != -1) {
-                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061151&pwd=MTIzNDU2"
-                window.open(ddzh_url)
-            }
-
-            if (roles.indexOf('120') != -1) {
-                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061081&pwd=MTIzNDU2"
-                window.open(ddzh_url)
-            }
-            if (roles.indexOf('96') != -1 || roles.indexOf('99') != -1 || roles.indexOf('102') != -1) {
-                var ddzh_url = "https://101.37.246.72:8079/map/?username=18008061109&pwd=MTIzNDU2"
-                window.open(ddzh_url)
-            }
-            else {
-                var ddzh_url = "https://101.37.246.72:8079/map/?username=" + params.username + "&pwd=MTIzNDU2"
-                console.log(ddzh_url)
-                window.open(url)
+            if (roles.indexOf("93") != -1) {
+                var ddzh_url =
+                    "https://101.37.246.72:8079/map/?username=18008061151&pwd=MTIzNDU2";
+                window.open(ddzh_url);
             }
 
+            if (roles.indexOf("120") != -1) {
+                var ddzh_url =
+                    "https://101.37.246.72:8079/map/?username=18008061081&pwd=MTIzNDU2";
+                window.open(ddzh_url);
+            }
+            if (
+                roles.indexOf("96") != -1 ||
+                roles.indexOf("99") != -1 ||
+                roles.indexOf("102") != -1
+            ) {
+                var ddzh_url =
+                    "https://101.37.246.72:8079/map/?username=18008061109&pwd=MTIzNDU2";
+                window.open(ddzh_url);
+            } else {
+                var ddzh_url =
+                    "https://101.37.246.72:8079/map/?username=" +
+                    params.username +
+                    "&pwd=MTIzNDU2";
+                console.log(ddzh_url);
+                window.open(url);
+            }
         } //调度指挥
     }
     // if (to === '') {
@@ -1079,14 +1199,14 @@ function show(id, url) {
     // }
 }
 function toMap() {
-    router.push('/map')
+    router.push("/map");
 }
 function logout() {
     //TODO 清除登录信息
-    router.push('/login')
+    router.push("/login");
 }
 function backtoHome() {
-    router.push('/home')
+    router.push("/home");
 }
 let one_selected = ref(false);
 let two_selected = ref(false);
@@ -1103,31 +1223,30 @@ let system_danche = reactive({});
 let system_jiemiantuxiang = reactive({});
 let zonghe_info = [
     { desc: "今日结案", value: "" },
-    { desc: "今日上报案件", value: '' },
-    { desc: "今日结案率", value: '' },
-    { desc: "本周解决", value: '' },
-    { desc: "本周上报案件", value: '' }
-]
+    { desc: "今日上报案件", value: "" },
+    { desc: "今日结案率", value: "" },
+    { desc: "本周解决", value: "" },
+    { desc: "本周上报案件", value: "" },
+];
 let canyin_info = [
     { desc: "已安装设备企业", value: "675" },
-    { desc: "正常运行企业", value: '490' },
-    { desc: "离线企业数", value: '182' },
-    { desc: "超标企业数", value: '1' },
-    { desc: "预警企业数", value: '2' }
-]
+    { desc: "正常运行企业", value: "490" },
+    { desc: "离线企业数", value: "182" },
+    { desc: "超标企业数", value: "1" },
+    { desc: "预警企业数", value: "2" },
+];
 let danche_info = [
     { desc: "全部停放车辆", value: "40684" },
-    { desc: "异常停放车辆", value: '6927' },
-    { desc: "正常停放车辆", value: '33757' },
-    { desc: "行驶中车辆", value: '2767' },
-    { desc: "分值", value: '0.829' }
-]
+    { desc: "异常停放车辆", value: "6927" },
+    { desc: "正常停放车辆", value: "33757" },
+    { desc: "行驶中车辆", value: "2767" },
+    { desc: "分值", value: "0.829" },
+];
 // const one_clicked = () => {
 //     systems.splice(0, systems.length);
 
 //     system_zonghe.name = "成都市综合行政管理执法智慧服务平台";
 //     system_zonghe.name_en = "Intelligent Service Platform For Comprehensive Administrative Management And Law Enforcement";
-
 
 //     system_zonghe['items'] = zonghe_info;
 //     systems.push(system_zonghe);
@@ -1145,10 +1264,9 @@ const one_clicked = () => {
     systems.splice(0, systems.length);
 
     system_canyin.name = "餐饮油烟监测服务";
-    system_canyin.name_en = "Catering Lampblack Monitoring Service"
+    system_canyin.name_en = "Catering Lampblack Monitoring Service";
 
-
-    system_canyin['items'] = canyin_info;
+    system_canyin["items"] = canyin_info;
 
     systems.push(system_canyin);
     one_selected.value = true;
@@ -1157,22 +1275,23 @@ const one_clicked = () => {
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
-}
+};
 
 const two_clicked = () => {
     systems.splice(0, systems.length);
 
     system_diaodu.name = "调度指挥管家";
-    system_diaodu.name_en = "Dust Control Big Data Collaborative Management Center"
+    system_diaodu.name_en =
+        "Dust Control Big Data Collaborative Management Center";
 
     let diaodu_info = [
         { desc: "未受理案件", value: "33" },
-        { desc: "未处理案件", value: '23' },
-        { desc: "处理中案件", value: '10' },
-        { desc: "已处理案件", value: '23' },
-        { desc: "已退回案件", value: '23' }
-    ]
-    system_diaodu['items'] = diaodu_info;
+        { desc: "未处理案件", value: "23" },
+        { desc: "处理中案件", value: "10" },
+        { desc: "已处理案件", value: "23" },
+        { desc: "已退回案件", value: "23" },
+    ];
+    system_diaodu["items"] = diaodu_info;
 
     systems.push(system_diaodu);
     one_selected.value = false;
@@ -1181,22 +1300,22 @@ const two_clicked = () => {
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
-}
+};
 
 const three_clicked = () => {
     systems.splice(0, systems.length);
 
     system_yangchen.name = "共享单车管理平台  ";
-    system_yangchen.name_en = "Shared Bicycle Management Platform"
+    system_yangchen.name_en = "Shared Bicycle Management Platform";
 
     let yangchen_info = [
         { desc: "未受理案件", value: "33" },
-        { desc: "未处理案件", value: '23' },
-        { desc: "处理中案件", value: '10' },
-        { desc: "已处理案件", value: '23' },
-        { desc: "已退回案件", value: '23' }
-    ]
-    system_yangchen['items'] = yangchen_info;
+        { desc: "未处理案件", value: "23" },
+        { desc: "处理中案件", value: "10" },
+        { desc: "已处理案件", value: "23" },
+        { desc: "已退回案件", value: "23" },
+    ];
+    system_yangchen["items"] = yangchen_info;
 
     systems.push(system_yangchen);
     one_selected.value = false;
@@ -1205,16 +1324,15 @@ const three_clicked = () => {
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = false;
-}
+};
 
 const four_clicked = () => {
     systems.splice(0, systems.length);
 
     system_danche.name = "扬尘治理大数据协同管理中心";
-    system_danche.name_en = "Catering Lampblack Monitoring Service"
+    system_danche.name_en = "Catering Lampblack Monitoring Service";
 
-
-    system_danche['items'] = danche_info;
+    system_danche["items"] = danche_info;
 
     systems.push(system_danche);
     one_selected.value = false;
@@ -1223,22 +1341,22 @@ const four_clicked = () => {
     four_selected.value = true;
     five_selected.value = false;
     six_selected.value = false;
-}
+};
 
 const six_clicked = () => {
     systems.splice(0, systems.length);
 
     system_jiemiantuxiang.name = "街面图像综合应用";
-    system_jiemiantuxiang.name_en = "Comprehensive Application Of Street Image"
+    system_jiemiantuxiang.name_en = "Comprehensive Application Of Street Image";
 
     let jiemiantuxiang_info = [
         { desc: "未受理案件", value: "33" },
-        { desc: "未处理案件", value: '23' },
-        { desc: "处理中案件", value: '10' },
-        { desc: "已处理案件", value: '23' },
-        { desc: "已退回案件", value: '23' }
-    ]
-    system_jiemiantuxiang['items'] = jiemiantuxiang_info;
+        { desc: "未处理案件", value: "23" },
+        { desc: "处理中案件", value: "10" },
+        { desc: "已处理案件", value: "23" },
+        { desc: "已退回案件", value: "23" },
+    ];
+    system_jiemiantuxiang["items"] = jiemiantuxiang_info;
 
     systems.push(system_jiemiantuxiang);
     one_selected.value = false;
@@ -1247,12 +1365,12 @@ const six_clicked = () => {
     four_selected.value = false;
     five_selected.value = false;
     six_selected.value = true;
-}
+};
 </script>
-  
+
 <style scoped>
 .img-wrapper {
-    background-image: url('@/assets/srzx/total.png');
+    background-image: url("@/assets/srzx/total.png");
     background-size: 100%;
     width: 100%;
     display: flex;
@@ -1265,7 +1383,7 @@ const six_clicked = () => {
     flex-wrap: wrap;
     /*当屏幕尺寸变小时，各个子系统汇总模块自动换行*/
     font-size: 40px;
-    color: #1677D9;
+    color: #1677d9;
     margin-left: 5%;
     margin-top: 15px;
 }
@@ -1312,12 +1430,12 @@ const six_clicked = () => {
 .container {
     display: flex;
     flex-direction: column;
-    color: #004B8C;
+    color: #004b8c;
 }
 
 .navHeader {
     background-color: #fff;
-    color: #004B8C;
+    color: #004b8c;
     margin-left: -20px;
     margin-right: -20px;
     height: initial;
@@ -1331,7 +1449,6 @@ const six_clicked = () => {
     margin-bottom: 10px;
     white-space: nowrap;
     letter-spacing: 3px;
-
 }
 
 .subsys {
@@ -1340,7 +1457,6 @@ const six_clicked = () => {
     flex-wrap: wrap;
     padding: 25px;
     text-align: center;
-
 }
 
 .classification {
@@ -1351,8 +1467,6 @@ const six_clicked = () => {
     text-align: center;
     float: right;
     margin-left: 5%;
-
-
 }
 
 .main {
@@ -1404,10 +1518,10 @@ const six_clicked = () => {
 .footer {
     width: 100%;
     font-size: 14px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     line-height: 32px;
-    background: #004B8C;
+    background: #004b8c;
     height: 120px;
 }
 
@@ -1419,7 +1533,7 @@ const six_clicked = () => {
     width: 180px;
     flex-wrap: wrap;
     font-size: 20px;
-    color: #1677D9;
+    color: #1677d9;
 }
 
 .el-button-null {
@@ -1524,7 +1638,7 @@ const six_clicked = () => {
 .col-line {
     width: 1px;
     height: 100px;
-    background: #CCCCCC;
+    background: #cccccc;
     position: absolute;
     left: 319px;
 }
@@ -1532,33 +1646,32 @@ const six_clicked = () => {
 .extra-col-line {
     width: 1px;
     height: 260px;
-    background: #CCCCCC;
+    background: #cccccc;
     position: absolute;
     left: 319px;
     top: 600px;
 }
 
 .left-number-selected {
-    background: #1677D9;
-
+    background: #1677d9;
 }
 
 .left-number-text-selected {
     font-family: PingFangSC-Regular;
     font-size: 24px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
 }
 
 .left-name-selected {
     font-family: PingFangSC-Semibold;
     font-size: 18px;
-    color: #1677D9;
+    color: #1677d9;
 }
 
 .col-line-selected {
     width: 4px;
-    background: #1677D9;
+    background: #1677d9;
 }
 
 .right-number-img {
@@ -1577,7 +1690,7 @@ const six_clicked = () => {
     left: 360px;
     font-family: PingFangSC-Semibold;
     font-size: 24px;
-    color: #1677D9;
+    color: #1677d9;
 }
 
 .system-name-en {
@@ -1629,7 +1742,7 @@ const six_clicked = () => {
     left: 40px;
     font-family: PingFangSC-Regular;
     font-size: 14px;
-    color: #FFFFFF;
+    color: #ffffff;
     line-height: 24px;
 }
 
