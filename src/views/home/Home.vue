@@ -2811,7 +2811,7 @@ onBeforeMount(() => {
   config_szcg.series[0].data[0].value = 90 %
     getTokenGxdc().then(data => {
       gxdcUrl.value = data
-      gxdc.url = 'http://172.30.19.17:80/manage/?token=' + gxdcUrl.value
+      gxdc.url = 'http://175.153.176.27:8080/manage/?token=' + gxdcUrl.value
     })
   getAiAlarm().then(data => {
     hwzy_tableData1.value = data
