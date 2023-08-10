@@ -19,6 +19,15 @@
             plain
             link
             color="fff"
+            @click="changePermissonDialog = true"
+            size="large"
+            >权限管理</el-button
+          >
+          <el-button
+            class="buttonToMap"
+            plain
+            link
+            color="fff"
             @click="changePasswordDialog = true"
             size="large"
             >修改密码</el-button
@@ -49,6 +58,8 @@
         </el-dropdown>
       </template>
     </Header>
+
+    KLIHPOIUGIYUKFVGFUKYF
     <el-container>
       <!-- 大类和子系统栏 -->
       <el-header class="navHeader">
@@ -113,7 +124,7 @@
       <div class="background" v-if="showDepts">
         <img
           id="obj"
-          :src="require('@/assets/home/banner-new'+picture+'.jpg')"
+          :src="require('@/assets/home/banner-new' + picture + '.jpg')"
           width="10000"
           style="overflow-y: auto; overflow-x: auto"
         />
@@ -1305,6 +1316,11 @@
                         {{ item.infoKey + ": " + item.infoVal }}
                       </li>
                     </template>
+                    <div v-if="item.infoKey === '门牌地址数量'">
+                      <li style="font-size: 20px; padding: 5px; width: 100%">
+                        暂无详细统计
+                      </li>
+                    </div>
                     <div v-if="item.infoKey === '店铺数量'">
                       <li style="font-size: 20px; padding: 5px; width: 100%">
                         暂无详细统计
@@ -1342,7 +1358,7 @@
                         {{ project }}
                       </li>
                     </div>
-                    <div v-if="item.infoKey === '店铺数店铺空置率量'">
+                    <div v-if="item.infoKey === '店铺空置率'">
                       <li style="font-size: 20px; padding: 5px; width: 100%">
                         暂无详细统计
                       </li>
@@ -2021,6 +2037,462 @@
         </el-image>
       </el-main>
       <el-dialog
+        v-model="changePermissonDialog"
+        title="权限管理"
+        align-center="true"
+        width="80%"
+        @close="handleClose"
+      >
+      <div style="font-size:2rem;">权限申请列表</div>
+        <el-table
+          :data="
+            permissonApplicationList.slice(
+              (current_Page - 1) * 10,
+              current_Page * 10
+            )
+          "
+          v-loading="aplicationloading"
+          size="large"
+          style="width: 100%"
+          :cell-style="{'font-size':'1rem'  }"
+        >
+          <!-- 序号（应该可选才对-目前没有） -->
+          <el-table-column prop="indexid" label="申请编号" />
+
+          \
+          <el-table-column prop="username" label="人员姓名"  />
+          <el-table-column prop="telephone" label="手机号"  />
+          <el-table-column prop="roleName" label="人员角色" />
+          <el-table-column prop="roleSystem" label="子系统名称" />
+          <el-table-column prop="operateType" label="权限变更" />
+          <el-table-column prop="operator" label="管理员"  />
+          <el-table-column prop="operate" label="操作" >
+            <template #default="scope">
+              <el-button
+                type="primary"
+                @click="approvedClick(refreshApproved, scope.row)"
+                >同意</el-button
+              >
+              <el-button
+                type="danger"
+                @click="refusedClick(refreshRefused, scope.row)"
+                >拒回</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="float-end">
+          <el-pagination
+            background
+            layout="->,total, prev, pager, next, jumper"
+            :total="total_Records"
+            :current-page="current_Page"
+            :page-size="10"
+            @current-change="getPermissionApplication"
+          />
+        </div>
+        <el-alert
+          id="permissonAlert"
+          title="请先处理完以上权限申请事务！"
+          type="error"
+          center
+          show-icon
+          style="display: none"
+          :closable="false"
+        />
+        <div style="font-size:2rem; ">人员权限列表</div>
+        <el-table
+          :data="permissionList.slice((currentPage - 1) * 10, currentPage * 10)"
+          v-loading="loading"
+          border
+          size="large"
+          style="width: 100%;"
+          :cell-style="{ 'font-size':'1rem' }"
+        >
+          <!-- 序号（应该可选才对-目前没有） -->
+          <el-table-column type="index" label="序号" />
+
+          \
+          <el-table-column prop="username" label="人员姓名" />
+          <el-table-column prop="telephone" label="手机号" width="150"/>
+          <el-table-column
+            prop="zhxz"
+            label="综合行政管理执法智慧管家"
+        
+          />
+          <el-table-column prop="cyyy" label="餐饮油烟管家"/>
+          <el-table-column prop="ddzh" label="调度指挥管家" />
+          <el-table-column
+            prop="yczl"
+            label="扬尘治理大数据协同管家"
+     
+          />
+          <el-table-column prop="gxdc" label="共享单车管家"/>
+          <el-table-column
+            prop="jgzm"
+            label="景观照明集中控制管家"
+          />
+          <el-table-column prop="ggzp" label="广告招牌二维码管家"  />
+          <el-table-column prop="shlj" label="生活垃圾分类管家" />
+          <el-table-column prop="cclj" label="餐厨垃圾收运管家" />
+          <el-table-column prop="ljsj" label="垃圾数据归集管家" />
+          <el-table-column prop="cgAI" label="城管AI识别管家" />
+          <el-table-column prop="szhcs" label="数字化城市信息管家"  />
+          <el-table-column prop="cgsyd" label="城管诉易达管家" />
+          <el-table-column prop="operate" label="操作" >
+            <template #default="scope">
+              <el-button type="primary" @click="handleClick(scope.row)"
+                >更改</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <div class="float-end">
+          <el-pagination
+            background
+            layout="->,total, prev, pager, next, jumper"
+            :total="totalRecords"
+            :current-page="currentPage"
+            :page-size="10"
+            @current-change="getPermission"
+          />
+        </div>
+      </el-dialog>
+
+      <el-dialog
+        v-model="handleEvent"
+        title="权限变更"
+        width="60%"
+        @close="handleClose"
+      >
+        <div
+          style="text-align: center; font-size: x-large; font-weight: bold"
+        ></div>
+
+        <el-form
+          ref="permissionForm"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          label-width="200px"
+          class="demo-ruleForm"
+          v-loading="formLoading"
+        >
+          <div
+            style="font-size: 1.25rem; padding-left: 5rem; font-weight: bold"
+          >
+            姓名：{{ permissonName }}&nbsp; &nbsp; &nbsp; 手机号：{{
+              permissonTelephone
+            }}
+          </div>
+
+          <el-form-item label="共享单车管家" prop="gxdc">
+            <el-switch
+              v-model="ruleForm.gxdc"
+              @change="changeGxdc($event, ruleForm)"
+              :disabled="switchGxdc"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioGxdc"
+              class="radioPermisson"
+              :disabled="disradioGxdc"
+              @change="radioChangeGxdc(radioGxdc)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+              
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="垃圾数据归集管家" prop="ljsj">
+            <el-switch
+              v-model="ruleForm.ljsj"
+              @change="changeLjsj($event, ruleForm)"
+              :disabled="switchLjsj"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioLjsj"
+              class="radioPermisson"
+              :disabled="disradioLjsj"
+              @change="radioChangeLjsj(radioLjsj)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+              
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="城管AI识别管家" prop="cgAI">
+            <el-switch
+              v-model="ruleForm.cgAI"
+              @change="changeCgAI($event, ruleForm)"
+              :disabled="switchCgAI"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioCgAI"
+              class="radioPermisson"
+              :disabled="disradioCgAI"
+              @change="radioChangeCgAI(radioCgAI)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="城管诉易达管家" prop="cgsyd">
+            <el-switch
+              v-model="ruleForm.cgsyd"
+              @change="changeCgsyd($event, ruleForm)"
+              :disabled="switchCgsyd"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioCgsyd"
+              class="radioPermisson"
+              :disabled="disradioCgsyd"
+              @change="radioChangeCgsyd(radioCgsyd)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="广告招牌二维码管家" prop="ggzp">
+            <el-switch
+              v-model="ruleForm.ggzp"
+              @change="changeGgzp($event, ruleForm)"
+              :disabled="switchGgzp"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioGgzp"
+              class="radioPermisson"
+              :disabled="disradioGgzp"
+              @change="radioChangeGgzp(radioGgzp)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+               <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="扬尘治理大数据协同管家" prop="yczl">
+            <el-switch
+              v-model="ruleForm.yczl"
+              @change="changeYczl($event, ruleForm)"
+              :disabled="switchYczl"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioYczl"
+              class="radioPermisson"
+              :disabled="disradioYczl"
+              @change="radioChangeYczl(radioYczl)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="数字化城市信息管家" prop="szhcs">
+            <el-switch
+              v-model="ruleForm.szhcs"
+              @change="changeSzhcs($event, ruleForm)"
+              :disabled="switchSzhcs"
+              
+            ></el-switch>
+            <el-radio-group
+              v-model="radioSzhcs"
+              class="radioPermisson"
+              :disabled="disradioSzhcs"
+              @change="radioChangeSzhcs(radioSzhcs)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="景观照明集中控制管家" prop="jgzm">
+            <el-switch
+              v-model="ruleForm.jgzm"
+              @change="changeJgzm($event, ruleForm)"
+              :disabled="switchJgzm"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioJgzm"
+              class="radioPermisson"
+              :disabled="disradioJgzm"
+              @change="radioChangeJgzm(radioJgzm)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="生活垃圾分类管家" prop="shlj">
+            <el-switch
+              v-model="ruleForm.shlj"
+              @change="changeShlj($event, ruleForm)"
+              :disabled="switchShlj"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioShlj"
+              class="radioPermisson"
+              :disabled="disradioShlj"
+              @change="radioChangeShlj(radioShlj)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="综合行政管理执法智慧管家" prop="zhxz">
+            <el-switch
+              v-model="ruleForm.zhxz"
+              @change="changeZhxz($event, ruleForm)"
+              :disabled="switchZhxz"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioZhxz"
+              class="radioPermisson"
+              :disabled="disradioZhxz"
+              @change="radioChangeZhxz(radioZhxz)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="调度指挥管家" prop="ddzh">
+            <el-switch
+              v-model="ruleForm.ddzh"
+              @change="changeDdzh($event, ruleForm)"
+              :disabled="switchDdzh"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioDdzh"
+              class="radioPermisson"
+              :disabled="disradioDdzh"
+              @change="radioChangeDdzh(radioDdzh)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="餐厨垃圾收运管家" prop="cclj">
+            <el-switch
+              v-model="ruleForm.cclj"
+              @change="changeCclj($event, ruleForm)"
+              :disabled="switchCclj"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioCclj"
+              class="radioPermisson"
+              :disabled="disradioCclj"
+              @change="radioChangeCclj(radioCclj)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="餐饮油烟管家" prop="cyyy">
+            <el-switch
+              v-model="ruleForm.cyyy"
+              @change="changeCyyy($event, ruleForm)"
+              :disabled="switchCyyy"
+            ></el-switch>
+            <el-radio-group
+              v-model="radioCyyy"
+              class="radioPermisson"
+              :disabled="disradioCyyy"
+              @change="radioChangeCyyy(radioCyyy)"
+            >
+              <!-- <el-radio label="superAdmin" size="large"
+                >可对所有子系统进行访问及管理</el-radio
+              > -->
+              <!-- <el-radio label="tempAdmin" size="large"
+                >仅可查看，不能维护系统数据</el-radio
+              > -->
+              <el-radio label="viewer" size="large">浏览信息</el-radio>
+              <el-radio label="admin" size="large">管理参数</el-radio>
+              <el-radio label="operator" size="large">操作系统</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+
+      <el-dialog
         v-model="changePasswordDialog"
         title="修改密码"
         align-center="true"
@@ -2122,25 +2594,1680 @@ const validatePass = (rules, value, callback) => {
   }
 };
 
+//=========================================================================2023/08/08 管理员管理人员访问子系统的权限
+const permissionList = reactive([]);
+const permissonApplicationList = reactive([]);
+const switchGxdc = ref(false);
+const disradioGxdc = ref(false);
+const switchLjsj = ref(false);
+const disradioLjsj = ref(false);
+const switchCgAI = ref(false);
+const disradioCgAI = ref(false);
+const switchCgsyd = ref(false);
+const disradioCgsyd = ref(false);
+const switchGgzp = ref(false);
+const disradioGgzp = ref(false);
+const switchYczl = ref(false);
+const disradioYczl = ref(false);
+const switchSzhcs = ref(false);
+const disradioSzhcs = ref(false);
+const switchJgzm = ref(false);
+const disradioJgzm = ref(false);
+const switchShlj = ref(false);
+const disradioShlj = ref(false);
+const switchZhxz = ref(false);
+const disradioZhxz = ref(false);
+const switchDdzh = ref(false);
+const disradioDdzh = ref(false);
+const switchCclj = ref(false);
+const disradioCclj = ref(false);
+const switchCyyy = ref(false);
+const disradioCyyy = ref(false);
+const loading = ref(true);
+const aplicationloading = ref(true);
+const formLoading = ref(true);
+const totalRecords = ref(1000);
+let currentPage = ref(1);
+let pageCount = 0;
+const total_Records = ref(1000);
+let current_Page = ref(1);
+let page_Count = 0;
+const permissionForm = ref(null);
+const handleEvent = ref(false);
+const permissonName = ref("");
+const applicationId = ref("");
+const permissonTelephone = ref("");
+const radioGxdc = ref("");
+const radioLjsj = ref("");
+const radioCgAI = ref("");
+const radioCgsyd = ref("");
+const radioGgzp = ref("");
+const radioYczl = ref("");
+const radioSzhcs = ref("");
+const radioJgzm = ref("");
+const radioShlj = ref("");
+const radioZhxz = ref("");
+const radioDdzh = ref("");
+const radioCclj = ref("");
+const radioCyyy = ref("");
+const ruleForm = reactive({
+  gxdc: false,
+  ljsj: false,
+  cgAI: false,
+  cgsyd: false,
+  ggzp: false,
+  yczl: false,
+  szhcs: false,
+  jgzm: false,
+  shlj: false,
+  zhxz: false,
+  ddzh: false,
+  cclj: false,
+  cyyy: false,
+});
+const permissonAlert = ref(false);
+
+const getPermissonApplicationListList = (pageNum) => {
+  axios({
+    url: "/api/auth/get_permission_applications",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    permissonApplicationList.splice(0, permissonApplicationList.length);
+    var data = resp.data;
+    console.log(111, data);
+
+    console.log("resp.code：" + data);
+    for (var key in data) {
+      if (data[key].reviewed == false) {
+        var permission_list = {
+          indexid: data[key].id,
+          username: data[key].realName,
+          telephone: data[key].telephone,
+          roleName: data[key].roleName,
+          roleSystem: data[key].roleSystem,
+          operator: data[key].operator,
+          operateType: data[key].operateType,
+        };
+        if (data[key].operateType == "add") {
+          permission_list.operateType = "允许访问";
+        } else if (data[key].operateType == "delete") {
+          permission_list.operateType = "禁止访问";
+        }
+        if (data[key].roleName == "viewer") {
+          permission_list.roleName = "浏览信息";
+        } else if (data[key].roleName == "operator") {
+          permission_list.roleName = "操作系统";
+        } else if (data[key].roleName == "admin") {
+          permission_list.roleName = "管理参数";
+        }
+        permissonApplicationList.push(permission_list);
+      }
+    }
+    total_Records.value = permissonApplicationList.length;
+    page_Count = parseInt(permissonApplicationList.length) % 10;
+    current_Page.value = pageNum;
+    aplicationloading.value = false;
+    var div = document.getElementById("permissonAlert");
+    if (permissonApplicationList.length == 0) {
+      div.style.display = "none";
+    }
+  });
+};
+getPermissonApplicationListList(1);
+setInterval(getPermissonApplicationListList(1), 60000);
+const getPermissionApplication = (pageNum) => {
+  // 当前页
+  current_Page.value = pageNum;
+};
+
+const approvedClick = (callback, row) => {
+  applicationId.value = row.indexid;
+  axios({
+    url: "/api/auth/approve_application/" + applicationId.value,
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    aplicationloading.value = true;
+    loading.value = true;
+    getPermissionList(1);
+    getPermissonApplicationListList(1);
+  });
+  callback();
+};
+const refreshApproved = () => {
+  if (aplicationloading.value == false) {
+    ElMessage({
+      message: "权限更改成功！",
+      type: "success",
+    });
+  }
+};
+const refreshRefused = () => {
+  if (aplicationloading.value == false) {
+    ElMessage({
+      message: "权限更改已拒回！",
+      type: "success",
+    });
+  }
+};
+const refusedClick = (callback, row) => {
+  applicationId.value = row.indexid;
+  axios({
+    url: "/api/auth/refuse_application/" + applicationId.value,
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    aplicationloading.value = true;
+    loading.value = true;
+    getPermissionList(1);
+    getPermissonApplicationListList(1);
+  });
+  callback();
+};
+
+const getPermissionList = (pageNum) => {
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/auth/non_super_admin_list",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    permissionList.splice(0, permissionList.length);
+    var data = resp.data;
+    console.log(111, data);
+
+    console.log("resp.code：" + data);
+    for (var key in data) {
+      var permission_list = {
+        username: data[key].realName,
+        telephone: data[key].telephone,
+        gxdc: "×",
+        ljsj: "×",
+        cgAI: "×",
+        cgsyd: "×",
+        ggzp: "×",
+        yczl: "×",
+        szhcs: "×",
+        jgzm: "×",
+        shlj: "×",
+        zhxz: "×",
+        ddzh: "×",
+        cclj: "×",
+        cyyy: "×",
+      };
+      var roleList = data[key].roleList;
+      for (var index in roleList) {
+        if (roleList[index].system == "all") {
+          permission_list.cyyy = "√";
+          permission_list.gxdc = "√";
+          permission_list.ljsj = "√";
+          permission_list.cgAI = "√";
+          permission_list.cgsyd = "√";
+          permission_list.ggzp = "√";
+          permission_list.yczl = "√";
+          permission_list.szhcs = "√";
+          permission_list.jgzm = "√";
+          permission_list.shlj = "√";
+          permission_list.zhxz = "√";
+          permission_list.cclj = "√";
+          permission_list.ddzh = "√";
+        }
+        if (roleList[index].system == "共享单车管家") {
+          permission_list.gxdc = "√";
+        }
+        if (roleList[index].system == "垃圾数据归集管家") {
+          permission_list.ljsj = "√";
+        }
+        if (roleList[index].system == "城管AI识别管家") {
+          permission_list.cgAI = "√";
+        }
+        if (roleList[index].system == "城管诉易达管家") {
+          permission_list.cgsyd = "√";
+        }
+        if (roleList[index].system == "广告招牌二维码管家") {
+          permission_list.ggzp = "√";
+        }
+        if (roleList[index].system == "扬尘治理大数据协同管家") {
+          permission_list.yczl = "√";
+        }
+        if (roleList[index].system == "数字化城市信息管家") {
+          permission_list.szhcs = "√";
+        }
+        if (roleList[index].system == "景观照明集中控制管家") {
+          permission_list.jgzm = "√";
+        }
+        if (roleList[index].system == "生活垃圾分类管家") {
+          permission_list.shlj = "√";
+        }
+        if (roleList[index].system == "综合行政管理执法智慧管家") {
+          permission_list.zhxz = "√";
+        }
+        if (roleList[index].system == "调度指挥管家") {
+          permission_list.ddzh = "√";
+        }
+        if (roleList[index].system == "餐厨垃圾收运管家") {
+          permission_list.cclj = "√";
+        }
+        if (roleList[index].system == "餐饮油烟管家") {
+          permission_list.cyyy = "√";
+        }
+      }
+      permissionList.push(permission_list);
+    }
+    totalRecords.value = permissionList.length;
+    pageCount = parseInt(permissionList.length) % 10;
+    currentPage.value = pageNum;
+    loading.value = false;
+  });
+};
+getPermissionList(1);
+setInterval(getPermissionList(1), 60000);
+
+const getPermission = (pageNum) => {
+  // 当前页
+  currentPage.value = pageNum;
+};
+
+const handleClick = (row) => {
+  console.log("length:" + permissonApplicationList.length);
+  var div = document.getElementById("permissonAlert");
+  if (permissonApplicationList.length != 0) {
+    console.log("div.style.display" + div.style.display);
+    div.style.display = "flex";
+  } else {
+    div.style.display = "none";
+    formLoading.value = true;
+    permissonName.value = row.username;
+    permissonTelephone.value = row.telephone;
+    console.log("permissonTelephone:" + permissonTelephone.value);
+    handleEvent.value = true;
+    radioGxdc.value = "";
+    radioLjsj.value = "";
+    radioCgAI.value = "";
+    radioCgsyd.value = "";
+    radioGgzp.value = "";
+    radioYczl.value = "";
+    radioSzhcs.value = "";
+    radioJgzm.value = "";
+    radioShlj.value = "";
+    radioZhxz.value = "";
+    radioDdzh.value = "";
+    radioCclj.value = "";
+    radioCyyy.value = "";
+    ruleForm.gxdc = false;
+    ruleForm.ljsj = false;
+    ruleForm.cgAI = false;
+    ruleForm.cgsyd = false;
+    ruleForm.ggzp = false;
+    ruleForm.yczl = false;
+    ruleForm.szhcs = false;
+    ruleForm.jgzm = false;
+    ruleForm.shlj = false;
+    ruleForm.zhxz = false;
+    ruleForm.ddzh = false;
+    ruleForm.cclj = false;
+    ruleForm.cyyy = false;
+
+    switchGxdc.value = false;
+    switchLjsj.value = false;
+    switchCgAI.value = false;
+    switchCgsyd.value = false;
+    switchGgzp.value = false;
+    switchYczl.value = false;
+    switchSzhcs.value = false;
+    switchJgzm.value = false;
+    switchShlj.value = false;
+    switchZhxz.value = false;
+    switchDdzh.value = false;
+    switchCclj.value = false;
+    switchCyyy.value = false;
+
+    disradioGxdc.value = true;
+    disradioLjsj.value = true;
+    disradioCgAI.value = true;
+    disradioCgsyd.value = true;
+    disradioGgzp.value = true;
+    disradioYczl.value = true;
+    disradioSzhcs.value = true;
+    disradioJgzm.value = true;
+    disradioShlj.value = true;
+    disradioZhxz.value = true;
+    disradioDdzh.value = true;
+    disradioCclj.value = true;
+    disradioCyyy.value = true;
+
+    axios({
+      // url: "/api/lzj/getWarning",
+      url: "/api/auth/non_super_admin_list",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + params.token,
+      },
+    }).then(function (resp) {
+      var data = resp.data;
+
+      for (var key in data) {
+        if (data[key].telephone == permissonTelephone.value) {
+          var roleList = data[key].roleList;
+          for (var index in roleList) {
+            if (roleList[index].system == "all") {
+              ruleForm.gxdc = true;
+              ruleForm.ljsj = true;
+              ruleForm.cgAI = true;
+              ruleForm.cgsyd = true;
+              ruleForm.ggzp = true;
+              ruleForm.yczl = true;
+              ruleForm.szhcs = true;
+              ruleForm.jgzm = true;
+              ruleForm.shlj = true;
+              ruleForm.zhxz = true;
+              ruleForm.ddzh = true;
+              ruleForm.cclj = true;
+              ruleForm.cyyy = true;
+              radioGxdc.value = roleList[index].name;
+              radioLjsj.value = roleList[index].name;
+              radioCgAI.value = roleList[index].name;
+              radioCgsyd.value = roleList[index].name;
+              radioGgzp.value = roleList[index].name;
+              radioYczl.value = roleList[index].name;
+              radioSzhcs.value = roleList[index].name;
+              radioJgzm.value = roleList[index].name;
+              radioShlj.value = roleList[index].name;
+              radioZhxz.value = roleList[index].name;
+              radioDdzh.value = roleList[index].name;
+              radioCclj.value = roleList[index].name;
+              radioCyyy.value = roleList[index].name;
+              switchGxdc.value = true;
+              switchLjsj.value = true;
+              switchCgAI.value = true;
+              switchCgsyd.value = true;
+              switchGgzp.value = true;
+              switchYczl.value = true;
+              switchSzhcs.value = true;
+              switchJgzm.value = true;
+              switchShlj.value = true;
+              switchZhxz.value = true;
+              switchDdzh.value = true;
+              switchCclj.value = true;
+              switchCyyy.value = true;
+
+              disradioGxdc.value = true;
+              disradioLjsj.value = true;
+              disradioCgAI.value = true;
+              disradioCgsyd.value = true;
+              disradioGgzp.value = true;
+              disradioYczl.value = true;
+              disradioSzhcs.value = true;
+              disradioJgzm.value = true;
+              disradioShlj.value = true;
+              disradioZhxz.value = true;
+              disradioDdzh.value = true;
+              disradioCclj.value = true;
+              disradioCyyy.value = true;
+              ElMessage({
+                message: "您不可更改该用户权限！",
+                type: "warning",
+              });
+            }
+            if (roleList[index].system == "共享单车管家") {
+              ruleForm.gxdc = true;
+disradioGxdc.value = false;
+              radioGxdc.value = roleList[index].name;
+            }
+            if (roleList[index].system == "垃圾数据归集管家") {
+              ruleForm.ljsj = true;
+              disradioLjsj.value = false;
+              radioLjsj.value = roleList[index].name;
+            }
+            if (roleList[index].system == "城管AI识别管家") {
+              ruleForm.cgAI = true;
+              disradioCgAI.value = false;
+              radioCgAI.value = roleList[index].name;
+            }
+            if (roleList[index].system == "城管诉易达管家") {
+              ruleForm.cgsyd = true;
+              disradioCgsyd.value = false;
+              radioCgsyd.value = roleList[index].name;
+            }
+            if (roleList[index].system == "广告招牌二维码管家") {
+              ruleForm.ggzp = true;
+              disradioGgzp.value = false;
+              radioGgzp.value = roleList[index].name;
+            }
+            if (roleList[index].system == "扬尘治理大数据协同管家") {
+              ruleForm.yczl = true;
+              disradioYczl.value = false;
+              radioYczl.value = roleList[index].name;
+            }
+            if (roleList[index].system == "数字化城市信息管家") {
+              ruleForm.szhcs = true;
+               disradioSzhcs.value = false;
+              radioSzhcs.value = roleList[index].name;
+            }
+            if (roleList[index].system == "景观照明集中控制管家") {
+              ruleForm.jgzm = true;
+              disradioJgzm.value = false;
+              radioJgzm.value = roleList[index].name;
+            }
+            if (roleList[index].system == "生活垃圾分类管家") {
+              ruleForm.shlj = true;
+              disradioShlj.value = false;
+              radioShlj.value = roleList[index].name;
+            }
+            if (roleList[index].system == "综合行政管理执法智慧管家") {
+              ruleForm.zhxz = true;
+              disradioZhxz.value = false;
+              radioZhxz.value = roleList[index].name;
+            }
+            if (roleList[index].system == "调度指挥管家") {
+              ruleForm.ddzh = true;
+              disradioDdzh.value = false;
+              radioDdzh.value = roleList[index].name;
+            }
+            if (roleList[index].system == "餐厨垃圾收运管家") {
+              ruleForm.cclj = true;
+              disradioCclj.value = false;
+              radioCclj.value = roleList[index].name;
+            }
+            if (roleList[index].system == "餐饮油烟管家") {
+              ruleForm.cyyy = true;
+              disradioCyyy.value = false;
+              radioCyyy.value = roleList[index].name;
+            }
+          }
+          formLoading.value = false;
+        }
+      }
+    });
+  }
+};
+
+const radioChangeGxdc = (radio) => {
+  
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "共享单车管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+
+const changeGxdc = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.gxdc = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioGxdc.value = false;
+    } else {
+      ruleForm.gxdc = false;
+      disradioGxdc.value = true;
+      if (radioGxdc.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "共享单车管家",
+              roleName: radioGxdc.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioGxdc.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.gxdc = false;
+    } else {
+      ruleForm.gxdc = true;
+    }
+  }
+};
+
+const radioChangeLjsj = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "垃圾数据归集管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeLjsj = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.ljsj = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioLjsj.value = false;
+    } else {
+      ruleForm.ljsj = false;
+      disradioLjsj.value = true;
+      if (radioLjsj.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "垃圾数据归集管家",
+              roleName: radioLjsj.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioLjsj.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.ljsj = false;
+    } else {
+      ruleForm.ljsj = true;
+    }
+  }
+};
+
+const radioChangeCgAI = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "城管AI识别管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeCgAI = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.cgAI = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioCgAI.value = false;
+    } else {
+      ruleForm.cgAI = false;
+      disradioCgAI.value = true;
+      disradioCgAI.value = true;
+      if (radioCgAI.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "城管AI识别管家",
+              roleName: radioCgAI.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioCgAI.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.cgAI = false;
+    } else {
+      ruleForm.cgAI = true;
+    }
+  }
+};
+
+const radioChangeCgsyd = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "城管诉易达管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeCgsyd = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.cgsyd = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioCgsyd.value = false;
+    } else {
+      ruleForm.cgsyd = false;
+      disradioCgsyd.value = true;
+      if (radioCgsyd.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "城管诉易达管家",
+              roleName: radioCgsyd.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioCgsyd.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.cgsyd = false;
+    } else {
+      ruleForm.cgsyd = true;
+    }
+  }
+};
+
+const radioChangeGgzp = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "广告招牌二维码管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeGgzp = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.ggzp = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioGgzp.value = false;
+    } else {
+      ruleForm.ggzp = false;
+      disradioGgzp.value = true;
+      if (radioGgzp.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "广告招牌二维码管家",
+              roleName: radioGgzp.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioGgzp.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.ggzp = false;
+    } else {
+      ruleForm.ggzp = true;
+    }
+  }
+};
+
+const radioChangeYczl = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "扬尘治理大数据协同管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeYczl = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.yczl = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioYczl.value = false;
+    } else {
+      ruleForm.yczl = false;
+       disradioYczl.value = true;
+      if (radioYczl.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "扬尘治理大数据协同管家",
+              roleName: radioYczl.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioYczl.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.yczl = false;
+    } else {
+      ruleForm.yczl = true;
+    }
+  }
+};
+
+
+const radioChangeSzhcs = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "数字化城市信息管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeSzhcs = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.szhcs = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioSzhcs.value = false;
+    } else {
+      ruleForm.szhcs = false;
+      disradioSzhcs.value = true;
+      if (radioSzhcs.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "数字化城市信息管家",
+              roleName: radioSzhcs.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioSzhcs.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.szhcs = false;
+    } else {
+      ruleForm.szhcs = true;
+    }
+  }
+};
+
+const radioChangeJgzm = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "景观照明集中控制管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeJgzm = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.jgzm = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioJgzm.value = false;
+    } else {
+      ruleForm.jgzm = false;
+      disradioJgzm.value = true;
+      if (radioJgzm.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "景观照明集中控制管家",
+              roleName: radioJgzm.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioJgzm.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.jgzm = false;
+    } else {
+      ruleForm.jgzm = true;
+    }
+  }
+};
+
+const radioChangeShlj = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "生活垃圾分类管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeShlj = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.shlj = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioShlj.value = false;
+    } else {
+      ruleForm.shlj = false;
+      disradioShlj.value = true;
+      if (radioShlj.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "生活垃圾分类管家",
+              roleName: radioShlj.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioShlj.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.shlj = false;
+    } else {
+      ruleForm.shlj = true;
+    }
+  }
+};
+
+const radioChangeZhxz = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "综合行政管理执法智慧管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeZhxz = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.zhxz = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioZhxz.value = false;
+    } else {
+      ruleForm.zhxz = false;
+      disradioZhxz.value = true;
+      if (radioZhxz.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "综合行政管理执法智慧管家",
+              roleName: radioZhxz.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioZhxz.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.zhxz = false;
+    } else {
+      ruleForm.zhxz = true;
+    }
+  }
+};
+
+const radioChangeDdzh = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "调度指挥管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeDdzh = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.ddzh = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioDdzh.value = false;
+    } else {
+      ruleForm.ddzh = false;
+      disradioDdzh.value = true;
+      if (radioDdzh.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "调度指挥管家",
+              roleName: radioDdzh.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioDdzh.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.ddzh = false;
+    } else {
+      ruleForm.ddzh = true;
+    }
+  }
+};
+
+const radioChangeCclj = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "餐厨垃圾收运管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeCclj = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.cclj = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioCclj.value = false;
+    } else {
+      ruleForm.cclj = false;
+      disradioCclj.value = true;
+      if (radioCclj.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "餐厨垃圾收运管家",
+              roleName: radioCclj.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioCclj.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.cclj = false;
+    } else {
+      ruleForm.cclj = true;
+    }
+  }
+};
+
+const radioChangeCyyy = (radio) => {
+  axios({
+    url: "/api/auth/apply_for_permission",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        operator: params.username,
+        userName: permissonTelephone.value,
+        operateType: "add",
+        roleSystem: "餐饮油烟管家",
+        roleName: radio,
+      })
+    ),
+    method: "post",
+  }).then(function (resp) {
+    console.log(2, resp);
+    console.log(
+      "我管理员" + params.username + "指定人员" + permissonTelephone.value
+    );
+  });
+  ElMessage({
+    message: "权限更改申请成功！",
+    type: "success",
+  });
+};
+
+const changeCyyy = (callback, ruleForm) => {
+  let text = "";
+  if (callback == true) {
+    text = "允许访问";
+    // row.enable = false
+  } else {
+    text = "禁止访问";
+    // row.enable = true
+  }
+  var res = confirm(`是否变更权限为${text}`);
+  if (res) {
+    if (callback == true) {
+      ruleForm.cyyy = true;
+      ElMessage({
+        message: "请选择访问级别！",
+        type: "warning",
+      });
+      disradioCyyy.value = false;
+    } else {
+      ruleForm.cyyy = false;
+      disradioCyyy.value = true;
+      if (radioCyyy.value != "") {
+        axios({
+          url: "/api/auth/apply_for_permission",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + params.token,
+          },
+          data: JSON.parse(
+            JSON.stringify({
+              operator: params.username,
+              userName: permissonTelephone.value,
+              operateType: "delete",
+              roleSystem: "餐饮油烟管家",
+              roleName: radioCyyy.value,
+            })
+          ),
+          method: "post",
+        }).then(function (resp) {
+          console.log(2, resp);
+          console.log(
+            "我管理员" + params.username + "指定人员" + permissonTelephone.value
+          );
+        });
+        radioCyyy.value = "";
+        ElMessage({
+          message: "权限更改申请成功！",
+          type: "success",
+        });
+      }
+    }
+  } else {
+    if (callback == true) {
+      ruleForm.cyyy = false;
+    } else {
+      ruleForm.cyyy = true;
+    }
+  }
+};
+//==============================================================================================================
+
 //===================================================================大图片定时更换（一个月）
 var curIndex = 0;
 var picture = ref("1");
 var timeInterval = 1000 * 60 * 60 * 24;
-
 
 setInterval(changeImg, timeInterval);
 function changeImg() {
   let nowDay = new Date().getDate();
   //每个月1号更换一次图片
   if (nowDay == "1") {
-
-   
     if (picture.value == "1") {
       picture.value = "3";
     } else {
       picture.value = "1";
     }
-
   }
 }
 
@@ -2232,6 +4359,7 @@ const form = reactive({
   new_password_confirm: "",
 });
 const confirmChangePasswordVisible = ref(false);
+const changePermissonDialog = ref(false);
 const changePasswordDialog = ref(false);
 const echartInit_srzx = () => {
   document
@@ -4568,5 +6696,9 @@ function logout() {
 .el-button-hjws {
   font-size: 20px;
   color: white;
+}
+
+.radioPermisson {
+  padding-left: 5rem;
 }
 </style>

@@ -216,34 +216,42 @@ function echartInit_ggzp() {
         tooltip: {
             trigger: 'item'
         },
-        legend: {
-            orient: 'vertical',
-            left: 'left'
-        },
+        // legend: {
+        //     orient: 'vertical',
+        //     left: 'left'
+        // },
+          xAxis: {
+    type: 'category',
+    data: ['店铺数量', '零售类店铺数量', '餐饮类店铺数量', '服务类店铺数量']
+  },
+  yAxis: {
+    type: 'value'
+  },
         series: [
             {
                 name: '店铺详细分类统计',
-                type: 'pie',
-                radius: '50%',
+                type: 'bar',
+                // radius: '50%',
                 data: [
                     { value: ggzp_tableData.value[1].infoVal, name: ggzp_tableData.value[1].infoKey },
                     { value: ggzp_tableData.value[2].infoVal, name: ggzp_tableData.value[2].infoKey },
                     { value: ggzp_tableData.value[3].infoVal, name: ggzp_tableData.value[3].infoKey },
                     { value: ggzp_tableData.value[4].infoVal, name: ggzp_tableData.value[4].infoKey },
                 ],
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }, label: {
-                    show: true,
-                    formatter(param) {
-                        // correct the percentage
-                        return param.name + ' (' + param.percent + '%)';
-                    }
-                },
+                // emphasis: {
+                //     itemStyle: {
+                //         shadowBlur: 10,
+                //         shadowOffsetX: 0,
+                //         shadowColor: 'rgba(0, 0, 0, 0.5)'
+                //     }
+                // },
+                // label: {
+                //     show: true,
+                //     formatter(param) {
+                //         // correct the percentage
+                //         return param.name + ' (' + param.percent + '%)';
+                //     }
+                // },
             }
         ]
     };
