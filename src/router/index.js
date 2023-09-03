@@ -273,6 +273,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     if (!params.isLogin && to.meta.requestAuth) {
+        console.log(params.isLogin)
         next({ name: Login });
     } else {
         next();

@@ -2,7 +2,7 @@ import { ref, onMounted, reactive, h } from 'vue';
 export const params = reactive({
     username: "",
     password: "",
-    role: "管理员",
+    role: "",
     token: "",
     isLogin: false,
     roleId: "",

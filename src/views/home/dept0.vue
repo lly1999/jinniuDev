@@ -21,7 +21,7 @@
         </div>
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{ params.username + "（" + params.role + "）" }}
+            {{ params.username + "" + params.role + "" }}
             <el-icon>
               <ArrowDown />
             </el-icon>
@@ -256,7 +256,7 @@
 <script setup>
 import 'element-plus/theme-chalk/display.css'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
+import { ref, reactive, computed, onBeforeMount, onMounted ,onBeforeUnmount} from "vue";
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import MainInfo from '@/views/home/components/MainInfo.vue'

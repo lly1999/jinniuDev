@@ -27,6 +27,7 @@
           </el-menu> -->
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
           <div class="no">
+            <div style="color:rgb(153, 222, 243);margin-bottom:-0.5vw;text-align: center;">餐厨垃圾</div>
             <div class="no-header" style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -60,6 +61,9 @@
               </ul>
 
             </div> -->
+                 <div style="width:100%;">
+          <div style="float: left;color:rgb(153, 222, 243)">环卫作业</div><div style="float: right;margin-right:1vw;color:rgb(153, 222, 243)">生活垃圾</div>
+          </div>
           </div>
           <!-- <div style="display: flex">
             <div
@@ -73,14 +77,15 @@
               style="width: 12vw; height: 20vh"
             ></div>
           </div> -->
-          <div style="display: flex">
+     
+          <div style="display: flex; margin-top:10px;">
             <div id="hwzy-Charts" v-show="echart_index_hjws === 1"></div>
             <div id="cclj-Charts" v-show="echart_index_hjws === 1"></div>
           </div>
-
+          
           <div style="display: flex">
-            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
-            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 13vw; height: 27vh"></div>
+            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 10vw; height: 24vh;margin-left:-2vw"></div>
+            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 10vw; height: 24vh"></div>
           </div>
         </div>
 
@@ -170,7 +175,7 @@
           </ul>
         </div>
 
-        <el-dialog v-model="alarmEvent" title="告警事件统计分析" append-to-body="true">
+        <el-dialog v-model="alarmEvent" title="普通事件统计分析" append-to-body="true">
           <!-- <WarningThings style="width:100%" /> -->
           <div class="warning-header">
             {{ warningTitle }}事件数
@@ -2020,7 +2025,7 @@ onMounted(() => {
         {
           name: "站点名",
           type: "pie",
-          radius: "70%",
+          radius: "80%",
 
           data: [
             { value: data1, name: "西华" },
@@ -2080,7 +2085,7 @@ onMounted(() => {
         {
           name: "出勤车辆",
           type: "pie",
-          radius: "70%",
+          radius: "80%",
 
           data: [
             { value: 121, name: "出勤" },

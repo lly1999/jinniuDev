@@ -279,7 +279,7 @@
         </div>
         <el-dropdown>
           <span class="el-dropdown-link">
-            {{ params.username + "（" + params.role + "）" }}
+            {{ params.username + "" + params.role + "" }}
             <el-icon>
               <ArrowDown />
             </el-icon>

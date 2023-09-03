@@ -58,6 +58,11 @@ const login = () => {
       params.isLogin = true
       params.token = data.token
       params.roleId = data.role_id
+      if (data.role_id == "83") {
+        params.role = "管理员";
+      } else {
+        params.role = "";
+      }
       //console.log(data.role_id)
       router.push({ name: "home" }); localStorage.setItem("username", params.username)
     }

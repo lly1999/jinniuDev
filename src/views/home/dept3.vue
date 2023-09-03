@@ -21,7 +21,7 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        {{ params.username + "（" + params.role + "）" }}
+                        {{ params.username + "" + params.role + "" }}
                         <el-icon>
                             <ArrowDown />
                         </el-icon>
@@ -236,7 +236,7 @@
 <script setup>
 import 'element-plus/theme-chalk/display.css'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
+import { ref, reactive, computed, onBeforeMount, onMounted,onBeforeUnmount } from "vue";
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import MainInfo from '@/views/home/components/MainInfo.vue'
@@ -258,11 +258,12 @@ const aiUrl = ref('')
 const imgVisible = ref(true)
 const tcwtTableData = ref([])
 const syd_data = ref([])
+let myChart_syd2 = null;
 const echartInit_syd = () => {
     //   document.getElementById("container_syd1").removeAttribute("_echarts_instance_");
     //   var myChart_syd1 = echarts.init(document.getElementById("container_syd1"));
     //document.getElementById("container_syd2").removeAttribute("_echarts_instance_");
-    var myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
+    myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
     var option_syd1 = {
         title: {
             text: '案件分析日统计',
@@ -372,8 +373,9 @@ const echartInit_syd = () => {
     }
     myChart_syd2.setOption(option_syd2)
 }
+let myChart = null;
 function echartInit_tcwt() {
-    var myChart = echarts.init(document.getElementById("container"));
+    myChart = echarts.init(document.getElementById("container"));
     getTrend().then(data => {
         var option = {
             title: {
@@ -538,7 +540,20 @@ function syd_click() {
 const szcg_statics = ref([])
 //部门列表, 从后端获取
 const depts = ref([])
+onBeforeUnmount(() => {
+    if (myChart) {
+        window.removeEventListener('resize', myChart);
+        myChart.dispose();
+        myChart = null;
+    }
+        if (myChart_syd2) {
+        window.removeEventListener('resize', myChart_syd2);
+        myChart_syd2.dispose();
+        myChart_syd2 = null;
+    }
+})
 onBeforeMount(() => {
+
     getDeptList()
         .then(response => {
             depts.value = response
@@ -591,6 +606,7 @@ const systems = ref([])
 onMounted(() => {
     getSystemList().then(data => {
         systems.value = data
+        console.log(data)
         // 请求各个子系统要显示的数据
         systems.value.forEach(system => {
             if (system.api !== '') {
@@ -602,6 +618,7 @@ onMounted(() => {
     tcwt_click()
 
 })
+
 //选中的部门
 // -1表示全选，为默认值
 const choosedDept = ref(3)

@@ -18,7 +18,7 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        {{ params.username + "（" + params.role + "）" }}
+                        {{ params.username + "" + params.role + "" }}
                         <el-icon>
                             <ArrowDown />
                         </el-icon>
@@ -381,7 +381,7 @@
 <script setup>
 import "element-plus/theme-chalk/display.css";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
+import { ref, reactive, computed, onBeforeMount, onMounted,onBeforeUnmount } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter, useRoute } from "vue-router";
 import MainInfo from "@/views/home/components/MainInfo.vue";
@@ -425,6 +425,13 @@ const ddzh_tianhui = ref([]);
 const ddzh_simaqiao = ref([]);
 const ddzh_fenghuanshan = ref([]);
 
+let myChart_gxdc = null;
+let myChart_gxdc1 = null;
+let myChart_yyxt1 = null;
+let myChart_yyxt2 = null;
+let myChart_yyxt3 = null;
+let myChart_ycxt1 = null;
+let myChart_ycxt2 = null;
 function echartInit_gxdc() {
     if (
         document
@@ -434,7 +441,7 @@ function echartInit_gxdc() {
         document
             .getElementById("container_gxdc1")
             .removeAttribute("_echarts_instance_");
-    var myChart_gxdc = echarts.init(document.getElementById("container_gxdc1"));
+    myChart_gxdc = echarts.init(document.getElementById("container_gxdc1"));
 
     if (
         document
@@ -444,7 +451,7 @@ function echartInit_gxdc() {
         document
             .getElementById("container_gxdc2")
             .removeAttribute("_echarts_instance_");
-    var myChart_gxdc1 = echarts.init(document.getElementById("container_gxdc2"));
+    myChart_gxdc1 = echarts.init(document.getElementById("container_gxdc2"));
     var option_gxdc2 = {
         title: {
             text: "公司统计",
@@ -606,9 +613,9 @@ function echartInit_yyxt() {
         document
             .getElementById("container_yyxt3")
             .removeAttribute("_echarts_instance_");
-    var myChart_yyxt1 = echarts.init(document.getElementById("container_yyxt1"));
-    var myChart_yyxt2 = echarts.init(document.getElementById("container_yyxt2"));
-    var myChart_yyxt3 = echarts.init(document.getElementById("container_yyxt3"));
+    myChart_yyxt1 = echarts.init(document.getElementById("container_yyxt1"));
+    myChart_yyxt2 = echarts.init(document.getElementById("container_yyxt2"));
+    myChart_yyxt3 = echarts.init(document.getElementById("container_yyxt3"));
     getOverStandard().then((tableData) => {
         var option_yyxt1 = {
             title: {
@@ -859,8 +866,8 @@ function echartInit_ycxt() {
 
         document.getElementById("container_ycxt2").removeAttribute("_echarts_instance_");
 
-    var myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
-    var myChart_ycxt2 = echarts.init(document.getElementById("container_ycxt2"))
+    myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
+    myChart_ycxt2 = echarts.init(document.getElementById("container_ycxt2"))
     axios({
         url: "/api/dust_sys/classified_gps_rate",
         headers: { 'Authorization': "Bearer" + params.token },
@@ -1020,6 +1027,44 @@ function echartInit_ycxt() {
 
 
 }
+
+onBeforeUnmount(() => {
+  if (myChart_gxdc) {
+    window.removeEventListener("resize", myChart_gxdc);
+    myChart_gxdc.dispose();
+    myChart_gxdc = null;
+    }
+    if (myChart_gxdc1) {
+    window.removeEventListener("resize", myChart_gxdc1);
+    myChart_gxdc1.dispose();
+    myChart_gxdc1 = null;
+    }
+    if (myChart_yyxt1) {
+    window.removeEventListener("resize", myChart_yyxt1);
+    myChart_yyxt1.dispose();
+    myChart_yyxt1 = null;
+    }
+    if (myChart_yyxt2) {
+    window.removeEventListener("resize", myChart_yyxt2);
+    myChart_yyxt2.dispose();
+    myChart_yyxt2 = null;
+    }
+    if (myChart_yyxt3) {
+    window.removeEventListener("resize", myChart_yyxt3);
+    myChart_yyxt3.dispose();
+    myChart_yyxt3 = null;
+    }
+    if (myChart_ycxt1) {
+    window.removeEventListener("resize", myChart_ycxt1);
+    myChart_ycxt1.dispose();
+    myChart_ycxt1 = null;
+    }
+      if (myChart_ycxt2) {
+    window.removeEventListener("resize", myChart_ycxt2);
+    myChart_ycxt2.dispose();
+    myChart_ycxt2 = null;
+  }
+})
 //用户信息
 const user = reactive({
     username: "张三",
