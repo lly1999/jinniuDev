@@ -607,12 +607,13 @@ const garbage_collect_click = () => {
   garbage_collect_detail.value = false
 }
 const cclj_sites = ref([])
-
+let myChart_cclj = null;
+let myChart_cclj1 = null;
 const echartInit_cclj = () => {
   //document.getElementById("container_cclj").removeAttribute("_echarts_instance_");
-  var myChart_cclj = echarts.init(document.getElementById("container_cclj"));
+  myChart_cclj = echarts.init(document.getElementById("container_cclj"));
   //document.getElementById("container_cclj1").removeAttribute("_echarts_instance_");
-  var myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
+  myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
   var option = {
     title: {
       text: '收运点位统计',
@@ -718,15 +719,18 @@ const echartInit_cclj = () => {
   myChart_cclj1.setOption(option1)
 
 }
+
+
 const ljz_table1 = ref([]) //垃圾站
 const ljz_table2 = ref([]) //垃圾站
-
+let myChart_ljz1 = null;
+let myChart_ljz2 = null;
 const echartInit_ljz = () => {
 
   document.getElementById("container_ljz1").removeAttribute("_echarts_instance_");
-  var myChart_ljz1 = echarts.init(document.getElementById("container_ljz1"));
+  myChart_ljz1 = echarts.init(document.getElementById("container_ljz1"));
   document.getElementById("container_ljz2").removeAttribute("_echarts_instance_");
-  var myChart_ljz2 = echarts.init(document.getElementById("container_ljz2"));
+  myChart_ljz2 = echarts.init(document.getElementById("container_ljz2"));
   var option1 = {
     title: {
       text: '垃圾分布统计',
@@ -855,6 +859,29 @@ const echartInit_ljz = () => {
   myChart_ljz2.setOption(option2)
 
 }
+
+onBeforeUnmount(() => {
+  if (myChart_cclj) {
+    window.removeEventListener("resize", myChart_cclj);
+    myChart_cclj.dispose();
+    myChart_cclj = null;
+    }
+    if (myChart_cclj1) {
+    window.removeEventListener("resize", myChart_cclj1);
+    myChart_cclj1.dispose();
+    myChart_cclj1 = null;
+    }
+    if (myChart_ljz1) {
+    window.removeEventListener("resize", myChart_ljz1);
+    myChart_ljz1.dispose();
+    myChart_ljz1 = null;
+    }
+    if (myChart_ljz2) {
+    window.removeEventListener("resize", myChart_ljz2);
+    myChart_ljz2.dispose();
+    myChart_ljz2 = null;
+    }
+})
 </script>
   
 <style scoped>

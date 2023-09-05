@@ -3060,16 +3060,19 @@ const submitAddForm = async () => {
           Authorization: "Bearer " + params.token,
         },
         data: JSON.stringify({
-          name: ruleAddForm.telephone,
-          password: ruleAddForm.password,
+          name: Number(ruleAddForm.telephone),
+          password: Number(ruleAddForm.password),
           realName: ruleAddForm.realName,
-          telephone: ruleAddForm.telephone,
+          telephone: Number(ruleAddForm.telephone),
         }),
         method: "post",
       }).then(function (resp) {
         console.log(2, resp);
-        if (resp.data == "true") {
+        if (resp.data) {
            alert("提交成功！");
+          peopleAdd.value = false;
+      loading.value = true;
+      getPermissionList(1);
         } else {
           alert("提交失败！");
         }
@@ -3077,9 +3080,7 @@ const submitAddForm = async () => {
 
       console.log("submit!");
      
-      peopleAdd.value = false;
-      loading.value = true;
-      getPermissionList(1);
+
     } else {
       return false;
     }
@@ -5256,6 +5257,7 @@ const echartInit_ljz = () => {
           "五月",
           "六月",
           "七月",
+          "八月",
           "九月",
           "十月",
           "十一月",
