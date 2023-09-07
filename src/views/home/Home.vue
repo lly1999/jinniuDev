@@ -29,6 +29,16 @@
             plain
             link
             color="fff"
+            @click="resetPasswordDialog = true"
+            size="large"
+            v-show="params.role == '管理员'"
+            >密码重置</el-button
+          >
+          <el-button
+            class="buttonToMap"
+            plain
+            link
+            color="fff"
             @click="changePasswordDialog = true"
             size="large"
             >修改密码</el-button
@@ -268,10 +278,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="hwzyImageUrl"
-                class="image"
-              />
+              <img :src="hwzyImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -460,7 +467,7 @@
               :src="require('@/assets/home/img-cclj2.jpg')"
             >
             </el-image> -->
-              <template v-if="params.role == '管理员'">
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -491,10 +498,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="ccljImageUrl"
-                class="image"
-              />
+              <img :src="ccljImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -605,7 +609,7 @@
               :src="require('@/assets/home/img-ljz2.jpg')"
             >
             </el-image> -->
-                          <template v-if="params.role == '管理员'">
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -636,10 +640,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="shljImageUrl"
-                class="image"
-              />
+              <img :src="shljImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -740,12 +741,12 @@
             shadow="hover"
             :body-style="{ padding: '0px' }"
           >
-   <!-- <el-image
+            <!-- <el-image
               class="image"
               :src="require('@/assets/home/img-ljz2.jpg')"
             >
             </el-image> -->
-                          <template v-if="params.role == '管理员'">
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -776,10 +777,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="ljflImageUrl"
-                class="image"
-              />
+              <img :src="ljflImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -920,7 +918,7 @@
             shadow="hover"
             :body-style="{ padding: '0px' }"
           >
-  <template v-if="params.role == '管理员'">
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -951,10 +949,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="cyyyImageUrl"
-                class="image"
-              />
+              <img :src="cyyyImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -1076,8 +1071,8 @@
               :src="require('@/assets/home/img-ddzh2.jpg')"
             >
             </el-image> -->
-            
-                          <template v-if="params.role == '管理员'">
+
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -1108,10 +1103,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="ddzhImageUrl"
-                class="image"
-              />
+              <img :src="ddzhImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -1232,8 +1224,8 @@
               :src="require('@/assets/home/' + item.image)"
             >
             </el-image> -->
-  
-                          <template v-if="params.role == '管理员'">
+
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -1264,10 +1256,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="gxdcImageUrl"
-                class="image"
-              />
+              <img :src="gxdcImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -1381,7 +1370,7 @@
               :src="require('@/assets/home/img-ycxt.png')"
             >
             </el-image> -->
-               <template v-if="params.role == '管理员'">
+            <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
                 action="uploadUrl"
@@ -1412,10 +1401,7 @@
               </el-upload>
             </template>
             <template v-else>
-              <img
-                :src="yczlImageUrl"
-                class="image"
-              />
+              <img :src="yczlImageUrl" class="image" />
             </template>
             <ul v-if="item.url">
               <div class="header">
@@ -1625,44 +1611,44 @@
                 fit="scale-down"
               >
               </el-image> -->
-                 <template v-if="params.role == '管理员'">
-              <el-upload
-                accept="image/jpg,image/jpeg,image/gif,image/png"
-                action="uploadUrl"
-                class="avatar-uploader"
-                :show-file-list="false"
-                :default-file-list="defaultFileList"
-                :before-upload="createBeforeUpload('ljdp')"
-              >
-                <el-tooltip
-                  content="点击鼠标左键即可更换图片"
-                  effect="dark"
-                  placement="top"
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('ljdp')"
                 >
-                  <img
-                    v-if="ljdpImageUrl"
-                    :src="ljdpImageUrl"
-                    style="width: 100%;height:400px"
-                fit="scale-down"
-                    @click="handleAvatarClick"
-                  />
-                  <el-icon
-                    v-else
-                    class="avatar-uploader-icon"
-                    @click="handleAvatarClick"
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
                   >
-                    <Plus />
-                  </el-icon>
-                </el-tooltip>
-              </el-upload>
-            </template>
-            <template v-else>
-              <img
-                :src="ljdpImageUrl"
-                style="width: 100%;height:400px"
-                fit="scale-down"
-              />
-            </template>
+                    <img
+                      v-if="ljdpImageUrl"
+                      :src="ljdpImageUrl"
+                      style="width: 100%; height: 400px"
+                      fit="scale-down"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img
+                  :src="ljdpImageUrl"
+                  style="width: 100%; height: 400px"
+                  fit="scale-down"
+                />
+              </template>
               <div
                 style="
                   padding: 5px;
@@ -1900,44 +1886,44 @@
                 style="width: 30%; float: right; margin-left: 50%"
               >
               </el-image> -->
-                 <template v-if="params.role == '管理员'">
-              <el-upload
-                accept="image/jpg,image/jpeg,image/gif,image/png"
-                action="uploadUrl"
-                class="avatar-uploader"
-                :show-file-list="false"
-                :default-file-list="defaultFileList"
-                :before-upload="createBeforeUpload('jgzm')"
-              >
-                <el-tooltip
-                  content="点击鼠标左键即可更换图片"
-                  effect="dark"
-                  placement="top"
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('jgzm')"
                 >
-                  <img
-                    v-if="jgzmImageUrl"
-                    :src="jgzmImageUrl"
-                    fit="scale-down"
-                    style="width: 40%; float: right; margin-left: 50%"
-                    @click="handleAvatarClick"
-                  />
-                  <el-icon
-                    v-else
-                    class="avatar-uploader-icon"
-                    @click="handleAvatarClick"
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
                   >
-                    <Plus />
-                  </el-icon>
-                </el-tooltip>
-              </el-upload>
-            </template>
-            <template v-else>
-              <img
-                :src="jgzmImageUrl"
-                fit="scale-down"
-                    style="width: 40%; float: right; margin-left: 50%;"
-              />
-            </template>
+                    <img
+                      v-if="jgzmImageUrl"
+                      :src="jgzmImageUrl"
+                      fit="scale-down"
+                      style="width: 40%; float: right; margin-left: 50%"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img
+                  :src="jgzmImageUrl"
+                  fit="scale-down"
+                  style="width: 40%; float: right; margin-left: 50%"
+                />
+              </template>
             </div>
           </div>
         </template>
@@ -2005,9 +1991,7 @@
               "
             >
               <div class="szcg" v-if="item.systemName == '突出问题管家'">
-                
                 <div style="padding: 5px; margin-top: 5%; margin-left: 15%">
-                  
                   <el-button
                     v-if="item.url"
                     class="el-button-succeed"
@@ -2458,43 +2442,94 @@
           style=""
         >
         </el-image> -->
-         <template v-if="params.role == '管理员'">
-              <el-upload
-                accept="image/jpg,image/jpeg,image/gif,image/png"
-                action="uploadUrl"
-                class="avatar-uploader"
-                :show-file-list="false"
-                :default-file-list="defaultFileList"
-                :before-upload="createBeforeUpload('bottom_banner')"
-              >
-                <el-tooltip
-                  content="点击鼠标左键即可更换图片"
-                  effect="dark"
-                  placement="top"
-                >
-                  <img
-                    v-if="bottomBannerImageUrl"
-                    :src="bottomBannerImageUrl"
-                    class="banner"
-                    @click="handleAvatarClick"
-                  />
-                  <el-icon
-                    v-else
-                    class="avatar-uploader-icon"
-                    @click="handleAvatarClick"
-                  >
-                    <Plus />
-                  </el-icon>
-                </el-tooltip>
-              </el-upload>
-            </template>
-            <template v-else>
+        <template v-if="params.role == '管理员'">
+          <el-upload
+            accept="image/jpg,image/jpeg,image/gif,image/png"
+            action="uploadUrl"
+            class="avatar-uploader"
+            :show-file-list="false"
+            :default-file-list="defaultFileList"
+            :before-upload="createBeforeUpload('bottom_banner')"
+          >
+            <el-tooltip
+              content="点击鼠标左键即可更换图片"
+              effect="dark"
+              placement="top"
+            >
               <img
+                v-if="bottomBannerImageUrl"
                 :src="bottomBannerImageUrl"
                 class="banner"
+                @click="handleAvatarClick"
               />
-            </template>
+              <el-icon
+                v-else
+                class="avatar-uploader-icon"
+                @click="handleAvatarClick"
+              >
+                <Plus />
+              </el-icon>
+            </el-tooltip>
+          </el-upload>
+        </template>
+        <template v-else>
+          <img :src="bottomBannerImageUrl" class="banner" />
+        </template>
       </el-main>
+
+      <!-- //-----------------------------------------------------------------sunny 09/07 密码重设列表 -->
+      <el-dialog
+        v-model="resetPasswordDialog"
+        title="用户密码重置管理"
+        align-center="true"
+        width="90%"
+        @close="handleClose"
+      >
+        <div style="font-size: 2rem">用户列表</div>
+        <el-table
+          :data="
+            resetPasswordList.slice(
+              (current_Page_reset - 1) * 10,
+              current_Page_reset * 10
+            )
+          "
+          size="large"
+          style="width: 100%"
+          :header-cell-style="{
+            'text-align': 'center',
+            'font-size': '1.5rem',
+            background: '#3B53A1 !important',
+            color: '#ffffff',
+            border: 'none !important',
+          }"
+          :cell-style="cellStyle"
+        >
+          <!-- 序号（应该可选才对-目前没有） -->
+
+          \
+          <el-table-column fixed="left" prop="realName" label="人员姓名" />
+          <el-table-column fixed="left" prop="telephone" label="手机号" />
+          <el-table-column fixed="right" prop="operate" label="操作">
+            <template #default="scope">
+              <el-button type="primary" @click="resetPassword(scope.row)"
+                >重置密码</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="float-end" style="margin-bottom: 20px">
+          <el-pagination
+            background
+            layout="->,total, prev, pager, next, jumper"
+            :total="total_Records_reset"
+            :current-page="current_Page_reset"
+            :page-size="10"
+            @current-change="getResetPasswordApplication"
+          />
+        </div>
+      </el-dialog>
+
+      <!-- //-----------------------------------------------------------------sunny 09/07 密码重设列表 -->
       <el-dialog
         v-model="changePermissonDialog"
         title="权限管理"
@@ -3069,18 +3104,16 @@ const submitAddForm = async () => {
       }).then(function (resp) {
         console.log(2, resp);
         if (resp.data) {
-           alert("提交成功！");
+          alert("提交成功！");
           peopleAdd.value = false;
-      loading.value = true;
-      getPermissionList(1);
+          loading.value = true;
+          getPermissionList(1);
         } else {
           alert("提交失败！");
         }
       });
 
       console.log("submit!");
-     
-
     } else {
       return false;
     }
@@ -3152,6 +3185,7 @@ const cities = ["浏览信息", "管理参数", "操作系统"];
 const permissionList = reactive([]);
 const showSuperAdmin = reactive([]);
 const permissonApplicationList = reactive([]);
+const resetPasswordList = reactive([]);
 
 const loading = ref(true);
 const aplicationloading = ref(true);
@@ -3162,6 +3196,9 @@ let pageCount = 0;
 const total_Records = ref(1000);
 let current_Page = ref(1);
 let page_Count = 0;
+const total_Records_reset = ref(1000);
+let current_Page_reset = ref(1);
+let page_Count_reset = 0;
 const permissionForm = ref(null);
 const handleEvent = ref(false);
 const peopleAdd = ref(false);
@@ -3237,6 +3274,70 @@ const ruleForm = reactive({
   cyyy: false,
 });
 const permissonAlert = ref(false);
+
+//-----------------------------------------------------------------sunny 090/07 密码重设列表
+const getResetPasswordList = (pageNum) => {
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/auth/non_super_admin_list",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(async (resp) => {
+    var data = resp.data;
+    resetPasswordList.splice(0, resetPasswordList.length);
+    console.log("人员列表:" + data);
+
+    for (var key in data) {
+      var resetPassword = {
+        realName: data[key].realName,
+        telephone: data[key].telephone,
+      };
+      resetPasswordList.push(resetPassword);
+    }
+    total_Records_reset.value = resetPasswordList.length;
+    page_Count_reset = parseInt(resetPasswordList.length) % 10;
+    current_Page_reset.value = pageNum;
+  });
+};
+// getPermissonApplicationListList(1);
+setInterval(getResetPasswordList(1), 60000);
+const getResetPasswordApplication = (pageNum) => {
+  // 当前页
+  current_Page_reset.value = pageNum;
+};
+
+const resetPassword = (row) => {
+  console.log("人员姓名：" + row.realName + "电话：" + row.telephone);
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/auth/admin_change_password",
+    method: "post",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+    data: JSON.parse(
+      JSON.stringify({
+        name: row.telephone,
+        password: "1234567",
+      })
+    ),
+  }).then(async (resp) => {
+    if (resp.data == true) {
+      ElMessage({
+        type: "success",
+        message: "密码重置成功！",
+      });
+    } else {
+      ElMessage({
+        type: "error",
+        message: "密码重置失败！",
+      });
+    }
+  });
+};
+//-----------------------------------------------------------------sunny 090/07 密码重设列表
 
 const getPermissonApplicationListList = (pageNum) => {
   axios({
@@ -4741,7 +4842,8 @@ const submitForm = (formEl) => {
             } else {
               ElMessage({
                 type: "error",
-                message: "密码的组成至少6位以上，要包含字母、数字、符号，例如：w-765223！",
+                message:
+                  "密码的组成至少6位以上，要包含字母、数字、符号，例如：w-765223！",
               });
             }
           });
@@ -4776,6 +4878,7 @@ const form = reactive({
 });
 const confirmChangePasswordVisible = ref(false);
 const changePermissonDialog = ref(false);
+const resetPasswordDialog = ref(false);
 const changePasswordDialog = ref(false);
 const echartInit_srzx = () => {
   document
@@ -6650,8 +6753,8 @@ function toSystem(item) {
     if (item.systemId == "17" || item.systemId == "4") {
       getAiUrl().then((data) => {
         aiUrl.value = data.message;
-        console.log("22222",aiUrl.value);
-        console.log("11111111",data, aiUrl);
+        console.log("22222", aiUrl.value);
+        console.log("11111111", data, aiUrl);
         window.open(aiUrl.value);
       });
     }
@@ -6859,7 +6962,7 @@ function logout() {
 const uploadUrl = "/api/avatar-other/update-avatar-other"; // 后端上传接口 URL
 const latestImageUrl = ref(""); // 最新头像 URL
 const hwzyImageUrl = ref(""); //
-const bottomBannerImageUrl = ref("")
+const bottomBannerImageUrl = ref("");
 const ccljImageUrl = ref(""); //
 const shljImageUrl = ref(""); //
 const ljflImageUrl = ref(""); //
@@ -6919,45 +7022,43 @@ const beforeUpload = async (rawFile, systemName) => {
         // 在这里处理上传成功的逻辑，如更新页面等
 
         // 更新最新头像 URL
-        if (systemName == 'banner') {
+        if (systemName == "banner") {
           latestImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'hwzy') {
+        if (systemName == "hwzy") {
           hwzyImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'cclj') {
+        if (systemName == "cclj") {
           ccljImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'shlj') {
+        if (systemName == "shlj") {
           shljImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'ljfl') {
+        if (systemName == "ljfl") {
           ljflImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'cyyy') {
+        if (systemName == "cyyy") {
           cyyyImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'ddzh') {
+        if (systemName == "ddzh") {
           ddzhImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'gxdc') {
+        if (systemName == "gxdc") {
           gxdcImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'yczl') {
+        if (systemName == "yczl") {
           yczlImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'jgzm') {
+        if (systemName == "jgzm") {
           jgzmImageUrl.value = "/img/" + response.data.url;
         }
-                if (systemName == 'ljdp') {
+        if (systemName == "ljdp") {
           ljdpImageUrl.value = "/img/" + response.data.url;
         }
-                   if (systemName == 'bottom_banner') {
+        if (systemName == "bottom_banner") {
           bottomBannerImageUrl.value = "/img/" + response.data.url;
         }
-             
 
-        
         //  latestImageUrl.value = require("@/assets/home/" + response.data.url);
       })
       .catch((error) => {
@@ -7004,7 +7105,6 @@ getLatestAvatar("ljdp", ljdpImageUrl);
 // getLatestAvatar("cgAI", cgAIImageUrl);
 // getLatestAvatar("cgsyd", cgsydImageUrl);
 // getLatestAvatar("szhcs", szhcsImageUrl);
-
 </script>
 
 <style scoped>
@@ -7050,7 +7150,7 @@ getLatestAvatar("ljdp", ljdpImageUrl);
   display: flex;
   padding: 5px;
   color: black;
-  margin-right:5%;
+  margin-right: 5%;
 }
 
 .szcgInfo {
