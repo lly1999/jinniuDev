@@ -21,6 +21,7 @@ import Dept2 from "@/views/home/dept2.vue"
 import Dept3 from "@/views/home/dept3.vue"
 import Lzj from "@/views/lzj/Content.vue"
 import Ddzh from "@/views/ddzh/Ddzh.vue"
+import Changepsw from '@/views/Changepsw.vue'
 import { params } from "@/store/store";
 
 
@@ -28,6 +29,7 @@ import { params } from "@/store/store";
 const routes = [
     { path: '/', component: Login, name: Login },
     { path: '/login', component: Login, name: Login },
+    { path: '/changepsw', component: Changepsw, name: Changepsw },
     { name: 'home', path: '/home', component: Home, meta: { requestAuth: true }, },
     { name: 'map', path: '/map', component: Map, meta: { requestAuth: true } },
     { name: 'dept0', path: '/dept0', component: Dept0 },

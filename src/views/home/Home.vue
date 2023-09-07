@@ -3028,7 +3028,7 @@ const peopleFormAdd = ref(null);
 const ruleAddForm = reactive({
   realName: "",
   telephone: "",
-  password: "123456",
+  password: "1234567",
 });
 const rulesAdd = reactive({
   realName: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
@@ -4741,7 +4741,7 @@ const submitForm = (formEl) => {
             } else {
               ElMessage({
                 type: "error",
-                message: "修改密码失败！",
+                message: "密码的组成至少6位以上，要包含字母、数字、符号，例如：w-765223！",
               });
             }
           });
