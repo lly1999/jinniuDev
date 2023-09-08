@@ -32,7 +32,7 @@
             @click="resetPasswordDialog = true"
             size="large"
             v-show="params.role == '管理员'"
-            >密码重置</el-button
+            >用户密码重置管理</el-button
           >
           <el-button
             class="buttonToMap"
@@ -41,7 +41,7 @@
             color="fff"
             @click="changePasswordDialog = true"
             size="large"
-            >修改密码</el-button
+            >修改个人密码</el-button
           >
 
           <el-button
