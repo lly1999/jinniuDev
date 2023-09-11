@@ -457,7 +457,17 @@ const echartInit_ddzh = () => {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow'
-      }
+      },
+              formatter: function (params) {
+      // 获取横坐标的内容
+      let xAxisLabel = params[0].axisValue;
+      
+      // 获取数据项的数值
+      let dataValue = params[0].value;
+
+      // 构建 tooltip 内容并换行显示
+      return xAxisLabel + "<br>打卡率 " + dataValue + "%";
+    },
     },
     yAxis: {
       type: 'category',
@@ -786,6 +796,16 @@ const changeCyyyChart = (page) => {
           axisPointer: {
             type: "shadow",
           },
+                  formatter: function (params) {
+      // 获取横坐标的内容
+      let xAxisLabel = params[0].axisValue;
+      
+      // 获取数据项的数值
+      let dataValue = params[0].value;
+
+      // 构建 tooltip 内容并换行显示
+      return xAxisLabel + "<br>超标企业 " + dataValue + "个";
+    },
         },
         xAxis: {
           type: "category",
@@ -1443,6 +1463,10 @@ const handleSelect_srzx = (key, keypath) => {
         },
         tooltip: {
           trigger: "item",
+                formatter: function (params) {
+      // 在 tooltip 中添加多行文本，包括标题和数值
+      return "单车<br>" + params.name + "   " + params.value + "辆";
+    },
         },
         legend: {
           top: "5%",
@@ -2011,6 +2035,10 @@ onMounted(() => {
       },
       tooltip: {
         trigger: "item",
+         formatter: function (params) {
+      // 在 tooltip 中添加多行文本，包括标题和数值
+      return "站点名 <br>" + params.name + "   " + params.value + "吨";
+    },
       },
       color: ["#E0847F", "#CD8BECA9"],
       legend: {
@@ -2072,6 +2100,10 @@ onMounted(() => {
       },
       tooltip: {
         trigger: "item",
+              formatter: function (params) {
+      // 在 tooltip 中添加多行文本，包括标题和数值
+      return "出勤车辆 <br>" + params.name + "   " + params.value + "辆";
+    },
       },
       legend: {
         bottom: "0%",

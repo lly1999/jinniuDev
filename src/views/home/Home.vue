@@ -3041,6 +3041,7 @@ import { getMainLjz, getSum, getWarning } from "@/api/ljz";
 import { getCarLists, getAiAlarm } from "@/api/hwzy";
 import { getCheckRate, getCntStatus } from "@/api/ddzh";
 import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
+import moment from "moment";
 
 import axios from "axios";
 const aiUrl = ref("");
@@ -5064,6 +5065,16 @@ const echartInit_ddzh = () => {
       axisPointer: {
         type: "shadow",
       },
+              formatter: function (params) {
+      // 获取横坐标的内容
+      let xAxisLabel = params[0].axisValue;
+      
+      // 获取数据项的数值
+      let dataValue = params[0].value;
+
+      // 构建 tooltip 内容并换行显示
+      return xAxisLabel + "<br>打卡率 " + dataValue + "%";
+    },
     },
     xAxis: {
       type: "category",
@@ -5338,6 +5349,17 @@ const echartInit_ljz = () => {
       axisPointer: {
         type: "shadow",
       },
+              formatter: function (params) {
+      // 获取横坐标的内容
+      let xAxisLabel = params[0].axisValue;
+      
+      // 获取数据项的数值
+      let dataValue = params[0].value;
+      let dataValue1 = params[1].value;
+
+      // 构建 tooltip 内容并换行显示
+      return xAxisLabel + "<br>红星站 " + dataValue + "吨"+ "<br>西华站 " + dataValue1 + "吨";
+    },
 
     },
     legend: {
@@ -6617,18 +6639,22 @@ function changeCellStyle(row) {
 
 var time = new Date().getTime();
 //setInterval(refreshSydToken, 1000 * 61)
-const today =
+const DateToday =
   new Date().getFullYear() +
   "-" +
   (new Date().getMonth() + 1) +
   "-" +
   new Date().getDate();
-const tomorrow =
+const today = moment().format("YYYY-MM-DD");
+const DateTomorrow =
   new Date(time + 1 * 24 * 60 * 60 * 1000).getFullYear() +
   "-" +
   (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
   "-" +
   new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
+const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
+console.log("today:"+today+"  "+"tomorrow:"+tomorrow)
+console.log("DateToday:"+DateToday+"  "+"DateTomorrow:"+DateTomorrow)
 const token = ref("");
 const gxdc = reactive({ url: "" });
 const syd = reactive({ url: "" });
