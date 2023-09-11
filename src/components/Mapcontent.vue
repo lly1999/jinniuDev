@@ -183,7 +183,7 @@
           <el-date-picker v-model="changeValue" type="daterange" unlink-panels range-separator="到"
             start-placeholder="选择开始时间" end-placeholder="选择结束时间" :disabled-date="disabledDate" :shortcuts="shortcuts"
             @change="changeDate" size="large" style="margin: 0.5rem 0 0.5rem" />
-          <el-table :data="data_total.slice((currentPage - 1) * 6, currentPage * 6)" :size="large" width="100%"
+          <el-table :data="data_total.slice((currentPage - 1) * 10, currentPage * 10)" :size="large" width="100%"
             id="#vcfResult" :row-class-name="tableRowClassName">
             <el-table-column property="uuid" label="事件uuid" width="260">
               <template #default="scope">
@@ -1914,7 +1914,7 @@ onMounted(() => {
 
         console.log("数据长度：" + data.length);
       totalRecords.value = data_total.length;
-      pageCount = parseInt(data_total.length) % 6;
+      pageCount = parseInt(data_total.length) % 10;
       currentPage.value = pageNum;
     }
   });

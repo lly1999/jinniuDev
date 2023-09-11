@@ -5280,6 +5280,10 @@ const echartInit_ljz = () => {
     },
     tooltip: {
       trigger: "item",
+            formatter: function (params) {
+      // 在 tooltip 中添加多行文本，包括标题和数值
+      return "垃圾分布统计 <br>" + params.name + "   " + params.value + "吨";
+    },
     },
     legend: {
       orient: "vertical",
@@ -5334,6 +5338,7 @@ const echartInit_ljz = () => {
       axisPointer: {
         type: "shadow",
       },
+
     },
     legend: {
       textStyle: {
