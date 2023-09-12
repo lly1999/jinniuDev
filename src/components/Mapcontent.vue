@@ -134,10 +134,10 @@
                 @工地运企信息
               </p>
               <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500">
-                <el-table-column prop="名称" label="名称" width="160" />
-                <el-table-column prop="联系人" label="联系人" width="180" />
-                <el-table-column prop="车辆数" label="车辆数" width="180" />
-                <el-table-column prop="联系电话" label="联系电话" />
+                <el-table-column prop="name" label="名称" width="160" />
+                <el-table-column prop="contacts" label="联系人" width="180" />
+                <el-table-column prop="car_count" label="车辆数" width="180" />
+                <el-table-column prop="tel" label="联系电话" />
 
 
               </el-table>
@@ -350,7 +350,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onBeforeMount, onMounted } from "vue";
+import { reactive, ref, onBeforeMount, onMounted,onBeforeUnmount } from "vue";
 import { ScrollBoard, DigitalFlop } from "@kjgl77/datav-vue3";
 import { BorderBox6 as DvBorderBox6 } from "@kjgl77/datav-vue3";
 import { BorderBox7 as DvBorderBox7 } from "@kjgl77/datav-vue3";
@@ -502,16 +502,16 @@ const echartInit_ddzh = () => {
     },
     series: [
       {
-        data: [(ddzh_tableData1.value[0].checkRate * 100).toFixed(2), (ddzh_tableData1.value[1].checkRate * 100).toFixed(2), (ddzh_tableData1.value[2].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[3].checkRate * 100).toFixed(2), (ddzh_tableData1.value[4].checkRate * 100).toFixed(2), (ddzh_tableData1.value[5].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[6].checkRate * 100).toFixed(2), (ddzh_tableData1.value[7].checkRate * 100).toFixed(2), (ddzh_tableData1.value[8].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[9].checkRate * 100).toFixed(2), (ddzh_tableData1.value[10].checkRate * 100).toFixed(2), (ddzh_tableData1.value[11].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[12].checkRate * 100).toFixed(2), (ddzh_tableData1.value[13].checkRate * 100).toFixed(2), (ddzh_tableData1.value[14].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[15].checkRate * 100).toFixed(2), (ddzh_tableData1.value[16].checkRate * 100).toFixed(2), (ddzh_tableData1.value[17].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[18].checkRate * 100).toFixed(2), (ddzh_tableData1.value[19].checkRate * 100).toFixed(2), (ddzh_tableData1.value[20].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[21].checkRate * 100).toFixed(2), (ddzh_tableData1.value[22].checkRate * 100).toFixed(2), (ddzh_tableData1.value[23].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[24].checkRate * 100).toFixed(2), (ddzh_tableData1.value[25].checkRate * 100).toFixed(2), (ddzh_tableData1.value[26].checkRate * 100).toFixed(2),
-        (ddzh_tableData1.value[27].checkRate * 100).toFixed(2), (ddzh_tableData1.value[28].checkRate * 100).toFixed(2)]
+        data: [(ddzh_tableData1.value[0].checkRate * 100).toFixed(1), (ddzh_tableData1.value[1].checkRate * 100).toFixed(1), (ddzh_tableData1.value[2].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[3].checkRate * 100).toFixed(1), (ddzh_tableData1.value[4].checkRate * 100).toFixed(1), (ddzh_tableData1.value[5].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[6].checkRate * 100).toFixed(1), (ddzh_tableData1.value[7].checkRate * 100).toFixed(1), (ddzh_tableData1.value[8].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[9].checkRate * 100).toFixed(1), (ddzh_tableData1.value[10].checkRate * 100).toFixed(1), (ddzh_tableData1.value[11].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[12].checkRate * 100).toFixed(1), (ddzh_tableData1.value[13].checkRate * 100).toFixed(1), (ddzh_tableData1.value[14].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[15].checkRate * 100).toFixed(1), (ddzh_tableData1.value[16].checkRate * 100).toFixed(1), (ddzh_tableData1.value[17].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[18].checkRate * 100).toFixed(1), (ddzh_tableData1.value[19].checkRate * 100).toFixed(1), (ddzh_tableData1.value[20].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[21].checkRate * 100).toFixed(1), (ddzh_tableData1.value[22].checkRate * 100).toFixed(1), (ddzh_tableData1.value[23].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[24].checkRate * 100).toFixed(1), (ddzh_tableData1.value[25].checkRate * 100).toFixed(1), (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
+        (ddzh_tableData1.value[27].checkRate * 100).toFixed(1), (ddzh_tableData1.value[28].checkRate * 100).toFixed(1)]
         ,
         type: 'bar',
         showBackground: true,
@@ -1520,6 +1520,7 @@ const handleSelect_srzx = (key, keypath) => {
 };
 const handleSelect_szcg = (key, keypath) => {
   if (key === "1") {
+    console.log("来到这里："+key)
 
     getTrend().then(data => {
       var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
@@ -1535,7 +1536,16 @@ const handleSelect_szcg = (key, keypath) => {
         //这里的yAxis就是竖轴，xAxis就是横轴
         // yAxis and xAxis 交换可以改变横向或竖向
         xAxis: {
-          data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type, data[6].type]
+          data: [data[0].type,
+          data[2].type,
+          data[3].type,
+          data[4].type,
+          data[5].type,
+                    data[6].type,
+          data[7].type,
+          data[8].type,
+          data[9].type,
+          data[10].type,]
         },
         yAxis: {
 
@@ -1548,8 +1558,17 @@ const handleSelect_szcg = (key, keypath) => {
             type: 'bar',
             color: '#dd6b66',
             // 数据
-            data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-            data[4].lian_value, data[5].lian_value, data[6].lian_value,]
+            data: [data[0].lian_value,
+            data[1].lian_value,
+            data[2].lian_value,
+            data[3].lian_value,
+            data[4].lian_value,
+            data[5].lian_value,
+                        data[6].lian_value,
+            data[7].lian_value,
+            data[8].lian_value,
+            data[9].lian_value,
+            data[10].lian_value,]
           }
         ]
       }
@@ -2358,6 +2377,8 @@ onMounted(() => {
   //   mychar_hjws.resize();
   // };
   // mychar_hjws.setOption(hjws_option);
+
+
   getTrend().then(data => {
     var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
@@ -2380,7 +2401,16 @@ onMounted(() => {
           interval: 0,//使x轴文字显示全
           rotate: 20
         },
-        data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type]
+        data: [data[0].type,
+          data[2].type,
+          data[3].type,
+          data[4].type,
+          data[5].type,
+                    data[6].type,
+          data[7].type,
+          data[8].type,
+          data[9].type,
+          data[10].type,]
       },
       yAxis: {
 
@@ -2405,8 +2435,17 @@ onMounted(() => {
             }
           },
           // 数据
-          data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-          data[4].lian_value, data[5].lian_value]
+          data: [   data[0].lian_value,
+            data[1].lian_value,
+            data[2].lian_value,
+            data[3].lian_value,
+            data[4].lian_value,
+            data[5].lian_value,
+                        data[6].lian_value,
+            data[7].lian_value,
+            data[8].lian_value,
+            data[9].lian_value,
+            data[10].lian_value,]
         }
       ]
     }

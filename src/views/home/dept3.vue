@@ -172,10 +172,11 @@
                     <div class="info-list" v-if="one_selected == true"
                         style="color:white;margin-right:50px;width:1350px;padding: 14px;line-height: 30px;display: flex;">
                         <div>
-                            <li> ①今日上报案件数:{{ szcg_info.case }}； </li>
-                            <li> ②今日结案数:{{ szcg_info.case_end }}； </li>
-                            <li> ③今日结案率:{{ szcg_info.rate }} ； </li>
-                            <li> ④今日上报问题数:{{ szcg_info.question }} </li>
+                            <li> 今日发现案件数:{{ ai_info.case_today }}； </li>
+                            <li> 今日应处置案件数:{{ ai_info.case_today_need }}； </li>
+                            <li> 今日已处置案件数:{{ ai_info.case_end }} ； </li>
+                            <li> 未处置案件数:{{ ai_info.case_no }}；</li>
+                            <li> 本月超期处置案件数:{{ ai_info.case_out }} </li>
                         </div>
                         <el-table :data="tcwtTableData" stripe style="width: 1050px;margin-left: 25px;" max-height="300"
                             :header-cell-style="{
@@ -251,6 +252,7 @@ import * as echarts from "echarts";
 
 import { getMainAI } from '@/api/ai';
 import { getAiUrl } from '@/api/ai'
+import moment from "moment"
 const syd = reactive({ url: '' })
 const token = ref('')
 const sydUrl = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=")
@@ -384,6 +386,15 @@ function echartInit_tcwt() {
                     color: 'white'
                 }
             },
+                grid: {
+    left: '3%',   // 调整左边距
+    right: '4%',  // 调整右边距
+    bottom: '3%', // 调整底边距
+    containLabel: true // 自动计算标签大小
+            },
+    tooltip: {
+    trigger: "axis",
+  },
             legend: {
                 top: '5%',
                 left: 'center',
@@ -401,7 +412,16 @@ function echartInit_tcwt() {
                         fontSize: 14      //更改坐标轴文字大小
                     }
                 },
-                data: [data[0].type, data[2].type, data[3].type, data[4].type, data[5].type]
+                data: [          data[0].type,
+          data[2].type,
+          data[3].type,
+          data[4].type,
+          data[5].type,
+                    data[6].type,
+          data[7].type,
+          data[8].type,
+          data[9].type,
+          data[10].type,]
             },
             xAxis: {
                 axisLabel: {
@@ -422,8 +442,20 @@ function echartInit_tcwt() {
                         color: 'white'
                     },
                     // 数据
-                    data: [data[0].lian_value, data[1].lian_value, data[2].lian_value, data[3].lian_value,
-                    data[4].lian_value, data[5].lian_value,]
+                        data: [
+            data[0].lian_value,
+            data[1].lian_value,
+            data[2].lian_value,
+            data[3].lian_value,
+            data[4].lian_value,
+            data[5].lian_value,
+                        data[6].lian_value,
+            data[7].lian_value,
+            data[8].lian_value,
+            data[9].lian_value,
+            data[10].lian_value,
+
+          ],
                 }
             ]
         }
@@ -468,18 +500,21 @@ function toSystem(item) {
 }
 var time = new Date().getTime();
 //setInterval(refreshSydToken, 1000 * 61)
-const today =
-    new Date().getFullYear() +
-    "-" +
-    (new Date().getMonth() + 1) +
-    "-" +
-    new Date().getDate();
-const tomorrow =
-    new Date(time + 1 * 24 * 60 * 60 * 1000).getFullYear() +
-    "-" +
-    (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
-    "-" +
-    new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
+// const today =
+//     new Date().getFullYear() +
+//     "-" +
+//     (new Date().getMonth() + 1) +
+//     "-" +
+//     new Date().getDate();
+// const tomorrow =
+//     new Date(time + 1 * 24 * 60 * 60 * 1000).getFullYear() +
+//     "-" +
+//     (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
+//     "-" +
+//     new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
+const today = moment().format("YYYY-MM-DD");
+const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
+// console.log(momentToday+" "+momentTomorrow)
 const szcg_info = reactive(
     {
         case: '',
@@ -580,7 +615,8 @@ onBeforeMount(() => {
         ai_info.case_today = data[0].infoVal
         ai_info.case_today_need = data[1].infoVal
         ai_info.case_end = data[2].infoVal
-        ai_info.case_out = data[3].infoVal
+        ai_info.case_no = data[3].infoVal
+        ai_info.case_out = data[4].infoVal
     })
     getStatics().then(data => {
         szcg_statics.value = data

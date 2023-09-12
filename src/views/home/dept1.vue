@@ -467,7 +467,11 @@ function echartInit_gxdc() {
                 type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
             },
         },
-        legend: {},
+        legend: {
+            textStyle: {
+                color: "black",
+            },
+        },
         grid: {
             left: "3%",
             right: "4%",
@@ -1130,7 +1134,7 @@ onBeforeMount(() => {
     // })
     getTokenGxdc().then((data) => {
         gxdcUrl.value = data;
-        gxdc.url = "http://175.153.176.27:8080/manage/?token=" + gxdcUrl.value;
+        gxdc.url = "https://175.153.176.27:58443/manage/?token=" + gxdcUrl.value;
     });
     getMainGxdc().then((data) => {
         tableDataGxdc.value = data;

@@ -1486,26 +1486,26 @@
                           :cell-style="changeCellStyle"
                         >
                           <el-table-column
-                            prop="名称"
+                            prop="name"
                             label="名称"
                             width="180"
                           />
                           <el-table-column
-                            prop="更新时间"
+                            prop="update_time"
                             label="更新时间"
                             width="240"
                           />
                           <el-table-column
-                            prop="联系人"
+                            prop="contacts"
                             label="联系人"
                             width="180"
                           />
                           <el-table-column
-                            prop="车辆数"
+                            prop="car_count"
                             label="车辆数"
                             width="180"
                           />
-                          <el-table-column prop="联系电话" label="联系电话" />
+                          <el-table-column prop="tel" label="联系电话" />
                         </el-table>
                         <p
                           class="demo-rich-content__mention"
@@ -1531,21 +1531,21 @@
                           :cell-style="changeCellStyle"
                         >
                           <el-table-column
-                            prop="超速位置"
+                            prop="overspeed_address"
                             label="超速位置"
                             width="180"
                           />
                           <el-table-column
-                            prop="速度"
+                            prop="speed"
                             label="速度"
                             width="280"
                           />
                           <el-table-column
-                            prop="车牌号"
+                            prop="plate_num"
                             label="车牌号"
                             width="180"
                           />
-                          <el-table-column prop="超速时间" label="超速时间" />
+                          <el-table-column prop="overspeed_time" label="超速时间" />
                         </el-table>
                         <!-- <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
                       <div id="container_yyxt2" style="width: 1000px; height: 350px"></div>
@@ -1971,7 +1971,9 @@
           <!-- <main-info v-if="item.deptId==3" :key="idx" :systemName="item.systemName" :url="item.url"
             :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId">
           </main-info> -->
+          
           <div style="display: flex">
+            
             <div
               class="szcgInfo"
               v-if="item.deptId == 3"
@@ -1990,6 +1992,7 @@
                 margin-left: 2%;
               "
             >
+        
               <div class="szcg" v-if="item.systemName == '突出问题管家'">
                 <div style="padding: 5px; margin-top: 5%; margin-left: 15%">
                   <el-button
@@ -2087,6 +2090,8 @@
                   </el-popover>
                 </div>
               </div>
+ 
+              
               <div class="AI" v-if="item.systemName == '城管AI识别管家'">
                 <div style="padding: 5px; margin-top: 4%; margin-left: 15%">
                   <el-button
@@ -3280,7 +3285,7 @@ const permissonAlert = ref(false);
 const getResetPasswordList = (pageNum) => {
   axios({
     // url: "/api/lzj/getWarning",
-    url: "/api/auth/non_super_admin_list",
+    url: "/api/auth/all_permission",
     method: "get",
     headers: {
       Authorization: "Bearer " + params.token,
@@ -4903,7 +4908,11 @@ const echartInit_srzx = () => {
         type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
       },
     },
-    legend: {},
+    legend: {
+                textStyle: {
+                color: "white",
+            },
+    },
     grid: {
       left: "3%",
       right: "4%",
@@ -5131,35 +5140,35 @@ const echartInit_ddzh = () => {
     series: [
       {
         data: [
-          (ddzh_tableData1.value[0].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[1].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[2].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[3].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[4].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[5].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[6].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[7].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[8].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[9].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[10].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[11].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[12].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[13].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[14].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[15].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[16].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[17].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[18].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[19].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[20].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[21].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[22].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[23].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[24].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[25].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[26].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[27].checkRate * 100).toFixed(2),
-          (ddzh_tableData1.value[28].checkRate * 100).toFixed(2),
+          (ddzh_tableData1.value[0].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[1].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[2].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[3].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[4].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[5].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[6].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[7].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[8].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[9].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[10].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[11].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[12].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[13].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[14].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[15].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[16].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[17].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[18].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[19].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[20].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[21].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[22].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[23].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[24].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[25].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[27].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[28].checkRate * 100).toFixed(1),
         ],
         type: "bar",
         showBackground: true,
@@ -5358,7 +5367,7 @@ const echartInit_ljz = () => {
       let dataValue1 = params[1].value;
 
       // 构建 tooltip 内容并换行显示
-      return xAxisLabel + "<br>红星站 " + dataValue + "吨"+ "<br>西华站 " + dataValue1 + "吨";
+      return xAxisLabel + "<br>西华站 " + dataValue1 + "吨"+ "<br>红星站 " + dataValue + "吨";
     },
 
     },
@@ -5941,6 +5950,15 @@ const echartInit = () => {
           color: "#ccc",
         },
       },
+      grid: {
+    left: '3%',   // 调整左边距
+    right: '4%',  // 调整右边距
+    bottom: '3%', // 调整底边距
+    containLabel: true // 自动计算标签大小
+},
+      tooltip: {
+    trigger: "axis",
+  },
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
       yAxis: {
@@ -5950,13 +5968,19 @@ const echartInit = () => {
           data[3].type,
           data[4].type,
           data[5].type,
+                    data[6].type,
+          data[7].type,
+          data[8].type,
+          data[9].type,
+          data[10].type,
         ],
+        interval:20,
       },
       xAxis: {},
       // 数据的来源
       series: [
         {
-          name: "source",
+          name: "事件数",
           // bar就是柱状图
           type: "bar",
           color: "#dd6b66",
@@ -5968,6 +5992,12 @@ const echartInit = () => {
             data[3].lian_value,
             data[4].lian_value,
             data[5].lian_value,
+                        data[6].lian_value,
+            data[7].lian_value,
+            data[8].lian_value,
+            data[9].lian_value,
+            data[10].lian_value,
+
           ],
         },
       ],
@@ -6690,7 +6720,7 @@ onBeforeMount(() => {
     90 %
     getTokenGxdc().then((data) => {
       gxdcUrl.value = data;
-      gxdc.url = "http://175.153.176.27:8080/manage/?token=" + gxdcUrl.value;
+      gxdc.url = "https://175.153.176.27:58443/manage/?token=" + gxdcUrl.value;
     });
   getAiAlarm().then((data) => {
     hwzy_tableData1.value = data;

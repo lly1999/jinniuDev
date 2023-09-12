@@ -377,7 +377,7 @@ onBeforeUnmount(() => {
   }
 })
 onMounted(() => {
-  function echartInit_ggzp() {
+  // function echartInit_ggzp() {
    myChart_ggzp1 = echarts.init(document.getElementById("container_ggzp1"));
   var option_ggzp1 = {
     title: {
@@ -425,56 +425,57 @@ onMounted(() => {
  barGap: '300px',   // 柱子之间的间隔，可以是绝对值或百分比
         data: [
           {
-            value: ggzp_tableData.value[1].infoVal,
+            value: 15,
             name: "荷花池",
           },
           {
-            value: ggzp_tableData.value[2].infoVal,
+            value: 10,
             name: "茶店子",
           },
 
           {
-            value: ggzp_tableData.value[4].infoVal,
+            value: 30,
             name: "抚琴",
           },
           {
-            value: ggzp_tableData.value[1].infoVal,
+            value: 22,
             name: "西安路",
           },
           {
-            value: ggzp_tableData.value[2].infoVal,
+            value: 14,
             name: "驷马桥",
           },
           {
-            value: ggzp_tableData.value[3].infoVal,
+            value: 6,
             name: "金泉",
           },
           {
-            value: ggzp_tableData.value[4].infoVal,
+            value: 41,
             name: "营门口",
           },
           {
-            value: ggzp_tableData.value[1].infoVal,
+            value: 15,
             name: "天回镇",
           },
           {
-            value: ggzp_tableData.value[2].infoVal,
+            value: 22,
             name: "五块石",
           },
           {
-            value: ggzp_tableData.value[3].infoVal,
+            value: 24,
             name: "九里堤",
           },
           {
-            value: ggzp_tableData.value[4].infoVal,
+            value: 3,
             name: "沙河源",
           },
           {
-            value: ggzp_tableData.value[1].infoVal,
+            value: 7,
             name: "西华",
           },
           {
-            value: ggzp_tableData.value[3].infoVal,
+            // value: ggzp_tableData.value[3].infoVal,
+            value:8,
             name: "凤凰山",
           },
         ],
@@ -494,7 +495,7 @@ window.addEventListener('resize', function() {
   myChart_ggzp1.resize(); // 重新计算图表大小
 });
   myChart_ggzp1.setOption(option_ggzp1);
-}
+// }
   getMain().then((data) => {
     ggzp_tableData.value = data;
     echartInit_ggzp();
@@ -511,6 +512,7 @@ window.addEventListener('resize', function() {
     });
   });
 });
+
 //选中的部门
 // -1表示全选，为默认值
 const choosedDept = ref(2);

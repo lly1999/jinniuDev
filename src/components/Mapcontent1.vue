@@ -176,7 +176,7 @@
 
 
 <script setup>
-import { reactive, ref, onBeforeMount, onMounted } from 'vue';
+import { reactive, ref, onBeforeMount, onMounted,onBeforeUnmount } from 'vue';
 import { ScrollBoard, DigitalFlop } from '@kjgl77/datav-vue3'
 import { BorderBox6 as DvBorderBox6 } from '@kjgl77/datav-vue3'
 import { BorderBox7 as DvBorderBox7 } from '@kjgl77/datav-vue3'
@@ -800,9 +800,13 @@ const handleSelect_srzx = (key, keypath) => {
 
   }
 }
+let myChart_tcwt = null;
+let myChart_jgzm1 = null;
+let mychar_hjws = null;
+
 const handleSelect_szcg = (key, keypath) => {
   if (key === '1') {
-    var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
+    myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
     echart_index_szcg.value = 1
     var option = {
@@ -923,7 +927,7 @@ const handleSelect_jgzm = (key, keyPath) => {
     echart_index_jgzm.value = 1
     //document.getElementById("hwzy-Charts").removeAttribute("_echarts_instance_");
 
-    var myChart_jgzm1 = echarts.init(document.getElementById("jgzm-Charts"));
+    myChart_jgzm1 = echarts.init(document.getElementById("jgzm-Charts"));
 
     getMainJgzm().then(data => {
       console.log(data)
@@ -1041,7 +1045,7 @@ const handleSelect_hjws = (key, keyPath) => {
     echart_index_hjws.value = 1
     //document.getElementById("hwzy-Charts").removeAttribute("_echarts_instance_");
 
-    var mychar_hjws = echarts.init(document.getElementById("hwzy-Charts"));
+    mychar_hjws = echarts.init(document.getElementById("hwzy-Charts"));
     var hjws_option = {
       title: {
         text: '环卫作业运行管家',
@@ -1337,7 +1341,24 @@ onMounted(() => {
   myChart_tcwt.setOption(option)
 })
 
-
+onBeforeUnmount(() => {
+  if (myChart_tcwt) {
+    window.removeEventListener("resize", myChart_tcwt);
+    myChart_tcwt.dispose();
+    myChart_tcwt = null;
+    }
+    if (myChart_jgzm1) {
+    window.removeEventListener("resize", myChart_jgzm1);
+    myChart_jgzm1.dispose();
+    myChart_jgzm1 = null;
+    }
+    if (mychar_hjws) {
+    window.removeEventListener("resize", mychar_hjws);
+    mychar_hjws.dispose();
+    mychar_hjws = null;
+    }
+   
+})
 
 const config = reactive({
   header: ['街道', '立案数', '处置数', '结案数', '结案率'],

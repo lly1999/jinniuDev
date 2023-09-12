@@ -740,7 +740,11 @@ const echartInit_ljz = () => {
       }
     },
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
+                 formatter: function (params) {
+      // 在 tooltip 中添加多行文本，包括标题和数值
+      return "垃圾分布统计 <br>" + params.name + "   " + params.value + "吨";
+    },
     },
     legend: {
       orient: 'vertical',
@@ -790,7 +794,18 @@ const echartInit_ljz = () => {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow'
-      }
+      },
+      formatter: function (params) {
+      // 获取横坐标的内容
+      let xAxisLabel = params[0].axisValue;
+      
+      // 获取数据项的数值
+      let dataValue = params[0].value;
+      let dataValue1 = params[1].value;
+
+      // 构建 tooltip 内容并换行显示
+      return xAxisLabel + "<br>西华站 " + dataValue1 + "吨"+ "<br>红星站 " + dataValue + "吨";
+    },
     },
     legend: {
       textStyle: {
@@ -809,7 +824,7 @@ const echartInit_ljz = () => {
     xAxis: [
       {
         type: 'category',
-        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '九月', '十月', '十一月', '十二月',]
+        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月','九月', '十月', '十一月', '十二月',]
       }
     ],
     yAxis: [
