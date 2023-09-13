@@ -1419,13 +1419,7 @@
               class="infoContainer"
               style="background-color: #2775b6; color: white"
             >
-              <!-- logo -->
-              <!-- <div>
-<el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large"></el-avatar>
-</div> -->
-              <!-- 汇总数据列表 -->
               <div>
-                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
                   <li v-for="item in item.data" style="font-size: 20px">
                     {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
@@ -1545,7 +1539,10 @@
                             label="车牌号"
                             width="180"
                           />
-                          <el-table-column prop="overspeed_time" label="超速时间" />
+                          <el-table-column
+                            prop="overspeed_time"
+                            label="超速时间"
+                          />
                         </el-table>
                         <!-- <div id="container_yyxt1" style="width: 1000px; height: 350px"></div>
                       <div id="container_yyxt2" style="width: 1000px; height: 350px"></div>
@@ -1733,41 +1730,6 @@
                       </li>
                     </div>
                   </el-popover>
-
-                  <!-- <el-popover :width="1200" placement="top" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
-                    popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                    <template #reference>
-                      <el-button class="el-button-succeed" link type="primary" style=" margin-top:10px;">
-                        查看详情 ></el-button>
-
-                    </template>
-                    <template #default>
-                      <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                        <div>
-                          <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                            {{ item.systemName }}
-                          </p>
-                          <p class="demo-rich-content__mention"
-                            style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                            @详情统计
-                          </p>
-                          <div style="display:flex">
-
-                            <dv-border-box8 v-for="item in item.data"
-                              style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                              <div>{{ item.infoKey }}</div>
-                              <div style="text-align:center">{{ item.infoVal }}</div>
-                            </dv-border-box8>
-
-                          </div>
-
-                          <div id="container_ljdp1" style="width: 600px; height: 400px;float: left;"></div>
-                          <div id="container_ljdp2" style="width: 600px; height: 400px ;float:left"></div>
-
-                        </div>
-                      </div>
-                    </template>
-                  </el-popover> -->
                 </div>
               </div>
             </div>
@@ -1838,54 +1800,9 @@
                       </li>
                     </div>
                   </el-popover>
-                  <!-- <li v-for="item in item.data" style="font-size: 20px;padding: 5px;width:100%">{{
-                    item.infoKey + ": "
-                    +
-                    item.infoVal
-                  }}
-                  </li> -->
-                  <!-- <el-popover :width="1200" placement="right" effect="dark" @after-enter=echartInit_jgzm() trigger="click"
-                    popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-                    <template #reference>
-                      <el-button class="el-button-succeed" link type="primary" style=" margin-top:10px;">
-                        查看详情 ></el-button>
-
-                    </template>
-                    <template #default>
-                      <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column ">
-                        <div>
-                          <p class="demo-rich-content__name" style="margin: 0; font-weight: 500;font-size: 25px;">
-                            {{ item.systemName }}
-                          </p>
-                          <p class="demo-rich-content__mention"
-                            style="margin: 0; font-size: 18px; color: var(--el-color-info)">
-                            @详情统计
-                          </p>
-                          <div style="display:flex">
-
-                            <dv-border-box8 v-for="item in item.data"
-                              style="font-size: 20px;padding: 10px;margin-top: 0px;width:100%">
-                              <div>{{ item.infoKey }}</div>
-                              <div style="text-align:center">{{ item.infoVal }}</div>
-                            </dv-border-box8>
-
-                          </div>
-
-
-
-
-                        </div>
-                      </div>
-                    </template>
-                  </el-popover> -->
                 </div>
               </div>
-              <!-- <el-image
-                fit="scale-down"
-                :src="require('@/assets/jgzm/' + idx + '-1.jpg')"
-                style="width: 30%; float: right; margin-left: 50%"
-              >
-              </el-image> -->
+
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1971,10 +1888,9 @@
           <!-- <main-info v-if="item.deptId==3" :key="idx" :systemName="item.systemName" :url="item.url"
             :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId">
           </main-info> -->
-          
+
           <div style="display: flex">
-            
-            <div
+            <!-- <div
               class="szcgInfo"
               v-if="item.deptId == 3"
               :key="idx"
@@ -1991,34 +1907,82 @@
                 font-size: 25px;
                 margin-left: 2%;
               "
+            > -->
+            <el-card
+              v-if="item.systemName == '突出问题管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
             >
-        
-              <div class="szcg" v-if="item.systemName == '突出问题管家'">
-                <div style="padding: 5px; margin-top: 5%; margin-left: 15%">
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('tcwt')"
+                >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="tcwtImageUrl"
+                      :src="tcwtImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="tcwtImageUrl" class="image" />
+              </template>
+
+              <ul v-if="item.url">
+                <div class="header">
                   <el-button
                     v-if="item.url"
-                    class="el-button-succeed"
+                    class="el-button-hjws"
                     type="text"
                     @click="toSystem(item)"
-                    style="margin-top: 0px; color: #e6e6e6"
                     >{{ item.systemName }}</el-button
                   >
-                  <el-button
-                    v-else
-                    class="el-button-null"
-                    type="text"
-                    @click="toSystem(item)"
-                    style="margin-top: 10px"
-                  >
-                    {{ item.systemName }}</el-button
-                  >
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div style="padding: 5px; margin-top: 5%; padding-left: 8%"> -->
 
-                  <li
-                    v-for="item in item.data"
-                    style="font-size: 20px; padding: 5px"
-                  >
-                    {{ item.infoKey + ": " + item.infoVal }}
-                  </li>
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
                   <el-popover
                     :width="1200"
                     placement="right"
@@ -2031,8 +1995,8 @@
                       <el-button
                         class="el-button-succeed"
                         link
-                        type="text"
-                        style="margin-top: 10px; color: #e6e6e6"
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
                       >
                         查看详情 ></el-button
                       >
@@ -2088,35 +2052,85 @@
                       </div>
                     </template>
                   </el-popover>
+                  <!-- </div> -->
                 </div>
               </div>
- 
-              
-              <div class="AI" v-if="item.systemName == '城管AI识别管家'">
-                <div style="padding: 5px; margin-top: 4%; margin-left: 15%">
+            </el-card>
+            <el-card
+              v-if="item.systemName == '城管AI识别管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
+            >
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('cgAI')"
+                >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="cgAIImageUrl"
+                      :src="cgAIImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="cgAIImageUrl" class="image" />
+              </template>
+
+              <ul v-if="item.url">
+                <div class="header">
                   <el-button
                     v-if="item.url"
-                    class="el-button-succeed"
+                    class="el-button-hjws"
                     type="text"
                     @click="toSystem(item)"
-                    style="margin-top: 10px; color: #e6e6e6"
                     >{{ item.systemName }}</el-button
                   >
-                  <el-button
-                    v-else
-                    class="el-button-null"
-                    type="text"
-                    @click="toSystem(item)"
-                    style="margin-top: 10px"
-                  >
-                    {{ item.systemName }}</el-button
-                  >
-                  <li
-                    v-for="item in item.data"
-                    style="font-size: 20px; padding: 5px; margin-top: 0px"
-                  >
-                    {{ item.infoKey + ":" + item.infoVal }}
-                  </li>
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div style="padding: 5px; margin-top: 4%; margin-left: 8%"> -->
+
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px; margin-top: 0px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
                   <el-popover
                     :width="1200"
                     effect="dark"
@@ -2128,8 +2142,8 @@
                       <el-button
                         class="el-button-succeed"
                         link
-                        type="text"
-                        style="margin-top: 0px; color: #e6e6e6"
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
                       >
                         查看详情 ></el-button
                       >
@@ -2231,42 +2245,94 @@
                     style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
                   <el-button v-else class="el-button-null" type="text" @click="toSystem(item)" style="margin-top:10px">
                     {{ item.systemName }}</el-button> -->
+                  <!-- </div> -->
                 </div>
               </div>
+            </el-card>
 
-              <div class="szcg" v-if="item.systemName == '数字化城市信息管家'">
-                <div
-                  style="
-                    padding: 5px;
-                    margin-top: 5%;
-                    margin-left: 15%;
-                    width: 100%;
-                    height: 100%;
-                  "
+            <el-card
+              v-if="item.systemName == '数字化城市信息管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
+            >
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('szhcs')"
                 >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="szhcsImageUrl"
+                      :src="szhcsImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="szhcsImageUrl" class="image" />
+              </template>
+              <ul v-if="item.url">
+                <div class="header">
                   <el-button
                     v-if="item.url"
-                    class="el-button-succeed"
+                    class="el-button-hjws"
                     type="text"
                     @click="toSystem(item)"
-                    style="margin-top: 10px; color: #e6e6e6"
                     >{{ item.systemName }}</el-button
                   >
-                  <el-button
-                    v-else
-                    class="el-button-null"
-                    type="text"
-                    @click="toSystem(item)"
-                    style="margin-top: 10px"
-                  >
-                    {{ item.systemName }}</el-button
-                  >
-                  <li
-                    v-for="item in item.data"
-                    style="font-size: 20px; padding: 5px; margin-top: 0px"
-                  >
-                    {{ item.infoKey + ":" + item.infoVal }}
-                  </li>
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
+
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div
+                      style="
+                        padding: 5px;
+                        margin-top: 5%;
+                        margin-left: 8%;
+                        width: 100%;
+                        height: 100%;
+                      "
+                    > -->
+
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px; margin-top: 0px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
 
                   <el-popover
                     :width="1200"
@@ -2280,11 +2346,11 @@
                       <el-button
                         class="el-button-succeed"
                         link
-                        type="text"
-                        style="margin-top: 0px; color: #e6e6e6"
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
                       >
-                        查看详情 >
-                      </el-button>
+                        查看详情 ></el-button
+                      >
                     </template>
                     <template #default>
                       <div
@@ -2344,33 +2410,86 @@
                         <dv-charts :option="config_szcg" style="width:200px;height: 200px;" />
                       </div> -->
                   </el-popover>
+                  <!-- </div> -->
                 </div>
               </div>
-              <div class="syd" v-if="item.systemName == '城管诉易达管家'">
-                <div style="padding: 5px; margin-top: 5%; margin-left: 20%">
+            </el-card>
+
+            <el-card
+              v-if="item.systemName == '城管诉易达管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
+            >
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('cgsyd')"
+                >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="cgsydImageUrl"
+                      :src="cgsydImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="cgsydImageUrl" class="image" />
+              </template>
+
+              <ul v-if="item.url">
+                <div class="header">
                   <el-button
                     v-if="item.url"
-                    class="el-button-succeed"
+                    class="el-button-hjws"
                     type="text"
                     @click="toSystem(item)"
-                    style="margin-top: 10px; color: #e6e6e6"
                     >{{ item.systemName }}</el-button
                   >
-                  <el-button
-                    v-else
-                    class="el-button-null"
-                    type="text"
-                    @click="toSystem(item)"
-                    style="margin-top: 10px"
-                  >
-                    {{ item.systemName }}</el-button
-                  >
-                  <li
-                    v-for="item in item.data"
-                    style="font-size: 20px; padding: 5px; margin-top: 0px"
-                  >
-                    {{ item.infoKey + ":" + item.infoVal }}
-                  </li>
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div style="padding: 5px; margin-top: 5%; margin-left: 8%"> -->
+
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px; margin-top: 0px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
                   <el-popover
                     :width="1000"
                     placement="top"
@@ -2383,8 +2502,8 @@
                       <el-button
                         class="el-button-succeed"
                         link
-                        type="text"
-                        style="margin-top: 0px; color: #e6e6e6"
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
                       >
                         查看详情 ></el-button
                       >
@@ -2435,10 +2554,13 @@
                       </div>
                     </template>
                   </el-popover>
+                  <!-- </div> -->
                 </div>
               </div>
-            </div>
+            </el-card>
+            <!-- </div> -->
           </div>
+          <!-- </div> -->
         </template>
 
         <!-- <el-image
@@ -2447,39 +2569,41 @@
           style=""
         >
         </el-image> -->
-        <template v-if="params.role == '管理员'">
-          <el-upload
-            accept="image/jpg,image/jpeg,image/gif,image/png"
-            action="uploadUrl"
-            class="avatar-uploader"
-            :show-file-list="false"
-            :default-file-list="defaultFileList"
-            :before-upload="createBeforeUpload('bottom_banner')"
-          >
-            <el-tooltip
-              content="点击鼠标左键即可更换图片"
-              effect="dark"
-              placement="top"
+        <div style="margin-top: 20px">
+          <template v-if="params.role == '管理员'">
+            <el-upload
+              accept="image/jpg,image/jpeg,image/gif,image/png"
+              action="uploadUrl"
+              class="avatar-uploader"
+              :show-file-list="false"
+              :default-file-list="defaultFileList"
+              :before-upload="createBeforeUpload('bottom_banner')"
             >
-              <img
-                v-if="bottomBannerImageUrl"
-                :src="bottomBannerImageUrl"
-                class="banner"
-                @click="handleAvatarClick"
-              />
-              <el-icon
-                v-else
-                class="avatar-uploader-icon"
-                @click="handleAvatarClick"
+              <el-tooltip
+                content="点击鼠标左键即可更换图片"
+                effect="dark"
+                placement="top"
               >
-                <Plus />
-              </el-icon>
-            </el-tooltip>
-          </el-upload>
-        </template>
-        <template v-else>
-          <img :src="bottomBannerImageUrl" class="banner" />
-        </template>
+                <img
+                  v-if="bottomBannerImageUrl"
+                  :src="bottomBannerImageUrl"
+                  class="banner"
+                  @click="handleAvatarClick"
+                />
+                <el-icon
+                  v-else
+                  class="avatar-uploader-icon"
+                  @click="handleAvatarClick"
+                >
+                  <Plus />
+                </el-icon>
+              </el-tooltip>
+            </el-upload>
+          </template>
+          <template v-else>
+            <img :src="bottomBannerImageUrl" class="banner" />
+          </template>
+        </div>
       </el-main>
 
       <!-- //-----------------------------------------------------------------sunny 09/07 密码重设列表 -->
@@ -4909,9 +5033,9 @@ const echartInit_srzx = () => {
       },
     },
     legend: {
-                textStyle: {
-                color: "white",
-            },
+      textStyle: {
+        color: "white",
+      },
     },
     grid: {
       left: "3%",
@@ -5074,16 +5198,16 @@ const echartInit_ddzh = () => {
       axisPointer: {
         type: "shadow",
       },
-              formatter: function (params) {
-      // 获取横坐标的内容
-      let xAxisLabel = params[0].axisValue;
-      
-      // 获取数据项的数值
-      let dataValue = params[0].value;
+      formatter: function (params) {
+        // 获取横坐标的内容
+        let xAxisLabel = params[0].axisValue;
 
-      // 构建 tooltip 内容并换行显示
-      return xAxisLabel + "<br>打卡率 " + dataValue + "%";
-    },
+        // 获取数据项的数值
+        let dataValue = params[0].value;
+
+        // 构建 tooltip 内容并换行显示
+        return xAxisLabel + "<br>打卡率 " + dataValue + "%";
+      },
     },
     xAxis: {
       type: "category",
@@ -5300,10 +5424,10 @@ const echartInit_ljz = () => {
     },
     tooltip: {
       trigger: "item",
-            formatter: function (params) {
-      // 在 tooltip 中添加多行文本，包括标题和数值
-      return "垃圾分布统计 <br>" + params.name + "   " + params.value + "吨";
-    },
+      formatter: function (params) {
+        // 在 tooltip 中添加多行文本，包括标题和数值
+        return "垃圾分布统计 <br>" + params.name + "   " + params.value + "吨";
+      },
     },
     legend: {
       orient: "vertical",
@@ -5358,18 +5482,25 @@ const echartInit_ljz = () => {
       axisPointer: {
         type: "shadow",
       },
-              formatter: function (params) {
-      // 获取横坐标的内容
-      let xAxisLabel = params[0].axisValue;
-      
-      // 获取数据项的数值
-      let dataValue = params[0].value;
-      let dataValue1 = params[1].value;
+      formatter: function (params) {
+        // 获取横坐标的内容
+        let xAxisLabel = params[0].axisValue;
 
-      // 构建 tooltip 内容并换行显示
-      return xAxisLabel + "<br>西华站 " + dataValue1 + "吨"+ "<br>红星站 " + dataValue + "吨";
-    },
+        // 获取数据项的数值
+        let dataValue = params[0].value;
+        let dataValue1 = params[1].value;
 
+        // 构建 tooltip 内容并换行显示
+        return (
+          xAxisLabel +
+          "<br>西华站 " +
+          dataValue1 +
+          "吨" +
+          "<br>红星站 " +
+          dataValue +
+          "吨"
+        );
+      },
     },
     legend: {
       textStyle: {
@@ -5951,14 +6082,14 @@ const echartInit = () => {
         },
       },
       grid: {
-    left: '3%',   // 调整左边距
-    right: '4%',  // 调整右边距
-    bottom: '3%', // 调整底边距
-    containLabel: true // 自动计算标签大小
-},
+        left: "3%", // 调整左边距
+        right: "4%", // 调整右边距
+        bottom: "3%", // 调整底边距
+        containLabel: true, // 自动计算标签大小
+      },
       tooltip: {
-    trigger: "axis",
-  },
+        trigger: "axis",
+      },
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
       yAxis: {
@@ -5968,13 +6099,13 @@ const echartInit = () => {
           data[3].type,
           data[4].type,
           data[5].type,
-                    data[6].type,
+          data[6].type,
           data[7].type,
           data[8].type,
           data[9].type,
           data[10].type,
         ],
-        interval:20,
+        interval: 20,
       },
       xAxis: {},
       // 数据的来源
@@ -5992,12 +6123,11 @@ const echartInit = () => {
             data[3].lian_value,
             data[4].lian_value,
             data[5].lian_value,
-                        data[6].lian_value,
+            data[6].lian_value,
             data[7].lian_value,
             data[8].lian_value,
             data[9].lian_value,
             data[10].lian_value,
-
           ],
         },
       ],
@@ -6682,9 +6812,11 @@ const DateTomorrow =
   (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
   "-" +
   new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
-const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
-console.log("today:"+today+"  "+"tomorrow:"+tomorrow)
-console.log("DateToday:"+DateToday+"  "+"DateTomorrow:"+DateTomorrow)
+const tomorrow = moment()
+  .add(+1, "d")
+  .format("YYYY-MM-DD");
+console.log("today:" + today + "  " + "tomorrow:" + tomorrow);
+console.log("DateToday:" + DateToday + "  " + "DateTomorrow:" + DateTomorrow);
 const token = ref("");
 const gxdc = reactive({ url: "" });
 const syd = reactive({ url: "" });
@@ -7119,6 +7251,18 @@ const beforeUpload = async (rawFile, systemName) => {
         if (systemName == "bottom_banner") {
           bottomBannerImageUrl.value = "/img/" + response.data.url;
         }
+        if (systemName == "tcwt") {
+          tcwtImageUrl.value = "/img/" + response.data.url;
+        }
+        if (systemName == "cgAI") {
+          cgAIImageUrl.value = "/img/" + response.data.url;
+        }
+        if (systemName == "cgsyd") {
+          cgsydImageUrl.value = "/img/" + response.data.url;
+        }
+        if (systemName == "szhcs") {
+          szhcsImageUrl.value = "/img/" + response.data.url;
+        }
 
         //  latestImageUrl.value = require("@/assets/home/" + response.data.url);
       })
@@ -7162,6 +7306,10 @@ getLatestAvatar("gxdc", gxdcImageUrl);
 getLatestAvatar("yczl", yczlImageUrl);
 getLatestAvatar("jgzm", jgzmImageUrl);
 getLatestAvatar("ljdp", ljdpImageUrl);
+getLatestAvatar("tcwt", tcwtImageUrl);
+getLatestAvatar("cgAI", cgAIImageUrl);
+getLatestAvatar("cgsyd", cgsydImageUrl);
+getLatestAvatar("szhcs", szhcsImageUrl);
 // getLatestAvatar("tcwt", tcwtImageUrl);
 // getLatestAvatar("cgAI", cgAIImageUrl);
 // getLatestAvatar("cgsyd", cgsydImageUrl);
@@ -7405,7 +7553,7 @@ getLatestAvatar("ljdp", ljdpImageUrl);
   width: 250px;
   flex-wrap: wrap;
   font-size: 20px;
-  color: #1677d9;
+  /* color: #1677d9; */
 }
 
 .el-button-null {
@@ -7498,6 +7646,7 @@ getLatestAvatar("ljdp", ljdpImageUrl);
 .el-button-hjws {
   font-size: 20px;
   color: white;
+  margin-top:10px;
 }
 
 .radioPermisson {

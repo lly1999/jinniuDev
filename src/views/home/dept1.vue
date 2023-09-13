@@ -327,7 +327,7 @@
                         </div>
                         <div v-show="four_selected == true" class="right-bg">
 
-                            <div id="container_ycxt1" style="width: 700px; height: 350px;"></div>
+                            <div id="container_ycxt1" style="width: 1000px; height: 350px;"></div>
 
 
                             <div id="container_ycxt2" style="width: 1000px; height: 350px;"></div>
@@ -466,6 +466,7 @@ function echartInit_gxdc() {
                 // Use axis to trigger tooltip
                 type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
             },
+            
         },
         legend: {
             textStyle: {
