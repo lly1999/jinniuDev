@@ -1663,7 +1663,7 @@
                   >{{ item.systemName }}</el-button
                 >
 
-                <div style="padding: 10px">
+                <div style="">
                   <!-- <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">{{
                     item.infoKey + ": " +
                     item.infoVal
@@ -2758,7 +2758,7 @@
           :cell-style="cellStyle"
         >
           <!-- 序号（应该可选才对-目前没有） -->
-          <el-table-column fixed="left" type="index" label="序号" width="90" />
+          <el-table-column fixed="left" prop="index" label="序号" width="90" />
 
           \
           <el-table-column
@@ -2773,19 +2773,21 @@
             label="手机号"
             width="150"
           />
-          <el-table-column prop="zhxz" label="综合行政管理执法智慧管家" />
+          <el-table-column prop="zhxz" label="突出问题管家" />
           <el-table-column prop="cyyy" label="餐饮油烟管家" />
           <el-table-column prop="ddzh" label="调度指挥管家" />
           <el-table-column prop="yczl" label="扬尘治理大数据协同管家" />
           <el-table-column prop="gxdc" label="共享单车管家" />
           <el-table-column prop="jgzm" label="景观照明集中控制管家" />
-          <el-table-column prop="ggzp" label="广告招牌二维码管家" />
+          <el-table-column prop="ggzp" label="临街店铺管家" />
           <el-table-column prop="shlj" label="生活垃圾分类管家" />
-          <el-table-column prop="cclj" label="餐厨垃圾收运管家" />
+          <el-table-column prop="cclj" label="餐厨垃圾全生命周期管家" />
           <el-table-column prop="ljsj" label="垃圾数据归集管家" />
           <el-table-column prop="cgAI" label="城管AI识别管家" />
           <el-table-column prop="szhcs" label="数字化城市信息管家" />
+          
           <el-table-column prop="cgsyd" label="城管诉易达管家" />
+          <el-table-column prop="hwzy" label="环卫作业运行管家" />
           <el-table-column
             fixed="right"
             prop="operate"
@@ -2874,7 +2876,7 @@
       <el-dialog
         v-model="handleEvent"
         title="权限变更"
-        width="45%"
+        width="55%"
         @close="handleClose"
       >
         <div
@@ -2911,6 +2913,22 @@
               v-model="radioGxdc"
               class="radioPermisson"
               @change="radioChangeGxdc"
+            >
+              <el-checkbox v-for="city in cities" :key="city" :label="city">{{
+                city
+              }}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          
+                    <el-form-item
+            label="环卫作业运行管家"
+            prop="hwzy"
+            style="font-size: 2rem"
+          >
+            <el-checkbox-group
+              v-model="radioHwzy"
+              class="radioPermisson"
+              @change="radioChangeHwzy"
             >
               <el-checkbox v-for="city in cities" :key="city" :label="city">{{
                 city
@@ -2954,7 +2972,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="广告招牌二维码管家" prop="ggzp">
+          <el-form-item label="临街店铺管家" prop="ggzp">
             <el-checkbox-group
               v-model="radioGgzp"
               class="radioPermisson"
@@ -3014,7 +3032,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="综合行政管理执法智慧管家" prop="zhxz">
+          <el-form-item label="突出问题管家" prop="zhxz">
             <el-checkbox-group
               v-model="radioZhxz"
               class="radioPermisson"
@@ -3038,7 +3056,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="餐厨垃圾收运管家" prop="cclj">
+          <el-form-item label="餐厨垃圾全生命周期管家" prop="cclj">
             <el-checkbox-group
               v-model="radioCclj"
               class="radioPermisson"
@@ -3237,7 +3255,9 @@ const submitAddForm = async () => {
           alert("提交成功！");
           peopleAdd.value = false;
           loading.value = true;
-          getPermissionList(1);
+          console.log("lastPage" + lastPage);
+          
+          getPermissionList(lastPage);
         } else {
           alert("提交失败！");
         }
@@ -3265,7 +3285,7 @@ const selfSystemPermisson = () => {
       for (var key in roleList) {
         console.log("子系统" + roleList[key].system);
         if (roleList[key].system == "all") {
-          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "综合行政管理执法智慧管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
           systemPermisson.push("共享单车管家");
           systemPermisson.push("垃圾分类管家");
           systemPermisson.push("城管AI识别管家");
@@ -3275,7 +3295,6 @@ const selfSystemPermisson = () => {
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
           systemPermisson.push("生活垃圾全生命周期管家");
-          systemPermisson.push("综合行政管理执法智慧管家");
           systemPermisson.push("调度指挥管家");
           systemPermisson.push("餐厨垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
@@ -3289,12 +3308,17 @@ const selfSystemPermisson = () => {
         } else if (roleList[key].system == "餐厨垃圾收运管家") {
           systemPermisson.push("餐厨垃圾全生命周期管家");
         } else if (roleList[key].system == "生活垃圾分类管家") {
-          systemPermisson.push("生活垃圾全生命周期管家");
-        } else if (roleList[key].system == "垃圾数据归集管家") {
           systemPermisson.push("垃圾分类管家");
+        } else if (roleList[key].system == "垃圾数据归集管家") {
+          systemPermisson.push("生活垃圾全生命周期管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
           systemPermisson.push("临街店铺管家");
-        } else {
+        } else if (roleList[key].system == "环卫作业管家") {
+          systemPermisson.push("环卫作业运行管家");
+        }else if (roleList[key].system == "突出问题管家") {
+          systemPermisson.push("突出问题管家");
+        }
+           else {
           systemPermisson.push(roleList[key].system);
         }
       }
@@ -3323,6 +3347,7 @@ const formLoading = ref(true);
 const totalRecords = ref(1000);
 let currentPage = ref(1);
 let pageCount = 0;
+let lastPage = 0;
 const total_Records = ref(1000);
 let current_Page = ref(1);
 let page_Count = 0;
@@ -3335,7 +3360,9 @@ const peopleAdd = ref(false);
 const permissonName = ref("");
 const applicationId = ref("");
 const permissonTelephone = ref("");
+let currentRowPage = ref(0);
 const radioGxdc = ref([]);
+const radioHwzy = ref([]);
 const radioLjsj = ref([]);
 const radioCgAI = ref([]);
 const radioCgsyd = ref([]);
@@ -3351,6 +3378,9 @@ const radioCyyy = ref([]);
 const permissonGxdc = ref("");
 const oldRadioGxdc = ref([]);
 const checkGxdc = ref(false);
+const permissonHwzy = ref("");
+const oldRadioHwzy = ref([]);
+const checkHwzy = ref(false);
 const permissonLjsj = ref("");
 const oldRadioLjsj = ref([]);
 const checkLjsj = ref(false);
@@ -3590,10 +3620,13 @@ const getPermissionList = (pageNum) => {
     // console.log("data.code：" + data);
     var realName = ref("");
     var telephone = ref("");
+    
     for (var key in data) {
       realName.value = data[key].realName;
       telephone.value = data[key].telephone;
+    
       var permission_list = {
+        index:Number(key)+1,
         username: data[key].realName,
         telephone: data[key].telephone,
         gxdc: "×",
@@ -3609,6 +3642,7 @@ const getPermissionList = (pageNum) => {
         ddzh: "×",
         cclj: "×",
         cyyy: "×",
+        hwzy:"x",
       };
       var roleList = data[key].roleList;
       for (var index in roleList) {
@@ -3627,9 +3661,13 @@ const getPermissionList = (pageNum) => {
           permission_list.zhxz = "√";
           permission_list.cclj = "√";
           permission_list.ddzh = "√";
+          permission_list.hwzy = "√";
         }
         if (roleList[index].system == "共享单车管家") {
           permission_list.gxdc = "√";
+        }
+               if (roleList[index].system == "环卫作业管家") {
+          permission_list.hwzy = "√";
         }
         if (roleList[index].system == "垃圾数据归集管家") {
           permission_list.ljsj = "√";
@@ -3655,7 +3693,7 @@ const getPermissionList = (pageNum) => {
         if (roleList[index].system == "生活垃圾分类管家") {
           permission_list.shlj = "√";
         }
-        if (roleList[index].system == "综合行政管理执法智慧管家") {
+        if (roleList[index].system == "突出问题管家") {
           permission_list.zhxz = "√";
         }
         if (roleList[index].system == "调度指挥管家") {
@@ -3683,6 +3721,9 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "共享单车管家") {
                 permission_list.gxdc = "×(待定)";
               }
+               if (resp[i].roleSystem == "环卫作业管家") {
+                permission_list.hwzy = "×(待定)";
+              }
               if (resp[i].roleSystem == "垃圾数据归集管家") {
                 permission_list.ljsj = "×(待定)";
               }
@@ -3707,7 +3748,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "生活垃圾分类管家") {
                 permission_list.shlj = "×(待定)";
               }
-              if (resp[i].roleSystem == "综合行政管理执法智慧管家") {
+              if (resp[i].roleSystem == "突出问题管家") {
                 permission_list.zhxz = "×(待定)";
               }
               if (resp[i].roleSystem == "调度指挥管家") {
@@ -3722,6 +3763,9 @@ const getPermissionList = (pageNum) => {
             } else if (resp[i].operateType == "add") {
               if (resp[i].roleSystem == "共享单车管家") {
                 permission_list.gxdc = "√(待定)";
+              }
+              if (resp[i].roleSystem == "环卫作业管家") {
+                permission_list.hwzy = "√(待定)";
               }
               if (resp[i].roleSystem == "垃圾数据归集管家") {
                 permission_list.ljsj = "√(待定)";
@@ -3747,7 +3791,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "生活垃圾分类管家") {
                 permission_list.shlj = "√(待定)";
               }
-              if (resp[i].roleSystem == "综合行政管理执法智慧管家") {
+              if (resp[i].roleSystem == "突出问题管家") {
                 permission_list.zhxz = "√(待定)";
               }
               if (resp[i].roleSystem == "调度指挥管家") {
@@ -3767,6 +3811,9 @@ const getPermissionList = (pageNum) => {
     }
     totalRecords.value = permissionList.length;
     pageCount = parseInt(permissionList.length) % 10;
+    // 计算最后一页的页码
+lastPage = Math.ceil(totalRecords.value / 10);
+    console.log("lastPage:"+lastPage)
     currentPage.value = pageNum;
     loading.value = false;
   });
@@ -3781,6 +3828,7 @@ const getPermission = (pageNum) => {
 
 const handleDelete = (row) => {
   console.log("length:" + permissonApplicationList.length);
+  currentRowPage = Math.ceil((row.index - 1) / 10);
   var div = document.getElementById("permissonAlert");
   if (permissonApplicationList.length != 0) {
     console.log("div.style.display" + div.style.display);
@@ -3803,7 +3851,7 @@ const handleDelete = (row) => {
         }).then(function (resp) {
           console.log(2, resp);
           loading.value = true;
-          getPermissionList(1);
+          getPermissionList(currentRowPage);
 
           ElMessage({
             type: "success",
@@ -3825,6 +3873,9 @@ const handleAdd = () => {
   peopleAdd.value = true;
 };
 const handleClick = (row) => {
+  console.log("所在行："+row.index)
+  currentRowPage = Math.ceil((row.index + 1) / 10);
+
   console.log("length:" + permissonApplicationList.length);
   var div = document.getElementById("permissonAlert");
   if (permissonApplicationList.length != 0) {
@@ -3838,6 +3889,7 @@ const handleClick = (row) => {
     console.log("permissonTelephone:" + permissonTelephone.value);
     handleEvent.value = true;
     radioGxdc.value = [];
+    radioHwzy.value = [];
     radioLjsj.value = [];
     radioCgAI.value = [];
     radioCgsyd.value = [];
@@ -3867,6 +3919,7 @@ const handleClick = (row) => {
           for (var index in roleList) {
             if (roleList[index].system == "all") {
               radioGxdc.value = ["浏览信息"];
+              radioHwzy.value = ["浏览信息"];
               radioLjsj.value = ["浏览信息"];
               radioCgAI.value = ["浏览信息"];
               radioCgsyd.value = ["浏览信息"];
@@ -3899,6 +3952,21 @@ const handleClick = (row) => {
                   oldRadioGxdc.value = "operator";
                 }
                 permissonGxdc.value = oldRadioGxdc.value;
+              }
+                            if (roleList[index].system == "环卫作业管家") {
+                if (roleList[index].name == "viewer") {
+                  radioHwzy.value = ["浏览信息"];
+                  oldRadioHwzy.value = "viewer";
+                }
+                if (roleList[index].name == "admin") {
+                  radioHwzy.value = ["浏览信息", "管理参数"];
+                  oldRadioHwzy.value = "admin";
+                }
+                if (roleList[index].name == "operator") {
+                  radioHwzy.value = ["浏览信息", "管理参数", "操作系统"];
+                  oldRadioHwzy.value = "operator";
+                }
+                permissonHwzy.value = oldRadioHwzy.value;
               }
               if (roleList[index].system == "垃圾数据归集管家") {
                 if (roleList[index].name == "viewer") {
@@ -4021,7 +4089,7 @@ const handleClick = (row) => {
                 }
                 permissonShlj.value = oldRadioShlj.value;
               }
-              if (roleList[index].system == "综合行政管理执法智慧管家") {
+              if (roleList[index].system == "突出问题管家") {
                 if (roleList[index].name == "viewer") {
                   radioZhxz.value = ["浏览信息"];
                   oldRadioZhxz.value = "viewer";
@@ -4113,6 +4181,24 @@ const handleClick = (row) => {
                       oldRadioGxdc.value = "operator";
                     }
                     permissonGxdc.value = oldRadioGxdc.value;
+                  }
+                }
+                                if (roleList[index].roleSystem == "环卫作业管家") {
+                  radioHwzy.value = [];
+                  if (roleList[index].operateType == "add") {
+                    if (roleList[index].roleName == "viewer") {
+                      radioHwzy.value = ["浏览信息"];
+                      oldRadioHwzy.value = "viewer";
+                    }
+                    if (roleList[index].roleName == "admin") {
+                      radioHwzy.value = ["浏览信息", "管理参数"];
+                      oldRadioHwzy.value = "admin";
+                    }
+                    if (roleList[index].roleName == "operator") {
+                      radioHwzy.value = ["浏览信息", "管理参数", "操作系统"];
+                      oldRadioHwzy.value = "operator";
+                    }
+                    permissonHwzy.value = oldRadioHwzy.value;
                   }
                 }
                 if (roleList[index].roleSystem == "垃圾数据归集管家") {
@@ -4243,7 +4329,7 @@ const handleClick = (row) => {
                   }
                   permissonShlj.value = oldRadioShlj.value;
                 }
-                if (roleList[index].roleSystem == "综合行政管理执法智慧管家") {
+                if (roleList[index].roleSystem == "突出问题管家") {
                   radioZhxz.value = [];
                   if (roleList[index].roleName == "viewer") {
                     radioZhxz.value = ["浏览信息"];
@@ -4371,6 +4457,11 @@ const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
     columnIndex === 5
   ) {
     return newstyleObject;
+  }else if (
+    (row.hwzy === "√(待定)" || row.hwzy === "×(待定)") &&
+    columnIndex === 16
+  ) {
+    return newstyleObject;
   } else if (
     (row.yczl === "√(待定)" || row.yczl === "×(待定)") &&
     columnIndex === 6
@@ -4428,9 +4519,9 @@ const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
 
 //提交权限修改表单
 const submitPermisson = (permissionForm) => {
-  console.log(
-    "更改之前：" + oldRadioGxdc.value + "更改之后：" + permissonGxdc.value
-  );
+  // console.log(
+  //   "更改之前：" + oldRadioGxdc.value + "更改之后：" + permissonGxdc.value
+  // );
   if (
     oldRadioGxdc.value == permissonGxdc.value &&
     oldRadioLjsj.value == permissonLjsj.value &&
@@ -4444,7 +4535,7 @@ const submitPermisson = (permissionForm) => {
     oldRadioZhxz.value == permissonZhxz.value &&
     oldRadioDdzh.value == permissonDdzh.value &&
     oldRadioCclj.value == permissonCclj.value &&
-    oldRadioCyyy.value == permissonCyyy.value
+    oldRadioCyyy.value == permissonCyyy.value&&oldRadioHwzy.value == permissonHwzy.value
   ) {
     ElMessage({
       message: "您未作任何更改，请更改之后再提交！",
@@ -4462,6 +4553,16 @@ const submitPermisson = (permissionForm) => {
           selfPermisson("共享单车管家", "add", permissonGxdc.value);
         } else {
           selfPermisson("共享单车管家", "delete", oldRadioGxdc.value);
+        }
+      }
+            if (checkHwzy.value == true) {
+        if (permissonHwzy.value != "") {
+          if (oldRadioHwzy.value != "") {
+            selfPermisson("环卫作业管家", "delete", oldRadioHwzy.value);
+          }
+          selfPermisson("环卫作业管家", "add", permissonHwzy.value);
+        } else {
+          selfPermisson("环卫作业管家", "delete", oldRadioHwzy.value);
         }
       }
       if (checkLjsj.value == true) {
@@ -4552,15 +4653,15 @@ const submitPermisson = (permissionForm) => {
         if (permissonZhxz.value != "") {
           if (oldRadioZhxz.value != "") {
             selfPermisson(
-              "综合行政管理执法智慧管家",
+              "突出问题管家",
               "delete",
               oldRadioZhxz.value
             );
           }
-          selfPermisson("综合行政管理执法智慧管家", "add", permissonZhxz.value);
+          selfPermisson("突出问题管家", "add", permissonZhxz.value);
         } else {
           selfPermisson(
-            "综合行政管理执法智慧管家",
+            "突出问题管家",
             "delete",
             oldRadioZhxz.value
           );
@@ -4605,7 +4706,8 @@ const submitPermisson = (permissionForm) => {
       });
     }
     loading.value = true;
-    getPermissionList(1);
+    console.log("currentRowPage:" + currentRowPage);
+    getPermissionList(currentRowPage);
     getPermissonApplicationListList(1);
   }
 };
@@ -4631,6 +4733,28 @@ const radioChangeGxdc = (value) => {
     }
   }
   checkGxdc.value = true;
+};
+
+const radioChangeHwzy = (value) => {
+  console.log("value长度：" + value.length);
+  if (value.length == 0) {
+    permissonHwzy.value = "";
+  }
+  for (var index in value) {
+    console.log("value:" + value[index]);
+    if (value[index] == "浏览信息") {
+      permissonHwzy.value = "viewer";
+    }
+    if (value[index] == "管理参数") {
+      radioHwzy.value = ["浏览信息", "管理参数"];
+      permissonHwzy.value = "admin";
+    }
+    if (value[index] == "操作系统") {
+      radioHwzy.value = ["浏览信息", "管理参数", "操作系统"];
+      permissonHwzy.value = "operator";
+    }
+  }
+  checkHwzy.value = true;
 };
 
 const radioChangeLjsj = (value) => {
@@ -5442,14 +5566,15 @@ const echartInit_ljz = () => {
         type: "pie",
         radius: "50%",
         data: [
+                    {
+            value: ljz_table1.value[2].infoVal.slice(0, -2),
+            name: ljz_table1.value[2].infoKey.slice(0, -2),
+          },
           {
             value: ljz_table1.value[1].infoVal.slice(0, -2),
             name: ljz_table1.value[1].infoKey.slice(0, -2),
           },
-          {
-            value: ljz_table1.value[2].infoVal.slice(0, -2),
-            name: ljz_table1.value[2].infoKey.slice(0, -2),
-          },
+
           // { value: 111, name: 222 },
           // { value: 111, name: 222 },
         ],
@@ -6093,18 +6218,7 @@ const echartInit = () => {
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
       yAxis: {
-        data: [
-          data[0].type,
-          data[2].type,
-          data[3].type,
-          data[4].type,
-          data[5].type,
-          data[6].type,
-          data[7].type,
-          data[8].type,
-          data[9].type,
-          data[10].type,
-        ],
+        data:data.map((item)=>item.type),
         interval: 20,
       },
       xAxis: {},
@@ -6116,19 +6230,7 @@ const echartInit = () => {
           type: "bar",
           color: "#dd6b66",
           // 数据
-          data: [
-            data[0].lian_value,
-            data[1].lian_value,
-            data[2].lian_value,
-            data[3].lian_value,
-            data[4].lian_value,
-            data[5].lian_value,
-            data[6].lian_value,
-            data[7].lian_value,
-            data[8].lian_value,
-            data[9].lian_value,
-            data[10].lian_value,
-          ],
+          data:data.map((item)=>item.lian_value),
         },
       ],
     };
@@ -6959,6 +7061,8 @@ function toSystem(item) {
       if (
         roles.indexOf("84") != -1 ||
         roles.indexOf("111") != -1 ||
+        roles.indexOf("109") != -1||
+        roles.indexOf("110") != -1||
         roles.indexOf("83") != -1
       ) {
         var ddzh_url =
@@ -7216,52 +7320,52 @@ const beforeUpload = async (rawFile, systemName) => {
 
         // 更新最新头像 URL
         if (systemName == "banner") {
-          latestImageUrl.value = "/img/" + response.data.url;
+          latestImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "hwzy") {
-          hwzyImageUrl.value = "/img/" + response.data.url;
+          hwzyImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "cclj") {
-          ccljImageUrl.value = "/img/" + response.data.url;
+          ccljImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "shlj") {
-          shljImageUrl.value = "/img/" + response.data.url;
+          shljImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "ljfl") {
-          ljflImageUrl.value = "/img/" + response.data.url;
+          ljflImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "cyyy") {
-          cyyyImageUrl.value = "/img/" + response.data.url;
+          cyyyImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "ddzh") {
-          ddzhImageUrl.value = "/img/" + response.data.url;
+          ddzhImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "gxdc") {
-          gxdcImageUrl.value = "/img/" + response.data.url;
+          gxdcImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "yczl") {
-          yczlImageUrl.value = "/img/" + response.data.url;
+          yczlImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "jgzm") {
-          jgzmImageUrl.value = "/img/" + response.data.url;
+          jgzmImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "ljdp") {
-          ljdpImageUrl.value = "/img/" + response.data.url;
+          ljdpImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "bottom_banner") {
-          bottomBannerImageUrl.value = "/img/" + response.data.url;
+          bottomBannerImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "tcwt") {
-          tcwtImageUrl.value = "/img/" + response.data.url;
+          tcwtImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "cgAI") {
-          cgAIImageUrl.value = "/img/" + response.data.url;
+          cgAIImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "cgsyd") {
-          cgsydImageUrl.value = "/img/" + response.data.url;
+          cgsydImageUrl.value = "/homePicture/" + response.data.url;
         }
         if (systemName == "szhcs") {
-          szhcsImageUrl.value = "/img/" + response.data.url;
+          szhcsImageUrl.value = "/homePicture/" + response.data.url;
         }
 
         //  latestImageUrl.value = require("@/assets/home/" + response.data.url);
@@ -7286,7 +7390,7 @@ const getLatestAvatar = async (systemName, latestImageUrl) => {
       },
     });
     // latestImageUrl.value = require("@/assets/home/" + response.data);
-    latestImageUrl.value = "/img/" + response.data;
+    latestImageUrl.value = "/homePicture/" + response.data;
     // console.log("之前的图片" + latestImageUrl.value);
   } catch (error) {
     console.error("Error fetching latest avatar:", error);
@@ -7414,7 +7518,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 }
 
 .text-week {
-  margin-left: 20px;
+  margin-left: -5vw;
   font-size: large;
   color: #fff;
   line-height: 60px;

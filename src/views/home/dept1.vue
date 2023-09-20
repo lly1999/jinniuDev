@@ -328,8 +328,8 @@
                         <div v-show="four_selected == true" class="right-bg">
 
                             <div id="container_ycxt1" style="width: 1000px; height: 350px;"></div>
-
-
+ </div>
+<div v-show="four_selected == true" class="right-bg" style="margin-top:370px;width: 1000px; height: 350px;">
                             <div id="container_ycxt2" style="width: 1000px; height: 350px;"></div>
 
                         </div>
@@ -864,16 +864,12 @@ function echartInit_yyxt() {
         myChart_yyxt2.setOption(option_yyxt2);
     });
 }
-function echartInit_ycxt() {
-    if (document.getElementById("container_ycxt1").hasAttribute("_echarts_instance_"))
-        document.getElementById("container_ycxt1").removeAttribute("_echarts_instance_");
-    if (document.getElementById("container_ycxt2").hasAttribute("_echarts_instance_"))
+function echartInit_ycxt2() {
+      if (document.getElementById("container_ycxt2").hasAttribute("_echarts_instance_"))
 
         document.getElementById("container_ycxt2").removeAttribute("_echarts_instance_");
-
-    myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
     myChart_ycxt2 = echarts.init(document.getElementById("container_ycxt2"))
-    axios({
+           axios({
         url: "/api/dust_sys/classified_gps_rate",
         headers: { 'Authorization': "Bearer" + params.token },
         method: "get",
@@ -931,6 +927,15 @@ function echartInit_ycxt() {
         };
         myChart_ycxt2.setOption(option_ycxt2)
     })
+}
+function echartInit_ycxt() {
+    if (document.getElementById("container_ycxt1").hasAttribute("_echarts_instance_"))
+        document.getElementById("container_ycxt1").removeAttribute("_echarts_instance_");
+  
+
+    myChart_ycxt1 = echarts.init(document.getElementById("container_ycxt1"))
+   
+  
     axios({
         url: "/api/dust_sys/classified_sites_amount",
         headers: { 'Authorization': "Bearer" + params.token },
@@ -1168,6 +1173,7 @@ onMounted(() => {
     echartInit_yyxt()
     echartInit_gxdc()
     echartInit_ycxt()
+    echartInit_ycxt2()
 })
 //选中的部门
 // -1表示全选，为默认值
@@ -1785,6 +1791,7 @@ const six_clicked = () => {
     position: absolute;
     top: 123px;
     left: 360px;
+    z-index:1;
 }
 
 .right-bg-yyxt {
@@ -1793,6 +1800,7 @@ const six_clicked = () => {
     position: absolute;
     top: 123px;
     left: 360px;
+    z-index:1;
 }
 
 .system-content {

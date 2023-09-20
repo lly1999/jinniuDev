@@ -195,9 +195,9 @@ const login = () => {
   font-size: 1.2rem;
   color: #ffffff;
   position: absolute;
-  top: 13.7vh;
+  top: 15vh;
   right: 13.1vw;
-  left: 15.2vw;
+  left: 16.5vw;
 }
 
 .login-box-logo {
@@ -205,7 +205,7 @@ const login = () => {
   height: 3vh;
   position: absolute;
   top: 14.4vh;
-  left: 13.1vw;
+  left: 14.5vw;
   right: 20.2vw;
   margin-right: 0.4vw;
 }

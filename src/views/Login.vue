@@ -91,7 +91,7 @@ const login = () => {
           params.role = "";
         }
         //console.log(data.role_id)
-        router.push({ name: "home" });
+        router.push({ name: "map" });
         localStorage.setItem("username", params.username);
       }
     } else {
@@ -101,35 +101,7 @@ const login = () => {
       });
     }
   });
-  // if (params.username == '18380195019' || params.username == '13908173345') {
-  //   if (params.username == '18380195019') {
-  //   }
-  //   else (params.username == '13908173345')
-  //   {
-  //   }
-  //   if (passwordBase64 == Base64.encode('jinniu')) {
-  //     router.push({ name: "home" }); localStorage.setItem("username", params.username)
-  //     localStorage.setItem("password", params.password)
-  //   }
 
-  //   else {
-  //     ElMessage({
-  //       message: h('p', null, [
-  //         h('span', null, '用户名或者密码错误！'),
-  //       ]),
-  //       type: 'error'
-  //     })
-  //   }
-  // }
-
-  // else {
-  //   ElMessage({
-  //     message: h('p', null, [
-  //       h('span', null, '用户名或者密码错误！'),
-  //     ]),
-  //     type: 'error'
-  //   })
-  // }
 };
 </script>
 
@@ -181,9 +153,9 @@ const login = () => {
   font-size: 1.2rem;
   color: #ffffff;
   position: absolute;
-  top: 13.7vh;
+  top: 15vh;
   right: 13.1vw;
-  left: 15.2vw;
+  left: 16.5vw;
 }
 
 .login-box-logo {
@@ -191,7 +163,7 @@ const login = () => {
   height: 3vh;
   position: absolute;
   top: 14.4vh;
-  left: 13.1vw;
+  left: 14.5vw;
   right: 20.2vw;
   margin-right: 0.4vw;
 }
