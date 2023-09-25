@@ -39,7 +39,7 @@
                 align="center"
                 :show-overflow-tooltip="true"
               />
-               <el-table-column
+              <el-table-column
                 prop="event_time"
                 label="事件时间"
                 min-width="150"
@@ -67,7 +67,6 @@
               <el-table-column>
                 <template #default="scope">
                   <el-button
-                   
                     size="small"
                     type="danger"
                     @click="handleClick(scope.$index, scope.row)"
@@ -82,11 +81,23 @@
             >
               历史告警事件
             </div>
-            <el-date-picker v-model="changeValue" type="daterange" unlink-panels range-separator="到"
-            start-placeholder="选择开始时间" end-placeholder="选择结束时间" :disabled-date="disabledDate" :shortcuts="shortcuts"
-            @change="changeDate" size="large" style="margin: 0.5rem 0 0.5rem" />
+            <el-date-picker
+              v-model="changeValue"
+              type="daterange"
+              unlink-panels
+              range-separator="到"
+              start-placeholder="选择开始时间"
+              end-placeholder="选择结束时间"
+              :disabled-date="disabledDate"
+              :shortcuts="shortcuts"
+              @change="changeDate"
+              size="large"
+              style="margin: 0.5rem 0 0.5rem"
+            />
             <el-table
-              :data="EventHistoryList.slice((currentPage - 1) * 5, currentPage * 5)"
+              :data="
+                EventHistoryList.slice((currentPage - 1) * 5, currentPage * 5)
+              "
               style="width: 100%"
               size="large"
               class="data-table"
@@ -201,9 +212,15 @@
               </el-table-column>
             </el-table>
             <div class="float-end">
-            <el-pagination background layout="->,total, prev, pager, next, jumper" :total="totalRecords"
-              :current-page="currentPage" :page-size="5" @current-change="getTransport" />
-          </div>
+              <el-pagination
+                background
+                layout="->,total, prev, pager, next, jumper"
+                :total="totalRecords"
+                :current-page="currentPage"
+                :page-size="5"
+                @current-change="getTransport"
+              />
+            </div>
           </el-dialog>
 
           <el-dialog
@@ -223,7 +240,22 @@
               label-width="120px"
               class="demo-ruleForm"
             >
-              <el-form-item label="处置人姓名：" prop="name">
+              <el-form-item label="处置人信息：" prop="info"
+                ><el-select
+                  v-model="ruleForm.info"
+                  filterable
+                  placeholder="请输入处置人姓名/电话号/工作单位"
+                  class="fuzzy_select"
+                >
+                  <el-option
+                    v-for="item in resetPasswordList"
+                    :key="item.name"
+                    :label="formatResult(item)"
+                    :value="JSON.stringify(item)"
+                  /> </el-select
+              ></el-form-item>
+
+              <!-- <el-form-item label="处置人姓名：" prop="name">
                 <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="处置人电话号码：" prop="phone">
@@ -237,7 +269,7 @@
                   v-model="ruleForm.place"
                   autocomplete="off"
                 ></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="处置指令内容：" prop="content">
                 <el-input
                   v-model="ruleForm.content"
@@ -2516,6 +2548,167 @@ const systemData = [
 ];
 
 // ===============================================告警事件
+const query = ref("");
+const value = ref("");
+const resetPasswordList = [
+  { name: "周攀", phone: "18008061031", company: "办公室" },
+  { name: "李自勇", phone: "18008060397", company: "办公室" },
+  { name: "蒲远胜", phone: "18008060520", company: "办公室" },
+  { name: "周思源", phone: "18008060503", company: "办公室" },
+  { name: "虞诚磊", phone: "18008060536", company: "办公室" },
+  { name: "尹叶峰", phone: "18008060657", company: "办公室" },
+  { name: "周晓蓉", phone: "19381969851", company: "办公室" },
+  { name: "叶建春", phone: "19381968202", company: "办公室" },
+  { name: "彭姣", phone: "19381969852", company: "办公室" },
+  { name: "谈方灿", phone: "18008061082", company: "城市环境综合治理科" },
+  { name: "刘敏", phone: "18008060760", company: "城市环境综合治理科" },
+  { name: "张蓉", phone: "18008060787", company: "城市环境综合治理科" },
+  { name: "王胜男", phone: "18008060872", company: "城市环境综合治理科" },
+  { name: "彭蕾", phone: "18008060898", company: "城市环境综合治理科" },
+  { name: "杜强", phone: "18008061026", company: "基建设备管理科" },
+  { name: "张红星", phone: "18008061015", company: "基建设备管理科" },
+  { name: "邓雨檬", phone: "18008061016", company: "基建设备管理科" },
+  { name: "胡浩", phone: "18008061036", company: "环境卫生监督管理科" },
+  { name: "张宗贵", phone: "18008061087", company: "环境卫生监督管理科" },
+  { name: "张静", phone: "18008061139", company: "环境卫生监督管理科" },
+  { name: "胡玉莲", phone: "19381969853", company: "环境卫生监督管理科" },
+  { name: "杨雨荷", phone: "19381969856", company: "环境卫生监督管理科" },
+  { name: "周勇刚", phone: "18008060092", company: "环境卫生监督管理科" },
+  { name: "肖轶", phone: "18008061056", company: "广告招牌和景观照明管理科" },
+  { name: "聂宁", phone: "18008061159", company: "广告招牌和景观照明管理科" },
+  { name: "刘文", phone: "19381969857", company: "广告招牌和景观照明管理科" },
+  { name: "叶华", phone: "18008061175", company: "计划财务处" },
+  { name: "罗争妍", phone: "18008061176", company: "计划财务处" },
+  { name: "邱惠", phone: "18008061181", company: "计划财务处" },
+  { name: "代然", phone: "18008061185", company: "计划财务处" },
+  { name: "王英", phone: "18008061191", company: "计划财务处" },
+  { name: "陈雪梅", phone: "18008061293", company: "计划财务处" },
+  { name: "周建春", phone: "18008061295", company: "计划财务处" },
+  { name: "钟杨", phone: "19381969858", company: "计划财务处" },
+  { name: "蒋波", phone: "18008061301", company: "人事劳资科" },
+  { name: "徐巧英", phone: "18008061303", company: "人事劳资科" },
+  { name: "张宽", phone: "18008061380", company: "人事劳资科" },
+  { name: "张成波", phone: "18008061369", company: "人事劳资科" },
+  { name: "段国钢", phone: "15388115360", company: "数字化指挥监督中心" },
+  { name: "高志昊", phone: "19381968262", company: "政策法规科" },
+    { name: "李新成", phone: "18008061170", company: "大队勤务科" },
+  { name: "邱志强", phone: "18008061023", company: "大队勤务科" },
+  { name: "李贵明", phone: "18008061381", company: "大队勤务科" },
+  { name: "冯娟", phone: "18008061037", company: "大队勤务科" },
+  { name: "汪敏", phone: "18190992825", company: "大队勤务科" },
+  { name: "赵杨", phone: "17723321969", company: "大队勤务科" },
+  { name: "文宇恒", phone: "18008060691", company: "大队勤务科" },
+  { name: "张宇杨", phone: "18008061257", company: "大队勤务科" },
+];
+// 自定义结果格式
+// const selectedResult = ref(null);
+
+const formatResult = (result) => {
+  return `${result.name} - ${result.phone} - ${result.company}`;
+};
+const getResetPasswordList = (pageNum) => {
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/auth/all_permission",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(async (resp) => {
+    var data = resp.data;
+    console.log("人员列表:" + data);
+
+    for (var key in data) {
+      if (data[key].telephone == "13880769883") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "城运中心",
+        };
+      } else if (data[key].telephone == "13880717069") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "指挥中心",
+        };
+      } else if (
+        data[key].telephone == "13708199475" ||
+        data[key].telephone == "13908173345" ||
+        data[key].telephone == "13752148440" ||
+        data[key].telephone == "18919564611" ||
+        data[key].telephone == "17360557880"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "测试中心",
+        };
+      } else if (data[key].realName == "代恭林") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "基建设备管理科",
+        };
+      } else if (
+        data[key].realName == "杨朕" ||
+        data[key].realName == "陈朝胜" ||
+        data[key].realName == "邓文华"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "环境卫生监督管理科",
+        };
+      } else if (
+        data[key].realName == "何其会" ||
+        data[key].realName == "杨健" ||
+        data[key].realName == "任兵兵" ||
+        data[key].realName == "刘晓峰"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "广告招牌和景观照明管理科",
+        };
+      } else if (
+        data[key].realName == "李莉佳" ||
+        data[key].realName == "刘亚奇"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "政策法规科",
+        };
+      } else if (
+        data[key].realName == "胡福乾" ||
+        data[key].realName == "王松"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "大队勤务科",
+        };
+      } else if (data[key].realName == "赖渊") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "数字化指挥监督中心",
+        };
+      } else {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "办公室",
+        };
+      }
+
+      console.log("这里：" + resetPassword);
+      resetPasswordList.push(resetPassword);
+    }
+  });
+};
+setInterval(getResetPasswordList(1), 60000);
+
 const totalRecords = ref(1000);
 let currentPage = ref(1);
 let pageCount = 0;
@@ -2525,7 +2718,7 @@ let end = ref("");
 const tomorrow = moment()
   .add(+1, "d")
   .format("YYYY-MM-DD");
-const today =moment().format("YYYY-MM-DD");
+const today = moment().format("YYYY-MM-DD");
 let changeValue = ref(["", ""]);
 // 禁选今天以后的日期以及没有数据的
 const disabledDate = (time) => {
@@ -2535,12 +2728,10 @@ const disabledDate = (time) => {
   );
 };
 function changeDate() {
-  start =
-    moment(changeValue.value[0]).format("YYYY-MM-DD")
-  end =
-    moment(changeValue.value[1]).format("YYYY-MM-DD")
+  start = moment(changeValue.value[0]).format("YYYY-MM-DD");
+  end = moment(changeValue.value[1]).format("YYYY-MM-DD");
   // end =  new Date();
-  queryAllWarning(start,end,1);
+  queryAllWarning(start, end, 1);
 }
 
 const ruleFormRef = ref(null);
@@ -2560,18 +2751,21 @@ const ruleForm = reactive({
 });
 
 const rules = reactive({
-  name: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
-  phone: [{ required: "true", message: "电话不能为空", trigger: "blur" }],
-  place: [{ required: "true", message: "工作单位不能为空", trigger: "blur" }],
+  info: [{ required: "true", message: "处置人信息不能为空", trigger: "blur" }],
+  // name: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
+  // phone: [{ required: "true", message: "电话不能为空", trigger: "blur" }],
+  // place: [{ required: "true", message: "工作单位不能为空", trigger: "blur" }],
   content: [{ required: "true", message: "指令内容不能为空", trigger: "blur" }],
 });
 
 const submitForm = async () => {
+  const selectedValue = JSON.parse(ruleForm.info);
+
   if (!ruleFormRef) return;
 
   ruleFormRef.value.validate((valid) => {
     if (valid) {
-      var telph = ruleForm.phone;
+      var telph = selectedValue.phone;
       var res = confirm("确认提交？");
       if (res) {
         var re = /^1[3,4,5,6,7,8,9][0-9]{9}$/;
@@ -2589,7 +2783,7 @@ const submitForm = async () => {
           Authorization: token.value,
         },
         data: JSON.stringify({
-          patrolTelephone: ruleForm.phone,
+          patrolTelephone: selectedValue.phone,
           message: ruleForm.content,
         }),
         method: "post",
@@ -2597,7 +2791,7 @@ const submitForm = async () => {
         console.log(2, resp);
         console.log(
           "发送给了电话为：" +
-            ruleForm.phone +
+            selectedValue.phone +
             "，指令内容为：" +
             ruleForm.content
         );
@@ -2613,9 +2807,9 @@ const submitForm = async () => {
         data: JSON.parse(
           JSON.stringify({
             id: event_uuid.value,
-            eventHandler: ruleForm.name,
-            handlerPhone: ruleForm.phone,
-            handlerWork: ruleForm.place,
+            eventHandler: selectedValue.name,
+            handlerPhone: selectedValue.phone,
+            handlerWork: selectedValue.company,
             instructionContent: ruleForm.content,
           })
         ),
@@ -2678,13 +2872,13 @@ const fault_details = () => {
   }
 };
 const queryAllWarning = (startTime, endTime, pageNum) => {
-   axios({
+  axios({
     url: "/api/event-query/getAllGarbageEvent",
     method: "get",
     headers: {
       Authorization: "Bearer " + params.token,
     },
-     params: {
+    params: {
       startTime: startTime,
       endTime: endTime,
     },
@@ -2709,20 +2903,19 @@ const queryAllWarning = (startTime, endTime, pageNum) => {
         event_disposed: data[key].disposedSign,
       };
       EventHistoryList.push(default_site);
- 
     }
-      totalRecords.value = EventHistoryList.length;
-      // pageCount = parseInt(EventHistoryList.length) % 5;
-      currentPage.value = pageNum;
+    totalRecords.value = EventHistoryList.length;
+    // pageCount = parseInt(EventHistoryList.length) % 5;
+    currentPage.value = pageNum;
   });
-}
- queryAllWarning("start","end",1);
+};
+queryAllWarning("start", "end", 1);
 const getTransport = (pageNum) => {
   // 当前页
   currentPage.value = pageNum;
 };
 const changeColor = () => {
- queryAllWarning("start","end",1);
+  queryAllWarning("start", "end", 1);
   axios({
     // url: "/api/lzj/getWarning",
     url: "/api/event-query/getNeedHandleEvent",
@@ -2737,7 +2930,7 @@ const changeColor = () => {
     console.log("resp.code：" + data);
     for (var key in data) {
       var default_site = {
-        event_time:data[key].eventTime,
+        event_time: data[key].eventTime,
         site_name: data[key].eventSource,
         Accident_cause: data[key].eventCause,
         event_id: data[key].id,
@@ -9458,5 +9651,31 @@ const tableData_xihua = [
   animation-timing-function: ease;
   animation-play-state: running;
   background-image: radial-gradient(yellow, red);
+}
+
+.query-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.query-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.query-container li {
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.query-container li:hover {
+  background-color: #f0f0f0;
+}
+.fuzzy_select {
+  width: 20vw;
 }
 </style>

@@ -1536,16 +1536,7 @@ const handleSelect_szcg = (key, keypath) => {
         //这里的yAxis就是竖轴，xAxis就是横轴
         // yAxis and xAxis 交换可以改变横向或竖向
         xAxis: {
-          data: [data[0].type,
-          data[2].type,
-          data[3].type,
-          data[4].type,
-          data[5].type,
-                    data[6].type,
-          data[7].type,
-          data[8].type,
-          data[9].type,
-          data[10].type,]
+          data: data.map((item) => item.type),
         },
         yAxis: {
 
@@ -1558,17 +1549,7 @@ const handleSelect_szcg = (key, keypath) => {
             type: 'bar',
             color: '#dd6b66',
             // 数据
-            data: [data[0].lian_value,
-            data[1].lian_value,
-            data[2].lian_value,
-            data[3].lian_value,
-            data[4].lian_value,
-            data[5].lian_value,
-                        data[6].lian_value,
-            data[7].lian_value,
-            data[8].lian_value,
-            data[9].lian_value,
-            data[10].lian_value,]
+             data: data.map((item) => item.lian_value),
           }
         ]
       }
@@ -2401,16 +2382,7 @@ onMounted(() => {
           interval: 0,//使x轴文字显示全
           rotate: 20
         },
-        data: [data[0].type,
-          data[2].type,
-          data[3].type,
-          data[4].type,
-          data[5].type,
-                    data[6].type,
-          data[7].type,
-          data[8].type,
-          data[9].type,
-          data[10].type,]
+        data: data.map((item) => item.type),
       },
       yAxis: {
 
@@ -2435,17 +2407,7 @@ onMounted(() => {
             }
           },
           // 数据
-          data: [   data[0].lian_value,
-            data[1].lian_value,
-            data[2].lian_value,
-            data[3].lian_value,
-            data[4].lian_value,
-            data[5].lian_value,
-                        data[6].lian_value,
-            data[7].lian_value,
-            data[8].lian_value,
-            data[9].lian_value,
-            data[10].lian_value,]
+           data: data.map((item) => item.lian_value),
         }
       ]
     }

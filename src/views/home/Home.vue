@@ -161,7 +161,9 @@
   </el-upload> -->
 
       <div class="upload">
+
         <template v-if="params.role == '管理员'">
+          <div class="image-title-container">
           <el-upload
             accept="image/jpg,image/jpeg,image/gif,image/png"
             action="uploadUrl"
@@ -190,6 +192,8 @@
               </el-icon>
             </el-tooltip>
           </el-upload>
+          </div>
+          
         </template>
         <template v-else>
           <img
@@ -198,6 +202,13 @@
             class="avatar"
           />
         </template>
+        <div class="title-container">
+            <h2 class="centered-text">金牛 · 城市 · 管家</h2>
+          </div>
+                    <div class="title-container2">
+
+            <h2 class="centered-text2">全民参与&nbsp;&nbsp;&nbsp;精细管理&nbsp;&nbsp;&nbsp;干净有序</h2>
+          </div>
       </div>
       <!-- <div class="background" v-if="choosedDept === 0">
         <img src="@/assets/home/banner-hjws.png" width="10000" style="overflow-y:auto;overflow-x: auto;">
@@ -2785,7 +2796,7 @@
           <el-table-column prop="ljsj" label="垃圾数据归集管家" />
           <el-table-column prop="cgAI" label="城管AI识别管家" />
           <el-table-column prop="szhcs" label="数字化城市信息管家" />
-          
+
           <el-table-column prop="cgsyd" label="城管诉易达管家" />
           <el-table-column prop="hwzy" label="环卫作业运行管家" />
           <el-table-column
@@ -2919,8 +2930,8 @@
               }}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          
-                    <el-form-item
+
+          <el-form-item
             label="环卫作业运行管家"
             prop="hwzy"
             style="font-size: 2rem"
@@ -3256,7 +3267,7 @@ const submitAddForm = async () => {
           peopleAdd.value = false;
           loading.value = true;
           console.log("lastPage" + lastPage);
-          
+
           getPermissionList(lastPage);
         } else {
           alert("提交失败！");
@@ -3315,10 +3326,9 @@ const selfSystemPermisson = () => {
           systemPermisson.push("临街店铺管家");
         } else if (roleList[key].system == "环卫作业管家") {
           systemPermisson.push("环卫作业运行管家");
-        }else if (roleList[key].system == "突出问题管家") {
+        } else if (roleList[key].system == "突出问题管家") {
           systemPermisson.push("突出问题管家");
-        }
-           else {
+        } else {
           systemPermisson.push(roleList[key].system);
         }
       }
@@ -3620,13 +3630,13 @@ const getPermissionList = (pageNum) => {
     // console.log("data.code：" + data);
     var realName = ref("");
     var telephone = ref("");
-    
+
     for (var key in data) {
       realName.value = data[key].realName;
       telephone.value = data[key].telephone;
-    
+
       var permission_list = {
-        index:Number(key)+1,
+        index: Number(key) + 1,
         username: data[key].realName,
         telephone: data[key].telephone,
         gxdc: "×",
@@ -3642,7 +3652,7 @@ const getPermissionList = (pageNum) => {
         ddzh: "×",
         cclj: "×",
         cyyy: "×",
-        hwzy:"x",
+        hwzy: "x",
       };
       var roleList = data[key].roleList;
       for (var index in roleList) {
@@ -3666,7 +3676,7 @@ const getPermissionList = (pageNum) => {
         if (roleList[index].system == "共享单车管家") {
           permission_list.gxdc = "√";
         }
-               if (roleList[index].system == "环卫作业管家") {
+        if (roleList[index].system == "环卫作业管家") {
           permission_list.hwzy = "√";
         }
         if (roleList[index].system == "垃圾数据归集管家") {
@@ -3721,7 +3731,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "共享单车管家") {
                 permission_list.gxdc = "×(待定)";
               }
-               if (resp[i].roleSystem == "环卫作业管家") {
+              if (resp[i].roleSystem == "环卫作业管家") {
                 permission_list.hwzy = "×(待定)";
               }
               if (resp[i].roleSystem == "垃圾数据归集管家") {
@@ -3812,8 +3822,8 @@ const getPermissionList = (pageNum) => {
     totalRecords.value = permissionList.length;
     pageCount = parseInt(permissionList.length) % 10;
     // 计算最后一页的页码
-lastPage = Math.ceil(totalRecords.value / 10);
-    console.log("lastPage:"+lastPage)
+    lastPage = Math.ceil(totalRecords.value / 10);
+    console.log("lastPage:" + lastPage);
     currentPage.value = pageNum;
     loading.value = false;
   });
@@ -3873,7 +3883,7 @@ const handleAdd = () => {
   peopleAdd.value = true;
 };
 const handleClick = (row) => {
-  console.log("所在行："+row.index)
+  console.log("所在行：" + row.index);
   currentRowPage = Math.ceil((row.index + 1) / 10);
 
   console.log("length:" + permissonApplicationList.length);
@@ -3953,7 +3963,7 @@ const handleClick = (row) => {
                 }
                 permissonGxdc.value = oldRadioGxdc.value;
               }
-                            if (roleList[index].system == "环卫作业管家") {
+              if (roleList[index].system == "环卫作业管家") {
                 if (roleList[index].name == "viewer") {
                   radioHwzy.value = ["浏览信息"];
                   oldRadioHwzy.value = "viewer";
@@ -4183,7 +4193,7 @@ const handleClick = (row) => {
                     permissonGxdc.value = oldRadioGxdc.value;
                   }
                 }
-                                if (roleList[index].roleSystem == "环卫作业管家") {
+                if (roleList[index].roleSystem == "环卫作业管家") {
                   radioHwzy.value = [];
                   if (roleList[index].operateType == "add") {
                     if (roleList[index].roleName == "viewer") {
@@ -4457,7 +4467,7 @@ const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
     columnIndex === 5
   ) {
     return newstyleObject;
-  }else if (
+  } else if (
     (row.hwzy === "√(待定)" || row.hwzy === "×(待定)") &&
     columnIndex === 16
   ) {
@@ -4535,7 +4545,8 @@ const submitPermisson = (permissionForm) => {
     oldRadioZhxz.value == permissonZhxz.value &&
     oldRadioDdzh.value == permissonDdzh.value &&
     oldRadioCclj.value == permissonCclj.value &&
-    oldRadioCyyy.value == permissonCyyy.value&&oldRadioHwzy.value == permissonHwzy.value
+    oldRadioCyyy.value == permissonCyyy.value &&
+    oldRadioHwzy.value == permissonHwzy.value
   ) {
     ElMessage({
       message: "您未作任何更改，请更改之后再提交！",
@@ -4555,7 +4566,7 @@ const submitPermisson = (permissionForm) => {
           selfPermisson("共享单车管家", "delete", oldRadioGxdc.value);
         }
       }
-            if (checkHwzy.value == true) {
+      if (checkHwzy.value == true) {
         if (permissonHwzy.value != "") {
           if (oldRadioHwzy.value != "") {
             selfPermisson("环卫作业管家", "delete", oldRadioHwzy.value);
@@ -4652,19 +4663,11 @@ const submitPermisson = (permissionForm) => {
       if (checkZhxz.value == true) {
         if (permissonZhxz.value != "") {
           if (oldRadioZhxz.value != "") {
-            selfPermisson(
-              "突出问题管家",
-              "delete",
-              oldRadioZhxz.value
-            );
+            selfPermisson("突出问题管家", "delete", oldRadioZhxz.value);
           }
           selfPermisson("突出问题管家", "add", permissonZhxz.value);
         } else {
-          selfPermisson(
-            "突出问题管家",
-            "delete",
-            oldRadioZhxz.value
-          );
+          selfPermisson("突出问题管家", "delete", oldRadioZhxz.value);
         }
       }
       if (checkDdzh.value == true) {
@@ -5566,7 +5569,7 @@ const echartInit_ljz = () => {
         type: "pie",
         radius: "50%",
         data: [
-                    {
+          {
             value: ljz_table1.value[2].infoVal.slice(0, -2),
             name: ljz_table1.value[2].infoKey.slice(0, -2),
           },
@@ -5574,9 +5577,6 @@ const echartInit_ljz = () => {
             value: ljz_table1.value[1].infoVal.slice(0, -2),
             name: ljz_table1.value[1].infoKey.slice(0, -2),
           },
-
-          // { value: 111, name: 222 },
-          // { value: 111, name: 222 },
         ],
         label: {
           show: true,
@@ -6218,7 +6218,7 @@ const echartInit = () => {
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
       yAxis: {
-        data:data.map((item)=>item.type),
+        data: data.map((item) => item.type),
         interval: 20,
       },
       xAxis: {},
@@ -6230,7 +6230,7 @@ const echartInit = () => {
           type: "bar",
           color: "#dd6b66",
           // 数据
-          data:data.map((item)=>item.lian_value),
+          data: data.map((item) => item.lian_value),
         },
       ],
     };
@@ -6373,6 +6373,19 @@ const echartInit = () => {
     myChart2.setOption(option2);
   });
   getSjqsfx().then((dataTable) => {
+    // 从 dataTable 中筛选出 type 为 "街面秩序" 的数据，并提取 rq 值
+    const filteredData1 = dataTable.filter((item) => item.type === "公用设施");
+    const rqValues = filteredData1.map((item) => item.rq);
+    const Values1 = filteredData1.map((item) => item.value);
+    const filteredData2 = dataTable.filter((item) => item.type === "宣传广告");
+
+    const Values2 = filteredData2.map((item) => item.value);
+    const filteredData3 = dataTable.filter((item) => item.type === "市容环境");
+
+    const Values3 = filteredData3.map((item) => item.value);
+    const filteredData4 = dataTable.filter((item) => item.type === "街面秩序");
+
+    const Values4 = filteredData4.map((item) => item.value);
     var option4 = {
       title: {
         textStyle: {
@@ -6387,12 +6400,7 @@ const echartInit = () => {
         textStyle: {
           color: "#ccc",
         },
-        data: [
-          dataTable[0].type,
-          dataTable[1].type,
-          dataTable[2].type,
-          dataTable[3].type,
-        ],
+        data: [...new Set(dataTable.map((item) => item.type))],
       },
       grid: {
         left: "3%",
@@ -6409,15 +6417,7 @@ const echartInit = () => {
         axisLabel: { interval: 0 },
         type: "category",
         boundaryGap: false,
-        data: [
-          dataTable[0].rq,
-          dataTable[4].rq,
-          dataTable[8].rq,
-          dataTable[12].rq,
-          dataTable[16].rq,
-          dataTable[20].rq,
-          dataTable[24].rq,
-        ],
+        data: rqValues,
       },
       yAxis: {
         type: "value",
@@ -6427,57 +6427,25 @@ const echartInit = () => {
           name: dataTable[0].type,
           type: "line",
           stack: "Total",
-          data: [
-            dataTable[0].value,
-            dataTable[4].value,
-            dataTable[8].value,
-            dataTable[12].value,
-            dataTable[16].value,
-            dataTable[20].value,
-            dataTable[24].value,
-          ],
+          data: Values1,
         },
         {
           name: dataTable[1].type,
           type: "line",
           stack: "Total",
-          data: [
-            dataTable[1].value,
-            dataTable[5].value,
-            dataTable[9].value,
-            dataTable[13].value,
-            dataTable[17].value,
-            dataTable[21].value,
-            dataTable[25].value,
-          ],
+          data: Values2,
         },
         {
           name: dataTable[2].type,
           type: "line",
           stack: "Total",
-          data: [
-            dataTable[2].value,
-            dataTable[6].value,
-            dataTable[10].value,
-            dataTable[14].value,
-            dataTable[18].value,
-            dataTable[22].value,
-            dataTable[26].value,
-          ],
+          data: Values3,
         },
         {
           name: dataTable[3].type,
           type: "line",
           stack: "Total",
-          data: [
-            dataTable[3].value,
-            dataTable[7].value,
-            dataTable[11].value,
-            dataTable[15].value,
-            dataTable[19].value,
-            dataTable[23].value,
-            dataTable[27].value,
-          ],
+          data: Values4,
         },
       ],
     };
@@ -7061,8 +7029,8 @@ function toSystem(item) {
       if (
         roles.indexOf("84") != -1 ||
         roles.indexOf("111") != -1 ||
-        roles.indexOf("109") != -1||
-        roles.indexOf("110") != -1||
+        roles.indexOf("109") != -1 ||
+        roles.indexOf("110") != -1 ||
         roles.indexOf("83") != -1
       ) {
         var ddzh_url =
@@ -7750,7 +7718,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 .el-button-hjws {
   font-size: 20px;
   color: white;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .radioPermisson {
@@ -7765,9 +7733,9 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 }
 
 .avatar-uploader .avatar {
-  width: 100%;
+  width: 99vw;
   overflow: auto;
-  height: auto;
+  height: 120vh;
   display: block !important;
 }
 ::v-deep .el-upload {
@@ -7798,5 +7766,44 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 
 ::v-deep .el-popper__content {
   font-size: 30px !important; /* 修改字体大小为 16px */
+}
+
+.image-title-container {
+  display: flex;
+  align-items: center;
+  position: relative; /* 添加相对定位，以便绝对定位的文本相对于此容器定位 */
+}
+.title-container {
+  position: absolute; /* 使用绝对定位将文本放在图片上 */
+  top: 70%; /* 上边距设为50%，将文本垂直居中 */
+  left: 50%; /* 左边距设为50%，将文本水平居中 */
+  transform: translate(-50%, -50%); /* 使用translate来微调文本的位置 */
+}
+
+.centered-text {
+  text-align: center; /* 文本水平居中 */
+  font-size: 5.5rem; /* 设置文本字体大小 */
+  font-weight: bold; /* 设置文本加粗 */
+  color:#FFC000;
+}
+
+.title-container2 {
+  position: absolute; /* 使用绝对定位将文本放在图片上 */
+  top: 95%; /* 上边距设为50%，将文本垂直居中 */
+  left: 50%; /* 左边距设为50%，将文本水平居中 */
+  transform: translate(-50%, -50%); /* 使用translate来微调文本的位置 */
+}
+
+.centered-text2 {
+  text-align: center; /* 文本水平居中 */
+  font-size: 3.4rem; /* 设置文本字体大小 */
+  font-weight: bold; /* 设置文本加粗 */
+  color:#FFC000;
+  font-family:"HYXJ";
+}
+
+@font-face {
+  font-family: "HYXJ";
+  src: url("@/assets/font/homeFont.ttf") format("truetype");
 }
 </style>

@@ -49,7 +49,7 @@
           </div> -->
         <div class="subsys" v-if="!showDepts">
 
-          <class-item v-for="system in choosedSystems" :key="system.systemId" @click="show(system.to, system.url)"
+          <class-item v-for="system in choosedSystems" :key="system.systemId" @click="show(system)"
             :logo="system.systemLogo" :name="system.systemName" styleName="subsysName">
           </class-item>
         </div>
@@ -270,6 +270,7 @@ import { params } from '@/store/store.js'
 import { getCarLists, getAiAlarm } from "@/api/hwzy";
 import * as echarts from "echarts";
 import { getMainLjz, getSum, getWarning } from "@/api/ljz";
+import axios from "axios";
 
 const data = ref([])
 
@@ -449,9 +450,79 @@ function switchShowDepts(deptId, deptName) {
 }
 
 const router = useRouter()
+
+const systemPermisson = reactive([]);
+const selfSystemPermisson = () => {
+  axios({
+    url: "/api/auth/self_role_list",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    var data = resp.data;
+    for (var index in data) {
+      // console.log("姓名：" + data[index].realName);
+      var roleList = data[index].roleList;
+      for (var key in roleList) {
+        console.log("子系统" + roleList[key].system);
+        if (roleList[key].system == "all") {
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          systemPermisson.push("共享单车管家");
+          systemPermisson.push("垃圾分类管家");
+          systemPermisson.push("城管AI识别管家");
+          systemPermisson.push("城管诉易达管家");
+          systemPermisson.push("临街店铺管家");
+          systemPermisson.push("扬尘治理大数据协同管家");
+          systemPermisson.push("数字化城市信息管家");
+          systemPermisson.push("景观照明管家");
+          systemPermisson.push("生活垃圾全生命周期管家");
+          systemPermisson.push("调度指挥管家");
+          systemPermisson.push("餐厨垃圾全生命周期管家");
+          systemPermisson.push("餐饮油烟管家");
+          systemPermisson.push("环卫作业运行管家");
+          systemPermisson.push("突出问题管家");
+
+          break;
+        }
+        if (roleList[key].system == "景观照明集中控制管家") {
+          systemPermisson.push("景观照明管家");
+        } else if (roleList[key].system == "餐厨垃圾收运管家") {
+          systemPermisson.push("餐厨垃圾全生命周期管家");
+        } else if (roleList[key].system == "生活垃圾分类管家") {
+          systemPermisson.push("垃圾分类管家");
+        } else if (roleList[key].system == "垃圾数据归集管家") {
+          systemPermisson.push("生活垃圾全生命周期管家");
+        } else if (roleList[key].system == "广告招牌二维码管家") {
+          systemPermisson.push("临街店铺管家");
+        } else if (roleList[key].system == "环卫作业管家") {
+          systemPermisson.push("环卫作业运行管家");
+        } else if (roleList[key].system == "突出问题管家") {
+          systemPermisson.push("突出问题管家");
+        } else {
+          systemPermisson.push(roleList[key].system);
+        }
+      }
+    }
+    console.log("所有的" + systemPermisson.value);
+  });
+};
+selfSystemPermisson();
 // 跳转到to指定的子系统汇总页面
-function show(to, url) {
-  window.open(url)
+function show(item) {
+    var permission = ref(false);
+  for (var i in systemPermisson) {
+    if (item.systemName == systemPermisson[i]) {
+      permission.value = true;
+      break;
+    }
+  }
+  if (permission.value == true) {
+    window.open(item.url);
+  } else {
+    ElMessage.error("对不起，你无权访问系统！");
+  }
+
   // if (to === '') {
   //   ll
   //   ElMessage({
