@@ -1601,6 +1601,8 @@ function show(system, id, url) {
         // console.log(params.roleId)
         if (
           roles.indexOf("84") != -1 ||
+          roles.indexOf("109") != -1 ||
+          roles.indexOf("110") != -1 ||
           roles.indexOf("111") != -1 ||
           roles.indexOf("83") != -1
         ) {

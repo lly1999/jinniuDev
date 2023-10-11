@@ -39,26 +39,47 @@ import { ElMessage, ElDialog, tabBarProps } from "element-plus";
 import { params } from "@/store/store.js";
 import { getLogin } from "@/api/home.js";
 
-
 const Base64 = require("js-base64").Base64;
 // const params = reactive({
 //   username: "",
 //   password: "123"
 // })
 onMounted(() => {
-  params.password = "";
-  if (localStorage.getItem("username"))
-    params.username = localStorage.getItem("username");
-  if (localStorage.getItem("password"))
-    params.password = localStorage.getItem("password");
+// 获取整个哈希部分（包括 #）
+const hash = window.location.hash;
+
+// 如果哈希部分包含参数，则可以从中提取参数
+if (hash.includes('?')) {
+    const paramsString = hash.split('?')[1]; // 获取问号后面的部分
+    const urlParams = new URLSearchParams(paramsString);
+console.log("urlParams:"+urlParams)
+    // 获取参数值
+    const username = urlParams.get('username');
+    const password = urlParams.get('password');
+ if (username && password) {
+    params.username = Base64.decode(username);
+    params.password = Base64.decode(password);
+    login();
+  } 
+}
+ else {
+    if (localStorage.getItem("username"))
+      params.username = localStorage.getItem("username");
+    if (localStorage.getItem("password"))
+      params.password = localStorage.getItem("password");
+  }
 });
+  const urlParams = new URLSearchParams(window.location.search);
+  console.log("urlParams:" + urlParams);
 const rememberUser = ref(false);
 const changeRememberUser = () => {
   rememberUser.value = !rememberUser.value;
   console.log(rememberUser.value);
 };
 const login = () => {
+  let usernameBase64 = Base64.encode(params.username);
   let passwordBase64 = Base64.encode(params.password);
+  console.log("加密后的密码" + usernameBase64);
 
   var user = {
     name: params.username,
@@ -66,7 +87,7 @@ const login = () => {
   };
   getLogin(user).then((data) => {
     if (data.error_message == "success") {
-      console.log("检验密码："+data.isValidPassword)
+      console.log("检验密码：" + data.isValidPassword);
       if (data.isValidPassword == "false") {
         ElMessage({
           message: h("p", null, [
@@ -101,7 +122,6 @@ const login = () => {
       });
     }
   });
-
 };
 </script>
 

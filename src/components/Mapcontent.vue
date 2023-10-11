@@ -1711,9 +1711,10 @@ const handleSelect_jgzm = (key, keyPath) => {
         tooltip: {
           trigger: "item",
         },
+        // color:["#83b86a","#4C65B3","#E1B44F"],
         legend: {
           top: "0%",
-          right: "2%",
+          right: "right",
           textStyle: {
             color: "white",
           },
@@ -1745,9 +1746,13 @@ const handleSelect_jgzm = (key, keyPath) => {
               show: false,
             },
             data: [
-              { value: data[3].infoVal, name: "总店铺数量" },
-              { value: data[0].infoVal, name: "巡检店铺数量" },
-              { value: data[2].infoVal, name: "未办证数量" },
+            { value: data[2].infoVal, name: "零售类店铺数量" },
+            { value: data[3].infoVal, name: "餐饮类店铺数量" },
+            { value: data[4].infoVal, name: "服务类店铺数量" },
+            { value: data[5].infoVal, name: "其他行业店铺数量" },
+            // { value: data[3].infoVal, name: "总店铺数量" },
+            // { value: data[0].infoVal, name: "巡检店铺数量" },
+            // { value: data[2].infoVal, name: "未办证数量" },
               // { value: 580, name: 'Email' },
               // { value: 484, name: 'Union Ads' },
               // { value: 300, name: 'Video Ads' }
@@ -1966,9 +1971,10 @@ onMounted(() => {
       tooltip: {
         trigger: "item",
       },
+      // color:["#83b86a","#4C65B3","#E1B44F"],
       legend: {
         top: "0%",
-        right: "2%",
+        right: "right",
         textStyle: {
           color: "white",
         },
@@ -2000,9 +2006,13 @@ onMounted(() => {
             show: false,
           },
           data: [
-            { value: data[3].infoVal, name: "总店铺数量" },
-            { value: data[0].infoVal, name: "巡检店铺数量" },
-            { value: data[2].infoVal, name: "未办证数量" },
+            { value: data[2].infoVal, name: "零售类店铺数量" },
+            { value: data[3].infoVal, name: "餐饮类店铺数量" },
+            { value: data[4].infoVal, name: "服务类店铺数量" },
+            { value: data[5].infoVal, name: "其他行业店铺数量" },
+            // { value: data[3].infoVal, name: "总店铺数量" },
+            // { value: data[0].infoVal, name: "巡检店铺数量" },
+            // { value: data[2].infoVal, name: "未办证数量" },
             // { value: 580, name: 'Email' },
             // { value: 484, name: 'Union Ads' },
             // { value: 300, name: 'Video Ads' }

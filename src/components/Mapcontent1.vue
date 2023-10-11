@@ -992,6 +992,7 @@ const handleSelect_jgzm = (key, keyPath) => {
             color: 'white'
           }
         },
+        color:["#83b86a","#4C65B3","#E1B44F"],
         series: [
           {
             name: '店铺',

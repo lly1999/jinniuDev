@@ -7,8 +7,10 @@ export function getXjry() {
     })
 }
 export function getXcgl() {
+
     return request({
         url: '/ggzp/getXcgl',
+
         method: 'get'
     })
 } export function getMapDataGgzp() {
