@@ -207,7 +207,7 @@
           </div>
                     <div class="title-container2">
 
-            <h2 class="centered-text2">全民参与&nbsp;&nbsp;&nbsp;精细管理&nbsp;&nbsp;&nbsp;干净有序</h2>
+            <h2 class="centered-text2">全民参与&nbsp;&nbsp;精细管理&nbsp;&nbsp;干净有序</h2>
           </div>
       </div>
       <!-- <div class="background" v-if="choosedDept === 0">
@@ -258,6 +258,29 @@
               :src="require('@/assets/home/img-hwzy2.jpg')"
             >
             </el-image> -->
+                        <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystemHjws(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size: 20px" v-else>
+              <el-button
+                class="el-button-null"
+                type="text"
+                disabled
+                plain
+                @click="toSystemHjws(item)"
+                style="margin-top: 10px"
+              >
+                {{ item.systemName }}</el-button
+              >
+            </div>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -291,29 +314,7 @@
             <template v-else>
               <img :src="hwzyImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystemHjws(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
-            <div class="header" style="font-size: 20px" v-else>
-              <el-button
-                class="el-button-null"
-                type="text"
-                disabled
-                plain
-                @click="toSystemHjws(item)"
-                style="margin-top: 10px"
-              >
-                {{ item.systemName }}</el-button
-              >
-            </div>
+
             <div
               class="infoContainer"
               style="background-color: #2775b6; color: white"
@@ -478,6 +479,29 @@
               :src="require('@/assets/home/img-cclj2.jpg')"
             >
             </el-image> -->
+                        <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystemHjws(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size: 20px" v-else>
+              <el-button
+                class="el-button-null"
+                type="text"
+                disabled
+                plain
+                @click="toSystemHjws(item)"
+                style="margin-top: 10px"
+              >
+                {{ item.systemName }}</el-button
+              >
+            </div>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -511,29 +535,7 @@
             <template v-else>
               <img :src="ccljImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystemHjws(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
-            <div class="header" style="font-size: 20px" v-else>
-              <el-button
-                class="el-button-null"
-                type="text"
-                disabled
-                plain
-                @click="toSystemHjws(item)"
-                style="margin-top: 10px"
-              >
-                {{ item.systemName }}</el-button
-              >
-            </div>
+
             <div
               class="infoContainer"
               style="background-color: #2775b6; color: white"
@@ -620,6 +622,29 @@
               :src="require('@/assets/home/img-ljz2.jpg')"
             >
             </el-image> -->
+                        <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystemHjws(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size: 20px" v-else>
+              <el-button
+                class="el-button-null"
+                type="text"
+                disabled
+                plain
+                @click="toSystemHjws(item)"
+                style="margin-top: 10px"
+              >
+                {{ item.systemName }}</el-button
+              >
+            </div>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -653,29 +678,7 @@
             <template v-else>
               <img :src="shljImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystemHjws(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
-            <div class="header" style="font-size: 20px" v-else>
-              <el-button
-                class="el-button-null"
-                type="text"
-                disabled
-                plain
-                @click="toSystemHjws(item)"
-                style="margin-top: 10px"
-              >
-                {{ item.systemName }}</el-button
-              >
-            </div>
+
             <div
               class="infoContainer"
               style="background-color: #2775b6; color: white"
@@ -757,6 +760,29 @@
               :src="require('@/assets/home/img-ljz2.jpg')"
             >
             </el-image> -->
+                        <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystemHjws(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
+            <div class="header" style="font-size: 20px" v-else>
+              <el-button
+                class="el-button-null"
+                type="text"
+                disabled
+                plain
+                @click="toSystemHjws(item)"
+                style="margin-top: 10px"
+              >
+                {{ item.systemName }}</el-button
+              >
+            </div>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -790,29 +816,7 @@
             <template v-else>
               <img :src="ljflImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystemHjws(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
-            <div class="header" style="font-size: 20px" v-else>
-              <el-button
-                class="el-button-null"
-                type="text"
-                disabled
-                plain
-                @click="toSystemHjws(item)"
-                style="margin-top: 10px"
-              >
-                {{ item.systemName }}</el-button
-              >
-            </div>
+
             <div
               class="infoContainer"
               style="background-color: #2775b6; color: white"
@@ -929,6 +933,17 @@
             shadow="hover"
             :body-style="{ padding: '0px' }"
           >
+                      <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystem(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -962,17 +977,7 @@
             <template v-else>
               <img :src="cyyyImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystem(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
+
 
             <div
               class="infoContainer"
@@ -1082,7 +1087,17 @@
               :src="require('@/assets/home/img-ddzh2.jpg')"
             >
             </el-image> -->
-
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystem(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1116,17 +1131,7 @@
             <template v-else>
               <img :src="ddzhImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystem(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
+
 
             <div
               class="infoContainer"
@@ -1235,7 +1240,17 @@
               :src="require('@/assets/home/' + item.image)"
             >
             </el-image> -->
-
+            <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystem(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1269,17 +1284,7 @@
             <template v-else>
               <img :src="gxdcImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystem(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
+
 
             <div
               class="infoContainer"
@@ -1381,6 +1386,17 @@
               :src="require('@/assets/home/img-ycxt.png')"
             >
             </el-image> -->
+                        <ul v-if="item.url">
+              <div class="header">
+                <el-button
+                  class="el-button-hjws-title"
+                  type="text"
+                  @click="toSystem(item)"
+                  style="margin-top: 10px"
+                  >{{ item.systemName }}
+                </el-button>
+              </div>
+            </ul>
             <template v-if="params.role == '管理员'">
               <el-upload
                 accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1414,17 +1430,7 @@
             <template v-else>
               <img :src="yczlImageUrl" class="image" />
             </template>
-            <ul v-if="item.url">
-              <div class="header">
-                <el-button
-                  class="el-button-hjws"
-                  type="text"
-                  @click="toSystem(item)"
-                  style="margin-top: 10px"
-                  >{{ item.systemName }}
-                </el-button>
-              </div>
-            </ul>
+
 
             <div
               class="infoContainer"
@@ -1589,7 +1595,7 @@
           class="classification-title"
           v-if="(choosedDept == -1) | (choosedDept == 2)"
         >
-          招牌景观
+          城市景观
         </div>
         <div class="description">
           负责全区户外广告招牌和景观照明的监督管理，开展违规户外广告招牌专项整治，编制技术规范，并实施安全监管。
@@ -1925,6 +1931,26 @@
               shadow="hover"
               :body-style="{ padding: '0px' }"
             >
+                          <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}</el-button
+                  >
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1959,26 +1985,7 @@
                 <img :src="tcwtImageUrl" class="image" />
               </template>
 
-              <ul v-if="item.url">
-                <div class="header">
-                  <el-button
-                    v-if="item.url"
-                    class="el-button-hjws"
-                    type="text"
-                    @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
-                </div>
-              </ul>
+
               <div
                 class="infoContainer"
                 style="background-color: #2775b6; color: white"
@@ -2073,6 +2080,26 @@
               shadow="hover"
               :body-style="{ padding: '0px' }"
             >
+                          <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}</el-button
+                  >
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -2107,26 +2134,7 @@
                 <img :src="cgAIImageUrl" class="image" />
               </template>
 
-              <ul v-if="item.url">
-                <div class="header">
-                  <el-button
-                    v-if="item.url"
-                    class="el-button-hjws"
-                    type="text"
-                    @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
-                </div>
-              </ul>
+
               <div
                 class="infoContainer"
                 style="background-color: #2775b6; color: white"
@@ -2267,6 +2275,26 @@
               shadow="hover"
               :body-style="{ padding: '0px' }"
             >
+                          <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}</el-button
+                  >
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -2300,26 +2328,7 @@
               <template v-else>
                 <img :src="szhcsImageUrl" class="image" />
               </template>
-              <ul v-if="item.url">
-                <div class="header">
-                  <el-button
-                    v-if="item.url"
-                    class="el-button-hjws"
-                    type="text"
-                    @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
-                </div>
-              </ul>
+
 
               <div
                 class="infoContainer"
@@ -2432,6 +2441,26 @@
               shadow="hover"
               :body-style="{ padding: '0px' }"
             >
+                          <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}</el-button
+                  >
+                  <!-- <el-button
+                      v-else
+                      class="el-button-null"
+                      type="text"
+                      @click="toSystem(item)"
+                      style="margin-top: 10px"
+                    >
+                      {{ item.systemName }}</el-button
+                    > -->
+                </div>
+              </ul>
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -2466,26 +2495,7 @@
                 <img :src="cgsydImageUrl" class="image" />
               </template>
 
-              <ul v-if="item.url">
-                <div class="header">
-                  <el-button
-                    v-if="item.url"
-                    class="el-button-hjws"
-                    type="text"
-                    @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
-                </div>
-              </ul>
+
               <div
                 class="infoContainer"
                 style="background-color: #2775b6; color: white"
@@ -7624,13 +7634,21 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 .el-button-succeed {
   width: 250px;
   flex-wrap: wrap;
-  font-size: 20px;
+  font-size: 1.8rem;
+  font-weight:bold;
   /* color: #1677d9; */
 }
 
 .el-button-null {
-  font-size: 20px;
+  /* font-size: 20px; */
   color: gray;
+    font-size: 1.8rem;
+  color: white;
+  padding-top:3vh;
+  padding-bottom: 4vh;
+  color:gold;
+  font-weight:bold;
+  
 }
 
 .el-carousel__item h3 {
@@ -7716,9 +7734,18 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 }
 
 .el-button-hjws {
-  font-size: 20px;
+  font-size: 1.2rem;
   color: white;
   margin-top: 10px;
+}
+
+.el-button-hjws-title {
+  font-size: 1.8rem;
+  color: white;
+  padding-top:3vh;
+  padding-bottom: 4vh;
+  color:gold;
+  font-weight:bold;
 }
 
 .radioPermisson {
@@ -7775,30 +7802,33 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 }
 .title-container {
   position: absolute; /* 使用绝对定位将文本放在图片上 */
-  top: 70%; /* 上边距设为50%，将文本垂直居中 */
-  left: 50%; /* 左边距设为50%，将文本水平居中 */
-  transform: translate(-50%, -50%); /* 使用translate来微调文本的位置 */
+  top: 60%; /* 上边距设为50%，将文本垂直居中 */
+  left: 46%; /* 左边距设为50%，将文本水平居中 */
+  /* 使用translate来微调文本的位置 */
+  transform: translate(-46%, -50%); 
 }
 
 .centered-text {
   text-align: center; /* 文本水平居中 */
-  font-size: 5.5rem; /* 设置文本字体大小 */
+  font-size: 7rem; /* 设置文本字体大小 */
   font-weight: bold; /* 设置文本加粗 */
-  color:#FFC000;
+  /* color:#FFC000; */
+  color:rgb(255,251,0);
 }
 
 .title-container2 {
   position: absolute; /* 使用绝对定位将文本放在图片上 */
   top: 95%; /* 上边距设为50%，将文本垂直居中 */
-  left: 50%; /* 左边距设为50%，将文本水平居中 */
-  transform: translate(-50%, -50%); /* 使用translate来微调文本的位置 */
+  left: 47%; /* 左边距设为50%，将文本水平居中 */
+  transform: translate(-48%, -50%); /* 使用translate来微调文本的位置 */
 }
 
 .centered-text2 {
   text-align: center; /* 文本水平居中 */
-  font-size: 3.4rem; /* 设置文本字体大小 */
+  font-size: 4rem; /* 设置文本字体大小 */
   font-weight: bold; /* 设置文本加粗 */
-  color:#FFC000;
+  /* color:#FFC000; */
+  color:rgb(255,251,0);
   font-family:"HYXJ";
 }
 

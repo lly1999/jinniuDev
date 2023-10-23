@@ -54,23 +54,28 @@ if (hash.includes('?')) {
     const urlParams = new URLSearchParams(paramsString);
 console.log("urlParams:"+urlParams)
     // 获取参数值
-    const username = urlParams.get('username');
-    const password = urlParams.get('password');
+
+  const username = urlParams.get('username');
+       console.log("获取到的username!!=" + username);
+  const password = urlParams.get('password');
  if (username && password) {
     params.username = Base64.decode(username);
     params.password = Base64.decode(password);
     login();
   } 
 }
- else {
+else {
+//   const urlParams = new URLSearchParams(window.location.search);
+// console.log("urlParams:" + urlParams);
+//    const code = urlParams.get('code');
+//   console.log("获取到的授权码code=" + code);
     if (localStorage.getItem("username"))
       params.username = localStorage.getItem("username");
     if (localStorage.getItem("password"))
       params.password = localStorage.getItem("password");
   }
 });
-  const urlParams = new URLSearchParams(window.location.search);
-  console.log("urlParams:" + urlParams);
+  
 const rememberUser = ref(false);
 const changeRememberUser = () => {
   rememberUser.value = !rememberUser.value;
@@ -106,7 +111,7 @@ const login = () => {
         params.isLogin = true;
         params.token = data.token;
         params.roleId = data.role_id;
-        if (data.role_id == "83") {
+        if (data.role_id.includes("83") ) {
           params.role = "管理员";
         } else {
           params.role = "";

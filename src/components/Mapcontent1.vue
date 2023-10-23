@@ -77,7 +77,7 @@
   </div>
   <!-- <dv-border-box7 style="height:30vh;padding:5px">
         <div dv-bg>
-          <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">招牌景观</h5>
+          <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">城市景观</h5>
           <div>
             <dv-conical-column-chart :config="config_yyxt" style="width:25vw;height:20vh;" />
           </div>
@@ -116,7 +116,7 @@
     <div class="container">
       <dv-border-box7 style="height:40vh;padding:5px">
         <div dv-bg>
-          <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">招牌景观</h5>
+          <h5 class="card-title" style="font-size:25px;padding:5px ;text-align: center;">城市景观</h5>
           <div class="card-body" style="padding:0px ; height: 35vh;width:100%;">
 
             <el-menu :default-active="activeIndex_jgzm" class="el-menu-demo" mode="horizontal" @select="handleSelect_jgzm"

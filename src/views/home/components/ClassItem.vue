@@ -9,7 +9,7 @@
             content="餐饮油烟管家 调度指挥管家 扬尘治理大数据协同管家 共享单车管家 街面图像综合应用管家" popper-class="tip-class">
             <span :class="styleName">{{ name }}</span>
         </el-tooltip>
-        <el-tooltip v-else-if="name == '招牌景观'" placement="top-start" effect="light" content="景观照明管家 临街店铺管家"
+        <el-tooltip v-else-if="name == '城市景观'" placement="top-start" effect="light" content="景观照明管家 临街店铺管家"
             popper-class="tip-class">
             <span :class="styleName">{{ name }}</span>
         </el-tooltip>

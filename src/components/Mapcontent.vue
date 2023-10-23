@@ -248,7 +248,7 @@
       <dv-border-box7 style="height: 46vh">
         <div dv-bg>
           <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
-            招牌景观
+            城市景观
           </h5>
           <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
