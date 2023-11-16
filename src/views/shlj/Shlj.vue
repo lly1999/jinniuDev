@@ -83,6 +83,8 @@ import { useRouter, useRoute } from "vue-router";
 import {House, ArrowDown, Setting, Link} from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
 import { ref } from "vue";
+import { useStore } from "vuex"
+const store = useStore()
 
 // 由于<script setup>使用动态组件时，:is属性的值是对象实例，而不是组件名
 // 而menuList里的icon是组件名，因此这里做一个映射
@@ -110,7 +112,8 @@ const menuList = [
 function displayContent(name){
   router.push({name})
 }
-function logout(){
+function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push("/login")
 }

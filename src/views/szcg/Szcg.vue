@@ -86,6 +86,8 @@ import { useRouter, useRoute } from "vue-router";
 import { ArrowDown, Link } from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
 import { onMounted, ref } from "vue";
+import { useStore } from "vuex"
+const store = useStore()
 
 // 设置子系统名字
 const route = useRoute()
@@ -139,6 +141,7 @@ function displayContent(name) {
   router.push({ name })
 }
 function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push('/login')
 }

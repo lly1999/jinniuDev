@@ -3,7 +3,10 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh; width: 25vw">
         <!-- <div class="card text-white bg-primary mb-3 " style="max-width: 14rem;padding: 10px;height: 10vh;"> -->
-        <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+        <h5
+          class="card-title"
+          style="font-size: 25px; padding: 5px; text-align: center"
+        >
           环境卫生
         </h5>
 
@@ -27,14 +30,25 @@
           </el-menu> -->
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
           <div class="no">
-            <div style="color:rgb(153, 222, 243);margin-bottom:-0.5vw;text-align: center;">餐厨垃圾</div>
-            <div class="no-header" style="
+            <div
+              style="
+                color: rgb(153, 222, 243);
+                margin-bottom: -0.5vw;
+                text-align: center;
+              "
+            >
+              餐厨垃圾
+            </div>
+            <div
+              class="no-header"
+              style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "></div>
+              "
+            ></div>
             <div class="no-hd">
               <ul>
                 <li>{{ year_transport.toFixed(2) }}</li>
@@ -47,13 +61,16 @@
                 <li>当日收运量累积(吨)</li>
               </ul>
             </div>
-            <div class="no-header" style="
+            <div
+              class="no-header"
+              style="
                 height: 1px;
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 width: 85%;
                 margin: 0 auto;
                 margin-bottom: 10px;
-              "></div>
+              "
+            ></div>
             <!-- <div class="no-md">
               <ul>
                 <li>出勤车辆数：141</li>
@@ -61,9 +78,18 @@
               </ul>
 
             </div> -->
-                 <div style="width:100%;">
-          <div style="float: left;color:rgb(153, 222, 243)">环卫作业</div><div style="float: right;margin-right:1vw;color:rgb(153, 222, 243)">生活垃圾</div>
-          </div>
+            <div style="width: 100%">
+              <div style="float: left; color: rgb(153, 222, 243)">环卫作业</div>
+              <div
+                style="
+                  float: right;
+                  margin-right: 1vw;
+                  color: rgb(153, 222, 243);
+                "
+              >
+                生活垃圾
+              </div>
+            </div>
           </div>
           <!-- <div style="display: flex">
             <div
@@ -77,15 +103,23 @@
               style="width: 12vw; height: 20vh"
             ></div>
           </div> -->
-     
-          <div style="display: flex; margin-top:10px;">
+
+          <div style="display: flex; margin-top: 10px">
             <div id="hwzy-Charts" v-show="echart_index_hjws === 1"></div>
             <div id="cclj-Charts" v-show="echart_index_hjws === 1"></div>
           </div>
-          
+
           <div style="display: flex">
-            <div id="cqcl-Charts" v-show="echart_index_hjws === 1" style="width: 10vw; height: 24vh;margin-left:-2vw"></div>
-            <div id="shlj-Charts" v-show="echart_index_hjws === 1" style="width: 10vw; height: 24vh"></div>
+            <div
+              id="cqcl-Charts"
+              v-show="echart_index_hjws === 1"
+              style="width: 10vw; height: 24vh; margin-left: -2vw"
+            ></div>
+            <div
+              id="shlj-Charts"
+              v-show="echart_index_hjws === 1"
+              style="width: 10vw; height: 24vh"
+            ></div>
           </div>
         </div>
 
@@ -93,11 +127,19 @@
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             市容秩序
           </h5>
-          <div class="card-body" style="padding: 0px; height: 40vh; width: 100%" active-text-color="#ffd04b"
-            background-color="#2a2a2a" text-color="#fff">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 40vh; width: 100%"
+            active-text-color="#ffd04b"
+            background-color="#2a2a2a"
+            text-color="#fff"
+          >
             <!-- <el-tabs v-model="activeName" type="border-card" class="hwzy-tabs" @tab-click="handleClick" style="width:100%">
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
@@ -109,41 +151,76 @@
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->
-            <el-menu :default-active="activeIndex_srzx" class="el-menu-demo" mode="horizontal" @select="handleSelect_srzx"
-              style="width: 80%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
+            <el-menu
+              :default-active="activeIndex_srzx"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect_srzx"
+              style="width: 80%; margin: 0 auto"
+              active-text-color="#ffd04b"
+              background-color="#05103C"
+              text-color="#fff"
+            >
               <el-menu-item index="1">餐饮油烟管家</el-menu-item>
               <el-menu-item index="2">调度指挥管家</el-menu-item>
               <el-menu-item index="4">共享单车管家</el-menu-item>
               <el-menu-item index="3">扬尘治理大数据协同管家</el-menu-item>
-
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <div v-show="echart_index_srzx === 1">
               <div id="cyyy-Charts" style="width: 26vw; height: 30vh"></div>
               <div style="width: 50%; margin: 0 auto">
-                <el-pagination layout="prev, pager, next" :total="4" background text-color="#fff" :page-size="1"
-                  @current-change="changeCyyyChart" small :current-page="currentPageCyyy" />
+                <el-pagination
+                  layout="prev, pager, next"
+                  :total="4"
+                  background
+                  text-color="#fff"
+                  :page-size="1"
+                  @current-change="changeCyyyChart"
+                  small
+                  :current-page="currentPageCyyy"
+                />
               </div>
             </div>
 
-            <div id="ddzh-Charts" v-show="echart_index_srzx === 2" style="width: 25vw; height: 35vh">
-
-            </div>
-            <div id="ycxt-Charts" v-show="echart_index_srzx === 3" style="width: 25vw; height: 30vh">
-              <p class="demo-rich-content__mention" style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+            <div
+              id="ddzh-Charts"
+              v-show="echart_index_srzx === 2"
+              style="width: 25vw; height: 35vh"
+            ></div>
+            <div
+              id="ycxt-Charts"
+              v-show="echart_index_srzx === 3"
+              style="width: 25vw; height: 30vh"
+            >
+              <p
+                class="demo-rich-content__mention"
+                style="margin: 0; font-size: 18px; color: var(--el-color-info)"
+              >
                 @工地运企信息
               </p>
-              <el-table :data="ycxt_tableData1" stripe style="width: 100%" max-height="500">
+              <el-table
+                :data="ycxt_tableData1"
+                stripe
+                style="width: 100%"
+                max-height="500"
+              >
                 <el-table-column prop="name" label="名称" width="160" />
                 <el-table-column prop="contacts" label="联系人" width="180" />
                 <el-table-column prop="car_count" label="车辆数" width="180" />
                 <el-table-column prop="tel" label="联系电话" />
-
-
               </el-table>
             </div>
-            <div id="gxdc-Charts" v-show="echart_index_srzx === 4" style="width: 25vw; height: 30vh"></div>
-            <div id="jmtx-Charts" v-show="echart_index_srzx === 5" style="width: 25vw; height: 30vh">
+            <div
+              id="gxdc-Charts"
+              v-show="echart_index_srzx === 4"
+              style="width: 25vw; height: 30vh"
+            ></div>
+            <div
+              id="jmtx-Charts"
+              v-show="echart_index_srzx === 5"
+              style="width: 25vw; height: 30vh"
+            >
               待接入
             </div>
           </div>
@@ -157,9 +234,13 @@
         <div class="no-middle-hd">
           <ul>
             <li @click="handleEdit(warningReported)">{{ reportedNum }}</li>
-            <li @click="handleEdit(warningUnregistered)">{{ unregisteredNum }}</li>
+            <li @click="handleEdit(warningUnregistered)">
+              {{ unregisteredNum }}
+            </li>
             <li @click="handleEdit(warningRegistered)">{{ registeredNum }}</li>
-            <li @click="handleEdit(warningDistributed)">{{ distributedNum }}</li>
+            <li @click="handleEdit(warningDistributed)">
+              {{ distributedNum }}
+            </li>
             <li @click="handleEdit(warningUndisposed)">{{ undisposedNum }}</li>
             <li @click="handleEdit(warningDisposed)">{{ disposedNum }}</li>
             <li @click="handleEdit(warningVerified)">{{ verifiedNum }}</li>
@@ -175,46 +256,101 @@
           </ul>
         </div>
 
-        <el-dialog v-model="alarmEvent" title="普通事件统计分析" append-to-body="true">
+        <el-dialog
+          v-model="alarmEvent"
+          title="普通事件统计分析"
+          append-to-body="true"
+        >
           <!-- <WarningThings style="width:100%" /> -->
-          <div class="warning-header">
-            {{ warningTitle }}事件数
-          </div>
-          <el-date-picker v-model="changeValue" type="daterange" unlink-panels range-separator="到"
-            start-placeholder="选择开始时间" end-placeholder="选择结束时间" :disabled-date="disabledDate" :shortcuts="shortcuts"
-            @change="changeDate" size="large" style="margin: 0.5rem 0 0.5rem" />
-          <el-table :data="data_total.slice((currentPage - 1) * 10, currentPage * 10)" :size="large" width="100%"
-            id="#vcfResult" :row-class-name="tableRowClassName">
+          <div class="warning-header">{{ warningTitle }}事件数</div>
+          <el-date-picker
+            v-model="changeValue"
+            type="daterange"
+            unlink-panels
+            range-separator="到"
+            start-placeholder="选择开始时间"
+            end-placeholder="选择结束时间"
+            :disabled-date="disabledDate"
+            :shortcuts="shortcuts"
+            @change="changeDate"
+            size="large"
+            style="margin: 0.5rem 0 0.5rem"
+          />
+          <el-table
+            :data="data_total.slice((currentPage - 1) * 10, currentPage * 10)"
+            :size="large"
+            width="100%"
+            id="#vcfResult"
+            :row-class-name="tableRowClassName"
+          >
             <el-table-column property="uuid" label="事件uuid" width="260">
               <template #default="scope">
-                <el-tooltip class="item" effect="dark" content="点击查看事件详情" placement="top-start">
-                  <el-button size="medium" type="primary" link @click="warningDetail(scope.$index, scope.row)">{{
-                    scope.row.uuid }}
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="点击查看事件详情"
+                  placement="top-start"
+                >
+                  <el-button
+                    size="medium"
+                    type="primary"
+                    link
+                    @click="warningDetail(scope.$index, scope.row)"
+                    >{{ scope.row.uuid }}
                   </el-button>
                 </el-tooltip>
               </template>
             </el-table-column>
             <el-table-column property="event_no" label="事件编号" width="150" />
-            <el-table-column property="event_name" label="事件名称" width="120" />
-            <el-table-column property="event_time" label="事件发生时间" width="160" />
-            <el-table-column property="map_info" label="事件发生地点" width="150">
+            <el-table-column
+              property="event_name"
+              label="事件名称"
+              width="120"
+            />
+            <el-table-column
+              property="event_time"
+              label="事件发生时间"
+              width="160"
+            />
+            <el-table-column
+              property="map_info"
+              label="事件发生地点"
+              width="150"
+            >
             </el-table-column>
-            <el-table-column property="submit_time" label="事件登记时间" width="160" />
-            <el-table-column property="handle_deadline" label="事件处理截至时间" width="160" />
+            <el-table-column
+              property="submit_time"
+              label="事件登记时间"
+              width="160"
+            />
+            <el-table-column
+              property="handle_deadline"
+              label="事件处理截至时间"
+              width="160"
+            />
 
-            <el-table-column property="event_type_pid" label="事件类型编号" width="80" />
+            <el-table-column
+              property="event_type_pid"
+              label="事件类型编号"
+              width="80"
+            />
             <el-table-column property="tags" label="事件处理备注" width="150" />
-
           </el-table>
           <div class="float-end">
-            <el-pagination background layout="->,total, prev, pager, next, jumper" :total="totalRecords"
-              :current-page="currentPage" @current-change="getTransport" />
+            <el-pagination
+              background
+              layout="->,total, prev, pager, next, jumper"
+              :total="totalRecords"
+              :current-page="currentPage"
+              @current-change="getTransport"
+            />
           </div>
-          <div class="warning-header" style="padding-top:30px;">
-            事件详情
-          </div>
-          <div class="warning-detail" style="padding-top:20px;padding-left:20px;">
-            <ul style="display: inline-block;">
+          <div class="warning-header" style="padding-top: 30px">事件详情</div>
+          <div
+            class="warning-detail"
+            style="padding-top: 20px; padding-left: 20px"
+          >
+            <ul style="display: inline-block">
               <li>事件id：{{ id }}</li>
               <li>事件名称：{{ eventName }}</li>
               <li>事件来源：{{ eventSource }}</li>
@@ -223,10 +359,8 @@
               <li>地点纬度：{{ latitude }}</li>
               <li>地点经度：{{ longitude }}</li>
               <li>发生时间：{{ eventTime }}</li>
-
-
             </ul>
-            <ul style="display: inline-block;padding-left:40px;">
+            <ul style="display: inline-block; padding-left: 40px">
               <li>所属街道：{{ street }}</li>
               <li>上报角色：{{ reportRole }}</li>
               <!-- <li>上报附件：{{uploadFiles}}</li> -->
@@ -247,10 +381,16 @@
     <div class="container">
       <dv-border-box7 style="height: 46vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             城市景观
           </h5>
-          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 35vh; width: 100%"
+          >
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
             <!-- <div
               id="jgzm-Charts"
@@ -259,13 +399,16 @@
             ></div> -->
             <div id="jgzm-Charts" v-show="echart_index_jgzm === 1"></div>
             <div class="no">
-              <div class="no-header" style="
+              <div
+                class="no-header"
+                style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "></div>
+                "
+              ></div>
               <div class="no-hd">
                 <ul>
                   <li>{{ year_electricity }}</li>
@@ -278,60 +421,116 @@
                   <li>昨日电量统计</li>
                 </ul>
               </div>
-              <div class="no-header" style="
+              <div
+                class="no-header"
+                style="
                   height: 1px;
                   border-top: 1px solid rgba(255, 255, 255, 0.2);
                   width: 85%;
                   margin: 0 auto;
                   margin-bottom: 10px;
-                "></div>
+                "
+              ></div>
             </div>
-            <div id="ggzp-Charts" v-show="echart_index_jgzm === 1" style="width: 25vw; height: 30vh"></div>
+            <div
+              id="ggzp-Charts"
+              v-show="echart_index_jgzm === 1"
+              style="width: 25vw; height: 30vh"
+            ></div>
           </div>
         </div>
       </dv-border-box7>
       <dv-border-box7 style="height: 46vh; margin-top: 2vh">
         <div dv-bg>
-          <h5 class="card-title" style="font-size: 25px; padding: 5px; text-align: center">
+          <h5
+            class="card-title"
+            style="font-size: 25px; padding: 5px; text-align: center"
+          >
             数字城管
           </h5>
-          <div class="card-body" style="padding: 0px; height: 35vh; width: 100%">
-            <el-menu :default-active="activeIndex_jgzm" class="el-menu-demo" mode="horizontal" @select="handleSelect_szcg"
-              style="width: 90%; margin: 0 auto" active-text-color="#ffd04b" background-color="#05103C" text-color="#fff">
+          <div
+            class="card-body"
+            style="padding: 0px; height: 35vh; width: 100%"
+          >
+            <el-menu
+              :default-active="activeIndex_jgzm"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect_szcg"
+              style="width: 90%; margin: 0 auto"
+              active-text-color="#ffd04b"
+              background-color="#05103C"
+              text-color="#fff"
+            >
               <el-menu-item index="1">突出问题管家</el-menu-item>
               <el-menu-item index="2">城管AI识别管家</el-menu-item>
               <el-menu-item index="4">城管诉易达管家</el-menu-item>
               <el-menu-item index="3">数字化城市信息管家</el-menu-item>
-
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
-            <div id="tcwt-Charts" v-show="echart_index_szcg === 1" style="width: 24vw; height: 36vh; margin-left: 0px">
-            </div>
-            <div id="ai-Charts" v-show="echart_index_szcg === 2" style="width: 25vw; height: 30vh">
-              <p class="demo-rich-content__mention" style="margin: 0; font-size: 18px; color: var(--el-color-info)">
+            <div
+              id="tcwt-Charts"
+              v-show="echart_index_szcg === 1"
+              style="width: 24vw; height: 36vh; margin-left: 0px"
+            ></div>
+            <div
+              id="ai-Charts"
+              v-show="echart_index_szcg === 2"
+              style="width: 25vw; height: 30vh"
+            >
+              <p
+                class="demo-rich-content__mention"
+                style="margin: 0; font-size: 18px; color: var(--el-color-info)"
+              >
                 @事件列表
               </p>
-              <el-table :data="tcwtTableData" stripe style="width: 100%" max-height="500">
-                <el-table-column prop="event_name" label="事件名称" width="80" />
-                <el-table-column prop="description" label="问题描述" width="80" />
+              <el-table
+                :data="tcwtTableData"
+                stripe
+                style="width: 100%"
+                max-height="500"
+              >
+                <el-table-column
+                  prop="event_name"
+                  label="事件名称"
+                  width="80"
+                />
+                <el-table-column
+                  prop="description"
+                  label="问题描述"
+                  width="80"
+                />
                 <el-table-column prop="creator" label="创建者" width="80" />
-                <el-table-column prop="modify_time" label="确认时间" width="120" />
+                <el-table-column
+                  prop="modify_time"
+                  label="确认时间"
+                  width="120"
+                />
 
                 <el-table-column prop="tags" label="标签" />
-
               </el-table>
             </div>
             <div v-show="echart_index_szcg === 3">
               <div id="szcg-Charts" style="width: 25vw; height: 30vh"></div>
               <div style="width: 40%; margin: 0 auto">
-                <el-pagination layout="prev, pager, next" :total="3" background text-color="#fff" :page-size="1"
-                  @current-change="changeSzcgChart" small :current-page="currentPageSzcg" />
+                <el-pagination
+                  layout="prev, pager, next"
+                  :total="3"
+                  background
+                  text-color="#fff"
+                  :page-size="1"
+                  @current-change="changeSzcgChart"
+                  small
+                  :current-page="currentPageSzcg"
+                />
               </div>
             </div>
 
-            <div id="syd-Charts" v-show="echart_index_szcg === 4" style="width: 25vw; height: 30vh">
-
-            </div>
+            <div
+              id="syd-Charts"
+              v-show="echart_index_szcg === 4"
+              style="width: 25vw; height: 30vh"
+            ></div>
           </div>
         </div>
       </dv-border-box7>
@@ -350,7 +549,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onBeforeMount, onMounted,onBeforeUnmount } from "vue";
+import { reactive, ref, onBeforeMount, onMounted, onBeforeUnmount } from "vue";
 import { ScrollBoard, DigitalFlop } from "@kjgl77/datav-vue3";
 import { BorderBox6 as DvBorderBox6 } from "@kjgl77/datav-vue3";
 import { BorderBox7 as DvBorderBox7 } from "@kjgl77/datav-vue3";
@@ -358,15 +557,19 @@ import { getQypjCg } from "@/api/szcg.js";
 import { getMain } from "@/api/ggzp.js";
 import { getMainXzzf } from "@/api/xzzf.js";
 import { getMainJgzm } from "@/api/jgzm";
-import Charts from "@jiaminghi/charts";
+
 import * as echarts from "echarts";
 import { getRdfx, getSjqsfx } from "@/api/szcg.js";
 import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { getMainShlj } from "@/api/shlj";
-import { stubString } from "lodash";
 import { getMainCclj } from "@/api/cclj";
-import { getOverStandard, getMonitor, getCompanyType, getTouSU } from '@/api/yyxt';
+import {
+  getOverStandard,
+  getMonitor,
+  getCompanyType,
+  getTouSU,
+} from "@/api/yyxt";
 import { getCheckRate, getCntStatus } from "@/api/ddzh";
 import { getToken, getMainSyd } from "@/api/syd";
 import { getAllEvents, getResourceTcwt, getTrend } from "@/api/tcwt";
@@ -390,7 +593,7 @@ const distributedNum = ref(0);
 const disposedNum = ref(0);
 const undisposedNum = ref(0);
 const verifiedNum = ref(0);
-const tcwtTableData = ref([])
+const tcwtTableData = ref([]);
 
 const id = ref("");
 const eventName = ref("");
@@ -415,186 +618,251 @@ const eventLevel = ref("");
 const street = ref("");
 const tags = ref("");
 const updateTime = ref("");
-const ddzh_tableData1 = ref([])
-const ycxt_tableData1 = ref([])
-const syd_data = ref([])
+const ddzh_tableData1 = ref([]);
+const ycxt_tableData1 = ref([]);
+const syd_data = ref([]);
 
 onBeforeMount(() => {
+  getMainSyd().then((data) => {
+    syd_data.value = data;
+    echartInit_syd();
+  });
+  // getCheckRate().then(data => {
+  //   ddzh_tableData1.value = data
+  //   console.log(ddzh_tableData1.value)
+  //   echartInit_ddzh()
+  // })
 
-  getMainSyd().then(data => {
-    syd_data.value = data
-    echartInit_syd()
-  })
-  getCheckRate().then(data => {
-    ddzh_tableData1.value = data
-    console.log(ddzh_tableData1.value)
-    echartInit_ddzh()
-  })
-  getCompanyDust().then(data => {
-    ycxt_tableData1.value = data
-  })
-  getAllEvents(today, tomorrow).then(data => {
-    tcwtTableData.value = data
-  })
-})
+  axios({
+    url: "https://101.37.246.72:8079/api/auth/login",
+    method: "post",
+    data: JSON.stringify({
+      phone: "18380195019",
+      password: "123456",
+    }),
+  }).then(function (resp) {
+    var ddzh_token = resp.data.token;
+    axios({
+      url: "https://101.37.246.72:8079/api/patrol-status/status/rate",
+      method: "post",
+      data: JSON.stringify({
+        data: "",
+        param: "2",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: ddzh_token,
+      },
+    }).then(function (resp) {
+      ddzh_tableData1.value = resp.data;
+      console.log(ddzh_tableData1.value);
+      echartInit_ddzh();
+    });
 
+  });
+  getCompanyDust().then((data) => {
+    ycxt_tableData1.value = data;
+  });
+  getAllEvents(today, tomorrow).then((data) => {
+    tcwtTableData.value = data;
+  });
+});
 
 const alarmEvent = ref(false);
 
 const echartInit_ddzh = () => {
-
   document.getElementById("ddzh-Charts").removeAttribute("_echarts_instance_");
   var myChart_ddzh1 = echarts.init(document.getElementById("ddzh-Charts"));
 
   var option1 = {
     title: {
-      text: '打卡率统计',
+      text: "打卡率统计",
       textStyle: {
-        color: '#ccc'
-      }
+        color: "#ccc",
+      },
     },
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
       axisPointer: {
-        type: 'shadow'
+        type: "shadow",
       },
-              formatter: function (params) {
-      // 获取横坐标的内容
-      let xAxisLabel = params[0].axisValue;
-      
-      // 获取数据项的数值
-      let dataValue = params[0].value;
+      formatter: function (params) {
+        // 获取横坐标的内容
+        let xAxisLabel = params[0].axisValue;
 
-      // 构建 tooltip 内容并换行显示
-      return xAxisLabel + "<br>打卡率 " + dataValue + "%";
-    },
+        // 获取数据项的数值
+        let dataValue = params[0].value;
+
+        // 构建 tooltip 内容并换行显示
+        return xAxisLabel + "<br>打卡率 " + dataValue + "%";
+      },
     },
     yAxis: {
-      type: 'category',
-      data: [ddzh_tableData1.value[0].department, ddzh_tableData1.value[1].department, ddzh_tableData1.value[2].department, ddzh_tableData1.value[3].department
-        , ddzh_tableData1.value[4].department, ddzh_tableData1.value[5].department, ddzh_tableData1.value[6].department,
-      ddzh_tableData1.value[7].department,
-      ddzh_tableData1.value[8].department, ddzh_tableData1.value[9].department, ddzh_tableData1.value[10].department, ddzh_tableData1.value[11].department, ddzh_tableData1.value[12].department,
-      ddzh_tableData1.value[13].department, ddzh_tableData1.value[14].department, ddzh_tableData1.value[15].department, ddzh_tableData1.value[16].department,
-      ddzh_tableData1.value[17].department, ddzh_tableData1.value[18].department, ddzh_tableData1.value[19].department, ddzh_tableData1.value[20].department,
-      ddzh_tableData1.value[21].department, ddzh_tableData1.value[22].department, ddzh_tableData1.value[23].department, ddzh_tableData1.value[24].department,
-      ddzh_tableData1.value[25].department, ddzh_tableData1.value[26].department, ddzh_tableData1.value[27].department, ddzh_tableData1.value[28].department,
+      type: "category",
+      data: [
+        ddzh_tableData1.value[0].department,
+        ddzh_tableData1.value[1].department,
+        ddzh_tableData1.value[2].department,
+        ddzh_tableData1.value[3].department,
+        ddzh_tableData1.value[4].department,
+        ddzh_tableData1.value[5].department,
+        ddzh_tableData1.value[6].department,
+        ddzh_tableData1.value[7].department,
+        ddzh_tableData1.value[8].department,
+        ddzh_tableData1.value[9].department,
+        ddzh_tableData1.value[10].department,
+        ddzh_tableData1.value[11].department,
+        ddzh_tableData1.value[12].department,
+        ddzh_tableData1.value[13].department,
+        ddzh_tableData1.value[14].department,
+        ddzh_tableData1.value[15].department,
+        ddzh_tableData1.value[16].department,
+        ddzh_tableData1.value[17].department,
+        ddzh_tableData1.value[18].department,
+        ddzh_tableData1.value[19].department,
+        ddzh_tableData1.value[20].department,
+        ddzh_tableData1.value[21].department,
+        ddzh_tableData1.value[22].department,
+        ddzh_tableData1.value[23].department,
+        ddzh_tableData1.value[24].department,
+        ddzh_tableData1.value[25].department,
+        ddzh_tableData1.value[26].department,
+        ddzh_tableData1.value[27].department,
+        ddzh_tableData1.value[28].department,
       ],
       axisLabel: {
         //x轴文字的配置
         show: true,
-        interval: 0,//使x轴文字显示全
-        rotate: 20
-      }
-
+        interval: 0, //使x轴文字显示全
+        rotate: 20,
+      },
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
       containLabel: true,
       textStyle: {
-        color: 'white'
-      }
+        color: "white",
+      },
     },
     xAxis: {
-      type: 'value'
+      type: "value",
     },
     series: [
       {
-        data: [(ddzh_tableData1.value[0].checkRate * 100).toFixed(1), (ddzh_tableData1.value[1].checkRate * 100).toFixed(1), (ddzh_tableData1.value[2].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[3].checkRate * 100).toFixed(1), (ddzh_tableData1.value[4].checkRate * 100).toFixed(1), (ddzh_tableData1.value[5].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[6].checkRate * 100).toFixed(1), (ddzh_tableData1.value[7].checkRate * 100).toFixed(1), (ddzh_tableData1.value[8].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[9].checkRate * 100).toFixed(1), (ddzh_tableData1.value[10].checkRate * 100).toFixed(1), (ddzh_tableData1.value[11].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[12].checkRate * 100).toFixed(1), (ddzh_tableData1.value[13].checkRate * 100).toFixed(1), (ddzh_tableData1.value[14].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[15].checkRate * 100).toFixed(1), (ddzh_tableData1.value[16].checkRate * 100).toFixed(1), (ddzh_tableData1.value[17].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[18].checkRate * 100).toFixed(1), (ddzh_tableData1.value[19].checkRate * 100).toFixed(1), (ddzh_tableData1.value[20].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[21].checkRate * 100).toFixed(1), (ddzh_tableData1.value[22].checkRate * 100).toFixed(1), (ddzh_tableData1.value[23].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[24].checkRate * 100).toFixed(1), (ddzh_tableData1.value[25].checkRate * 100).toFixed(1), (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
-        (ddzh_tableData1.value[27].checkRate * 100).toFixed(1), (ddzh_tableData1.value[28].checkRate * 100).toFixed(1)]
-        ,
-        type: 'bar',
+        data: [
+          (ddzh_tableData1.value[0].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[1].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[2].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[3].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[4].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[5].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[6].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[7].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[8].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[9].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[10].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[11].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[12].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[13].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[14].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[15].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[16].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[17].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[18].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[19].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[20].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[21].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[22].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[23].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[24].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[25].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[27].checkRate * 100).toFixed(1),
+          (ddzh_tableData1.value[28].checkRate * 100).toFixed(1),
+        ],
+        type: "bar",
         showBackground: true,
         backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'
+          color: "rgba(180, 180, 180, 0.2)",
         },
         emphasis: {
-          focus: 'series'
-        }, textStyle: {
-          color: 'white'
+          focus: "series",
+        },
+        textStyle: {
+          color: "white",
         },
         label: {
-          show: true
+          show: true,
         },
+      },
+    ],
+  };
 
-      }]
-  }
-
-  myChart_ddzh1.setOption(option1)
-
-
-
-}
+  myChart_ddzh1.setOption(option1);
+};
 const echartInit_syd = () => {
-
   document.getElementById("syd-Charts").removeAttribute("_echarts_instance_");
   var myChart_syd2 = echarts.init(document.getElementById("syd-Charts"));
 
   var option_syd2 = {
     title: {
-      text: '案件分析月统计',
+      text: "案件分析月统计",
       textStyle: {
-        color: '#ccc'
-      }
+        color: "#ccc",
+      },
     },
     tooltip: {
-      trigger: 'item'
+      trigger: "item",
     },
     legend: {
-      top: '5%',
-      left: 'center',
+      top: "5%",
+      left: "center",
       textStyle: {
-        color: 'white'
-      }
+        color: "white",
+      },
     },
     series: [
       {
-        name: '案件',
-        type: 'pie',
-        radius: ['40%', '70%'],
+        name: "案件",
+        type: "pie",
+        radius: ["40%", "70%"],
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2
+          borderColor: "#fff",
+          borderWidth: 2,
         },
         label: {
           show: true,
-          position: 'center'
+          position: "center",
         },
         emphasis: {
           label: {
             show: true,
             fontSize: 35,
-            fontWeight: 'bold',
-
-          }
+            fontWeight: "bold",
+          },
         },
         labelLine: {
-          show: false
+          show: false,
         },
         data: [
-          { value: syd_data.value[3].infoVal, name: '本月办结案件数量' },
-          { value: syd_data.value[1].infoVal - syd_data.value[3].infoVal, name: '本月待办案件数量' },
+          { value: syd_data.value[3].infoVal, name: "本月办结案件数量" },
+          {
+            value: syd_data.value[1].infoVal - syd_data.value[3].infoVal,
+            name: "本月待办案件数量",
+          },
           // { value: 580, name: 'Email' },
           // { value: 484, name: 'Union Ads' },
           // { value: 300, name: 'Video Ads' }
-        ]
-      }
-    ]
-  }
-  myChart_syd2.setOption(option_syd2)
-}
+        ],
+      },
+    ],
+  };
+  myChart_syd2.setOption(option_syd2);
+};
 const data_total = reactive([]);
 const queryCarNum = ref("");
 let totalRecords = ref(1000);
@@ -741,7 +1009,6 @@ const warningDetail = (index, row) => {
       street.value = data.street;
       updateTime.value = data.updateTime;
 
-
       console.log("数据长度：" + data.length);
       totalRecords.value = data_total.length;
       pageCount = parseInt(data_total.length) % 6;
@@ -796,16 +1063,16 @@ const changeCyyyChart = (page) => {
           axisPointer: {
             type: "shadow",
           },
-                  formatter: function (params) {
-      // 获取横坐标的内容
-      let xAxisLabel = params[0].axisValue;
-      
-      // 获取数据项的数值
-      let dataValue = params[0].value;
+          formatter: function (params) {
+            // 获取横坐标的内容
+            let xAxisLabel = params[0].axisValue;
 
-      // 构建 tooltip 内容并换行显示
-      return xAxisLabel + "<br>超标企业 " + dataValue + "个";
-    },
+            // 获取数据项的数值
+            let dataValue = params[0].value;
+
+            // 构建 tooltip 内容并换行显示
+            return xAxisLabel + "<br>超标企业 " + dataValue + "个";
+          },
         },
         xAxis: {
           type: "category",
@@ -865,91 +1132,127 @@ const changeCyyyChart = (page) => {
     });
   }
   if (currentPageCyyy.value === 2) {
-
-    getTouSU().then(data => {
+    getTouSU().then((data) => {
       document
         .getElementById("cyyy-Charts")
         .removeAttribute("_echarts_instance_");
       var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
       if (data.tsLastNow.length < 12) {
         for (let i = 0; i < 20; i++) {
-          var tmp = { count: 0 }
-          data.tsLastNow.push(tmp)
+          var tmp = { count: 0 };
+          data.tsLastNow.push(tmp);
         }
-
       }
       var option_yyxt2 = {
-
         title: {
-          text: '油烟投诉趋势图',
+          text: "油烟投诉趋势图",
           textStyle: {
-            color: '#ccc'
-          }
+            color: "#ccc",
+          },
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: "axis",
         },
         legend: {
           textStyle: {
-            color: '#ccc'
+            color: "#ccc",
           },
-          data: ['2021', '2022', '2023',]
+          data: ["2021", "2022", "2023"],
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
         },
         toolbox: {
           feature: {
-            saveAsImage: {}
-          }
+            saveAsImage: {},
+          },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
-          data: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+          data: [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12",
+          ],
         },
         yAxis: {
-          type: 'value'
+          type: "value",
         },
         series: [
           {
-            name: '2021',
-            type: 'line',
+            name: "2021",
+            type: "line",
 
-            data: [data.tsLastTow[0].count, data.tsLastTow[1].count, data.tsLastTow[2].count,
-            data.tsLastTow[3].count, data.tsLastTow[4].count,
-            data.tsLastTow[5].count, data.tsLastTow[6].count, data.tsLastTow[7].count,
-            data.tsLastTow[8].count, data.tsLastTow[9].count,
-            data.tsLastTow[10].count, data.tsLastTow[11].count]
+            data: [
+              data.tsLastTow[0].count,
+              data.tsLastTow[1].count,
+              data.tsLastTow[2].count,
+              data.tsLastTow[3].count,
+              data.tsLastTow[4].count,
+              data.tsLastTow[5].count,
+              data.tsLastTow[6].count,
+              data.tsLastTow[7].count,
+              data.tsLastTow[8].count,
+              data.tsLastTow[9].count,
+              data.tsLastTow[10].count,
+              data.tsLastTow[11].count,
+            ],
           },
           {
-            name: '2022',
-            type: 'line',
+            name: "2022",
+            type: "line",
 
-            data: [data.tsLast[0].count, data.tsLast[1].count, data.tsLast[2].count,
-            data.tsLast[3].count, data.tsLast[4].count,
-            data.tsLast[5].count, data.tsLast[6].count, data.tsLast[7].count,
-            data.tsLast[8].count, data.tsLast[9].count,
-            data.tsLast[10].count, data.tsLast[11].count]
+            data: [
+              data.tsLast[0].count,
+              data.tsLast[1].count,
+              data.tsLast[2].count,
+              data.tsLast[3].count,
+              data.tsLast[4].count,
+              data.tsLast[5].count,
+              data.tsLast[6].count,
+              data.tsLast[7].count,
+              data.tsLast[8].count,
+              data.tsLast[9].count,
+              data.tsLast[10].count,
+              data.tsLast[11].count,
+            ],
           },
           {
-            name: '2023',
-            type: 'line',
+            name: "2023",
+            type: "line",
 
-            data: [data.tsLastNow[0].count, data.tsLastNow[1].count, data.tsLastNow[2].count,
-            data.tsLastNow[3].count, data.tsLastNow[4].count,
-            data.tsLastNow[5].count, data.tsLastNow[6].count, data.tsLastNow[7].count, data.tsLastNow[8].count,
-            data.tsLastNow[9].count, data.tsLastNow[10].count, data.tsLastNow[11].count]
+            data: [
+              data.tsLastNow[0].count,
+              data.tsLastNow[1].count,
+              data.tsLastNow[2].count,
+              data.tsLastNow[3].count,
+              data.tsLastNow[4].count,
+              data.tsLastNow[5].count,
+              data.tsLastNow[6].count,
+              data.tsLastNow[7].count,
+              data.tsLastNow[8].count,
+              data.tsLastNow[9].count,
+              data.tsLastNow[10].count,
+              data.tsLastNow[11].count,
+            ],
           },
-
-        ]
+        ],
       };
       myChart_cyyy.setOption(option_yyxt2);
-    })
-
+    });
   }
   if (currentPageCyyy.value === 3) {
     document
@@ -1013,54 +1316,52 @@ const changeCyyyChart = (page) => {
     });
   }
   if (currentPageCyyy.value === 4) {
-
-    getCompanyType().then(data => {
+    getCompanyType().then((data) => {
       document
         .getElementById("cyyy-Charts")
         .removeAttribute("_echarts_instance_");
       var myChart_cyyy = echarts.init(document.getElementById("cyyy-Charts"));
       var option_yyxt4 = {
         title: {
-          text: '餐饮企业类型分布',
+          text: "餐饮企业类型分布",
           textStyle: {
-            color: '#ccc'
-          }
+            color: "#ccc",
+          },
         },
         tooltip: {
-          trigger: 'item'
+          trigger: "item",
         },
         legend: {
-          top: '5%',
-          left: 'center',
+          top: "5%",
+          left: "center",
           textStyle: {
-            color: 'white'
-          }
+            color: "white",
+          },
         },
         series: [
           {
-            name: '企业',
-            type: 'pie',
-            radius: ['40%', '70%'],
+            name: "企业",
+            type: "pie",
+            radius: ["40%", "70%"],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
-              borderColor: '#fff',
-              borderWidth: 2
+              borderColor: "#fff",
+              borderWidth: 2,
             },
             label: {
               show: false,
-              position: 'center'
+              position: "center",
             },
             emphasis: {
               label: {
                 show: true,
                 fontSize: 35,
-                fontWeight: 'bold',
-
-              }
+                fontWeight: "bold",
+              },
             },
             labelLine: {
-              show: false
+              show: false,
             },
             data: [
               { value: data[0].num, name: data[0].sub_text },
@@ -1071,16 +1372,14 @@ const changeCyyyChart = (page) => {
               { value: data[5].num, name: data[5].sub_text },
               { value: data[6].num, name: data[6].sub_text },
 
-
               // { value: 484, name: 'Union Ads' },
               // { value: 300, name: 'Video Ads' }
-            ]
-          }
-        ]
-      }
+            ],
+          },
+        ],
+      };
       myChart_cyyy.setOption(option_yyxt4);
-    })
-
+    });
   }
 };
 const changeSzcgChart = (page) => {
@@ -1463,10 +1762,10 @@ const handleSelect_srzx = (key, keypath) => {
         },
         tooltip: {
           trigger: "item",
-                formatter: function (params) {
-      // 在 tooltip 中添加多行文本，包括标题和数值
-      return "单车<br>" + params.name + "   " + params.value + "辆";
-    },
+          formatter: function (params) {
+            // 在 tooltip 中添加多行文本，包括标题和数值
+            return "单车<br>" + params.name + "   " + params.value + "辆";
+          },
         },
         legend: {
           top: "5%",
@@ -1520,46 +1819,42 @@ const handleSelect_srzx = (key, keypath) => {
 };
 const handleSelect_szcg = (key, keypath) => {
   if (key === "1") {
-    console.log("来到这里："+key)
+    console.log("来到这里：" + key);
 
-    getTrend().then(data => {
+    getTrend().then((data) => {
       var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
       echart_index_szcg.value = 1;
       var option = {
         title: {
-          text: '事件趋势分析',
+          text: "事件趋势分析",
           textStyle: {
-            color: '#ccc'
-          }
+            color: "#ccc",
+          },
         },
         //这里的yAxis就是竖轴，xAxis就是横轴
         // yAxis and xAxis 交换可以改变横向或竖向
         xAxis: {
           data: data.map((item) => item.type),
         },
-        yAxis: {
-
-        },
+        yAxis: {},
         // 数据的来源
         series: [
           {
-            name: 'source',
+            name: "source",
             // bar就是柱状图
-            type: 'bar',
-            color: '#dd6b66',
+            type: "bar",
+            color: "#dd6b66",
             // 数据
-             data: data.map((item) => item.lian_value),
-          }
-        ]
-      }
+            data: data.map((item) => item.lian_value),
+          },
+        ],
+      };
       myChart_tcwt.setOption(option);
       window.onresize = function () {
         myChart_cyyy.resize();
       };
-    })
-
-
+    });
   }
   if (key === "2") {
     echart_index_szcg.value = 2;
@@ -1746,13 +2041,13 @@ const handleSelect_jgzm = (key, keyPath) => {
               show: false,
             },
             data: [
-            { value: data[2].infoVal, name: "零售类店铺数量" },
-            { value: data[3].infoVal, name: "餐饮类店铺数量" },
-            { value: data[4].infoVal, name: "服务类店铺数量" },
-            { value: data[5].infoVal, name: "其他行业店铺数量" },
-            // { value: data[3].infoVal, name: "总店铺数量" },
-            // { value: data[0].infoVal, name: "巡检店铺数量" },
-            // { value: data[2].infoVal, name: "未办证数量" },
+              { value: data[2].infoVal, name: "零售类店铺数量" },
+              { value: data[3].infoVal, name: "餐饮类店铺数量" },
+              { value: data[4].infoVal, name: "服务类店铺数量" },
+              { value: data[5].infoVal, name: "其他行业店铺数量" },
+              // { value: data[3].infoVal, name: "总店铺数量" },
+              // { value: data[0].infoVal, name: "巡检店铺数量" },
+              // { value: data[2].infoVal, name: "未办证数量" },
               // { value: 580, name: 'Email' },
               // { value: 484, name: 'Union Ads' },
               // { value: 300, name: 'Video Ads' }
@@ -1920,7 +2215,6 @@ const handleSelect_jgzm = (key, keyPath) => {
 //   }
 // };
 onMounted(() => {
-
   //===========================================sunny 告警事件
   axios({
     url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
@@ -1933,14 +2227,13 @@ onMounted(() => {
     if (resp.status == 200) {
       var data = resp.data.data;
       console.log("案件数量：" + tomorrow);
-      unregisteredNum.value = data.待立案,
-        registeredNum.value = data.已立案,
-        reportedNum.value = data.已上报,
-        distributedNum.value = data.已派发,
-        undisposedNum.value = data.待处置,
-        disposedNum.value = data.已处置,
-        verifiedNum.value = data.已核查,
-
+      (unregisteredNum.value = data.待立案),
+        (registeredNum.value = data.已立案),
+        (reportedNum.value = data.已上报),
+        (distributedNum.value = data.已派发),
+        (undisposedNum.value = data.待处置),
+        (disposedNum.value = data.已处置),
+        (verifiedNum.value = data.已核查),
         console.log("数据长度：" + data.length);
       totalRecords.value = data_total.length;
       pageCount = parseInt(data_total.length) % 10;
@@ -2045,10 +2338,10 @@ onMounted(() => {
       },
       tooltip: {
         trigger: "item",
-         formatter: function (params) {
-      // 在 tooltip 中添加多行文本，包括标题和数值
-      return "站点名 <br>" + params.name + "   " + params.value + "吨";
-    },
+        formatter: function (params) {
+          // 在 tooltip 中添加多行文本，包括标题和数值
+          return "站点名 <br>" + params.name + "   " + params.value + "吨";
+        },
       },
       color: ["#E0847F", "#CD8BECA9"],
       legend: {
@@ -2110,10 +2403,10 @@ onMounted(() => {
       },
       tooltip: {
         trigger: "item",
-              formatter: function (params) {
-      // 在 tooltip 中添加多行文本，包括标题和数值
-      return "出勤车辆 <br>" + params.name + "   " + params.value + "辆";
-    },
+        formatter: function (params) {
+          // 在 tooltip 中添加多行文本，包括标题和数值
+          return "出勤车辆 <br>" + params.name + "   " + params.value + "辆";
+        },
       },
       legend: {
         bottom: "0%",
@@ -2369,19 +2662,19 @@ onMounted(() => {
   // };
   // mychar_hjws.setOption(hjws_option);
 
-
-  getTrend().then(data => {
+  getTrend().then((data) => {
     var myChart_tcwt = echarts.init(document.getElementById("tcwt-Charts"));
 
     echart_index_szcg.value = 1;
     var option = {
       title: {
-        text: '事件趋势分析',
+        text: "事件趋势分析",
         textStyle: {
-          color: '#ccc'
-        }
-      }, tooltip: {
-        trigger: 'item'
+          color: "#ccc",
+        },
+      },
+      tooltip: {
+        trigger: "item",
       },
       //这里的yAxis就是竖轴，xAxis就是横轴
       // yAxis and xAxis 交换可以改变横向或竖向
@@ -2389,44 +2682,39 @@ onMounted(() => {
         axisLabel: {
           //x轴文字的配置
           show: true,
-          interval: 0,//使x轴文字显示全
-          rotate: 20
+          interval: 0, //使x轴文字显示全
+          rotate: 20,
         },
         data: data.map((item) => item.type),
       },
-      yAxis: {
-
-      },
+      yAxis: {},
       // 数据的来源
       series: [
         {
-          name: '来源',
+          name: "来源",
           // bar就是柱状图
-          type: 'bar',
-          color: '#dd6b66',
+          type: "bar",
+          color: "#dd6b66",
           label: {
             show: true,
-
           },
           emphasis: {
             label: {
               show: true,
               fontSize: 35,
-              fontWeight: 'bold',
-
-            }
+              fontWeight: "bold",
+            },
           },
           // 数据
-           data: data.map((item) => item.lian_value),
-        }
-      ]
-    }
+          data: data.map((item) => item.lian_value),
+        },
+      ],
+    };
     myChart_tcwt.setOption(option);
     window.onresize = function () {
       myChart_cyyy.resize();
     };
-  })
-
+  });
 });
 
 // const config = reactive({

@@ -82,6 +82,8 @@ import {House, ArrowDown, Setting, Link} from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
 import { onBeforeMount, ref } from "vue";
 import { getTokenGxdc } from "@/api/gxdc";
+import { useStore } from "vuex"
+const store = useStore()
 const url = ref("")
 onBeforeMount(() => {
     getTokenGxdc().then(data => {
@@ -105,7 +107,8 @@ const router = useRouter()
 function goback(){
   router.push('/home')
 }
-function logout(){
+function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push('/login')
 }

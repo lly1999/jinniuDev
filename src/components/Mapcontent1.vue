@@ -185,13 +185,12 @@ import { getCompanyList } from '@/api/yyxt.js'
 import { getMain } from '@/api/ggzp.js'
 import { getMainXzzf } from '@/api/xzzf.js'
 import { getMainJgzm } from "@/api/jgzm"
-import Charts from '@jiaminghi/charts'
+
 import * as echarts from "echarts";
 import { getRdfx, getSjqsfx } from "@/api/szcg.js";
 import { getOverStandard, getMonitor } from '@/api/yyxt';
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { getMainShlj } from "@/api/shlj";
-import { stubString } from 'lodash';
 import { getMainCclj } from "@/api/cclj";
 
 const currentPageSzcg = ref(1)

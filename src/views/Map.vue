@@ -2389,6 +2389,9 @@ import request from "@/utils/request.js";
 import moment from "moment";
 
 import geoDistrit from "@/assets/510106geo.json";
+import { useStore } from "vuex"
+const store = useStore()
+
 const zoom = ref(12);
 let date = new Date().toLocaleDateString();
 var a = new Array("日", "一", "二", "三", "四", "五", "六");
@@ -2437,6 +2440,8 @@ const companyVisibleShaHeyuan = ref(false);
 //todo
 //const tableInfoSzcgFuqin =ref([])
 ////const tableInfoSzcgYingmenkou =ref([])
+
+
 
 const infoYingmenkou = reactive({
   infoVisible: false,
@@ -7849,6 +7854,7 @@ const polygon = reactive({
   ],
 });
 function logout() {
+  store.dispatch("logout")
   //TODO 清除登录信息
   router.push("/login");
 }

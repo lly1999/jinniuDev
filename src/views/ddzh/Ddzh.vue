@@ -74,7 +74,7 @@
                         <el-icon>
                             <component :is="Link"></component>
                         </el-icon>
-                        <span style="font-size:25px"><a href="http://101.37.246.72:8079/map/"
+                        <span style="font-size:25px"><a href="https://175.153.176.27:18804/map/"
                                 target="_blank">跳转主页</a></span>
                     </el-menu-item>
                 </el-menu>
@@ -91,6 +91,8 @@ import { useRouter, useRoute } from "vue-router";
 import { House, ArrowDown, Setting, Link } from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
 import { ref, onMounted } from "vue";
+import { useStore } from "vuex"
+const store = useStore()
 
 // 由于<script setup>使用动态组件时，:is属性的值是对象实例，而不是组件名
 // 而menuList里的icon是组件名，因此这里做一个映射
@@ -108,6 +110,7 @@ function goback() {
     router.push('/home')
 }
 function logout() {
+     store.dispatch("logout")
     //TODO 清除登录信息
     router.push('/login')
 }

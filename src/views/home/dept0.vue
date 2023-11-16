@@ -271,6 +271,8 @@ import { getCarLists, getAiAlarm } from "@/api/hwzy";
 import * as echarts from "echarts";
 import { getMainLjz, getSum, getWarning } from "@/api/ljz";
 import axios from "axios";
+import { useStore } from "vuex"
+const store = useStore()
 
 const data = ref([])
 
@@ -537,6 +539,7 @@ function toMap() {
   router.push('/map')
 }
 function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push('/login')
 }

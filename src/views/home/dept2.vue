@@ -304,6 +304,8 @@ import { getAlarm } from "@/api/jgzm.js";
 import { getMain } from "@/api/ggzp.js";
 import * as echarts from "echarts";
 import axios from "axios";
+import { useStore } from "vuex"
+const store = useStore()
 
 const maxTableHeight = '35vh'
 const tableData = ref([
@@ -640,6 +642,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push("/login");
 }

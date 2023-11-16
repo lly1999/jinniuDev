@@ -82,6 +82,8 @@ import {House, ArrowDown, Setting, Link} from "@element-plus/icons-vue";
 import Header from "@/components/Header.vue";
 import { onBeforeMount, ref } from "vue";
 import { getToken } from "@/api/syd";
+import { useStore } from "vuex"
+const store = useStore()
 const token = ref('')
 const url = ref("https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=")
 onBeforeMount(()=>{
@@ -106,7 +108,8 @@ const router = useRouter()
 function goback(){
   router.push('/home')
 }
-function logout(){
+function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push('/login')
 }

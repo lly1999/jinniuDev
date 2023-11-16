@@ -446,6 +446,8 @@ import { getToken, getMainSyd } from "@/api/syd";
 import { params } from "@/store/store.js";
 import { getMainTcwt, getAllEvents, getTrend } from "@/api/tcwt";
 import * as echarts from "echarts";
+import { useStore } from "vuex"
+const store = useStore()
 
 import { getMainAI } from "@/api/ai";
 import { getAiUrl } from "@/api/ai";
@@ -969,6 +971,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push("/login");
 }

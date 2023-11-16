@@ -675,6 +675,8 @@ import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { params } from "@/store/store.js";
 import { getGroup } from "@/api/ddzh";
 import axios from "axios";
+import { useStore } from "vuex"
+const store = useStore()
 
 import {
   getOverStandard,
@@ -1607,18 +1609,18 @@ function show(system, id, url) {
           roles.indexOf("83") != -1
         ) {
           var ddzh_url =
-            "https://101.37.246.72:8079/map/?username=18008060886&pwd=MTIzNDU2";
+            "https://175.153.176.27:18804/map/?username=18008060886&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
         if (roles.indexOf("93") != -1) {
           var ddzh_url =
-            "https://101.37.246.72:8079/map/?username=18008061151&pwd=MTIzNDU2";
+            "https://175.153.176.27:18804/map/?username=18008061151&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
 
         if (roles.indexOf("120") != -1) {
           var ddzh_url =
-            "https://101.37.246.72:8079/map/?username=18008061081&pwd=MTIzNDU2";
+            "https://175.153.176.27:18804/map/?username=18008061081&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
         if (
@@ -1627,11 +1629,11 @@ function show(system, id, url) {
           roles.indexOf("102") != -1
         ) {
           var ddzh_url =
-            "https://101.37.246.72:8079/map/?username=18008061109&pwd=MTIzNDU2";
+            "https://175.153.176.27:18804/map/?username=18008061109&pwd=MTIzNDU2";
           window.open(ddzh_url);
         } else {
           var ddzh_url =
-            "https://101.37.246.72:8079/map/?username=" +
+            "https://175.153.176.27:18804/map/?username=" +
             params.username +
             "&pwd=MTIzNDU2";
           console.log(ddzh_url);
@@ -1657,6 +1659,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
+   store.dispatch("logout")
   //TODO 清除登录信息
   router.push("/login");
 }

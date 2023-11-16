@@ -273,12 +273,14 @@ const router = createRouter({
     routes,
     history: createWebHashHistory()
 })
-router.beforeEach((to, from, next) => {
-    if (!params.isLogin && to.meta.requestAuth) {
-        console.log(params.isLogin)
-        next({ name: Login });
-    } else {
-        next();
-    }
-})
+
+//以下代码是旧版的，刷新浏览器会自动跳转回登录页面，这是不合理的，2023/11/16 wlp已做修改
+// router.beforeEach((to, from, next) => {
+//     if (!params.isLogin && to.meta.requestAuth) {
+//         console.log(params.isLogin)
+//         next({ name: Login });
+//     } else {
+//         next();
+//     }
+// })
 export default router;

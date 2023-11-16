@@ -38,6 +38,11 @@ import { ref, onMounted, reactive, h } from "vue";
 import { ElMessage, ElDialog, tabBarProps } from "element-plus";
 import { params } from "@/store/store.js";
 import { getLogin } from "@/api/home.js";
+// import { useCookies } from '@vueuse/integrations/useCookies'
+import { setToken } from "@/composables/auth";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const Base64 = require("js-base64").Base64;
 // const params = reactive({
@@ -45,37 +50,36 @@ const Base64 = require("js-base64").Base64;
 //   password: "123"
 // })
 onMounted(() => {
-// 获取整个哈希部分（包括 #）
-const hash = window.location.hash;
+  // 获取整个哈希部分（包括 #）
+  const hash = window.location.hash;
 
-// 如果哈希部分包含参数，则可以从中提取参数
-if (hash.includes('?')) {
-    const paramsString = hash.split('?')[1]; // 获取问号后面的部分
+  // 如果哈希部分包含参数，则可以从中提取参数
+  if (hash.includes("?")) {
+    const paramsString = hash.split("?")[1]; // 获取问号后面的部分
     const urlParams = new URLSearchParams(paramsString);
-console.log("urlParams:"+urlParams)
+    console.log("urlParams:" + urlParams);
     // 获取参数值
 
-  const username = urlParams.get('username');
-       console.log("获取到的username!!=" + username);
-  const password = urlParams.get('password');
- if (username && password) {
-    params.username = Base64.decode(username);
-    params.password = Base64.decode(password);
-    login();
-  } 
-}
-else {
-//   const urlParams = new URLSearchParams(window.location.search);
-// console.log("urlParams:" + urlParams);
-//    const code = urlParams.get('code');
-//   console.log("获取到的授权码code=" + code);
+    const username = urlParams.get("username");
+    console.log("获取到的username!!=" + username);
+    const password = urlParams.get("password");
+    if (username && password) {
+      params.username = Base64.decode(username);
+      params.password = Base64.decode(password);
+      login();
+    }
+  } else {
+    //   const urlParams = new URLSearchParams(window.location.search);
+    // console.log("urlParams:" + urlParams);
+    //    const code = urlParams.get('code');
+    //   console.log("获取到的授权码code=" + code);
     if (localStorage.getItem("username"))
       params.username = localStorage.getItem("username");
     if (localStorage.getItem("password"))
       params.password = localStorage.getItem("password");
   }
 });
-  
+
 const rememberUser = ref(false);
 const changeRememberUser = () => {
   rememberUser.value = !rememberUser.value;
@@ -111,7 +115,14 @@ const login = () => {
         params.isLogin = true;
         params.token = data.token;
         params.roleId = data.role_id;
-        if (data.role_id.includes("83") ) {
+
+        //将token存储到cookie里面
+        // const cookie = useCookies();
+        // cookie.set("token",data.token);
+        setToken(data.token);
+
+
+        if (data.role_id.includes("83")) {
           params.role = "管理员";
         } else {
           params.role = "";

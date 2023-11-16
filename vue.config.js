@@ -8,7 +8,7 @@ module.exports = defineConfig({
       '/api': {
         //target: 'http://192.168.12.112:8084',
         // target: 'http://localhost:8084',
-        target: 'http://175.153.176.27:18801/api',
+        target: 'https://175.153.176.27:18801/api',
         // target: 'http://101.37.246.72:8084',//服务器
         //target: 'http://192.168.43.39:8084',
         //target: 'http://192.168.50.7:8084',
@@ -21,7 +21,7 @@ module.exports = defineConfig({
             '/homePicture': {
         //target: 'http://192.168.12.112:8084',
         // target: 'http://localhost:8084',
-        target: 'http://175.153.176.27:18801/homePicture',
+        target: 'https://175.153.176.27:18801/homePicture',
         // target: 'http://101.37.246.72:8084',//服务器
         //target: 'http://192.168.43.39:8084',
         //target: 'http://192.168.50.7:8084',
@@ -33,7 +33,7 @@ module.exports = defineConfig({
       },
 
         '/ddzh': {
-        target: 'http://101.37.246.72:9094',
+        target: 'https://101.37.246.72:9094',
         changeOrigin: true,
         pathRewrite: {
           '^/ddzh': ''//将url中起始的'/api'替换成''，比如将/api/getDeptList替换成/getDeptList
