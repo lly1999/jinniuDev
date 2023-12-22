@@ -622,44 +622,47 @@ const ddzh_tableData1 = ref([]);
 const ycxt_tableData1 = ref([]);
 const syd_data = ref([]);
 
+// axios({
+//     url: "/ddzh2/auth/login",
+//     method: "post",
+//     data: JSON.stringify({
+//       phone: "18380195019",
+//       password: "123456",
+//     }),
+// }).then(function (resp) {
+//     console.log("ddzh2",resp)
+//     var ddzh_token = resp.data.token;
+//     axios({
+//       url: "/ddzh2/patrol-status/status/rate_period",
+//       method: "post",
+//       data: JSON.stringify({
+//         startDate: "2023-12-01 00:00:00",
+//         endDate:"2023-12-01 23:59:59",
+//         param: "2",
+//       }),
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: ddzh_token,
+//       },
+//     }).then(function (resp) {
+//       ddzh_tableData1.value = resp.data;
+//       console.log("打卡率",resp);
+//       echartInit_ddzh();
+//     });
+
+//   });
 onBeforeMount(() => {
   getMainSyd().then((data) => {
     syd_data.value = data;
     echartInit_syd();
   });
-  // getCheckRate().then(data => {
-  //   ddzh_tableData1.value = data
-  //   console.log(ddzh_tableData1.value)
-  //   echartInit_ddzh()
-  // })
+  getCheckRate().then(data => {
+    ddzh_tableData1.value = data
+    console.log(ddzh_tableData1.value)
+    echartInit_ddzh()
+  })
 
-  axios({
-    url: "https://101.37.246.72:8079/api/auth/login",
-    method: "post",
-    data: JSON.stringify({
-      phone: "18380195019",
-      password: "123456",
-    }),
-  }).then(function (resp) {
-    var ddzh_token = resp.data.token;
-    axios({
-      url: "https://101.37.246.72:8079/api/patrol-status/status/rate",
-      method: "post",
-      data: JSON.stringify({
-        data: "",
-        param: "2",
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: ddzh_token,
-      },
-    }).then(function (resp) {
-      ddzh_tableData1.value = resp.data;
-      console.log(ddzh_tableData1.value);
-      echartInit_ddzh();
-    });
-
-  });
+  
   getCompanyDust().then((data) => {
     ycxt_tableData1.value = data;
   });
@@ -986,8 +989,9 @@ const warningDetail = (index, row) => {
     method: "get",
   }).then(function (resp) {
     if (resp.status == 200) {
+      console.log(777,resp.data.data.data)
       var data = resp.data.data.data;
-      console.log("latitude:" + data.latitude);
+  
       // uploadFiles= data.uploadFiles;
       latitude.value = data.latitude;
       eventSource.value = data.eventSource;
@@ -2216,17 +2220,20 @@ const handleSelect_jgzm = (key, keyPath) => {
 // };
 onMounted(() => {
   //===========================================sunny 告警事件
+  console.log(111, today)
+  console.log(222,tomorrow)
   axios({
-    url: "http://175.153.176.27:18801/api/event/getEventsStatusNum",
+    url: "/api/event/getEventsStatusNum",
     params: {
       startTime: today,
       endTime: tomorrow,
     },
     method: "get",
   }).then(function (resp) {
+console.log(555,resp)
     if (resp.status == 200) {
       var data = resp.data.data;
-      console.log("案件数量：" + tomorrow);
+    
       (unregisteredNum.value = data.待立案),
         (registeredNum.value = data.已立案),
         (reportedNum.value = data.已上报),

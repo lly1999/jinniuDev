@@ -5380,6 +5380,7 @@ const echartInit_ddzh = () => {
         ddzh_tableData1.value[26].department,
         ddzh_tableData1.value[27].department,
         ddzh_tableData1.value[28].department,
+     
       ],
       axisLabel: {
         //x轴文字的配置
@@ -5432,6 +5433,7 @@ const echartInit_ddzh = () => {
           (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
           (ddzh_tableData1.value[27].checkRate * 100).toFixed(1),
           (ddzh_tableData1.value[28].checkRate * 100).toFixed(1),
+       
         ],
         type: "bar",
         showBackground: true,
@@ -5475,7 +5477,7 @@ const echartInit_ddzh = () => {
         radius: "50%",
         data: [
           { value: ddzh_tableData2.value[0].num, name: "定位正常人员" },
-          { value: ddzh_tableData2.value[4].num, name: "定位异常人员" },
+          { value: ddzh_tableData2.value[3].num, name: "定位异常人员" },
           // { value: 111, name: 222 },
         ],
         label: {
@@ -6909,6 +6911,9 @@ const ddzh_tableData1 = ref([]);
 const ddzh_tableData2 = ref([
   { 超速位置: "无", 速度: "无", 车牌号: "无", 超速时间: "无" },
 ]);
+const startDate = moment().format('YYYY-MM-DD')+" 00:00:00"
+const endDate = moment().format('YYYY-MM-DD')+" 23:59:59"
+// const startDate = 
 const syd_data = ref([]);
 const sydUrl = ref(
   "https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token="
@@ -6924,6 +6929,38 @@ onBeforeMount(() => {
   getCheckRate().then((data) => {
     ddzh_tableData1.value = data;
   });
+// axios({
+//     url: "/diao/auth/login",
+//     method: "post",
+//     data: JSON.stringify({
+//       phone: "18380195019",
+//       password: "123456",
+//     }),
+//     headers: {
+//         "Content-Type": "application/json",
+//       },
+// }).then(function (resp) {
+//     console.log("ddzh2",resp)
+//     var ddzh_token = resp.data.token;
+//     axios({
+//       url: "/diao/patrol-status/status/rate_period",
+//       method: "post",
+//       data: JSON.stringify({
+//         startDate:startDate,
+//         endDate:endDate,
+//         param: "1",
+//       }),
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: ddzh_token,
+//       },
+//     }).then(function (resp) {
+//       ddzh_tableData1.value = resp.data.data;
+//       console.log("打卡率",resp);
+//       echartInit_ddzh();
+//     });
+
+//   });
   getCntStatus().then((data) => {
     ddzh_tableData2.value = data;
   });

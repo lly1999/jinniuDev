@@ -49,6 +49,8 @@ const Base64 = require("js-base64").Base64;
 //   username: "",
 //   password: "123"
 // })
+
+
 onMounted(() => {
   // 获取整个哈希部分（包括 #）
   const hash = window.location.hash;
@@ -69,10 +71,6 @@ onMounted(() => {
       login();
     }
   } else {
-    //   const urlParams = new URLSearchParams(window.location.search);
-    // console.log("urlParams:" + urlParams);
-    //    const code = urlParams.get('code');
-    //   console.log("获取到的授权码code=" + code);
     if (localStorage.getItem("username"))
       params.username = localStorage.getItem("username");
     if (localStorage.getItem("password"))
@@ -86,9 +84,7 @@ const changeRememberUser = () => {
   console.log(rememberUser.value);
 };
 const login = () => {
-  let usernameBase64 = Base64.encode(params.username);
-  let passwordBase64 = Base64.encode(params.password);
-  console.log("加密后的密码" + usernameBase64);
+
 
   var user = {
     name: params.username,
@@ -105,6 +101,7 @@ const login = () => {
           type: "error",
         });
         params.token = data.token;
+         setToken(data.token);
         router.push("/changepsw");
         localStorage.setItem("username", params.username);
       } else {
