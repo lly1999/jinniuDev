@@ -14,7 +14,7 @@
             <el-tab-pane label="餐厨垃圾全生命周期管家" name="second">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
-            <el-tab-pane label="生活垃圾全生命周期管家" name="third">
+            <el-tab-pane label="生活垃圾转运处理管家" name="third">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->
@@ -22,7 +22,7 @@
             style="width: 100%;" active-text-color="#ffd04b" background-color="#2a2a2a" text-color="#fff">
             <el-menu-item index="1">环卫作业运行管家</el-menu-item>
             <el-menu-item index="2">餐厨垃圾全生命周期管家</el-menu-item>
-            <el-menu-item index="3">生活垃圾全生命周期管家</el-menu-item>
+            <el-menu-item index="3">生活垃圾转运处理管家</el-menu-item>
           </el-menu>
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
 
@@ -46,7 +46,7 @@
             <el-tab-pane label="餐厨垃圾全生命周期管家" name="second">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
-            <el-tab-pane label="生活垃圾全生命周期管家" name="third">
+            <el-tab-pane label="生活垃圾转运处理管家" name="third">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
           </el-tabs> -->

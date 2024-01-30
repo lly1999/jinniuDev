@@ -581,7 +581,7 @@ const selfSystemPermisson = () => {
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
-          systemPermisson.push("生活垃圾全生命周期管家");
+          systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
           systemPermisson.push("餐厨垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
@@ -597,7 +597,7 @@ const selfSystemPermisson = () => {
         } else if (roleList[key].system == "生活垃圾分类管家") {
           systemPermisson.push("垃圾分类管家");
         } else if (roleList[key].system == "垃圾数据归集管家") {
-          systemPermisson.push("生活垃圾全生命周期管家");
+          systemPermisson.push("生活垃圾转运处理管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
           systemPermisson.push("临街店铺管家");
         } else if (roleList[key].system == "环卫作业管家") {

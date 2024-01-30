@@ -120,7 +120,7 @@
               src="@/assets/images/environment/garbage-compress-selected.png" alt="">
             <div
               :class="garbage_compress_detail == false ? 'garbage-compress-text' : 'garbage-compress-text garbage-compress-text-select'">
-              生活垃圾全生命周期管家</div>
+              生活垃圾转运处理管家</div>
           </div>
           <div @click="showLjfl"
             :class="garbage_collect_detail == false ? 'garbage-collect' : 'garbage-collect garbage-collect-select'">
@@ -478,7 +478,7 @@ const selfSystemPermisson = () => {
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
-          systemPermisson.push("生活垃圾全生命周期管家");
+          systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
           systemPermisson.push("餐厨垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
@@ -494,7 +494,7 @@ const selfSystemPermisson = () => {
         } else if (roleList[key].system == "生活垃圾分类管家") {
           systemPermisson.push("垃圾分类管家");
         } else if (roleList[key].system == "垃圾数据归集管家") {
-          systemPermisson.push("生活垃圾全生命周期管家");
+          systemPermisson.push("生活垃圾转运处理管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
           systemPermisson.push("临街店铺管家");
         } else if (roleList[key].system == "环卫作业管家") {
@@ -641,7 +641,7 @@ const garbage_transport_click = () => {
 const garbage_compress_click = () => {
   environments.splice(0, environments.length);
 
-  garbage_compress['title'] = "生活垃圾全生命周期管家";
+  garbage_compress['title'] = "生活垃圾转运处理管家";
   garbage_compress['title_en'] = "Garbage Collection Management";
   garbage_compress['not_accept'] = total_jinniu.value + "吨";
   garbage_compress['not_processed'] = total_hongxing.value + "吨";
