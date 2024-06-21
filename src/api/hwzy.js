@@ -7,15 +7,15 @@ export function getMainHwzy() {
         method: 'get'
     })
 }
-export function getCarLists() {
-    return request({
-        url: '/hwzy/getCarLists',
-        method: 'get'
-    })
-}
-export function getAiAlarm() {
-    return request({
-        url: '/hwzy/getAiAlarm',
-        method: 'get'
-    })
-}
+// export function getCarLists() {
+//     return request({
+//         url: '/hwzy/getCarLists',
+//         method: 'get'
+//     })
+// }
+// export function getAiAlarm() {
+//     return request({
+//         url: '/hwzy/getAiAlarm',
+//         method: 'get'
+//     })
+// }

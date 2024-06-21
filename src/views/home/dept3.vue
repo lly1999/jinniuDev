@@ -63,15 +63,17 @@
           <div class="subdepts">{{choosedDeptName}}</div>
         </div> -->
         <div class="subsys" v-if="!showDepts">
-          <class-item
-            v-for="system in choosedSystems"
-            :key="system.systemId"
-            @click="show(system,system.to,system.url)"
-            :logo="system.systemLogo"
-            :name="system.systemName"
-            styleName="subsysName"
-          >
-          </class-item>
+          <div v-for="system in choosedSystems" :key="system.systemId">
+            <class-item
+             class="dept-item"
+              @click="show(system, system.systemId, system.url)"
+              :logo="system.systemLogo"
+              :name="system.systemName"
+              styleName="subsysName"
+            >
+            </class-item>
+            <div id="fourTopic" title="运行正常"></div>
+          </div>
         </div>
         <div class="subsys" v-if="!showDepts">
           <div style="padding-left: 15px; margin-top: 20px">
@@ -142,7 +144,7 @@
           >
             <img class="syd-icon" src="@/assets/images/szcg/syd.png" alt="" />
             <div class="syd-text" style="color: white; padding: 10px">
-              城管诉易达管家
+              网络理政管家
             </div>
             <div v-if="two_selected == true" class="col-line-selected"></div>
           </div>
@@ -239,7 +241,7 @@
           <el-image
             v-if="three_selected == true"
             class="number"
-            :src="require('@/assets/images/szcg/number4.png')"
+            :src="require('@/assets/images/szcg/number4-1.png')"
             alt=""
             style="margin-left: 400px"
           ></el-image>
@@ -269,6 +271,7 @@
             class="number"
             :src="require('@/assets/images/szcg/number3.png')"
             style="margin-left: 400px"
+            fit="cover"
             alt=""
           ></el-image>
           <div
@@ -276,7 +279,7 @@
             class="text"
             style="color: white; margin-left: 400px; padding: 10px; z-index: 2"
           >
-            城管诉易达管家
+            网络理政管家
           </div>
           <div
             v-if="two_selected == true"
@@ -305,7 +308,7 @@
           >
             <div
               id="container"
-              style="width: 600px; height: 400px; float: left"
+              style="width: 800px; height: 400px; float: left"
             ></div>
           </div>
 
@@ -363,7 +366,7 @@
           </div>
           <div
             class="info-list"
-            v-if="three_selected == true"
+            v-show="three_selected == true"
             style="
               color: white;
               margin-left: 350px;
@@ -372,7 +375,11 @@
               line-height: 26px;
             "
           >
-            <template v-for="tableItem in szcg_statics">
+            <div
+              id="container2"
+              style="width: 1000px; height: 400px; float: left"
+            ></div>
+            <!-- <template v-for="tableItem in szcg_statics">
               <el-table
                 :data="tableItem.data"
                 class="table"
@@ -388,7 +395,7 @@
                   width="150"
                 />
               </el-table>
-            </template>
+            </template> -->
           </div>
 
           <div
@@ -445,9 +452,10 @@ import { getMainSzcg, getCase, getStatics } from "@/api/szcg.js";
 import { getToken, getMainSyd } from "@/api/syd";
 import { params } from "@/store/store.js";
 import { getMainTcwt, getAllEvents, getTrend } from "@/api/tcwt";
+import { getRdfx } from "@/api/szcg.js";
 import * as echarts from "echarts";
-import { useStore } from "vuex"
-const store = useStore()
+import { useStore } from "vuex";
+const store = useStore();
 
 import { getMainAI } from "@/api/ai";
 import { getAiUrl } from "@/api/ai";
@@ -463,70 +471,112 @@ const imgVisible = ref(true);
 const tcwtTableData = ref([]);
 const syd_data = ref([]);
 let myChart_syd2 = null;
-const echartInit_syd = () => {
-  //   document.getElementById("container_syd1").removeAttribute("_echarts_instance_");
-  //   var myChart_syd1 = echarts.init(document.getElementById("container_syd1"));
-  //document.getElementById("container_syd2").removeAttribute("_echarts_instance_");
-  myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
-  var option_syd1 = {
-    title: {
-      text: "案件分析日统计",
-      textStyle: {
-        color: "#ccc",
-      },
-    },
-    tooltip: {
-      trigger: "item",
-    },
-    legend: {
-      top: "5%",
-      left: "center",
-      textStyle: {
-        color: "white",
-      },
-    },
-    series: [
-      {
-        name: "案件",
-        type: "pie",
-        radius: ["40%", "70%"],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: "#fff",
-          borderWidth: 2,
+let myChart2 = null;
+
+const echartInit = () => {
+  document.getElementById("container2").removeAttribute("_echarts_instance_");
+
+  myChart2 = echarts.init(document.getElementById("container2"));
+
+  getRdfx().then((data) => {
+    var option2 = {
+      title: {
+        text: "热点分析",
+        textStyle: {
+          color: "white",
         },
-        label: {
-          show: true,
-          position: "center",
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      legend: {
+        data: ["立案", "结案"],
+        textStyle: {
+          color: "white",
         },
-        emphasis: {
-          label: {
+      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     dataView: { show: true, readOnly: false },
+      //     magicType: { show: true, type: ["line", "bar"] },
+      //     restore: { show: true },
+      //     saveAsImage: { show: true },
+      //   },
+      // },
+      calculable: true,
+      xAxis: [
+        {
+          type: "category",
+
+          axisLabel: {
+            //x轴文字的配置
             show: true,
-            fontSize: 35,
-            fontWeight: "bold",
+            interval: 0, //使x轴文字显示全
+            rotate: 20,
+            textStyle: {
+              color: "white", //更改坐标轴文字颜色
+              fontSize: 14, //更改坐标轴文字大小
+            },
+          },
+          // prettier-ignore
+          data: [data[0].sub_type_name, data[1].sub_type_name, data[2].sub_type_name, data[3].sub_type_name, data[4].sub_type_name, data[5].sub_type_name, data[6].sub_type_name, data[7].sub_type_name, data[8].sub_type_name,],
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          axisLabel: {
+            //x轴文字的配置
+            show: true,
+            textStyle: {
+              color: "white", //更改坐标轴文字颜色
+              fontSize: 14, //更改坐标轴文字大小
+            },
           },
         },
-        labelLine: {
-          show: false,
+      ],
+      series: [
+        {
+          name: "立案",
+          type: "bar",
+          data: [
+            data[0].inst_num,
+            data[1].inst_num,
+            data[2].inst_num,
+            data[3].inst_num,
+            data[4].inst_num,
+            data[5].inst_num,
+            data[6].inst_num,
+            data[7].inst_num,
+            data[8].inst_num,
+          ],
         },
-        data: [
-          { value: syd_data.value[2].infoVal, name: "今日办结案件数量" },
-          {
-            value: syd_data.value[0].infoVal - syd_data.value[2].infoVal,
-            name: "今日待办案件数量",
-          },
-          // { value: 580, name: 'Email' },
-          // { value: 484, name: 'Union Ads' },
-          // { value: 300, name: 'Video Ads' }
-        ],
-      },
-    ],
-  };
-  //   myChart_syd1.setOption(option_syd1)
+        {
+          name: "结案",
+          type: "bar",
+          data: [
+            data[0].archive_num,
+            data[1].archive_num,
+            data[2].archive_num,
+            data[3].archive_num,
+            data[4].archive_num,
+            data[5].archive_num,
+            data[6].archive_num,
+            data[7].archive_num,
+            data[8].archive_num,
+          ],
+        },
+      ],
+    };
+    myChart2.setOption(option2);
+  });
+};
+const echartInit_syd = () => {
+  myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
   var option_syd2 = {
     title: {
-      text: "案件分析月统计",
+      text: "工单分析月统计",
       textStyle: {
         color: "#ccc",
       },
@@ -543,7 +593,7 @@ const echartInit_syd = () => {
     },
     series: [
       {
-        name: "案件",
+        name: "工单",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -567,10 +617,10 @@ const echartInit_syd = () => {
           show: false,
         },
         data: [
-          { value: syd_data.value[3].infoVal, name: "本月办结案件数量" },
+          { value: syd_data.value[1].infoVal, name: "本月工单完成量" },
           {
-            value: syd_data.value[1].infoVal - syd_data.value[3].infoVal,
-            name: "本月待办案件数量",
+            value: syd_data.value[3].infoVal - syd_data.value[1].infoVal,
+            name: "本月工单待完成量",
           },
           // { value: 580, name: 'Email' },
           // { value: 484, name: 'Union Ads' },
@@ -698,9 +748,7 @@ var time = new Date().getTime();
 //     "-" +
 //     new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
 const today = moment().format("YYYY-MM-DD");
-const tomorrow = moment()
-  .add(+1, "d")
-  .format("YYYY-MM-DD");
+const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
 // console.log(momentToday+" "+momentTomorrow)
 const szcg_info = reactive({
   case: "",
@@ -765,6 +813,12 @@ onBeforeUnmount(() => {
     myChart_syd2.dispose();
     myChart_syd2 = null;
   }
+
+  if (myChart2) {
+    window.removeEventListener("resize", myChart2);
+    myChart2.dispose();
+    myChart2 = null;
+  }
 });
 onBeforeMount(() => {
   getDeptList().then((response) => {
@@ -792,9 +846,9 @@ onBeforeMount(() => {
     ai_info.case_no = data[3].infoVal;
     ai_info.case_out = data[4].infoVal;
   });
-  getStatics().then((data) => {
-    szcg_statics.value = data;
-  });
+  // getStatics().then((data) => {
+  //   szcg_statics.value = data;
+  // });
   getMainSyd().then((data) => {
     syd_data.value = data;
     console.log(data[0].infoVal);
@@ -825,6 +879,7 @@ onMounted(() => {
   });
   echartInit_tcwt();
   tcwt_click();
+  echartInit();
 });
 
 //选中的部门
@@ -884,18 +939,18 @@ const selfSystemPermisson = () => {
       for (var key in roleList) {
         console.log("子系统" + roleList[key].system);
         if (roleList[key].system == "all") {
-          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "网络理政管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "智慧公厕管家", "突出问题管家", "调度指挥管家", "垃圾全生命周期管家", "餐饮油烟管家"];
           systemPermisson.push("共享单车管家");
-          systemPermisson.push("垃圾分类管家");
+          systemPermisson.push("智慧公厕管家");
           systemPermisson.push("城管AI识别管家");
-          systemPermisson.push("城管诉易达管家");
+          systemPermisson.push("网络理政管家");
           systemPermisson.push("临街店铺管家");
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
           systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
-          systemPermisson.push("餐厨垃圾全生命周期管家");
+          systemPermisson.push("垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
           systemPermisson.push("环卫作业运行管家");
           systemPermisson.push("突出问题管家");
@@ -904,10 +959,10 @@ const selfSystemPermisson = () => {
         }
         if (roleList[key].system == "景观照明集中控制管家") {
           systemPermisson.push("景观照明管家");
-        } else if (roleList[key].system == "餐厨垃圾收运管家") {
-          systemPermisson.push("餐厨垃圾全生命周期管家");
-        } else if (roleList[key].system == "生活垃圾分类管家") {
-          systemPermisson.push("垃圾分类管家");
+        } else if (roleList[key].system == "垃圾全生命周期管家") {
+          systemPermisson.push("垃圾全生命周期管家");
+        } else if (roleList[key].system == "智慧公厕管家") {
+          systemPermisson.push("智慧公厕管家");
         } else if (roleList[key].system == "垃圾数据归集管家") {
           systemPermisson.push("生活垃圾转运处理管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
@@ -927,7 +982,7 @@ const selfSystemPermisson = () => {
 selfSystemPermisson();
 // 跳转到to指定的子系统汇总页面
 function show(system, id, url) {
-      var permission = ref(false);
+  var permission = ref(false);
   for (var i in systemPermisson) {
     if (system.systemName == systemPermisson[i]) {
       permission.value = true;
@@ -935,43 +990,40 @@ function show(system, id, url) {
     }
   }
   if (permission.value == true) {
-     if (url === "") {
-    ElMessage({
-      showClose: true,
-      message: "正在开发中...",
-    });
-  } else {
-    // router.push({ name: to, params: { subsysName } })
-    if (id != "16" && id != "17" && id != "4") window.open(url);
-    else if (id == "16")
-      getToken().then((data) => {
-        token.value = data;
-        var sydUrl =
-          "https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=";
-        sydUrl = sydUrl + token.value;
-        syd.url = sydUrl;
-        console.log(syd.url);
-        window.open(syd.url);
+    if (url === "") {
+      ElMessage({
+        showClose: true,
+        message: "正在开发中...",
       });
-    else if (id == "17" || id == "4") {
-      getAiUrl().then((data) => {
-        aiUrl.value = data.message;
-        console.log(data, aiUrl);
-        window.open(aiUrl.value);
-      });
+    } else {
+      // router.push({ name: to, params: { subsysName } })
+      if (id != "16" && id != "17" && id != "4") window.open(url);
+      else if (id == "16")
+        getToken().then((data) => {
+          token.value = data;
+          var sydUrl = "http://119.4.191.13:9580/#/login?token=";
+          sydUrl = sydUrl + token.value;
+          syd.url = sydUrl;
+          console.log(syd.url);
+          window.open(syd.url);
+        });
+      else if (id == "17" || id == "4") {
+        getAiUrl().then((data) => {
+          aiUrl.value = data.message;
+          console.log(data, aiUrl);
+          window.open(aiUrl.value);
+        });
+      }
     }
-  }
-   
   } else {
     ElMessage.error("对不起，你无权访问系统！");
   }
- 
 }
 function toMap() {
   router.push("/map");
 }
 function logout() {
-   store.dispatch("logout")
+  store.dispatch("logout");
   //TODO 清除登录信息
   router.push("/login");
 }
@@ -1236,5 +1288,22 @@ function backtoHome() {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+#fourTopic {
+  width: 25px;
+  height: 25px;
+  margin-top: -4vh;
+  background-color: #11e1b0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  float: right;
+}
+
+.dept-item {
+  margin-right: 1vw;
 }
 </style>

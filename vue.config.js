@@ -1,4 +1,4 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
 
@@ -6,7 +6,7 @@ module.exports = defineConfig({
     proxy: {
       "/api": {
         //target: 'http://192.168.12.112:8084',
-        // target: 'http://localhost:8084',
+        // target: 'http://localhost:8890',
         //政务云
         // target: "https://175.153.176.27:18801/api",
         //市政务云
@@ -58,5 +58,3 @@ module.exports = defineConfig({
     },
   },
 });
-
-

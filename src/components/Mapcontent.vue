@@ -15,7 +15,7 @@
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
-            <el-tab-pane label="餐厨垃圾全生命周期管家" name="second">
+            <el-tab-pane label="餐厨垃圾全生命周期管家管家" name="second">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
             <el-tab-pane label="生活垃圾转运处理管家" name="third">
@@ -25,7 +25,7 @@
           <!-- <el-menu :default-active="activeIndex_hjws" class="el-menu-demo" mode="horizontal" @select="handleSelect_hjws"
             style="width: 100%;" active-text-color="#ffd04b" background-color="#2a2a2a" text-color="#fff">
             <el-menu-item index="1">环卫作业运行管家</el-menu-item>
-            <el-menu-item index="2">餐厨垃圾全生命周期管家</el-menu-item>
+            <el-menu-item index="2">餐厨垃圾全生命周期管家管家</el-menu-item>
             <el-menu-item index="3">生活垃圾转运处理管家</el-menu-item>
           </el-menu> -->
           <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
@@ -37,7 +37,7 @@
                 text-align: center;
               "
             >
-              餐厨垃圾
+              垃圾全生命周期
             </div>
             <div
               class="no-header"
@@ -51,14 +51,14 @@
             ></div>
             <div class="no-hd">
               <ul>
-                <li>{{ year_transport.toFixed(2) }}</li>
-                <li>{{ month_transport.toFixed(2) }}</li>
-                <li>{{ day_transport.toFixed(2) }}</li>
+                <li>{{ ccljTodayWeight}}</li>
+                <li>{{ otherTodayWeight }}</li>
+                <li>{{ aflTodayWeight }}</li>
               </ul>
               <ul>
-                <li>年度收运量累积(吨)</li>
-                <li>当月收运量累积(吨)</li>
-                <li>当日收运量累积(吨)</li>
+                <li>餐厨垃圾今日重量</li>
+                <li>其他垃圾今日重量</li>
+                <li>爱分类今日重量</li>
               </ul>
             </div>
             <div
@@ -87,7 +87,7 @@
                   color: rgb(153, 222, 243);
                 "
               >
-                生活垃圾
+                智慧厕所
               </div>
             </div>
           </div>
@@ -109,11 +109,11 @@
             <div id="cclj-Charts" v-show="echart_index_hjws === 1"></div>
           </div>
 
-          <div style="display: flex">
+          <div style="display: flex;width:80%;margin:0 auto;">
             <div
               id="cqcl-Charts"
               v-show="echart_index_hjws === 1"
-              style="width: 10vw; height: 24vh; margin-left: -2vw"
+              style="width: 10vw; height: 24vh"
             ></div>
             <div
               id="shlj-Charts"
@@ -144,7 +144,7 @@
             <el-tab-pane label="环卫作业运行管家" name="first">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
-            <el-tab-pane label="餐厨垃圾全生命周期管家" name="second">
+            <el-tab-pane label="餐厨垃圾全生命周期管家管家" name="second">
               <div class="hwzy-Charts" style="width: 25vw; height: 30vh;"> </div>
             </el-tab-pane>
             <el-tab-pane label="生活垃圾转运处理管家" name="third">
@@ -464,7 +464,7 @@
             >
               <el-menu-item index="1">突出问题管家</el-menu-item>
               <el-menu-item index="2">城管AI识别管家</el-menu-item>
-              <el-menu-item index="4">城管诉易达管家</el-menu-item>
+              <el-menu-item index="4">网络理政管家</el-menu-item>
               <el-menu-item index="3">数字化城市信息管家</el-menu-item>
             </el-menu>
             <!-- <div id="hwzy-Charts" v-if="echart_index_hjws != 1" style="width: 25vw; height: 30vh;"></div> -->
@@ -563,7 +563,16 @@ import { getRdfx, getSjqsfx } from "@/api/szcg.js";
 import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
 import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { getMainShlj } from "@/api/shlj";
+import { getMainToilet } from "@/api/toilet";
 import { getMainCclj } from "@/api/cclj";
+import { params } from "@/store/store.js";
+import {
+  getMainLjz,
+  getSum,
+  getWarning,
+  getStations,
+  getLifecycle,
+} from "@/api/ljz";
 import {
   getOverStandard,
   getMonitor,
@@ -651,28 +660,186 @@ const syd_data = ref([]);
 //     });
 
 //   });
-onBeforeMount(() => {
-  getMainSyd().then((data) => {
-    syd_data.value = data;
-    echartInit_syd();
-  });
-  getCheckRate().then(data => {
-    ddzh_tableData1.value = data
-    console.log(ddzh_tableData1.value)
-    echartInit_ddzh()
-  })
+const stations_table = ref([]); //道路告警
+// onBeforeMount(() => {
+//   getMainSyd().then((data) => {
+//     syd_data.value = data;
+//     echartInit_syd();
+//   });
+//   getCheckRate().then((data) => {
+//     ddzh_tableData1.value = data;
+//     console.log(ddzh_tableData1.value);
+//     echartInit_ddzh();
+//   });
 
-  
-  getCompanyDust().then((data) => {
-    ycxt_tableData1.value = data;
-  });
-  getAllEvents(today, tomorrow).then((data) => {
-    tcwtTableData.value = data;
-  });
-});
+//   getCompanyDust().then((data) => {
+//     ycxt_tableData1.value = data;
+//   });
+//   getAllEvents(today, tomorrow).then((data) => {
+//     tcwtTableData.value = data;
+//   });
 
+//    getStations().then((data) => {
+//       stations_table.value = data;
+//      echartInit_ljz();
+//       console.log(4172, stations_table.value.monitor_roads)
+//     console.log(4171,stations_table.value);
+//    });
+//       getMainCclj().then((tableData) => {
+//     ccljTodayWeight.value = Number(tableData[4].infoVal);
+   
+//     console.log(421,tableData[3].infoVal);
+//     if (tableData[3].infoVal == "今日无数据【注意检查】") {
+//       aflTodayWeight.value="无数据"
+//     }else{
+//       aflTodayWeight.value = Number(tableData[3].infoVal);
+//     }
+    
+//     var cclj_option = {
+//       title: {
+//         text: "餐厨垃圾全生命周期管家管家",
+//         textStyle: {
+//           color: "#ccc",
+//         },
+//       },
+//       tooltip: {
+//         trigger: "axis",
+//         axisPointer: {
+//           type: "shadow",
+//         },
+//       },
+//       xAxis: {
+//         type: "category",
+//         data: [
+//           "年度收运量累积（吨）",
+//           "当月收运量累积（吨）",
+//           "当日收运量累积（吨）",
+//         ],
+//       },
+//       yAxis: {
+//         type: "value",
+//       },
+//       series: [
+//         {
+//           data: [
+//             tableData[0].infoVal,
+//             tableData[1].infoVal,
+//             tableData[2].infoVal,
+//           ],
+//           type: "bar",
+//           showBackground: true,
+//           backgroundStyle: {
+//             color: "rgba(180, 180, 180, 0.2)",
+//           },
+//         },
+//       ],
+//     };
+//     window.onresize = function () {
+//       mychar_cclj.resize();
+//     };
+//     mychar_cclj.setOption(cclj_option);
+//   });
+// });
+ 
 const alarmEvent = ref(false);
 
+let myChart_ljz1 = null;
+
+const echartInit_ljz = () => {
+  document
+    .getElementById("cqcl-Charts")
+    .removeAttribute("_echarts_instance_");
+  myChart_ljz1 = echarts.init(document.getElementById("cqcl-Charts"));
+
+     var cqcl_option = {
+      title: {
+        text: "道路情况",
+        left: "center",
+        textStyle: {
+          color: "#ccc",
+          fontSize: "15",
+        },
+        subtextStyle: {
+          color: "#ccc",
+          fontSize: "20",
+        },
+      },
+      tooltip: {
+        trigger: "item",
+        formatter: function (params) {
+          // 在 tooltip 中添加多行文本，包括标题和数值
+          return "道路数 <br>" + params.name + "   " + params.value + "条";
+        },
+      },
+      legend: {
+        bottom: "0%",
+        left: "left",
+        textStyle: {
+          color: "#ccc",
+          fontSize: "12",
+        },
+        itemWidth: 20, // 设置颜色条的宽度
+  itemHeight: 10, // 设置颜色条的高度
+      },
+      series: [
+        {
+          name: "道路数",
+          type: "pie",
+          radius: "80%",
+          data: [
+            {
+              value:
+                stations_table.value.monitor_roads -
+                stations_table.value.unwork_roads,
+              name: "已作业",
+            },
+            {
+              value: stations_table.value.unwork_roads,
+              name: "未作业",
+            },
+            {
+              value: stations_table.value.unmonitor_roads,
+              name: "未监测",
+            },
+            // { value: 111, name: 222 },
+            // { value: 111, name: 34 },
+          ],
+          label: {
+            normal: {
+              show: false,
+            },
+            labelLine: {
+              normal: {
+                position: "inner",
+                show: false,
+              },
+            },
+          },
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+            },
+            textStyle: {
+              color: "#ccc",
+              fontSize: "16",
+            },
+          },
+        },
+      ],
+    };
+  
+  myChart_ljz1.setOption(cqcl_option);
+
+};
+
+onBeforeUnmount(() => {
+  if (myChart_ljz1) {
+    window.removeEventListener("resize", myChart_ljz1);
+    myChart_ljz1.dispose();
+    myChart_ljz1 = null;
+  }
+});
 const echartInit_ddzh = () => {
   document.getElementById("ddzh-Charts").removeAttribute("_echarts_instance_");
   var myChart_ddzh1 = echarts.init(document.getElementById("ddzh-Charts"));
@@ -811,7 +978,7 @@ const echartInit_syd = () => {
 
   var option_syd2 = {
     title: {
-      text: "案件分析月统计",
+      text: "工单分析月统计",
       textStyle: {
         color: "#ccc",
       },
@@ -828,7 +995,7 @@ const echartInit_syd = () => {
     },
     series: [
       {
-        name: "案件",
+        name: "工单",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -852,10 +1019,10 @@ const echartInit_syd = () => {
           show: false,
         },
         data: [
-          { value: syd_data.value[3].infoVal, name: "本月办结案件数量" },
+          { value: syd_data.value[1].infoVal, name: "本月工单完成量" },
           {
-            value: syd_data.value[1].infoVal - syd_data.value[3].infoVal,
-            name: "本月待办案件数量",
+            value: syd_data.value[3].infoVal - syd_data.value[1].infoVal,
+            name: "本月工单待完成量",
           },
           // { value: 580, name: 'Email' },
           // { value: 484, name: 'Union Ads' },
@@ -873,9 +1040,7 @@ let currentPage = ref(1);
 let pageCount = 0;
 let start = ref("");
 let end = ref("");
-const tomorrow = moment()
-  .add(+1, "d")
-  .format("YYYY-MM-DD");
+const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
 const today = moment().format("YYYY-MM-DD");
 let startTime = ref("2023-05-01");
 let endTime = ref("2023-05-02");
@@ -989,9 +1154,9 @@ const warningDetail = (index, row) => {
     method: "get",
   }).then(function (resp) {
     if (resp.status == 200) {
-      console.log(777,resp.data.data.data)
+      console.log(777, resp.data.data.data);
       var data = resp.data.data.data;
-  
+
       // uploadFiles= data.uploadFiles;
       latitude.value = data.latitude;
       eventSource.value = data.eventSource;
@@ -1024,9 +1189,9 @@ const warningDetail = (index, row) => {
 //===================================================================================
 const currentPageSzcg = ref(1);
 const currentPageCyyy = ref(1);
-const year_transport = ref(0);
-const month_transport = ref(0);
-const day_transport = ref(0);
+const ccljTodayWeight = ref("");
+const otherTodayWeight = ref(0);
+const aflTodayWeight = ref("");
 const year_electricity = ref(0);
 const month_electricity = ref(0);
 const day_electricity = ref(0);
@@ -2045,10 +2210,10 @@ const handleSelect_jgzm = (key, keyPath) => {
               show: false,
             },
             data: [
-              { value: data[2].infoVal, name: "零售类店铺数量" },
+              { value: data[0].infoVal, name: "零售类店铺数量" },
               { value: data[3].infoVal, name: "餐饮类店铺数量" },
-              { value: data[4].infoVal, name: "服务类店铺数量" },
-              { value: data[5].infoVal, name: "其他行业店铺数量" },
+              { value: data[1].infoVal, name: "服务类店铺数量" },
+              { value: data[2].infoVal, name: "其他行业店铺数量" },
               // { value: data[3].infoVal, name: "总店铺数量" },
               // { value: data[0].infoVal, name: "巡检店铺数量" },
               // { value: data[2].infoVal, name: "未办证数量" },
@@ -2114,7 +2279,7 @@ const handleSelect_jgzm = (key, keyPath) => {
 //     getMainCclj().then((tableData) => {
 //       var cclj_option = {
 //         title: {
-//           text: "餐厨垃圾全生命周期管家",
+//           text: "餐厨垃圾全生命周期管家管家",
 //           textStyle: {
 //             color: "#ccc",
 //           },
@@ -2220,8 +2385,14 @@ const handleSelect_jgzm = (key, keyPath) => {
 // };
 onMounted(() => {
   //===========================================sunny 告警事件
-  console.log(111, today)
-  console.log(222,tomorrow)
+  console.log(111, today);
+  console.log(222, tomorrow);
+   getStations().then((data) => {
+      stations_table.value = data;
+     echartInit_ljz();
+      console.log(4172, stations_table.value.monitor_roads)
+    console.log(4171,stations_table.value);
+    });
   axios({
     url: "/api/event/getEventsStatusNum",
     params: {
@@ -2230,10 +2401,10 @@ onMounted(() => {
     },
     method: "get",
   }).then(function (resp) {
-console.log(555,resp)
+    console.log(555, resp);
     if (resp.status == 200) {
       var data = resp.data.data;
-    
+
       (unregisteredNum.value = data.待立案),
         (registeredNum.value = data.已立案),
         (reportedNum.value = data.已上报),
@@ -2247,6 +2418,8 @@ console.log(555,resp)
       currentPage.value = pageNum;
     }
   });
+
+
 
   //=====================================================
   echart_index_hjws.value = 1;
@@ -2306,10 +2479,10 @@ console.log(555,resp)
             show: false,
           },
           data: [
-            { value: data[2].infoVal, name: "零售类店铺数量" },
+            { value: data[0].infoVal, name: "零售类店铺数量" },
             { value: data[3].infoVal, name: "餐饮类店铺数量" },
-            { value: data[4].infoVal, name: "服务类店铺数量" },
-            { value: data[5].infoVal, name: "其他行业店铺数量" },
+            { value: data[1].infoVal, name: "服务类店铺数量" },
+            { value: data[2].infoVal, name: "其他行业店铺数量" },
             // { value: data[3].infoVal, name: "总店铺数量" },
             // { value: data[0].infoVal, name: "巡检店铺数量" },
             // { value: data[2].infoVal, name: "未办证数量" },
@@ -2325,14 +2498,102 @@ console.log(555,resp)
       myChart_ljdp1.resize();
     };
   });
-  getMainShlj().then((tableData) => {
-    var data1 = tableData[1].infoVal;
-    data1 = data1.substr(0, data1.length - 1) * 1;
-    var data2 = tableData[2].infoVal;
-    data2 = data2.substr(0, data2.length - 1) * 1;
+
+  // const stations_table = ref([]); //道路告警
+  // getStations().then((data) => {
+  //   console.log(4172,data);
+  //   var stations_table = data;
+    
+  //   console.log(666,params.hwzyToken)
+  //   // echartInit_ljz();
+  //   console.log(4171, stations_table);
+  //   var cqcl_option = {
+  //     title: {
+  //       text: "车辆出勤情况",
+  //       left: "center",
+  //       textStyle: {
+  //         color: "#ccc",
+  //         fontSize: "15",
+  //       },
+  //       subtextStyle: {
+  //         color: "#ccc",
+  //         fontSize: "20",
+  //       },
+  //     },
+  //     tooltip: {
+  //       trigger: "item",
+  //       formatter: function (params) {
+  //         // 在 tooltip 中添加多行文本，包括标题和数值
+  //         return "出勤车辆 <br>" + params.name + "   " + params.value + "辆";
+  //       },
+  //     },
+  //     legend: {
+  //       bottom: "0%",
+  //       left: "left",
+  //       textStyle: {
+  //         color: "#ccc",
+  //         fontSize: "3",
+  //       },
+  //     },
+  //     series: [
+  //       {
+  //         name: "出勤车辆",
+  //         type: "pie",
+  //         radius: "80%",
+  //         data: [
+  //           {
+  //             value:
+  //               stations_table.monitor_roads -
+  //               stations_table.unwork_roads,
+  //             name: "今日已作业道路数",
+  //           },
+  //           {
+  //             value: stations_table.unwork_roads,
+  //             name: "今日未作业道路数",
+  //           },
+  //           {
+  //             value: stations_table.unmonitor_roads,
+  //             name: "未监测道路数",
+  //           },
+  //           // { value: 111, name: 222 },
+  //           // { value: 111, name: 222 },
+  //         ],
+  //         label: {
+  //           normal: {
+  //             show: false,
+  //           },
+  //           labelLine: {
+  //             normal: {
+  //               position: "inner",
+  //               show: false,
+  //             },
+  //           },
+  //         },
+  //         emphasis: {
+  //           itemStyle: {
+  //             shadowBlur: 10,
+  //             shadowOffsetX: 0,
+  //           },
+  //           textStyle: {
+  //             color: "#ccc",
+  //             fontSize: "16",
+  //           },
+  //         },
+  //       },
+  //     ],
+  //   };
+  //   window.onresize = function () {
+  //     mychar_cqcl.resize();
+  //   };
+  //   mychar_cqcl.setOption(cqcl_option);
+  // });
+  getMainToilet().then((tableData) => {
+    var data1 = tableData[3].infoVal;
+    var data2 = tableData[4].infoVal;
+    var data3 = tableData[5].infoVal;
     var shlj_option = {
       title: {
-        text: "金牛区垃圾净重",
+        text: "厕所客流量情况",
         left: "center",
         textStyle: {
           color: "#ccc",
@@ -2347,17 +2608,20 @@ console.log(555,resp)
         trigger: "item",
         formatter: function (params) {
           // 在 tooltip 中添加多行文本，包括标题和数值
-          return "站点名 <br>" + params.name + "   " + params.value + "吨";
+          return "客流量 <br>" + params.name + "   " + params.value + "人";
         },
       },
-      color: ["#E0847F", "#CD8BECA9"],
+      color: ["#E0847F", "#CD8BECA9", "yellow"],
       legend: {
         bottom: "0%",
-        left: "center",
+        left: "left",
+  
         textStyle: {
           color: "#ccc",
           fontSize: "12",
         },
+        itemWidth: 20, // 设置颜色条的宽度
+  itemHeight: 10, // 设置颜色条的高度
       },
       series: [
         {
@@ -2366,8 +2630,9 @@ console.log(555,resp)
           radius: "80%",
 
           data: [
-            { value: data1, name: "西华" },
-            { value: data2, name: "红星" },
+            { value: data1, name: "男卫生间" },
+            { value: data2, name: "女卫生间" },
+            { value: data3, name: "第三卫生间" },
           ],
 
           label: {
@@ -2395,83 +2660,30 @@ console.log(555,resp)
       ],
     };
 
-    var cqcl_option = {
-      title: {
-        text: "车辆出勤情况",
-        left: "center",
-        textStyle: {
-          color: "#ccc",
-          fontSize: "15",
-        },
-        subtextStyle: {
-          color: "#ccc",
-          fontSize: "20",
-        },
-      },
-      tooltip: {
-        trigger: "item",
-        formatter: function (params) {
-          // 在 tooltip 中添加多行文本，包括标题和数值
-          return "出勤车辆 <br>" + params.name + "   " + params.value + "辆";
-        },
-      },
-      legend: {
-        bottom: "0%",
-        left: "center",
-        textStyle: {
-          color: "#ccc",
-          fontSize: "12",
-        },
-      },
-      series: [
-        {
-          name: "出勤车辆",
-          type: "pie",
-          radius: "80%",
-
-          data: [
-            { value: 121, name: "出勤" },
-            { value: 14, name: "未出勤" },
-          ],
-          label: {
-            normal: {
-              show: false,
-            },
-            labelLine: {
-              normal: {
-                position: "inner",
-                show: false,
-              },
-            },
-          },
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-            },
-            textStyle: {
-              color: "#ccc",
-              fontSize: "16",
-            },
-          },
-        },
-      ],
-    };
     window.onresize = function () {
       mychar_shlj.resize();
-      mychar_cqcl.resize();
+      // mychar_cqcl.resize();
     };
     mychar_shlj.setOption(shlj_option);
-    mychar_cqcl.setOption(cqcl_option);
+    // mychar_cqcl.setOption(cqcl_option);
   });
-
+  getMainLjz().then((tableData) => {
+    console.log(4211,tableData[0])
+   otherTodayWeight.value = tableData[0].infoVal;
+})
   getMainCclj().then((tableData) => {
-    year_transport.value = Number(tableData[0].infoVal);
-    month_transport.value = Number(tableData[1].infoVal);
-    day_transport.value = Number(tableData[2].infoVal);
+    ccljTodayWeight.value = tableData[4].infoVal;
+   
+    console.log(421,tableData[3].infoVal);
+    if (tableData[3].infoVal == "今日无数据【注意检查】") {
+      aflTodayWeight.value="无数据"
+    }else{
+      aflTodayWeight.value = tableData[3].infoVal;
+    }
+    
     var cclj_option = {
       title: {
-        text: "餐厨垃圾全生命周期管家",
+        text: "餐厨垃圾全生命周期管家管家",
         textStyle: {
           color: "#ccc",
         },
@@ -2722,6 +2934,33 @@ console.log(555,resp)
       myChart_cyyy.resize();
     };
   });
+});
+
+  onBeforeMount(() => {
+  getMainSyd().then((data) => {
+    syd_data.value = data;
+    echartInit_syd();
+  });
+  getCheckRate().then((data) => {
+    ddzh_tableData1.value = data;
+    console.log(ddzh_tableData1.value);
+    echartInit_ddzh();
+  });
+
+  getCompanyDust().then((data) => {
+    ycxt_tableData1.value = data;
+  });
+  getAllEvents(today, tomorrow).then((data) => {
+    tcwtTableData.value = data;
+  });
+
+   getStations().then((data) => {
+      stations_table.value = data;
+     echartInit_ljz();
+      console.log(4172, stations_table.value.monitor_roads)
+    console.log(4171,stations_table.value);
+   });
+
 });
 
 // const config = reactive({

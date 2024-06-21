@@ -38,8 +38,9 @@ import { ref, onMounted, reactive, h } from "vue";
 import { ElMessage, ElDialog, tabBarProps } from "element-plus";
 import { params } from "@/store/store.js";
 import { getLogin } from "@/api/home.js";
+
 // import { useCookies } from '@vueuse/integrations/useCookies'
-import { setToken } from "@/composables/auth";
+import { setToken ,setHwzyToken} from "@/composables/auth";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -94,6 +95,7 @@ const login = () => {
     if (data.error_message == "success") {
       console.log("检验密码：" + data.isValidPassword);
       if (data.isValidPassword == "false") {
+        
         ElMessage({
           message: h("p", null, [
             h("span", null, "您的密码为初始密码，为保证登录安全请重设密码！"),
@@ -102,7 +104,9 @@ const login = () => {
         });
         params.token = data.token;
          setToken(data.token);
-        router.push("/changepsw");
+
+        
+       router.push("/changepsw");
         localStorage.setItem("username", params.username);
       } else {
         if (rememberUser.value == true) {
@@ -112,11 +116,19 @@ const login = () => {
         params.isLogin = true;
         params.token = data.token;
         params.roleId = data.role_id;
+        params.hwzyToken = data.hwzyToken;
+        console.log(11111,params.hwzyToken )
+
+        // getHwzyToken().then((data) => {
+        // params.hwzyToken = data.access_token;
+        // console.log(418,params.hwzyToken)
+  // });
 
         //将token存储到cookie里面
         // const cookie = useCookies();
         // cookie.set("token",data.token);
         setToken(data.token);
+        setHwzyToken(data.hwzyToken);
 
 
         if (data.role_id.includes("83")) {

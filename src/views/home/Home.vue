@@ -10,6 +10,287 @@
       <template #time>
         <div class="text-week">今天是: {{ date }} {{ week }}</div>
       </template>
+      <template #warning>
+        <div class="text-week">
+          <div id="dotClass" title="" @click="fault_details">
+            <div id="lamp" style="display: none"></div>
+          </div>
+          <el-dialog
+            v-model="defaultVisible"
+            title="事故详情"
+            @close="handleClose"
+          >
+            <div
+              style="text-align: center; font-size: x-large; font-weight: bold"
+            >
+              未处理的事件
+            </div>
+            <el-table
+              :data="defaultList"
+              style="width: 100%"
+              size="large"
+              class="data-table"
+            >
+              <el-table-column
+                prop="event_id"
+                label="事件编号"
+                min-width="80"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column
+                prop="event_time"
+                label="事件时间"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column
+                prop="site_name"
+                label="事件来源"
+                min-width="80"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="Accident_cause"
+                label="事件详情"
+                min-width="200"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column>
+                <template #default="scope">
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="warningHandleClick(scope.$index, scope.row)"
+                    >处理</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <div
+              style="text-align: center; font-size: x-large; font-weight: bold"
+            >
+              历史告警事件
+            </div>
+            <el-date-picker
+              v-model="changeValue"
+              type="daterange"
+              unlink-panels
+              range-separator="到"
+              start-placeholder="选择开始时间"
+              end-placeholder="选择结束时间"
+              :disabled-date="disabledDate"
+              :shortcuts="shortcuts"
+              @change="changeDate"
+              size="large"
+              style="margin: 0.5rem 0 0.5rem"
+            />
+            <el-table
+              :data="
+                EventHistoryList.slice(
+                  (warningCurrentPage - 1) * 5,
+                  warningCurrentPage * 5
+                )
+              "
+              style="width: 100%"
+              size="large"
+              class="data-table"
+            >
+              <el-table-column
+                prop="event_id"
+                label="事件编号"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_source"
+                label="事件来源"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_cause"
+                label="事件详情"
+                min-width="450"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              />
+              <el-table-column
+                prop="event_disposed"
+                label="事件是否已处理"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_time"
+                label="发生时间"
+                min-width="250"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+
+              <el-table-column
+                prop="administrator"
+                label="派发人"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="instruction_time"
+                label="指令下达时间"
+                min-width="250"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="administrator_phone"
+                label="派发人电话"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="instruction_content"
+                label="指令内容"
+                min-width="450"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="event_handler"
+                label="事件处理人"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="handler_phone"
+                label="处理人电话"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="handler_work"
+                label="处理人工作单位"
+                min-width="150"
+                header-align="center"
+                align="center"
+                :show-overflow-tooltip="true"
+              >
+              </el-table-column>
+            </el-table>
+            <div class="float-warningEnd">
+              <el-pagination
+                background
+                layout="->,total, prev, pager, next, jumper"
+                :total="warningTotalRecords"
+                :current-page="warningCurrentPage"
+                :page-size="5"
+                @current-change="getTransport"
+              />
+            </div>
+          </el-dialog>
+
+          <el-dialog
+            v-model="warningHandleEvent"
+            title="事故处理"
+            @close="handleClose"
+          >
+            <div
+              style="text-align: center; font-size: x-large; font-weight: bold"
+            ></div>
+
+            <el-form
+              ref="warningRuleFormRef"
+              :model="warningRuleForm"
+              status-icon
+              :warningRules="warningRules"
+              label-width="120px"
+              class="demo-warningRuleForm"
+            >
+              <el-form-item label="处置人信息：" prop="info"
+                ><el-select
+                  v-model="warningRuleForm.info"
+                  filterable
+                  placeholder="请输入处置人姓名/电话号/工作单位"
+                  class="fuzzy_select"
+                >
+                  <el-option
+                    v-for="item in warningPersonList"
+                    :key="item.name"
+                    :label="warningFormatResult(item)"
+                    :value="JSON.stringify(item)"
+                  /> </el-select
+              ></el-form-item>
+
+              <!-- <el-form-item label="处置人姓名：" prop="name">
+                <el-input v-model="warningRuleForm.name" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="处置人电话号码：" prop="phone">
+                <el-input
+                  v-model="warningRuleForm.phone"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="工作单位：" prop="place">
+                <el-input
+                  v-model="warningRuleForm.place"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item> -->
+              <el-form-item label="处置指令内容：" prop="content">
+                <el-input
+                  v-model="warningRuleForm.content"
+                  type="textarea"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  @click="warningSubmitForm(warningRuleFormRef)"
+                  >提交</el-button
+                >
+              </el-form-item>
+            </el-form>
+          </el-dialog>
+        </div>
+      </template>
 
       <!-- 用户信息 -->
       <template #userinfo>
@@ -81,14 +362,17 @@
           fit="scale-down"
         ></el-image>
         <div class="classification" v-if="showDepts">
-          <class-item
-            v-for="dept in depts"
-            :key="dept.deptId"
-            @click="switchShowDepts(dept.deptId, dept.deptName)"
-            :logo="dept.deptLogo"
-            :name="dept.deptName"
-            styleName="subsysName"
-          ></class-item>
+          <div v-for="dept in depts" :key="dept.deptId">
+            <class-item
+              class="dept-item"
+              @click="switchShowDepts(dept.deptId, dept.deptName)"
+              :logo="dept.deptLogo"
+              :name="dept.deptName"
+              styleName="subsysName"
+            >
+            </class-item>
+            <div :id="`fourTopic-${index}`" :class="`fourTopic-${index}`" ></div>
+          </div>
         </div>
         <!-- <div class="subsys" v-if="!showDepts">
           <div class="subdepts">{{choosedDeptName}}</div>
@@ -161,39 +445,37 @@
   </el-upload> -->
 
       <div class="upload">
-
         <template v-if="params.role == '管理员'">
           <div class="image-title-container">
-          <el-upload
-            accept="image/jpg,image/jpeg,image/gif,image/png"
-            action="uploadUrl"
-            class="avatar-uploader"
-            :show-file-list="false"
-            :default-file-list="defaultFileList"
-            :before-upload="createBeforeUpload('banner')"
-          >
-            <el-tooltip
-              content="点击鼠标左键即可更换图片"
-              effect="dark"
-              placement="top"
+            <el-upload
+              accept="image/jpg,image/jpeg,image/gif,image/png"
+              action="uploadUrl"
+              class="avatar-uploader"
+              :show-file-list="false"
+              :default-file-list="defaultFileList"
+              :before-upload="createBeforeUpload('banner')"
             >
-              <img
-                v-if="latestImageUrl"
-                :src="latestImageUrl"
-                class="avatar"
-                @click="handleAvatarClick"
-              />
-              <el-icon
-                v-else
-                class="avatar-uploader-icon"
-                @click="handleAvatarClick"
+              <el-tooltip
+                content="点击鼠标左键即可更换图片"
+                effect="dark"
+                placement="top"
               >
-                <Plus />
-              </el-icon>
-            </el-tooltip>
-          </el-upload>
+                <img
+                  v-if="latestImageUrl"
+                  :src="latestImageUrl"
+                  class="avatar"
+                  @click="handleAvatarClick"
+                />
+                <el-icon
+                  v-else
+                  class="avatar-uploader-icon"
+                  @click="handleAvatarClick"
+                >
+                  <Plus />
+                </el-icon>
+              </el-tooltip>
+            </el-upload>
           </div>
-          
         </template>
         <template v-else>
           <img
@@ -203,12 +485,13 @@
           />
         </template>
         <div class="title-container">
-            <h2 class="centered-text">金牛 · 城市 · 管家</h2>
-          </div>
-                    <div class="title-container2">
-
-            <h2 class="centered-text2">全民参与&nbsp;&nbsp;精细管理&nbsp;&nbsp;干净有序</h2>
-          </div>
+          <h2 class="centered-text">金牛 · 城市 · 管家</h2>
+        </div>
+        <div class="title-container2">
+          <h2 class="centered-text2">
+            全民参与&nbsp;&nbsp;精细管理&nbsp;&nbsp;干净有序
+          </h2>
+        </div>
       </div>
       <!-- <div class="background" v-if="choosedDept === 0">
         <img src="@/assets/home/banner-hjws.png" width="10000" style="overflow-y:auto;overflow-x: auto;">
@@ -241,6 +524,7 @@
           负责市政道路清扫保洁，生活垃圾分类收集、运输及处置，环卫公厕管理，城市环境卫生设施的规划和建设等。
         </div>
         <el-divider v-if="(choosedDept == -1) | (choosedDept == 0)" />
+       
         <template v-for="(item, idx) in choosedSystems">
           <!-- <main-info v-if="item.deptId == 0" :key="idx" :systemName="item.systemName" :url="item.url"
             :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId"
@@ -252,13 +536,14 @@
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+      
           >
             <!-- <el-image
               class="image"
               :src="require('@/assets/home/img-hwzy2.jpg')"
             >
             </el-image> -->
-                        <ul v-if="item.url">
+            <ul v-if="item.url">
               <div class="header">
                 <el-button
                   class="el-button-hjws-title"
@@ -266,6 +551,7 @@
                   @click="toSystemHjws(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-hwzy"  class="warning-hwzy"></div>
                 </el-button>
               </div>
             </ul>
@@ -325,7 +611,6 @@
         </div> -->
               <!-- 汇总数据列表 -->
               <div>
-                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
                   <li v-for="item in item.data" style="font-size: 20px">
                     {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
@@ -336,7 +621,6 @@
                   :width="1000"
                   placement="right"
                   effect="dark"
-                  @after-enter="echartInit_jgzm()"
                   trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center"
@@ -387,10 +671,10 @@
                             color: var(--el-color-info);
                           "
                         >
-                          @AI报警事件处置
+                          @城市道路信息
                         </p>
                         <el-table
-                          :data="hwzy_tableData1"
+                          :data="cityRoad"
                           stripe
                           style="width: 100%"
                           max-height="500"
@@ -403,21 +687,21 @@
                           :cell-style="changeCellStyle"
                         >
                           <el-table-column
-                            prop="e_alarm_name"
-                            label="报警名称"
+                            prop="district_name"
+                            label="所属区域"
                             width="180"
                           />
                           <el-table-column
-                            prop="e_alarm_create_time"
-                            label="报送时间"
+                            prop="street_name"
+                            label="街道名称"
                             width="280"
                           />
                           <el-table-column
-                            prop="e_alarm_sanitation_task_truck"
-                            label="处置车辆"
+                            prop="road_name"
+                            label="道路名称"
                             width="180"
                           />
-                          <el-table-column prop="e_alarm_from" label="地点" />
+                          <el-table-column prop="road_type" label="道路类型" />
                         </el-table>
                         <p
                           class="demo-rich-content__mention"
@@ -427,10 +711,10 @@
                             color: var(--el-color-info);
                           "
                         >
-                          @清运车辆列表
+                          @环卫车辆列表
                         </p>
                         <el-table
-                          :data="hwzy_tableData"
+                          :data="trucksData"
                           stripe
                           style="width: 100%"
                           max-height="500"
@@ -443,24 +727,71 @@
                           :cell-style="changeCellStyle"
                         >
                           <el-table-column
-                            prop="teamName"
-                            label="名称"
+                            prop="CAR_NAME"
+                            label="车牌号"
                             width="180"
                           />
                           <el-table-column
-                            prop="carName"
-                            label="车辆名称"
+                            prop="CMP_NAME"
+                            label="车辆公司"
                             width="280"
                           />
                           <el-table-column
-                            prop="cmpName"
-                            label="公司名称"
+                            prop="TEAM_NAME"
+                            label="所属街道"
                             width="180"
                           />
-                          <el-table-column prop="onlineTime" label="在线时间" />
+                          <el-table-column
+                            prop="DES2"
+                            label="车辆类型"
+                            width="180"
+                          />
+                          <el-table-column
+                            prop="UPDATE_TIME"
+                            label="在线时间"
+                          />
                         </el-table>
-                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
-                <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
+                        <p
+                          class="demo-rich-content__mention"
+                          style="
+                            margin: 0;
+                            font-size: 18px;
+                            color: var(--el-color-info);
+                          "
+                        >
+                          @环卫人员列表
+                        </p>
+                        <el-table
+                          :data="workersData"
+                          stripe
+                          style="width: 100%"
+                          max-height="500"
+                          :header-cell-style="{
+                            'font-size': '18px',
+                            background: '#303133 !important',
+                            color: '#ffffff',
+                            border: 'none !important',
+                          }"
+                          :cell-style="changeCellStyle"
+                        >
+                          <el-table-column
+                            prop="worker_name"
+                            label="驾驶员姓名"
+                            width="180"
+                          />
+                          <el-table-column
+                            prop="worker_mobile"
+                            label="手机号"
+                            width="280"
+                          />
+                          <el-table-column
+                            prop="worker_type"
+                            label="环卫人员类型"
+                            width="180"
+                          />
+                          <el-table-column prop="worker_org" label="所属公司" />
+                        </el-table>
                       </div>
                     </div>
                   </template>
@@ -469,17 +800,18 @@
             </div>
           </el-card>
           <el-card
-            v-if="item.systemName == '餐厨垃圾全生命周期管家'"
+            v-if="item.systemName == '垃圾全生命周期管家'"
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+          
           >
             <!-- <el-image
               class="image"
               :src="require('@/assets/home/img-cclj2.jpg')"
             >
             </el-image> -->
-                        <ul v-if="item.url">
+            <ul v-if="item.url">
               <div class="header">
                 <el-button
                   class="el-button-hjws-title"
@@ -487,6 +819,7 @@
                   @click="toSystemHjws(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-ljqsm"  class="warning-ljqsm"></div>
                 </el-button>
               </div>
             </ul>
@@ -546,7 +879,6 @@
 </div> -->
               <!-- 汇总数据列表 -->
               <div>
-                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
                   <li v-for="item in item.data" style="font-size: 20px">
                     {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
@@ -557,7 +889,6 @@
                   :width="1000"
                   placement="top"
                   effect="dark"
-                  @after-enter="echartInit_cclj()"
                   trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center"
@@ -584,7 +915,7 @@
                         >
                           {{ item.systemName }}
                         </p>
-                        <p
+                        <!-- <p
                           class="demo-rich-content__mention"
                           style="
                             margin: 0;
@@ -601,27 +932,132 @@
                         <div
                           id="container_cclj1"
                           style="width: 1000px; height: 400px"
-                        ></div>
+                        ></div> -->
 
-                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
-    <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+                        <p
+                          class="demo-rich-content__mention"
+                          style="
+                            margin: 0;
+                            font-size: 18px;
+                            color: var(--el-color-info);
+                          "
+                        >
+                          @其他垃圾收运点列表
+                        </p>
+                        <el-table
+                          :data="TrashData"
+                          stripe
+                          style="width: 100%"
+                          max-height="500"
+                          :header-cell-style="{
+                            'font-size': '18px',
+                            background: '#303133 !important',
+                            color: '#ffffff',
+                            border: 'none !important',
+                          }"
+                          :cell-style="changeCellStyle"
+                        >
+                          <el-table-column
+                            prop="district"
+                            label="所属区域"
+                            width="180"
+                          />
+                          <el-table-column
+                            prop="street"
+                            label="所属街道"
+                            width="280"
+                          />
+                          <el-table-column
+                            prop="house_address"
+                            label="详细地址"
+                          />
+                        </el-table>
+
+                        <p
+                          class="demo-rich-content__mention"
+                          style="
+                            margin: 0;
+                            font-size: 18px;
+                            color: var(--el-color-info);
+                          "
+                        >
+                          @果蔬垃圾收运点列表
+                        </p>
+                        <el-table
+                          :data="guoShuData"
+                          stripe
+                          style="width: 100%"
+                          max-height="500"
+                          :header-cell-style="{
+                            'font-size': '18px',
+                            background: '#303133 !important',
+                            color: '#ffffff',
+                            border: 'none !important',
+                          }"
+                          :cell-style="changeCellStyle"
+                        >
+                          <el-table-column
+                            prop="district"
+                            label="所属区域"
+                            width="180"
+                          />
+                          <el-table-column
+                            prop="street"
+                            label="所属街道"
+                            width="280"
+                          />
+                          <el-table-column
+                            prop="house_address"
+                            label="详细地址"
+                          />
+                        </el-table>
+
+                        <p
+                          class="demo-rich-content__mention"
+                          style="
+                            margin: 0;
+                            font-size: 18px;
+                            color: var(--el-color-info);
+                          "
+                        >
+                          @可回收垃圾收运点列表
+                        </p>
+                        <el-table
+                          :data="hardWaresData"
+                          stripe
+                          style="width: 100%"
+                          max-height="500"
+                          :header-cell-style="{
+                            'font-size': '18px',
+                            background: '#303133 !important',
+                            color: '#ffffff',
+                            border: 'none !important',
+                          }"
+                          :cell-style="changeCellStyle"
+                        >
+                          <el-table-column
+                            prop="STREET_NAME"
+                            label="所属街道"
+                            width="180"
+                          />
+                          <el-table-column
+                            prop="COMMUNITY_NAME"
+                            label="详细地址"
+                          />
+                        </el-table>
                       </div>
                     </div>
                   </template>
                 </el-popover>
               </div>
-            </div> </el-card
-          ><el-card
+            </div>
+          </el-card>
+          <!-- <el-card
             v-if="item.systemName == '生活垃圾转运处理管家'"
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
           >
-            <!-- <el-image
-              class="image"
-              :src="require('@/assets/home/img-ljz2.jpg')"
-            >
-            </el-image> -->
                         <ul v-if="item.url">
               <div class="header">
                 <el-button
@@ -740,27 +1176,27 @@
                           style="width: 1000px; height: 400px"
                         ></div>
 
-                        <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
-    <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
+
                       </div>
                     </div>
                   </template>
                 </el-popover>
               </div>
             </div>
-          </el-card>
+          </el-card> -->
           <el-card
-            v-if="item.systemName == '垃圾分类管家'"
+            v-if="item.systemName == '智慧公厕管家'"
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+  
           >
             <!-- <el-image
               class="image"
               :src="require('@/assets/home/img-ljz2.jpg')"
             >
             </el-image> -->
-                        <ul v-if="item.url">
+            <ul v-if="item.url">
               <div class="header">
                 <el-button
                   class="el-button-hjws-title"
@@ -768,6 +1204,7 @@
                   @click="toSystemHjws(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-toilet" class="warning-toilet" title=""></div>
                 </el-button>
               </div>
             </ul>
@@ -829,10 +1266,10 @@
                 </ul>
 
                 <el-popover
-                  :width="800"
+                  :width="1100"
                   placement="left"
                   effect="dark"
-                  @after-enter="echartInit_jgzm()"
+                  @after-enter="showWeeklyChart()"
                   trigger="click"
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
                   style="text-align: center"
@@ -884,6 +1321,10 @@
                             </div>
                           </dv-border-box6>
                         </div>
+                        <div
+                          id="weekly_chart"
+                          style="width: 1000px; height: 400px"
+                        ></div>
 
                         <!-- <div id="container_jgzm1" style="width: 600px; height: 400px;float: left;"></div>
     <div id="container_jgzm2" style="width: 600px; height: 400px ;float:left"></div> -->
@@ -932,8 +1373,9 @@
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+            
           >
-                      <ul v-if="item.url">
+            <ul v-if="item.url">
               <div class="header">
                 <el-button
                   class="el-button-hjws-title"
@@ -941,6 +1383,7 @@
                   @click="toSystem(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-cyyy" class="warning-cyyy" title=""></div>
                 </el-button>
               </div>
             </ul>
@@ -977,7 +1420,6 @@
             <template v-else>
               <img :src="cyyyImageUrl" class="image" />
             </template>
-
 
             <div
               class="infoContainer"
@@ -1081,6 +1523,7 @@
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+            
           >
             <!-- <el-image
               class="image"
@@ -1095,6 +1538,7 @@
                   @click="toSystem(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-ddzh" class="warning-ddzh" title=""></div>
                 </el-button>
               </div>
             </ul>
@@ -1131,7 +1575,6 @@
             <template v-else>
               <img :src="ddzhImageUrl" class="image" />
             </template>
-
 
             <div
               class="infoContainer"
@@ -1234,6 +1677,7 @@
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+            
           >
             <!-- <el-image
               class="image"
@@ -1248,6 +1692,7 @@
                   @click="toSystem(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-gxdc" class="warning-gxdc" title=""></div>
                 </el-button>
               </div>
             </ul>
@@ -1285,7 +1730,6 @@
               <img :src="gxdcImageUrl" class="image" />
             </template>
 
-
             <div
               class="infoContainer"
               style="background-color: #2775b6; color: white"
@@ -1296,7 +1740,6 @@
 </div> -->
               <!-- 汇总数据列表 -->
               <div>
-                <!-- <el-avatar class="logo-icon" :src="require('@/assets/home/'+logo)" size="large" ></el-avatar> -->
                 <ul class="infoList">
                   <li v-for="item in item.data" style="font-size: 20px">
                     {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
@@ -1380,13 +1823,9 @@
             class="card"
             shadow="hover"
             :body-style="{ padding: '0px' }"
+            
           >
-            <!-- <el-image
-              class="image"
-              :src="require('@/assets/home/img-ycxt.png')"
-            >
-            </el-image> -->
-                        <ul v-if="item.url">
+            <ul v-if="item.url">
               <div class="header">
                 <el-button
                   class="el-button-hjws-title"
@@ -1394,6 +1833,7 @@
                   @click="toSystem(item)"
                   style="margin-top: 10px"
                   >{{ item.systemName }}
+                  <div id="warning-yczl" class="warning-yczl" title=""></div>
                 </el-button>
               </div>
             </ul>
@@ -1430,7 +1870,6 @@
             <template v-else>
               <img :src="yczlImageUrl" class="image" />
             </template>
-
 
             <div
               class="infoContainer"
@@ -1603,10 +2042,331 @@
         <el-divider v-if="(choosedDept == -1) | (choosedDept == 2)" />
 
         <template v-for="(item, idx) in choosedSystems">
-          <!-- <main-info v-if="item.deptId==2" :key="idx" :systemName="item.systemName" :url="item.url"
-            :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId">
-          </main-info> -->
-          <div
+          <div style="display: flex">
+            <el-card
+              v-if="item.systemName == '临街店铺管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
+              
+            >
+              <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}
+                    <div id="warning-ljdp" class="warning-ljdp" title=""></div
+                  ></el-button>
+                </div>
+              </ul>
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('ljdp')"
+                >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="ljdpImageUrl"
+                      :src="ljdpImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="ljdpImageUrl" class="image" />
+              </template>
+
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div style="padding: 5px; margin-top: 5%; padding-left: 8%"> -->
+
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
+                  <el-popover
+                    :width="500"
+                    placement="right"
+                    effect="dark"
+                    @after-enter="echartInit()"
+                    trigger="click"
+                    popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  >
+                    <template #reference>
+                      <el-button
+                        class="el-button-succeed"
+                        link
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
+                      >
+                        查看详情 ></el-button
+                      >
+                    </template>
+                    <template #default>
+                      <div
+                        class="demo-rich-conent"
+                        style="display: flex; gap: 16px; flex-direction: column"
+                      >
+                        <div>
+                          <p
+                            class="demo-rich-content__name"
+                            style="margin: 0; font-weight: 500; font-size: 25px"
+                          >
+                            {{ item.systemName }}
+                          </p>
+                          <p
+                            class="demo-rich-content__mention"
+                            style="
+                              margin: 0;
+                              font-size: 18px;
+                              color: var(--el-color-info);
+                            "
+                          >
+                            @详情统计
+                          </p>
+
+                          <div class="list_container">
+                            <div class="list_title">@门牌地址数量</div>
+                            <div class="list_body">暂无详细统计</div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@店铺数量</div>
+                            <div class="list_body">暂无详细统计</div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@零售类店铺数量</div>
+                            <div class="list_body">
+                              <li v-for="(project, index) in retailCount">
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@餐饮类店铺数量</div>
+                            <div class="list_body">
+                              <li v-for="(project, index) in cateringCount">
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@服务类店铺数量</div>
+                            <div class="list_body">
+                              <li v-for="(project, index) in serviceCount">
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@其他行业店铺数量</div>
+                            <div class="list_body">
+                              <li v-for="(project, index) in otherCount">
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@店铺空置率</div>
+                            <div class="list_body">
+                              <li>暂无详细统计</li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </el-popover>
+                </div>
+              </div>
+            </el-card>
+            <el-card
+              v-if="item.systemName == '景观照明管家'"
+              class="card"
+              shadow="hover"
+              :body-style="{ padding: '0px' }"
+              
+            >
+              <ul v-if="item.url">
+                <div class="header">
+                  <el-button
+                    v-if="item.url"
+                    class="el-button-hjws-title"
+                    type="text"
+                    @click="toSystem(item)"
+                    >{{ item.systemName }}
+                    <div id="warning-ggzm" class="warning-ggzm" title=""></div
+                  ></el-button>
+                </div>
+              </ul>
+              <template v-if="params.role == '管理员'">
+                <el-upload
+                  accept="image/jpg,image/jpeg,image/gif,image/png"
+                  action="uploadUrl"
+                  class="avatar-uploader"
+                  :show-file-list="false"
+                  :default-file-list="defaultFileList"
+                  :before-upload="createBeforeUpload('jgzm')"
+                >
+                  <el-tooltip
+                    content="点击鼠标左键即可更换图片"
+                    effect="dark"
+                    placement="top"
+                  >
+                    <img
+                      v-if="jgzmImageUrl"
+                      :src="jgzmImageUrl"
+                      class="image"
+                      @click="handleAvatarClick"
+                    />
+                    <el-icon
+                      v-else
+                      class="avatar-uploader-icon"
+                      @click="handleAvatarClick"
+                    >
+                      <Plus />
+                    </el-icon>
+                  </el-tooltip>
+                </el-upload>
+              </template>
+              <template v-else>
+                <img :src="jgzmImageUrl" class="image" />
+              </template>
+
+              <div
+                class="infoContainer"
+                style="background-color: #2775b6; color: white"
+              >
+                <div>
+                  <!-- <div style="padding: 5px; margin-top: 5%; padding-left: 8%"> -->
+
+                  <ul class="infoList">
+                    <li
+                      v-for="item in item.data"
+                      style="font-size: 20px; padding: 5px"
+                    >
+                      {{ item.infoKey + ": " }}<span>{{ item.infoVal }}</span>
+                    </li>
+                  </ul>
+                  <el-popover
+                    :width="500"
+                    placement="right"
+                    effect="dark"
+                    @after-enter="echartInit()"
+                    trigger="click"
+                    popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  >
+                    <template #reference>
+                      <el-button
+                        class="el-button-succeed"
+                        link
+                        type="primary"
+                        style="margin-top: 10px; font-size: 25px"
+                      >
+                        查看详情 ></el-button
+                      >
+                    </template>
+                    <template #default>
+                      <div
+                        class="demo-rich-conent"
+                        style="display: flex; gap: 16px; flex-direction: column"
+                      >
+                        <div>
+                          <p
+                            class="demo-rich-content__name"
+                            style="margin: 0; font-weight: 500; font-size: 25px"
+                          >
+                            {{ item.systemName }}
+                          </p>
+                          <p
+                            class="demo-rich-content__mention"
+                            style="
+                              margin: 0;
+                              font-size: 18px;
+                              color: var(--el-color-info);
+                            "
+                          >
+                            @详情统计
+                          </p>
+
+                          <div class="list_container">
+                            <div class="list_title">@报警照明设备数</div>
+                            <div class="list_body">
+                              <li
+                                v-for="(project, index) in jgzm_alarm_projrect"
+                              >
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@昨日电量统计（KWh）</div>
+                            <div class="list_body">
+                              <li
+                                v-for="(project, index) in jgzm_day_consumption"
+                              >
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@月电量统计（KWh）</div>
+                            <div class="list_body">
+                              <li
+                                v-for="(
+                                  project, index
+                                ) in jgzm_month_consumption"
+                              >
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                          <div class="list_container">
+                            <div class="list_title">@年电量统计（KWh）</div>
+                            <div class="list_body">
+                              <li
+                                v-for="(
+                                  project, index
+                                ) in jgzm_year_consumption"
+                              >
+                                {{ project }}
+                              </li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </el-popover>
+                </div>
+              </div>
+            </el-card>
+          </div>
+          <!-- <div
             class="jgzmInfo"
             v-if="item.deptId == 2"
             :key="idx"
@@ -1619,12 +2379,7 @@
             :deptId="item.deptId"
           >
             <div v-if="item.systemName == '临街店铺管家'" style="display: flex">
-              <!-- <el-image
-                :src="require('@/assets/jgzm/' + idx + '-1.jpg')"
-                style="width: 30%"
-                fit="scale-down"
-              >
-              </el-image> -->
+    
               <template v-if="params.role == '管理员'">
                 <el-upload
                   accept="image/jpg,image/jpeg,image/gif,image/png"
@@ -1677,15 +2432,12 @@
                   type="text"
                   @click="openSystem(item)"
                   style="margin-top: 10px; margin-left: 10%"
-                  >{{ item.systemName }}</el-button
+                  >{{ item.systemName }}<div id="littleSystem" title=""></div></el-button
                 >
+                
 
                 <div style="">
-                  <!-- <li v-for="item in item.data" style="font-size: 20px;padding: 5px;">{{
-                    item.infoKey + ": " +
-                    item.infoVal
-                  }}
-                  </li> -->
+    
                   <el-popover
                     v-for="(item, index) in item.data"
                     placement="right-end"
@@ -1709,7 +2461,7 @@
                         暂无详细统计
                       </li>
                     </div>
-                    <div v-if="item.infoKey === '零售类店铺数量'">
+                    <div v-if="item.infoKey === '零售业'">
                       <li
                         v-for="(project, index) in retailCount"
                         style="font-size: 20px; padding: 5px; width: 100%"
@@ -1717,7 +2469,7 @@
                         {{ project }}
                       </li>
                     </div>
-                    <div v-if="item.infoKey === '餐饮类店铺数量'">
+                    <div v-if="item.infoKey === '餐饮'">
                       <li
                         v-for="(project, index) in cateringCount"
                         style="font-size: 20px; padding: 5px; width: 100%"
@@ -1725,7 +2477,7 @@
                         {{ project }}
                       </li>
                     </div>
-                    <div v-if="item.infoKey === '服务类店铺数量'">
+                    <div v-if="item.infoKey === '服务业'">
                       <li
                         v-for="(project, index) in serviceCount"
                         style="font-size: 20px; padding: 5px; width: 100%"
@@ -1733,7 +2485,7 @@
                         {{ project }}
                       </li>
                     </div>
-                    <div v-if="item.infoKey === '其他行业店铺数量'">
+                    <div v-if="item.infoKey === '其他行业'">
                       <li
                         v-for="(project, index) in otherCount"
                         style="font-size: 20px; padding: 5px; width: 100%"
@@ -1768,8 +2520,9 @@
                   type="text"
                   @click="openSystem(item)"
                   style="margin-top: 10px; margin-left: 10%"
-                  >{{ item.systemName }}</el-button
+                  >{{ item.systemName }}<div id="littleSystem" title=""></div></el-button
                 >
+                
                 <div style="margin-top: 1%">
                   <el-popover
                     v-for="(item, index) in item.data"
@@ -1859,7 +2612,7 @@
                 />
               </template>
             </div>
-          </div>
+          </div> -->
         </template>
 
         <div
@@ -1868,33 +2621,6 @@
         >
           数字城管
         </div>
-        <!-- <el-popover :width="300"
-          popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
-          <template #reference>
-            <div class="description">
-              利用信息化移动通信技术、人工智能等手段实现对城市管理问题的采集、处理、分析，促进城市智慧化、精细化管理。
-            </div>
-          </template>
-          <template #default>
-            <div class="demo-rich-conent" style="display: flex; gap: 16px; flex-direction: column">
-              <el-avatar :size="60" src="https://avatars.githubusercontent.com/u/72015883?v=4"
-                style="margin-bottom: 8px" />
-              <div>
-                <p class="demo-rich-content__name" style="margin: 0; font-weight: 500">
-                  Element Plus
-                </p>
-                <p class="demo-rich-content__mention" style="margin: 0; font-size: 14px; color: var(--el-color-info)">
-                  @element-plus
-                </p>
-              </div>
-
-              <p class="demo-rich-content__desc" style="margin: 0">
-                Element Plus, a Vue 3 based component library for developers,
-                designers and product managers
-              </p>
-            </div>
-          </template>
-        </el-popover> -->
 
         <div class="description">
           利用信息化移动通信技术、人工智能等手段实现对城市管理问题的采集、处理、分析，促进城市智慧化、精细化管理。
@@ -1902,53 +2628,24 @@
         <el-divider v-if="(choosedDept == -1) | (choosedDept == 3)" />
 
         <template v-for="(item, idx) in choosedSystems">
-          <!-- <main-info v-if="item.deptId==3" :key="idx" :systemName="item.systemName" :url="item.url"
-            :logo="item.systemLogo" :info-list="item.data" :image="item.image" :to="item.to" :deptId="item.deptId">
-          </main-info> -->
-
           <div style="display: flex">
-            <!-- <div
-              class="szcgInfo"
-              v-if="item.deptId == 3"
-              :key="idx"
-              :systemName="item.systemName"
-              :url="item.url"
-              :logo="item.systemLogo"
-              :info-list="item.data"
-              :image="item.image"
-              :to="item.to"
-              :deptId="item.deptId"
-              style="
-                padding: 5px;
-                margin-top: 2%;
-                font-size: 25px;
-                margin-left: 2%;
-              "
-            > -->
             <el-card
               v-if="item.systemName == '突出问题管家'"
               class="card"
               shadow="hover"
               :body-style="{ padding: '0px' }"
+              
             >
-                          <ul v-if="item.url">
+              <ul v-if="item.url">
                 <div class="header">
                   <el-button
                     v-if="item.url"
                     class="el-button-hjws-title"
                     type="text"
                     @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
+                    >{{ item.systemName }}
+                    <div id="warning-tcwt" class="warning-tcwt" title=""></div
+                  ></el-button>
                 </div>
               </ul>
               <template v-if="params.role == '管理员'">
@@ -1984,7 +2681,6 @@
               <template v-else>
                 <img :src="tcwtImageUrl" class="image" />
               </template>
-
 
               <div
                 class="infoContainer"
@@ -2079,25 +2775,18 @@
               class="card"
               shadow="hover"
               :body-style="{ padding: '0px' }"
+              
             >
-                          <ul v-if="item.url">
+              <ul v-if="item.url">
                 <div class="header">
                   <el-button
                     v-if="item.url"
                     class="el-button-hjws-title"
                     type="text"
                     @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
+                    >{{ item.systemName }}
+                    <div id="warning-cgai" class="warning-cgai"  title=""></div
+                  ></el-button>
                 </div>
               </ul>
               <template v-if="params.role == '管理员'">
@@ -2134,14 +2823,11 @@
                 <img :src="cgAIImageUrl" class="image" />
               </template>
 
-
               <div
                 class="infoContainer"
                 style="background-color: #2775b6; color: white"
               >
                 <div>
-                  <!-- <div style="padding: 5px; margin-top: 4%; margin-left: 8%"> -->
-
                   <ul class="infoList">
                     <li
                       v-for="item in item.data"
@@ -2255,16 +2941,10 @@
                             />
                             <el-table-column prop="tags" label="标签" />
                           </el-table>
-                          <!-- <p><dv-charts :option="config_szcg" style="width:200px;height: 200px;" />a</p> -->
                         </div>
                       </div>
                     </template>
                   </el-popover>
-                  <!-- <el-button v-if="item.url" class="el-button-succeed" type="text" @click="toSystem(item)"
-                    style="margin-top:10px;color:#e6e6e6">{{ item.systemName }}</el-button>
-                  <el-button v-else class="el-button-null" type="text" @click="toSystem(item)" style="margin-top:10px">
-                    {{ item.systemName }}</el-button> -->
-                  <!-- </div> -->
                 </div>
               </div>
             </el-card>
@@ -2274,25 +2954,18 @@
               class="card"
               shadow="hover"
               :body-style="{ padding: '0px' }"
+              
             >
-                          <ul v-if="item.url">
+              <ul v-if="item.url">
                 <div class="header">
                   <el-button
                     v-if="item.url"
                     class="el-button-hjws-title"
                     type="text"
                     @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
+                    >{{ item.systemName }}
+                    <div id="warning-szhcsgj"  class="warning-szhcsgj" title=""></div
+                  ></el-button>
                 </div>
               </ul>
               <template v-if="params.role == '管理员'">
@@ -2329,22 +3002,11 @@
                 <img :src="szhcsImageUrl" class="image" />
               </template>
 
-
               <div
                 class="infoContainer"
                 style="background-color: #2775b6; color: white"
               >
                 <div>
-                  <!-- <div
-                      style="
-                        padding: 5px;
-                        margin-top: 5%;
-                        margin-left: 8%;
-                        width: 100%;
-                        height: 100%;
-                      "
-                    > -->
-
                   <ul class="infoList">
                     <li
                       v-for="item in item.data"
@@ -2425,10 +3087,6 @@
                         </div>
                       </div>
                     </template>
-                    <!-- <div class="charts" style="width:300px;height: 300px;">
-                        案件完成率
-                        <dv-charts :option="config_szcg" style="width:200px;height: 200px;" />
-                      </div> -->
                   </el-popover>
                   <!-- </div> -->
                 </div>
@@ -2436,29 +3094,22 @@
             </el-card>
 
             <el-card
-              v-if="item.systemName == '城管诉易达管家'"
+              v-if="item.systemName == '网络理政管家'"
               class="card"
               shadow="hover"
               :body-style="{ padding: '0px' }"
+              
             >
-                          <ul v-if="item.url">
+              <ul v-if="item.url">
                 <div class="header">
                   <el-button
                     v-if="item.url"
                     class="el-button-hjws-title"
                     type="text"
                     @click="toSystem(item)"
-                    >{{ item.systemName }}</el-button
-                  >
-                  <!-- <el-button
-                      v-else
-                      class="el-button-null"
-                      type="text"
-                      @click="toSystem(item)"
-                      style="margin-top: 10px"
-                    >
-                      {{ item.systemName }}</el-button
-                    > -->
+                    >{{ item.systemName }}
+                    <div id="warning-wllz" class="warning-wllz" title=""></div
+                  ></el-button>
                 </div>
               </ul>
               <template v-if="params.role == '管理员'">
@@ -2494,7 +3145,6 @@
               <template v-else>
                 <img :src="cgsydImageUrl" class="image" />
               </template>
-
 
               <div
                 class="infoContainer"
@@ -2581,15 +3231,7 @@
             </el-card>
             <!-- </div> -->
           </div>
-          <!-- </div> -->
         </template>
-
-        <!-- <el-image
-          class="banner"
-          :src="require('@/assets/home/banner.jpg')"
-          style=""
-        >
-        </el-image> -->
         <div style="margin-top: 20px">
           <template v-if="params.role == '管理员'">
             <el-upload
@@ -2801,13 +3443,13 @@
           <el-table-column prop="gxdc" label="共享单车管家" />
           <el-table-column prop="jgzm" label="景观照明集中控制管家" />
           <el-table-column prop="ggzp" label="临街店铺管家" />
-          <el-table-column prop="shlj" label="生活垃圾分类管家" />
-          <el-table-column prop="cclj" label="餐厨垃圾全生命周期管家" />
-          <el-table-column prop="ljsj" label="垃圾数据归集管家" />
+          <el-table-column prop="shlj" label="智慧公厕管家" />
+          <el-table-column prop="cclj" label="垃圾全生命周期管家" />
+          <!-- <el-table-column prop="ljsj" label="垃圾数据归集管家" /> -->
           <el-table-column prop="cgAI" label="城管AI识别管家" />
           <el-table-column prop="szhcs" label="数字化城市信息管家" />
 
-          <el-table-column prop="cgsyd" label="城管诉易达管家" />
+          <el-table-column prop="cgsyd" label="网络理政管家" />
           <el-table-column prop="hwzy" label="环卫作业运行管家" />
           <el-table-column
             fixed="right"
@@ -2956,7 +3598,7 @@
               }}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-
+          <!-- 
           <el-form-item label="垃圾数据归集管家" prop="ljsj">
             <el-checkbox-group
               v-model="radioLjsj"
@@ -2967,7 +3609,7 @@
                 city
               }}</el-checkbox>
             </el-checkbox-group>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item label="城管AI识别管家" prop="cgAI">
             <el-checkbox-group
@@ -2981,7 +3623,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="城管诉易达管家" prop="cgsyd">
+          <el-form-item label="网络理政管家" prop="cgsyd">
             <el-checkbox-group
               v-model="radioCgsyd"
               class="radioPermisson"
@@ -3041,7 +3683,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="生活垃圾分类管家" prop="shlj">
+          <el-form-item label="智慧公厕管家" prop="shlj">
             <el-checkbox-group
               v-model="radioShlj"
               class="radioPermisson"
@@ -3077,7 +3719,7 @@
             </el-checkbox-group>
           </el-form-item>
 
-          <el-form-item label="餐厨垃圾全生命周期管家" prop="cclj">
+          <el-form-item label="垃圾全生命周期管家" prop="cclj">
             <el-checkbox-group
               v-model="radioCclj"
               class="radioPermisson"
@@ -3179,12 +3821,19 @@ import {
   Plus,
 } from "@element-plus/icons-vue";
 import { UploadProps } from "element-plus";
-import { useStore } from "vuex"
-const store = useStore()
+import { useStore } from "vuex";
+const store = useStore();
 
 import "element-plus/theme-chalk/display.css";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { ref, reactive, computed, onBeforeMount, onMounted } from "vue";
+import {
+  ref,
+  reactive,
+  computed,
+  onBeforeMount,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import MainInfo from "@/views/home/components/MainInfo.vue";
@@ -3206,14 +3855,581 @@ import { getAiUrl } from "@/api/ai";
 import { getMain, getCategory } from "@/api/ggzp";
 import { getMainJgzm, getElectricity } from "@/api/jgzm";
 import { getAllEvents, getResourceTcwt, getTrend } from "@/api/tcwt";
-import { getSitesData } from "@/api/cclj";
+// import { getSitesData } from "@/api/cclj";
 import { getMainLjz, getSum, getWarning } from "@/api/ljz";
-import { getCarLists, getAiAlarm } from "@/api/hwzy";
+// import { getCarLists, getAiAlarm } from "@/api/hwzy";
 import { getCheckRate, getCntStatus } from "@/api/ddzh";
 import { getCompanyDust, getOverSpeed } from "@/api/ycxt";
 import moment from "moment";
 
 import axios from "axios";
+
+const cityRoad = reactive([]);
+const trucksData = reactive([]);
+const workersData = reactive([]);
+const TrashData = reactive([]);
+const guoShuData = reactive([]);
+const hardWaresData = reactive([]);
+
+//==============================================================================2024.04.12 告警指示灯
+const query = ref("");
+const value = ref("");
+const warningPersonList = [
+  { name: "周攀", phone: "18008061031", company: "办公室" },
+  { name: "李自勇", phone: "18008060397", company: "办公室" },
+  { name: "蒲远胜", phone: "18008060520", company: "办公室" },
+  { name: "周思源", phone: "18008060503", company: "办公室" },
+  { name: "虞诚磊", phone: "18008060536", company: "办公室" },
+  { name: "尹叶峰", phone: "18008060657", company: "办公室" },
+  { name: "周晓蓉", phone: "19381969851", company: "办公室" },
+  { name: "叶建春", phone: "19381968202", company: "办公室" },
+  { name: "彭姣", phone: "19381969852", company: "办公室" },
+  { name: "谈方灿", phone: "18008061082", company: "城市环境综合治理科" },
+  { name: "刘敏", phone: "18008060760", company: "城市环境综合治理科" },
+  { name: "张蓉", phone: "18008060787", company: "城市环境综合治理科" },
+  { name: "王胜男", phone: "18008060872", company: "城市环境综合治理科" },
+  { name: "彭蕾", phone: "18008060898", company: "城市环境综合治理科" },
+  { name: "杜强", phone: "18008061026", company: "基建设备管理科" },
+  { name: "张红星", phone: "18008061015", company: "基建设备管理科" },
+  { name: "邓雨檬", phone: "18008061016", company: "基建设备管理科" },
+  { name: "胡浩", phone: "18008061036", company: "环境卫生监督管理科" },
+  { name: "张宗贵", phone: "18008061087", company: "环境卫生监督管理科" },
+  { name: "张静", phone: "18008061139", company: "环境卫生监督管理科" },
+  { name: "胡玉莲", phone: "19381969853", company: "环境卫生监督管理科" },
+  { name: "杨雨荷", phone: "19381969856", company: "环境卫生监督管理科" },
+  { name: "周勇刚", phone: "18008060092", company: "环境卫生监督管理科" },
+  { name: "肖轶", phone: "18008061056", company: "广告招牌和景观照明管理科" },
+  { name: "聂宁", phone: "18008061159", company: "广告招牌和景观照明管理科" },
+  { name: "刘文", phone: "19381969857", company: "广告招牌和景观照明管理科" },
+  { name: "叶华", phone: "18008061175", company: "计划财务处" },
+  { name: "罗争妍", phone: "18008061176", company: "计划财务处" },
+  { name: "邱惠", phone: "18008061181", company: "计划财务处" },
+  { name: "代然", phone: "18008061185", company: "计划财务处" },
+  { name: "王英", phone: "18008061191", company: "计划财务处" },
+  { name: "陈雪梅", phone: "18008061293", company: "计划财务处" },
+  { name: "周建春", phone: "18008061295", company: "计划财务处" },
+  { name: "钟杨", phone: "19381969858", company: "计划财务处" },
+  { name: "蒋波", phone: "18008061301", company: "人事劳资科" },
+  { name: "徐巧英", phone: "18008061303", company: "人事劳资科" },
+  { name: "张宽", phone: "18008061380", company: "人事劳资科" },
+  { name: "张成波", phone: "18008061369", company: "人事劳资科" },
+  { name: "段国钢", phone: "15388115360", company: "数字化指挥监督中心" },
+  { name: "高志昊", phone: "19381968262", company: "政策法规科" },
+  { name: "李新成", phone: "18008061170", company: "大队勤务科" },
+  { name: "邱志强", phone: "18008061023", company: "大队勤务科" },
+  { name: "李贵明", phone: "18008061381", company: "大队勤务科" },
+  { name: "冯娟", phone: "18008061037", company: "大队勤务科" },
+  { name: "汪敏", phone: "18190992825", company: "大队勤务科" },
+  { name: "赵杨", phone: "17723321969", company: "大队勤务科" },
+  { name: "文宇恒", phone: "18008060691", company: "大队勤务科" },
+  { name: "张宇杨", phone: "18008061257", company: "大队勤务科" },
+];
+// 自定义结果格式
+// const selectedResult = ref(null);
+
+const warningFormatResult = (result) => {
+  return `${result.name} - ${result.phone} - ${result.company}`;
+};
+const getwarningPersonList = (pageNum) => {
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/auth/all_permission",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(async (resp) => {
+    var data = resp.data;
+    console.log("人员列表:" + data);
+
+    for (var key in data) {
+      if (data[key].telephone == "13880769883") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "城运中心",
+        };
+      } else if (data[key].telephone == "13880717069") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "指挥中心",
+        };
+      } else if (
+        data[key].telephone == "13708199475" ||
+        data[key].telephone == "13908173345" ||
+        data[key].telephone == "13752148440" ||
+        data[key].telephone == "18919564611" ||
+        data[key].telephone == "17360557880"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "测试中心",
+        };
+      } else if (data[key].realName == "代恭林") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "基建设备管理科",
+        };
+      } else if (
+        data[key].realName == "杨朕" ||
+        data[key].realName == "陈朝胜" ||
+        data[key].realName == "邓文华"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "环境卫生监督管理科",
+        };
+      } else if (
+        data[key].realName == "何其会" ||
+        data[key].realName == "杨健" ||
+        data[key].realName == "任兵兵" ||
+        data[key].realName == "刘晓峰"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "广告招牌和景观照明管理科",
+        };
+      } else if (
+        data[key].realName == "李莉佳" ||
+        data[key].realName == "刘亚奇"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "政策法规科",
+        };
+      } else if (
+        data[key].realName == "胡福乾" ||
+        data[key].realName == "王松"
+      ) {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "大队勤务科",
+        };
+      } else if (data[key].realName == "赖渊") {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "数字化指挥监督中心",
+        };
+      } else {
+        var resetPassword = {
+          name: data[key].realName,
+          phone: data[key].telephone,
+          company: "办公室",
+        };
+      }
+
+      console.log("这里：" + resetPassword);
+      warningPersonList.push(resetPassword);
+    }
+  });
+};
+setInterval(getwarningPersonList(1), 60000);
+
+const warningTotalRecords = ref(1000);
+let warningCurrentPage = ref(1);
+let warningPageCount = 0;
+
+let warningStart = moment("2023-03-01").format("YYYY-MM-DD");
+console.log(4211, warningStart);
+let warningEnd = moment().format("YYYY-MM-DD");
+console.log(4212, warningEnd);
+// const tomorrow = moment()
+//   .add(+1, "d")
+//   .format("YYYY-MM-DD");
+// const today = moment().format("YYYY-MM-DD");
+let changeValue = ref(["", ""]);
+// 禁选今天以后的日期以及没有数据的
+const disabledDate = (time) => {
+  return (
+    // time.getTime() < new Date("2022-8-31").getTime() ||
+    time.getTime() > new Date().getTime()
+  );
+};
+function changeDate() {
+  warningStart = moment(changeValue.value[0]).format("YYYY-MM-DD");
+  warningEnd = moment(changeValue.value[1]).format("YYYY-MM-DD");
+  // warningEnd =  new Date();
+  queryAllWarning(warningStart, warningEnd, 1);
+}
+
+const warningRuleFormRef = ref(null);
+const defaultList = reactive([]);
+const EventHistoryList = reactive([]);
+const defaultVisible = ref(false);
+const warningHandleEvent = ref(false);
+const warningToken = ref("");
+const event_uuid = ref("");
+const rowIndex = ref("");
+// const instructTime = ref("");
+const warningRuleForm = reactive({
+  name: "",
+  phone: "",
+  place: "",
+  content: "",
+});
+
+const warningRules = reactive({
+  info: [{ required: "true", message: "处置人信息不能为空", trigger: "blur" }],
+  // name: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
+  // phone: [{ required: "true", message: "电话不能为空", trigger: "blur" }],
+  // place: [{ required: "true", message: "工作单位不能为空", trigger: "blur" }],
+  content: [{ required: "true", message: "指令内容不能为空", trigger: "blur" }],
+});
+
+const warningSubmitForm = async () => {
+  const selectedValue = JSON.parse(warningRuleForm.info);
+
+  if (!warningRuleFormRef) return;
+
+  warningRuleFormRef.value.validate((valid) => {
+    if (valid) {
+      var telph = selectedValue.phone;
+      var res = confirm("确认提交？");
+      if (res) {
+        var re = /^1[3,4,5,6,7,8,9][0-9]{9}$/;
+        if (re.test(telph) == false) {
+          alert("电话号码输入有误！");
+          return false;
+        }
+      }
+      // instructTime.value = moment().format("YYYY-MM-DD HH:mm:ss");
+
+      axios({
+        url: "/ddzh/ws-message/single/web",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: warningToken.value,
+        },
+        data: JSON.stringify({
+          patrolTelephone: selectedValue.phone,
+          message: warningRuleForm.content,
+        }),
+        method: "post",
+      }).then(function (resp) {
+        console.log(2, resp);
+        console.log(
+          "发送给了电话为：" +
+            selectedValue.phone +
+            "，指令内容为：" +
+            warningRuleForm.content
+        );
+      });
+
+      axios({
+        url: "/api/event-query/updateHandleEvent",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + params.token,
+        },
+        method: "POST",
+        data: JSON.parse(
+          JSON.stringify({
+            id: event_uuid.value,
+            eventHandler: selectedValue.name,
+            handlerPhone: selectedValue.phone,
+            handlerWork: selectedValue.company,
+            instructionContent: warningRuleForm.content,
+          })
+        ),
+        method: "post",
+      }).then(function (resp) {
+        systemData.out.println("event_uuid:" + event_uuid);
+      });
+      console.log("submit!");
+      alert("提交成功！");
+      warningHandleEvent.value = false;
+      // defaultList.pop(rowIndex);
+      // for(let i = 0;i < defaultList.length; i++){
+      // if(defaultList[i].event_id == event_uuid.value){
+      //   defaultList.pop(defaultList[i-1])
+      //     }
+      //  }
+      changeColor();
+    } else {
+      alert("提交失败！");
+      return false;
+    }
+  });
+};
+
+const warningHandleClick = (index, row) => {
+  event_uuid.value = row.event_id;
+  rowIndex.value = index;
+  console.log("event_uuid:" + event_uuid.value);
+  warningHandleEvent.value = true;
+  warningRuleForm.phone = "";
+  warningRuleForm.name = "";
+  warningRuleForm.place = "";
+  warningRuleForm.content = "";
+};
+const fault_details = () => {
+  var div = document.getElementById("dotClass");
+  console.log("div.style.backgroundColor" + div.style.backgroundColor);
+  if (div.style.backgroundColor == "rgb(17, 225, 176)") {
+    console.log(params.username);
+    defaultVisible.value = true;
+  }
+  // 出现事故
+  if (div.style.backgroundColor == "rgb(225, 41, 17)") {
+    console.log(params.username);
+    defaultVisible.value = true;
+    console.log(defaultVisible.value);
+  }
+};
+const queryAllWarning = (warningStartTime, warningEndTime, pageNum) => {
+  axios({
+    url: "/api/event-query/getAllGarbageEvent",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+    params: {
+      startTime: warningStartTime,
+      endTime: warningEndTime,
+    },
+  }).then(function (resp) {
+    console.log(222, "Bearer" + params.token);
+    var data = resp.data.data;
+    EventHistoryList.splice(0, EventHistoryList.length);
+    console.log(111, resp.data.data);
+    for (var key in data) {
+      var default_site = {
+        event_source: data[key].eventSource,
+        event_cause: data[key].eventCause,
+        administrator: data[key].administrator,
+        administrator_phone: data[key].administratorPhone,
+        instruction_time: data[key].instructionTime,
+        instruction_content: data[key].instructionContent,
+        event_handler: data[key].eventHandler,
+        handler_phone: data[key].handlerPhone,
+        handler_work: data[key].handlerWork,
+        event_id: data[key].id,
+        event_time: data[key].eventTime,
+        event_disposed: data[key].disposedSign,
+      };
+      EventHistoryList.push(default_site);
+    }
+    warningTotalRecords.value = EventHistoryList.length;
+    // warningPageCount = parseInt(EventHistoryList.length) % 5;
+    warningCurrentPage.value = pageNum;
+  });
+};
+queryAllWarning(warningStart, warningEnd, 1);
+const getTransport = (pageNum) => {
+  // 当前页
+  warningCurrentPage.value = pageNum;
+};
+
+//四大板块的告警事件列表，如果列表不为空，则指示灯闪烁
+const hjwsList = reactive([]);
+const srzxList = reactive([]);
+const csjgList = reactive([]);
+const szcgList = reactive([]);
+//每个子系统的告警事件列表
+const hwzyList = reactive([]);
+const ljqsmList = reactive([]);
+const toiletWarningList = reactive([]);
+const cyyyList = reactive([]);
+const ddzhList = reactive([]);
+const gxdcList = reactive([]);
+const yczlList = reactive([]);
+const ggzmList = reactive([]);
+const ljdpList = reactive([]);
+const tcwtList = reactive([]);
+const cgaiList = reactive([]);
+const wllzList = reactive([]);
+const szhcsList = reactive([]);
+const changeColor = () => {
+  queryAllWarning(warningStart, warningEnd, 1);
+  axios({
+    // url: "/api/lzj/getWarning",
+    url: "/api/event-query/getNeedHandleEvent",
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + params.token,
+    },
+  }).then(function (resp) {
+    defaultList.splice(0, defaultList.length);
+    hjwsList.splice(0, hjwsList.length);
+    ljqsmList.splice(0, ljqsmList.length);
+    toiletWarningList.splice(0, toiletWarningList.length);
+    console.log(resp);
+    var data = resp.data.data;
+    console.log("resp.code：" + data);
+    for (var key in data) {
+      var default_site = {
+        event_time: data[key].eventTime,
+        site_name: data[key].eventSource,
+        Accident_cause: data[key].eventCause,
+        event_id: data[key].id,
+      };
+      defaultList.push(default_site);
+      console.log(612,data[key].systemName)
+      if (data[key].systemName == "垃圾系统" || data[key].systemName == "厕所系统") {
+        hjwsList.push(default_site);
+      }
+      if (data[key].systemName == "垃圾系统") {
+        ljqsmList.push(default_site);
+      }
+       if (data[key].systemName == "厕所系统") {
+        toiletWarningList.push(default_site);
+      }
+    }
+
+    console.log("data.length:" + defaultList.length);
+    // 出现事故
+    if (defaultList.length != 0) {
+      document.getElementById("dotClass").title = "出现异常！请点击查看详情！";
+      document.getElementById("dotClass").style.backgroundColor = "#E12911";
+      document.getElementById("lamp").style.display = "block";
+    } else {
+      document.getElementById("dotClass").style.backgroundColor = "#11e1b0";
+      document.getElementById("lamp").style.display = "none";
+    }
+    if (hjwsList.length != 0) {
+      document.getElementById("fourTopic-0").style.backgroundColor = "#E12911";
+    } else {
+      document.getElementById("fourTopic-0").style.backgroundColor = "#11e1b0";
+    }
+
+    if (ljqsmList.length != 0) {
+      document.getElementById("warning-ljqsm").style.backgroundColor = "#E12911";
+    } else {
+      document.getElementById("warning-ljqsm").style.backgroundColor = "#11e1b0";
+    }
+
+    if (toiletWarningList.length != 0) {
+      document.getElementById("warning-toilet").style.backgroundColor = "#E12911";
+    } else {
+      document.getElementById("warning-toilet").style.backgroundColor = "#11e1b0";
+    }
+
+  });
+};
+changeColor();
+setInterval(changeColor, 60000);
+
+//========================================================================================
+
+onMounted(() => {
+  init_ljqsm();
+});
+
+const init_ljqsm = async () => {
+  axios({
+    url: "/api/hwzy/getCityRoad?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        district_name: res[sensor].district_name,
+        street_name: res[sensor].street_name,
+        road_name: res[sensor].road_name,
+        road_type: res[sensor].road_type,
+      };
+      cityRoad.push(currentCar);
+    }
+  });
+  axios({
+    url: "/api/hwzy/getTrucks?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        CAR_NAME: res[sensor].CAR_NAME,
+        CMP_NAME: res[sensor].CMP_NAME,
+        TEAM_NAME: res[sensor].TEAM_NAME,
+        DES2: res[sensor].DES2,
+        UPDATE_TIME: res[sensor].UPDATE_TIME,
+      };
+      trucksData.push(currentCar);
+    }
+  });
+
+  axios({
+    url: "/api/hwzy/getWorkers?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        worker_name: res[sensor].worker_name,
+        worker_mobile: res[sensor].worker_mobile,
+        worker_type: res[sensor].worker_type,
+        worker_org: res[sensor].worker_org,
+      };
+      workersData.push(currentCar);
+    }
+  });
+
+  axios({
+    url: "/api/cclj/getTrash?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        district: res[sensor].district,
+        street: res[sensor].street,
+        house_address: res[sensor].house_address,
+      };
+      TrashData.push(currentCar);
+    }
+  });
+
+  axios({
+    url: "/api/cclj/getGuoshu?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        district: res[sensor].district,
+        street: res[sensor].street,
+        house_address: res[sensor].house_address,
+      };
+      guoShuData.push(currentCar);
+    }
+  });
+
+  axios({
+    url: "/api/cclj/getHardwares?token=" + params.hwzyToken,
+    method: "get",
+  }).then((response) => {
+    var res = response.data.data;
+    console.log(res);
+
+    for (var sensor in res) {
+      var currentCar = {
+        STREET_NAME: res[sensor].STREET_NAME,
+        COMMUNITY_NAME: res[sensor].COMMUNITY_NAME,
+      };
+      hardWaresData.push(currentCar);
+    }
+  });
+};
+init_ljqsm();
+
 const aiUrl = ref("");
 const ruleFormRef = ref(null);
 
@@ -3308,18 +4524,18 @@ const selfSystemPermisson = () => {
       for (var key in roleList) {
         console.log("子系统" + roleList[key].system);
         if (roleList[key].system == "all") {
-          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "网络理政管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "智慧公厕管家", "突出问题管家", "调度指挥管家", "垃圾全生命周期管家", "餐饮油烟管家"];
           systemPermisson.push("共享单车管家");
-          systemPermisson.push("垃圾分类管家");
+          systemPermisson.push("智慧公厕管家");
           systemPermisson.push("城管AI识别管家");
-          systemPermisson.push("城管诉易达管家");
+          systemPermisson.push("网络理政管家");
           systemPermisson.push("临街店铺管家");
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
           systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
-          systemPermisson.push("餐厨垃圾全生命周期管家");
+          systemPermisson.push("垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
           systemPermisson.push("环卫作业运行管家");
           systemPermisson.push("突出问题管家");
@@ -3328,12 +4544,10 @@ const selfSystemPermisson = () => {
         }
         if (roleList[key].system == "景观照明集中控制管家") {
           systemPermisson.push("景观照明管家");
-        } else if (roleList[key].system == "餐厨垃圾收运管家") {
-          systemPermisson.push("餐厨垃圾全生命周期管家");
-        } else if (roleList[key].system == "生活垃圾分类管家") {
-          systemPermisson.push("垃圾分类管家");
-        } else if (roleList[key].system == "垃圾数据归集管家") {
-          systemPermisson.push("生活垃圾转运处理管家");
+        } else if (roleList[key].system == "垃圾全生命周期管家") {
+          systemPermisson.push("垃圾全生命周期管家");
+        } else if (roleList[key].system == "智慧公厕管家") {
+          systemPermisson.push("智慧公厕管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
           systemPermisson.push("临街店铺管家");
         } else if (roleList[key].system == "环卫作业管家") {
@@ -3691,13 +4905,13 @@ const getPermissionList = (pageNum) => {
         if (roleList[index].system == "环卫作业管家") {
           permission_list.hwzy = "√";
         }
-        if (roleList[index].system == "垃圾数据归集管家") {
-          permission_list.ljsj = "√";
-        }
+        // if (roleList[index].system == "垃圾数据归集管家") {
+        //   permission_list.ljsj = "√";
+        // }
         if (roleList[index].system == "城管AI识别管家") {
           permission_list.cgAI = "√";
         }
-        if (roleList[index].system == "城管诉易达管家") {
+        if (roleList[index].system == "网络理政管家") {
           permission_list.cgsyd = "√";
         }
         if (roleList[index].system == "广告招牌二维码管家") {
@@ -3712,7 +4926,7 @@ const getPermissionList = (pageNum) => {
         if (roleList[index].system == "景观照明集中控制管家") {
           permission_list.jgzm = "√";
         }
-        if (roleList[index].system == "生活垃圾分类管家") {
+        if (roleList[index].system == "智慧公厕管家") {
           permission_list.shlj = "√";
         }
         if (roleList[index].system == "突出问题管家") {
@@ -3721,7 +4935,7 @@ const getPermissionList = (pageNum) => {
         if (roleList[index].system == "调度指挥管家") {
           permission_list.ddzh = "√";
         }
-        if (roleList[index].system == "餐厨垃圾收运管家") {
+        if (roleList[index].system == "垃圾全生命周期管家") {
           permission_list.cclj = "√";
         }
         if (roleList[index].system == "餐饮油烟管家") {
@@ -3746,13 +4960,13 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "环卫作业管家") {
                 permission_list.hwzy = "×(待定)";
               }
-              if (resp[i].roleSystem == "垃圾数据归集管家") {
-                permission_list.ljsj = "×(待定)";
-              }
+              // if (resp[i].roleSystem == "垃圾数据归集管家") {
+              //   permission_list.ljsj = "×(待定)";
+              // }
               if (resp[i].roleSystem == "城管AI识别管家") {
                 permission_list.cgAI = "×(待定)";
               }
-              if (resp[i].roleSystem == "城管诉易达管家") {
+              if (resp[i].roleSystem == "网络理政管家") {
                 permission_list.cgsyd = "×(待定)";
               }
               if (resp[i].roleSystem == "广告招牌二维码管家") {
@@ -3767,7 +4981,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "景观照明集中控制管家") {
                 permission_list.jgzm = "×(待定)";
               }
-              if (resp[i].roleSystem == "生活垃圾分类管家") {
+              if (resp[i].roleSystem == "智慧公厕管家") {
                 permission_list.shlj = "×(待定)";
               }
               if (resp[i].roleSystem == "突出问题管家") {
@@ -3776,7 +4990,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "调度指挥管家") {
                 permission_list.ddzh = "×(待定)";
               }
-              if (resp[i].roleSystem == "餐厨垃圾收运管家") {
+              if (resp[i].roleSystem == "垃圾全生命周期管家") {
                 permission_list.cclj = "×(待定)";
               }
               if (resp[i].roleSystem == "餐饮油烟管家") {
@@ -3789,13 +5003,13 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "环卫作业管家") {
                 permission_list.hwzy = "√(待定)";
               }
-              if (resp[i].roleSystem == "垃圾数据归集管家") {
-                permission_list.ljsj = "√(待定)";
-              }
+              // if (resp[i].roleSystem == "垃圾数据归集管家") {
+              //   permission_list.ljsj = "√(待定)";
+              // }
               if (resp[i].roleSystem == "城管AI识别管家") {
                 permission_list.cgAI = "√(待定)";
               }
-              if (resp[i].roleSystem == "城管诉易达管家") {
+              if (resp[i].roleSystem == "网络理政管家") {
                 permission_list.cgsyd = "√(待定)";
               }
               if (resp[i].roleSystem == "广告招牌二维码管家") {
@@ -3810,7 +5024,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "景观照明集中控制管家") {
                 permission_list.jgzm = "√(待定)";
               }
-              if (resp[i].roleSystem == "生活垃圾分类管家") {
+              if (resp[i].roleSystem == "智慧公厕管家") {
                 permission_list.shlj = "√(待定)";
               }
               if (resp[i].roleSystem == "突出问题管家") {
@@ -3819,7 +5033,7 @@ const getPermissionList = (pageNum) => {
               if (resp[i].roleSystem == "调度指挥管家") {
                 permission_list.ddzh = "√(待定)";
               }
-              if (resp[i].roleSystem == "餐厨垃圾收运管家") {
+              if (resp[i].roleSystem == "垃圾全生命周期管家") {
                 permission_list.cclj = "√(待定)";
               }
               if (resp[i].roleSystem == "餐饮油烟管家") {
@@ -3990,21 +5204,21 @@ const handleClick = (row) => {
                 }
                 permissonHwzy.value = oldRadioHwzy.value;
               }
-              if (roleList[index].system == "垃圾数据归集管家") {
-                if (roleList[index].name == "viewer") {
-                  radioLjsj.value = ["浏览信息"];
-                  oldRadioLjsj.value = "viewer";
-                }
-                if (roleList[index].name == "admin") {
-                  radioLjsj.value = ["浏览信息", "管理参数"];
-                  oldRadioLjsj.value = "admin";
-                }
-                if (roleList[index].name == "operator") {
-                  radioLjsj.value = ["浏览信息", "管理参数", "操作系统"];
-                  oldRadioLjsj.value = "operator";
-                }
-                permissonLjsj.value = oldRadioLjsj.value;
-              }
+              // if (roleList[index].system == "垃圾数据归集管家") {
+              //   if (roleList[index].name == "viewer") {
+              //     radioLjsj.value = ["浏览信息"];
+              //     oldRadioLjsj.value = "viewer";
+              //   }
+              //   if (roleList[index].name == "admin") {
+              //     radioLjsj.value = ["浏览信息", "管理参数"];
+              //     oldRadioLjsj.value = "admin";
+              //   }
+              //   if (roleList[index].name == "operator") {
+              //     radioLjsj.value = ["浏览信息", "管理参数", "操作系统"];
+              //     oldRadioLjsj.value = "operator";
+              //   }
+              //   permissonLjsj.value = oldRadioLjsj.value;
+              // }
 
               if (roleList[index].system == "城管AI识别管家") {
                 if (roleList[index].name == "viewer") {
@@ -4021,7 +5235,7 @@ const handleClick = (row) => {
                 }
                 permissonCgAI.value = oldRadioCgAI.value;
               }
-              if (roleList[index].system == "城管诉易达管家") {
+              if (roleList[index].system == "网络理政管家") {
                 if (roleList[index].name == "viewer") {
                   radioCgsyd.value = ["浏览信息"];
                   oldRadioCgsyd.value = "viewer";
@@ -4096,7 +5310,7 @@ const handleClick = (row) => {
                 }
                 permissonJgzm.value = oldRadioJgzm.value;
               }
-              if (roleList[index].system == "生活垃圾分类管家") {
+              if (roleList[index].system == "智慧公厕管家") {
                 if (roleList[index].name == "viewer") {
                   radioShlj.value = ["浏览信息"];
                   oldRadioShlj.value = "viewer";
@@ -4141,7 +5355,7 @@ const handleClick = (row) => {
                 }
                 permissonDdzh.value = oldRadioDdzh.value;
               }
-              if (roleList[index].system == "餐厨垃圾收运管家") {
+              if (roleList[index].system == "垃圾全生命周期管家") {
                 if (roleList[index].name == "viewer") {
                   radioCclj.value = ["浏览信息"];
                   oldRadioCclj.value = "viewer";
@@ -4223,22 +5437,22 @@ const handleClick = (row) => {
                     permissonHwzy.value = oldRadioHwzy.value;
                   }
                 }
-                if (roleList[index].roleSystem == "垃圾数据归集管家") {
-                  radioLjsj.value = [];
-                  if (roleList[index].roleName == "viewer") {
-                    radioLjsj.value = ["浏览信息"];
-                    oldRadioLjsj.value = "viewer";
-                  }
-                  if (roleList[index].roleName == "admin") {
-                    radioLjsj.value = ["浏览信息", "管理参数"];
-                    oldRadioLjsj.value = "admin";
-                  }
-                  if (roleList[index].roleName == "operator") {
-                    radioLjsj.value = ["浏览信息", "管理参数", "操作系统"];
-                    oldRadioLjsj.value = "operator";
-                  }
-                  permissonLjsj.value = oldRadioLjsj.value;
-                }
+                // if (roleList[index].roleSystem == "垃圾数据归集管家") {
+                //   radioLjsj.value = [];
+                //   if (roleList[index].roleName == "viewer") {
+                //     radioLjsj.value = ["浏览信息"];
+                //     oldRadioLjsj.value = "viewer";
+                //   }
+                //   if (roleList[index].roleName == "admin") {
+                //     radioLjsj.value = ["浏览信息", "管理参数"];
+                //     oldRadioLjsj.value = "admin";
+                //   }
+                //   if (roleList[index].roleName == "operator") {
+                //     radioLjsj.value = ["浏览信息", "管理参数", "操作系统"];
+                //     oldRadioLjsj.value = "operator";
+                //   }
+                //   permissonLjsj.value = oldRadioLjsj.value;
+                // }
                 if (roleList[index].roleSystem == "城管AI识别管家") {
                   radioCgAI.value = [];
                   if (roleList[index].roleName == "viewer") {
@@ -4255,7 +5469,7 @@ const handleClick = (row) => {
                   }
                   permissonCgAI.value = oldRadioCgAI.value;
                 }
-                if (roleList[index].roleSystem == "城管诉易达管家") {
+                if (roleList[index].roleSystem == "网络理政管家") {
                   radioCgsyd.value = [];
                   if (roleList[index].roleName == "viewer") {
                     radioCgsyd.value = ["浏览信息"];
@@ -4335,7 +5549,7 @@ const handleClick = (row) => {
                   }
                   permissonJgzm.value = oldRadioJgzm.value;
                 }
-                if (roleList[index].roleSystem == "生活垃圾分类管家") {
+                if (roleList[index].roleSystem == "智慧公厕管家") {
                   radioShlj.value = [];
                   if (roleList[index].roleName == "viewer") {
                     radioShlj.value = ["浏览信息"];
@@ -4383,7 +5597,7 @@ const handleClick = (row) => {
                   }
                   permissonDdzh.value = oldRadioDdzh.value;
                 }
-                if (roleList[index].roleSystem == "餐厨垃圾收运管家") {
+                if (roleList[index].roleSystem == "垃圾全生命周期管家") {
                   radioCclj.value = [];
                   if (roleList[index].roleName == "viewer") {
                     radioCclj.value = ["浏览信息"];
@@ -4588,16 +5802,16 @@ const submitPermisson = (permissionForm) => {
           selfPermisson("环卫作业管家", "delete", oldRadioHwzy.value);
         }
       }
-      if (checkLjsj.value == true) {
-        if (permissonLjsj.value != "") {
-          if (oldRadioLjsj.value != "") {
-            selfPermisson("垃圾数据归集管家", "delete", oldRadioLjsj.value);
-          }
-          selfPermisson("垃圾数据归集管家", "add", permissonLjsj.value);
-        } else {
-          selfPermisson("垃圾数据归集管家", "delete", oldRadioLjsj.value);
-        }
-      }
+      // if (checkLjsj.value == true) {
+      //   if (permissonLjsj.value != "") {
+      //     if (oldRadioLjsj.value != "") {
+      //       selfPermisson("垃圾数据归集管家", "delete", oldRadioLjsj.value);
+      //     }
+      //     selfPermisson("垃圾数据归集管家", "add", permissonLjsj.value);
+      //   } else {
+      //     selfPermisson("垃圾数据归集管家", "delete", oldRadioLjsj.value);
+      //   }
+      // }
       if (checkCgAI.value == true) {
         if (permissonCgAI.value != "") {
           if (oldRadioCgAI.value != "") {
@@ -4611,11 +5825,11 @@ const submitPermisson = (permissionForm) => {
       if (checkCgsyd.value == true) {
         if (permissonCgsyd.value != "") {
           if (oldRadioCgsyd.value != "") {
-            selfPermisson("城管诉易达管家", "delete", oldRadioCgsyd.value);
+            selfPermisson("网络理政管家", "delete", oldRadioCgsyd.value);
           }
-          selfPermisson("城管诉易达管家", "add", permissonCgsyd.value);
+          selfPermisson("网络理政管家", "add", permissonCgsyd.value);
         } else {
-          selfPermisson("城管诉易达管家", "delete", oldRadioCgsyd.value);
+          selfPermisson("网络理政管家", "delete", oldRadioCgsyd.value);
         }
       }
       if (checkGgzp.value == true) {
@@ -4665,11 +5879,11 @@ const submitPermisson = (permissionForm) => {
       if (checkShlj.value == true) {
         if (permissonShlj.value != "") {
           if (oldRadioShlj.value != "") {
-            selfPermisson("生活垃圾分类管家", "delete", oldRadioShlj.value);
+            selfPermisson("智慧公厕管家", "delete", oldRadioShlj.value);
           }
-          selfPermisson("生活垃圾分类管家", "add", permissonShlj.value);
+          selfPermisson("智慧公厕管家", "add", permissonShlj.value);
         } else {
-          selfPermisson("生活垃圾分类管家", "delete", oldRadioShlj.value);
+          selfPermisson("智慧公厕管家", "delete", oldRadioShlj.value);
         }
       }
       if (checkZhxz.value == true) {
@@ -4696,11 +5910,11 @@ const submitPermisson = (permissionForm) => {
       if (checkCclj.value == true) {
         if (permissonCclj.value != "") {
           if (oldRadioCclj.value != "") {
-            selfPermisson("餐厨垃圾收运管家", "delete", oldRadioCclj.value);
+            selfPermisson("垃圾全生命周期管家", "delete", oldRadioCclj.value);
           }
-          selfPermisson("餐厨垃圾收运管家", "add", permissonCclj.value);
+          selfPermisson("垃圾全生命周期管家", "add", permissonCclj.value);
         } else {
-          selfPermisson("餐厨垃圾收运管家", "delete", oldRadioCclj.value);
+          selfPermisson("垃圾全生命周期管家", "delete", oldRadioCclj.value);
         }
       }
       if (checkCyyy.value == true) {
@@ -5057,7 +6271,7 @@ function changeImg() {
 }
 
 //================================================================================
-const cclj_sites = ref([]);
+// const cclj_sites = ref([]);
 const gxdc_company = ref([]);
 const electricity = ref[("一品天下", "城北体育中心", "枣子巷", "一环路内透")];
 const jgzm_alarm_projrect = ref([]);
@@ -5069,7 +6283,7 @@ const cateringCount = ref([]);
 const serviceCount = ref([]);
 const otherCount = ref([]);
 const ljz_table2 = ref([]); //垃圾站
-const hwzy_tableData = ref([]); //环卫作业
+// const hwzy_tableData = ref([]); //环卫作业
 const ycxt_tableData1 = ref([]);
 const ycxt_tableData2 = ref([]); //扬尘系统
 
@@ -5380,7 +6594,6 @@ const echartInit_ddzh = () => {
         ddzh_tableData1.value[26].department,
         ddzh_tableData1.value[27].department,
         ddzh_tableData1.value[28].department,
-     
       ],
       axisLabel: {
         //x轴文字的配置
@@ -5433,7 +6646,6 @@ const echartInit_ddzh = () => {
           (ddzh_tableData1.value[26].checkRate * 100).toFixed(1),
           (ddzh_tableData1.value[27].checkRate * 100).toFixed(1),
           (ddzh_tableData1.value[28].checkRate * 100).toFixed(1),
-       
         ],
         type: "bar",
         showBackground: true,
@@ -5545,6 +6757,183 @@ const echartInit_ddzh = () => {
   myChart_ddzh1.setOption(option1);
   myChart_ddzh2.setOption(option2);
   myChart_ddzh3.setOption(option3);
+};
+
+//客流量趋势
+var weeklyChart = null;
+onMounted(() => {
+  showWeeklyChart();
+});
+
+//让图表随着屏幕自适应
+window.addEventListener("resize", function () {
+  weeklyChart.resize();
+});
+
+//页面跳转之前销毁图表
+onBeforeUnmount(() => {
+  if (weeklyChart) {
+    window.removeEventListener("resize", weeklyChart);
+    weeklyChart.dispose();
+    weeklyChart = null;
+  }
+});
+const showWeeklyChart = () => {
+  document.getElementById("weekly_chart").removeAttribute("_echarts_instance_");
+  var chartDom = document.getElementById("weekly_chart");
+  weeklyChart = echarts.init(chartDom);
+
+  var showPersonStart = moment().add(-6, "d").format("YYYY-MM-DD");
+  var showPersonEnd = moment().add(1, "d").format("YYYY-MM-DD");
+
+  axios({
+    url:
+      "/api/toilet/getSumByDuration/枣子巷/" +
+      showPersonStart +
+      "/" +
+      showPersonEnd +
+      "/threeType",
+    headers: {
+      Authorization: "Bearer" + params.token,
+      "Content-Type": " application/json",
+    },
+    method: "get",
+  }).then((dataTable) => {
+    console.log(222, dataTable.data.data);
+    dataTable = dataTable.data.data;
+    const filteredData1 = dataTable.filter(
+      (item) => item.gender === "男卫生间"
+    );
+    const flowValues1 = filteredData1.map((item) => item.flowValue);
+    const DateValues1 = filteredData1.map((item) => item.startDate);
+    const filteredData2 = dataTable.filter(
+      (item) => item.gender === "女卫生间"
+    );
+    const flowValues2 = filteredData2.map((item) => item.flowValue);
+
+    const filteredData3 = dataTable.filter(
+      (item) => item.gender === "第三卫生间"
+    );
+    const flowValues3 = filteredData3.map((item) => item.flowValue);
+
+    // 处理成功响应
+    var option;
+
+    option = {
+      title: {
+        text: "最近一周每日客流量统计",
+        textStyle: {
+          color: "white",
+        },
+      },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+        formatter: function (params) {
+          // 获取横坐标的内容
+          let xAxisLabel = params[0].axisValue;
+
+          // 获取数据项的数值
+          let dataValue = params[0].value;
+          let dataValue1 = params[1].value;
+          let dataValue2 = params[2].value;
+
+          // 构建 tooltip 内容并换行显示
+          return (
+            xAxisLabel +
+            "<br>第三卫生间 " +
+            dataValue2 +
+            "人" +
+            "<br>女卫生间 " +
+            dataValue1 +
+            "人" +
+            "<br>男卫生间 " +
+            dataValue +
+            "人"
+          );
+        },
+      },
+      legend: {
+        textStyle: {
+          color: "white",
+        },
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+        textStyle: {
+          color: "white",
+        },
+      },
+      xAxis: [
+        {
+          type: "category",
+          data: DateValues1,
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          axisLabel: {
+            formatter: "{value} 人",
+          },
+        },
+      ],
+      series: [
+        {
+          name: "男卫生间",
+          type: "bar",
+          stack: "Ad",
+          label: {
+            show: true,
+          },
+          emphasis: {
+            focus: "series",
+          },
+          textStyle: {
+            color: "white",
+          },
+          data: flowValues1,
+        },
+        {
+          name: "女卫生间",
+          type: "bar",
+          stack: "Ad",
+          label: {
+            show: true,
+          },
+          emphasis: {
+            focus: "series",
+          },
+          textStyle: {
+            color: "white",
+          },
+          data: flowValues2,
+        },
+        {
+          name: "第三卫生间",
+          type: "bar",
+          stack: "Ad",
+          label: {
+            show: true,
+          },
+          emphasis: {
+            focus: "series",
+          },
+          textStyle: {
+            color: "white",
+          },
+          data: flowValues3,
+        },
+      ],
+    };
+
+    option && weeklyChart.setOption(option);
+  });
 };
 const echartInit_ljz = () => {
   document
@@ -5755,7 +7144,7 @@ const echartInit_syd = () => {
   var myChart_syd2 = echarts.init(document.getElementById("container_syd2"));
   var option_syd1 = {
     title: {
-      text: "案件分析日统计",
+      text: "工单分析",
       textStyle: {
         color: "#ccc",
       },
@@ -5772,7 +7161,7 @@ const echartInit_syd = () => {
     },
     series: [
       {
-        name: "案件",
+        name: "工单",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -5796,10 +7185,10 @@ const echartInit_syd = () => {
           show: false,
         },
         data: [
-          { value: syd_data.value[2].infoVal, name: "今日办结案件数量" },
+          { value: syd_data.value[0].infoVal, name: "办理中数量" },
           {
-            value: syd_data.value[0].infoVal - syd_data.value[2].infoVal,
-            name: "今日待办案件数量",
+            value: syd_data.value[1].infoVal,
+            name: "超期量",
           },
           // { value: 580, name: 'Email' },
           // { value: 484, name: 'Union Ads' },
@@ -5811,7 +7200,7 @@ const echartInit_syd = () => {
   myChart_syd1.setOption(option_syd1);
   var option_syd2 = {
     title: {
-      text: "案件分析月统计",
+      text: "工单分析月统计",
       textStyle: {
         color: "#ccc",
       },
@@ -5828,7 +7217,7 @@ const echartInit_syd = () => {
     },
     series: [
       {
-        name: "案件",
+        name: "工单",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -5852,10 +7241,10 @@ const echartInit_syd = () => {
           show: false,
         },
         data: [
-          { value: syd_data.value[3].infoVal, name: "本月办结案件数量" },
+          { value: syd_data.value[2].infoVal, name: "本月办结量" },
           {
-            value: syd_data.value[1].infoVal - syd_data.value[3].infoVal,
-            name: "本月待办案件数量",
+            value: syd_data.value[4].infoVal,
+            name: "本月受理量",
           },
           // { value: 580, name: 'Email' },
           // { value: 484, name: 'Union Ads' },
@@ -5866,177 +7255,177 @@ const echartInit_syd = () => {
   };
   myChart_syd2.setOption(option_syd2);
 };
-const echartInit_cclj = () => {
-  document
-    .getElementById("container_cclj")
-    .removeAttribute("_echarts_instance_");
-  var myChart_cclj = echarts.init(document.getElementById("container_cclj"));
-  document
-    .getElementById("container_cclj1")
-    .removeAttribute("_echarts_instance_");
-  var myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
-  var option = {
-    title: {
-      text: "收运点位统计",
-      textStyle: {
-        color: "#ccc",
-      },
-    },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: {
-        type: "shadow",
-      },
-    },
-    xAxis: {
-      type: "category",
-      axisLabel: {
-        //x轴文字的配置
-        show: true,
-        interval: 0, //使x轴文字显示全
-        rotate: 20,
-      },
-      data: [
-        cclj_sites.value[0].street,
-        cclj_sites.value[1].street,
-        cclj_sites.value[2].street,
-        cclj_sites.value[3].street,
-        cclj_sites.value[4].street,
-        cclj_sites.value[5].street,
-        cclj_sites.value[6].street,
-        cclj_sites.value[7].street,
-        cclj_sites.value[8].street,
-        cclj_sites.value[9].street,
-        cclj_sites.value[10].street,
-        cclj_sites.value[11].street,
-        cclj_sites.value[12].street,
-      ],
-    },
-    yAxis: {
-      type: "value",
-    },
-    series: [
-      {
-        data: [
-          cclj_sites.value[0].street_site_num,
-          cclj_sites.value[1].street_site_num,
-          cclj_sites.value[2].street_site_num,
-          cclj_sites.value[3].street_site_num,
-          cclj_sites.value[4].street_site_num,
-          cclj_sites.value[5].street_site_num,
-          cclj_sites.value[6].street_site_num,
-          cclj_sites.value[7].street_site_num,
-          cclj_sites.value[8].street_site_num,
-          cclj_sites.value[9].street_site_num,
-          cclj_sites.value[10].street_site_num,
-          cclj_sites.value[11].street_site_num,
-          cclj_sites.value[12].street_site_num,
-        ],
-        type: "bar",
-        showBackground: true,
-        backgroundStyle: {
-          color: "rgba(180, 180, 180, 0.2)",
-        },
-      },
-    ],
-  };
-  var option1 = {
-    title: {
-      text: "收运点位统计",
-      left: "center",
-      textStyle: {
-        color: "white",
-      },
-    },
-    tooltip: {
-      trigger: "item",
-    },
-    legend: {
-      orient: "vertical",
-      left: "left",
-      textStyle: {
-        color: "#ccc",
-      },
-    },
-    series: [
-      {
-        name: "街道点位统计",
-        type: "pie",
-        radius: "50%",
-        data: [
-          {
-            value: cclj_sites.value[0].street_site_num,
-            name: cclj_sites.value[0].street,
-          },
-          {
-            value: cclj_sites.value[1].street_site_num,
-            name: cclj_sites.value[1].street,
-          },
-          {
-            value: cclj_sites.value[2].street_site_num,
-            name: cclj_sites.value[2].street,
-          },
-          {
-            value: cclj_sites.value[3].street_site_num,
-            name: cclj_sites.value[3].street,
-          },
-          {
-            value: cclj_sites.value[4].street_site_num,
-            name: cclj_sites.value[4].street,
-          },
-          {
-            value: cclj_sites.value[5].street_site_num,
-            name: cclj_sites.value[5].street,
-          },
-          {
-            value: cclj_sites.value[6].street_site_num,
-            name: cclj_sites.value[6].street,
-          },
-          {
-            value: cclj_sites.value[7].street_site_num,
-            name: cclj_sites.value[7].street,
-          },
-          {
-            value: cclj_sites.value[8].street_site_num,
-            name: cclj_sites.value[8].street,
-          },
-          {
-            value: cclj_sites.value[9].street_site_num,
-            name: cclj_sites.value[9].street,
-          },
-          {
-            value: cclj_sites.value[10].street_site_num,
-            name: cclj_sites.value[10].street,
-          },
-          {
-            value: cclj_sites.value[11].street_site_num,
-            name: cclj_sites.value[11].street,
-          },
-          {
-            value: cclj_sites.value[12].street_site_num,
-            name: cclj_sites.value[12].street,
-          },
-        ],
-        label: {
-          show: true,
-          formatter(param) {
-            // correct the percentage
-            return param.name + " (" + param.percent + "%)";
-          },
-        },
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-          },
-        },
-      },
-    ],
-  };
-  myChart_cclj.setOption(option);
-  myChart_cclj1.setOption(option1);
-};
+// const echartInit_cclj = () => {
+//   document
+//     .getElementById("container_cclj")
+//     .removeAttribute("_echarts_instance_");
+//   var myChart_cclj = echarts.init(document.getElementById("container_cclj"));
+//   document
+//     .getElementById("container_cclj1")
+//     .removeAttribute("_echarts_instance_");
+//   var myChart_cclj1 = echarts.init(document.getElementById("container_cclj1"));
+//   var option = {
+//     title: {
+//       text: "收运点位统计",
+//       textStyle: {
+//         color: "#ccc",
+//       },
+//     },
+//     tooltip: {
+//       trigger: "axis",
+//       axisPointer: {
+//         type: "shadow",
+//       },
+//     },
+//     xAxis: {
+//       type: "category",
+//       axisLabel: {
+//         //x轴文字的配置
+//         show: true,
+//         interval: 0, //使x轴文字显示全
+//         rotate: 20,
+//       },
+//       data: [
+//         cclj_sites.value[0].street,
+//         cclj_sites.value[1].street,
+//         cclj_sites.value[2].street,
+//         cclj_sites.value[3].street,
+//         cclj_sites.value[4].street,
+//         cclj_sites.value[5].street,
+//         cclj_sites.value[6].street,
+//         cclj_sites.value[7].street,
+//         cclj_sites.value[8].street,
+//         cclj_sites.value[9].street,
+//         cclj_sites.value[10].street,
+//         cclj_sites.value[11].street,
+//         cclj_sites.value[12].street,
+//       ],
+//     },
+//     yAxis: {
+//       type: "value",
+//     },
+//     series: [
+//       {
+//         data: [
+//           cclj_sites.value[0].street_site_num,
+//           cclj_sites.value[1].street_site_num,
+//           cclj_sites.value[2].street_site_num,
+//           cclj_sites.value[3].street_site_num,
+//           cclj_sites.value[4].street_site_num,
+//           cclj_sites.value[5].street_site_num,
+//           cclj_sites.value[6].street_site_num,
+//           cclj_sites.value[7].street_site_num,
+//           cclj_sites.value[8].street_site_num,
+//           cclj_sites.value[9].street_site_num,
+//           cclj_sites.value[10].street_site_num,
+//           cclj_sites.value[11].street_site_num,
+//           cclj_sites.value[12].street_site_num,
+//         ],
+//         type: "bar",
+//         showBackground: true,
+//         backgroundStyle: {
+//           color: "rgba(180, 180, 180, 0.2)",
+//         },
+//       },
+//     ],
+//   };
+//   var option1 = {
+//     title: {
+//       text: "收运点位统计",
+//       left: "center",
+//       textStyle: {
+//         color: "white",
+//       },
+//     },
+//     tooltip: {
+//       trigger: "item",
+//     },
+//     legend: {
+//       orient: "vertical",
+//       left: "left",
+//       textStyle: {
+//         color: "#ccc",
+//       },
+//     },
+//     series: [
+//       {
+//         name: "街道点位统计",
+//         type: "pie",
+//         radius: "50%",
+//         data: [
+//           {
+//             value: cclj_sites.value[0].street_site_num,
+//             name: cclj_sites.value[0].street,
+//           },
+//           {
+//             value: cclj_sites.value[1].street_site_num,
+//             name: cclj_sites.value[1].street,
+//           },
+//           {
+//             value: cclj_sites.value[2].street_site_num,
+//             name: cclj_sites.value[2].street,
+//           },
+//           {
+//             value: cclj_sites.value[3].street_site_num,
+//             name: cclj_sites.value[3].street,
+//           },
+//           {
+//             value: cclj_sites.value[4].street_site_num,
+//             name: cclj_sites.value[4].street,
+//           },
+//           {
+//             value: cclj_sites.value[5].street_site_num,
+//             name: cclj_sites.value[5].street,
+//           },
+//           {
+//             value: cclj_sites.value[6].street_site_num,
+//             name: cclj_sites.value[6].street,
+//           },
+//           {
+//             value: cclj_sites.value[7].street_site_num,
+//             name: cclj_sites.value[7].street,
+//           },
+//           {
+//             value: cclj_sites.value[8].street_site_num,
+//             name: cclj_sites.value[8].street,
+//           },
+//           {
+//             value: cclj_sites.value[9].street_site_num,
+//             name: cclj_sites.value[9].street,
+//           },
+//           {
+//             value: cclj_sites.value[10].street_site_num,
+//             name: cclj_sites.value[10].street,
+//           },
+//           {
+//             value: cclj_sites.value[11].street_site_num,
+//             name: cclj_sites.value[11].street,
+//           },
+//           {
+//             value: cclj_sites.value[12].street_site_num,
+//             name: cclj_sites.value[12].street,
+//           },
+//         ],
+//         label: {
+//           show: true,
+//           formatter(param) {
+//             // correct the percentage
+//             return param.name + " (" + param.percent + "%)";
+//           },
+//         },
+//         emphasis: {
+//           itemStyle: {
+//             shadowBlur: 10,
+//             shadowOffsetX: 0,
+//             shadowColor: "rgba(0, 0, 0, 0.5)",
+//           },
+//         },
+//       },
+//     ],
+//   };
+//   myChart_cclj.setOption(option);
+//   myChart_cclj1.setOption(option1);
+// };
 
 const echartInit_jgzm = () => {
   document
@@ -6896,9 +8285,7 @@ const DateTomorrow =
   (new Date(time + 1 * 24 * 60 * 60 * 1000).getMonth() + 1) +
   "-" +
   new Date(time + 1 * 24 * 60 * 60 * 1000).getDate();
-const tomorrow = moment()
-  .add(+1, "d")
-  .format("YYYY-MM-DD");
+const tomorrow = moment().add(+1, "d").format("YYYY-MM-DD");
 console.log("today:" + today + "  " + "tomorrow:" + tomorrow);
 console.log("DateToday:" + DateToday + "  " + "DateTomorrow:" + DateTomorrow);
 const token = ref("");
@@ -6906,14 +8293,14 @@ const gxdc = reactive({ url: "" });
 const syd = reactive({ url: "" });
 const gxdcUrl = ref("");
 const tcwtTableData = ref([]);
-const hwzy_tableData1 = ref([]);
+// const hwzy_tableData1 = ref([]);
 const ddzh_tableData1 = ref([]);
 const ddzh_tableData2 = ref([
   { 超速位置: "无", 速度: "无", 车牌号: "无", 超速时间: "无" },
 ]);
-const startDate = moment().format('YYYY-MM-DD')+" 00:00:00"
-const endDate = moment().format('YYYY-MM-DD')+" 23:59:59"
-// const startDate = 
+const startDate = moment().format("YYYY-MM-DD") + " 00:00:00";
+const endDate = moment().format("YYYY-MM-DD") + " 23:59:59";
+// const startDate =
 const syd_data = ref([]);
 const sydUrl = ref(
   "https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token="
@@ -6929,38 +8316,38 @@ onBeforeMount(() => {
   getCheckRate().then((data) => {
     ddzh_tableData1.value = data;
   });
-// axios({
-//     url: "/diao/auth/login",
-//     method: "post",
-//     data: JSON.stringify({
-//       phone: "18380195019",
-//       password: "123456",
-//     }),
-//     headers: {
-//         "Content-Type": "application/json",
-//       },
-// }).then(function (resp) {
-//     console.log("ddzh2",resp)
-//     var ddzh_token = resp.data.token;
-//     axios({
-//       url: "/diao/patrol-status/status/rate_period",
-//       method: "post",
-//       data: JSON.stringify({
-//         startDate:startDate,
-//         endDate:endDate,
-//         param: "1",
-//       }),
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: ddzh_token,
-//       },
-//     }).then(function (resp) {
-//       ddzh_tableData1.value = resp.data.data;
-//       console.log("打卡率",resp);
-//       echartInit_ddzh();
-//     });
+  // axios({
+  //     url: "/diao/auth/login",
+  //     method: "post",
+  //     data: JSON.stringify({
+  //       phone: "18380195019",
+  //       password: "123456",
+  //     }),
+  //     headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  // }).then(function (resp) {
+  //     console.log("ddzh2",resp)
+  //     var ddzh_token = resp.data.token;
+  //     axios({
+  //       url: "/diao/patrol-status/status/rate_period",
+  //       method: "post",
+  //       data: JSON.stringify({
+  //         startDate:startDate,
+  //         endDate:endDate,
+  //         param: "1",
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: ddzh_token,
+  //       },
+  //     }).then(function (resp) {
+  //       ddzh_tableData1.value = resp.data.data;
+  //       console.log("打卡率",resp);
+  //       echartInit_ddzh();
+  //     });
 
-//   });
+  //   });
   getCntStatus().then((data) => {
     ddzh_tableData2.value = data;
   });
@@ -6971,11 +8358,11 @@ onBeforeMount(() => {
     90 %
     getTokenGxdc().then((data) => {
       gxdcUrl.value = data;
-      gxdc.url = "https://175.153.176.27:58443/manage/?token=" + gxdcUrl.value;
+      gxdc.url = "https://119.4.191.13:5580/manage/?token=" + gxdcUrl.value;
     });
-  getAiAlarm().then((data) => {
-    hwzy_tableData1.value = data;
-  });
+  // getAiAlarm().then((data) => {
+  //   hwzy_tableData1.value = data;
+  // });
   getCompanyDust().then((data) => {
     ycxt_tableData1.value = data;
   });
@@ -7046,6 +8433,8 @@ function toSystem(item) {
         });
       } else window.open(item.url);
     }
+
+    console.log(item.systemName);
     if (item.systemId == "13")
       //共享单车
       window.open(gxdc.url);
@@ -7054,8 +8443,9 @@ function toSystem(item) {
 
       getToken().then((data) => {
         token.value = data;
-        var sydUrl =
-          "https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=";
+        // var sydUrl =
+        //   "https://www.jncgsqbl.com/namespaces/1/categories/1?_user_login_token=";
+        var sydUrl = "http://119.4.191.13:9580/#/login?token=";
         sydUrl = sydUrl + token.value;
         syd.url = sydUrl;
         console.log(syd.url);
@@ -7083,18 +8473,19 @@ function toSystem(item) {
         roles.indexOf("83") != -1
       ) {
         var ddzh_url =
-          "https://175.153.176.27:18804/map/?username=18008060886&pwd=MTIzNDU2";
+          // "https://175.153.176.27:18804/map/?username=18008060886&pwd=MTIzNDU2";
+          "https://119.4.191.13:8881/map/?username=18008060886&pwd=MTIzNDU2";
         window.open(ddzh_url);
       }
       if (roles.indexOf("93") != -1) {
         var ddzh_url =
-          "https://175.153.176.27:18804/map/?username=18008061151&pwd=MTIzNDU2";
+          "https://119.4.191.13:8881/map/?username=18008061151&pwd=MTIzNDU2";
         window.open(ddzh_url);
       }
 
       if (roles.indexOf("120") != -1) {
         var ddzh_url =
-          "https://175.153.176.27:18804/map/?username=18008061081&pwd=MTIzNDU2";
+          "https://119.4.191.13:8881/map/?username=18008061081&pwd=MTIzNDU2";
         window.open(ddzh_url);
       }
       if (
@@ -7103,11 +8494,11 @@ function toSystem(item) {
         roles.indexOf("102") != -1
       ) {
         var ddzh_url =
-          "https://175.153.176.27:18804/map/?username=18008061109&pwd=MTIzNDU2";
+          "https://119.4.191.13:8881/map/?username=18008061109&pwd=MTIzNDU2";
         window.open(ddzh_url);
       } else {
         var ddzh_url =
-          "https://175.153.176.27:18804/map/?username=" +
+          "https://119.4.191.13:8881/map/?username=" +
           params.username +
           "&pwd=MTIzNDU2";
         console.log(ddzh_url);
@@ -7123,15 +8514,22 @@ const ljz_table1 = ref([]);
 
 //部门列表, 从后端获取
 const depts = ref([]);
+// const hwzyToken = ref([])
 onBeforeMount(() => {
+  // getHwzyToken().then((data) => {
+  //   hwzyToken.value = data;
+  //   console.log(418,hwzyToken.value)
+  // });
   getDeptList().then((response) => {
     depts.value = response;
   });
   getCategory().then((data) => {
+    console.log("ggzp", data);
+    console.log("xxx", data[0]);
     retailCount.value = data[0];
-    cateringCount.value = data[2];
+    cateringCount.value = data[3];
     serviceCount.value = data[1];
-    otherCount.value = data[3];
+    otherCount.value = data[2];
   });
   getElectricity().then((data) => {
     jgzm_alarm_projrect.value = data[0];
@@ -7139,24 +8537,29 @@ onBeforeMount(() => {
     jgzm_month_consumption.value = data[2];
     jgzm_year_consumption.value = data[3];
   });
-  getSitesData().then((data) => {
-    cclj_sites.value = data;
-  });
+  // getSitesData().then((data) => {
+  //   cclj_sites.value = data;
+  // });
 });
 // 系统列表
 const systems = ref([]);
 onMounted(() => {
   getSystemList().then((data) => {
     systems.value = data;
+
     // 请求各个子系统要显示的数据
     systems.value.forEach((system) => {
       if (system.api !== "") {
-        get(system.api).then((data) => (system.data = data));
-        // if (system.systemId == '8') {//垃圾站获取主页+图表数据
-        //   console.log(data)
-        //   ljz_table1 = data[5]
-        //   // console.log(ljz_table1)
-        // }
+        if (system.systemId == "5" || system.systemId == "7") {
+          //环卫作业和垃圾全生命周期的接口要传递token，这个token在登录城市管家的时候就获取并缓存
+          console.log(4182, params.hwzyToken);
+          get(system.api + "?token=" + params.hwzyToken).then(
+            (data) => (system.data = data)
+          );
+          // console.log(ljz_table1)
+        } else {
+          get(system.api).then((data) => (system.data = data));
+        }
       }
     });
   });
@@ -7168,9 +8571,9 @@ onMounted(() => {
     ljz_table2.value = data;
   });
 
-  getCarLists().then((data) => {
-    hwzy_tableData.value = data;
-  });
+  // getCarLists().then((data) => {
+  //   hwzy_tableData.value = data;
+  // });
 });
 //选中的部门
 // -1表示全选，为默认值
@@ -7232,7 +8635,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
-   store.dispatch("logout")
+  store.dispatch("logout");
   //TODO 清除登录信息
   params.isLogin = false;
   router.push("/login");
@@ -7536,7 +8939,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 }
 
 .text-week {
-  margin-left: -5vw;
+  margin-left: -10vw;
   font-size: large;
   color: #fff;
   line-height: 60px;
@@ -7617,6 +9020,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
   flex-wrap: wrap;
   /*当屏幕尺寸变小时，各个子系统汇总模块自动换行*/
   justify-content: center;
+  background: url("/public/images/bg-box2.jpg") center
 }
 
 .logo-title {
@@ -7675,20 +9079,19 @@ getLatestAvatar("szhcs", szhcsImageUrl);
   width: 250px;
   flex-wrap: wrap;
   font-size: 1.8rem;
-  font-weight:bold;
+  font-weight: bold;
   /* color: #1677d9; */
 }
 
 .el-button-null {
   /* font-size: 20px; */
   color: gray;
-    font-size: 1.8rem;
+  font-size: 1.8rem;
   color: white;
-  padding-top:3vh;
+  padding-top: 3vh;
   padding-bottom: 4vh;
-  color:gold;
-  font-weight:bold;
-  
+  color: gold;
+  font-weight: bold;
 }
 
 .el-carousel__item h3 {
@@ -7781,11 +9184,11 @@ getLatestAvatar("szhcs", szhcsImageUrl);
 
 .el-button-hjws-title {
   font-size: 1.8rem;
-  color: white;
-  padding-top:3vh;
+  color: #fff;
+  padding-top: 3vh;
   padding-bottom: 4vh;
-  color:gold;
-  font-weight:bold;
+  color: gold;
+  font-weight: 700;
 }
 
 .radioPermisson {
@@ -7845,7 +9248,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
   top: 60%; /* 上边距设为50%，将文本垂直居中 */
   left: 46%; /* 左边距设为50%，将文本水平居中 */
   /* 使用translate来微调文本的位置 */
-  transform: translate(-46%, -50%); 
+  transform: translate(-46%, -50%);
 }
 
 .centered-text {
@@ -7853,7 +9256,7 @@ getLatestAvatar("szhcs", szhcsImageUrl);
   font-size: 7rem; /* 设置文本字体大小 */
   font-weight: bold; /* 设置文本加粗 */
   /* color:#FFC000; */
-  color:rgb(255,251,0);
+  color: rgb(255, 251, 0);
 }
 
 .title-container2 {
@@ -7868,12 +9271,123 @@ getLatestAvatar("szhcs", szhcsImageUrl);
   font-size: 4rem; /* 设置文本字体大小 */
   font-weight: bold; /* 设置文本加粗 */
   /* color:#FFC000; */
-  color:rgb(255,251,0);
-  font-family:"HYXJ";
+  color: rgb(255, 251, 0);
+  font-family: "HYXJ";
 }
 
 @font-face {
   font-family: "HYXJ";
   src: url("@/assets/font/homeFont.ttf") format("truetype");
+}
+
+.text-warning {
+  margin-left: 20px;
+  font-size: large;
+  color: #fff;
+  line-height: 60px;
+  width: 100%;
+}
+#dotClass{
+  width: 25px;
+  height: 25px;
+  margin-top: 2.2vh;
+  background-color: #11e1b0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#fourTopic-0,#fourTopic-1,#fourTopic-2,#fourTopic-3 {
+  width: 25px;
+  height: 25px;
+  margin-top: -4vh;
+  background-color: #11e1b0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  float: right;
+}
+
+#warning-cgai, #warning-cyyy,#warning-ddzh,#warning-gxdc,#warning-ggzm,#warning-ljdp,#warning-wllz,#warning-ljqsm,#warning-hwzy,#warning-szhcsgj,#warning-tcwt,#warning-yczl,#warning-toilet{
+  width: 25px;
+  height: 25px;
+  background-color: #11e1b0;
+  border-radius: 50%;
+}
+#lamp {
+  width: 25px;
+  height: 25px;
+  animation-name: imageAnim;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease;
+  animation-play-state: running;
+  background-image: radial-gradient(yellow, red);
+}
+
+.query-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.query-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.query-container li {
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.query-container li:hover {
+  background-color: #f0f0f0;
+}
+.fuzzy_select {
+  width: 20vw;
+}
+.dept-item {
+  margin-top: 2vh;
+  margin-right: 1vw;
+}
+
+.list_container {
+  display: flex;
+}
+.list_title {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* 将列表项垂直排列 */
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 10px; /* 添加一些内边距来调整样式 */
+
+  font-size: 1rem;
+}
+.list_body {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* 将列表项垂直排列 */
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 10px; /* 添加一些内边距来调整样式 */
+  font-size: 1rem;
+}
+.list_body li {
+  list-style: none;
+  margin: 5px 0; /* 调整列表项之间的垂直间距 */
 }
 </style>

@@ -63,15 +63,17 @@
           <div class="subdepts">{{choosedDeptName}}</div>
         </div> -->
         <div class="subsys" v-if="!showDepts">
-          <class-item
-            v-for="system in choosedSystems"
-            :key="system.systemId"
-            @click="show(system)"
-            :logo="system.systemLogo"
-            :name="system.systemName"
-            styleName="subsysName"
-          >
-          </class-item>
+          <div v-for="system in choosedSystems" :key="system.systemId">
+            <class-item
+              class="dept-item"
+              @click="show(system)"
+              :logo="system.systemLogo"
+              :name="system.systemName"
+              styleName="subsysName"
+            >
+            </class-item>
+            <div id="fourTopic" title="运行正常"></div>
+          </div>
         </div>
         <div class="subsys" v-if="!showDepts">
           <div style="padding-left: 15px; margin-top: 20px">
@@ -203,7 +205,18 @@
             临街店铺管家
           </div>
           <div>QR Code Management of Advertising Signs</div>
-          <div style="font-size:20px;color:rgb(102, 171, 216);font-weight:bold;display: block;margin-top:10px;margin-bottom:-20px">巡查/更新统计</div>
+          <div
+            style="
+              font-size: 20px;
+              color: rgb(102, 171, 216);
+              font-weight: bold;
+              display: block;
+              margin-top: 10px;
+              margin-bottom: -20px;
+            "
+          >
+            巡查/更新统计
+          </div>
         </div>
         <!-- <div class="jgzmInfo">
  
@@ -214,34 +227,38 @@
           >
           </el-image>
         </div> -->
-        
-         <div class="jgzmInfo" style="height:40vh">
-         
-    <div class="table-container">
-      <!-- 左侧表格 -->
-      <el-table :data="tableData" style="width: 100%;" :max-height="maxTableHeight">
-        <!-- 表格列定义 -->
-         <el-table-column prop="region" label="区域"></el-table-column>
-        <el-table-column prop="dpzs" label="店铺总数"></el-table-column>
-        <el-table-column prop="xcsl" label="巡查数量"></el-table-column>
-        <el-table-column prop="xcbl" label="巡查比例"></el-table-column>
-        <el-table-column prop="gxsl" label="更新数量"></el-table-column>
-         <el-table-column prop="wtzpsl" label="问题招牌数量"></el-table-column>
-        <!-- 更多列... -->
-      </el-table>
-    </div>
-    <div class="image-container">
-      <!-- 右侧图片 -->
-      <el-image :src="require('@/assets/jgzm/6-1.jpg')" style="width: 80%;margin-right:15%;height:35vh" ></el-image>
-    </div>
 
-  </div>
-                <div class="jgzmInfo">
-          <div
-            id="container_ggzp1"
-            style="width: 100%; height: 50vh; "
-          ></div>
-   
+        <div class="jgzmInfo" style="height: 40vh">
+          <div class="table-container">
+            <!-- 左侧表格 -->
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :max-height="maxTableHeight"
+            >
+              <!-- 表格列定义 -->
+              <el-table-column prop="region" label="区域"></el-table-column>
+              <el-table-column prop="dpzs" label="店铺总数"></el-table-column>
+              <el-table-column prop="xcsl" label="巡查数量"></el-table-column>
+              <el-table-column prop="xcbl" label="巡查比例"></el-table-column>
+              <el-table-column prop="gxsl" label="更新数量"></el-table-column>
+              <el-table-column
+                prop="wtzpsl"
+                label="问题招牌数量"
+              ></el-table-column>
+              <!-- 更多列... -->
+            </el-table>
+          </div>
+          <div class="image-container">
+            <!-- 右侧图片 -->
+            <el-image
+              :src="require('@/assets/jgzm/6-1.jpg')"
+              style="width: 80%; margin-right: 15%; height: 35vh"
+            ></el-image>
+          </div>
+        </div>
+        <div class="jgzmInfo">
+          <div id="container_ggzp1" style="width: 100%; height: 50vh"></div>
         </div>
         <!-- <template v-for="(item, idx) in choosedSystems">
                     <div class="jgzmInfo" v-if="item.deptId == 2" :key="idx" :systemName="item.systemName" :url="item.url"
@@ -292,7 +309,14 @@
 <script setup>
 import "element-plus/theme-chalk/display.css";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { ref, reactive, computed, onBeforeMount, onMounted,onBeforeUnmount } from "vue";
+import {
+  ref,
+  reactive,
+  computed,
+  onBeforeMount,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import MainInfo from "@/views/home/components/MainInfo.vue";
@@ -304,26 +328,25 @@ import { getAlarm } from "@/api/jgzm.js";
 import { getMain } from "@/api/ggzp.js";
 import * as echarts from "echarts";
 import axios from "axios";
-import { useStore } from "vuex"
-const store = useStore()
+import { useStore } from "vuex";
+const store = useStore();
 
-const maxTableHeight = '35vh'
+const maxTableHeight = "35vh";
 const tableData = ref([
-  { region: '金牛区' },
-  { region: '茶店子街道'},
-  { region: '抚琴街道' },
-    { region: '荷花池街道' },
-  { region: '金泉街道'},
-  { region: '西安路街道' },
-    { region: '驷马桥街道' },
-  { region: '营门口街道'},
-  { region: '天回镇街道' },
-    { region: '五块石街道' },
-  { region: '九里提街道'},
-  { region: '沙河源街道' },
-    { region: '西华街道' },
-  { region: '凤凰山街道'},
-
+  { region: "金牛区" },
+  { region: "茶店子街道" },
+  { region: "抚琴街道" },
+  { region: "荷花池街道" },
+  { region: "金泉街道" },
+  { region: "西安路街道" },
+  { region: "驷马桥街道" },
+  { region: "营门口街道" },
+  { region: "天回镇街道" },
+  { region: "五块石街道" },
+  { region: "九里提街道" },
+  { region: "沙河源街道" },
+  { region: "西华街道" },
+  { region: "凤凰山街道" },
 ]);
 const imgVisible = ref(true);
 //用户信息
@@ -341,9 +364,6 @@ var week = "星期" + a[str];
 //     router.push({ name: item.to, params: item.systemName })
 // }
 
-
-
-
 function toSystem(item) {
   if (item.url === "") {
     ElMessage({
@@ -357,7 +377,6 @@ const ggzp_tableData = ref([]);
 //部门列表, 从后端获取
 const depts = ref([]);
 onBeforeMount(() => {
-  
   getDeptList().then((response) => {
     depts.value = response;
   });
@@ -366,7 +385,6 @@ onBeforeMount(() => {
     console.log(tableData_jbgl);
   });
 });
-
 
 // 系统列表
 const systems = ref([]);
@@ -378,10 +396,10 @@ onBeforeUnmount(() => {
     myChart_ggzp1.dispose();
     myChart_ggzp1 = null;
   }
-})
+});
 onMounted(() => {
   // function echartInit_ggzp() {
-   myChart_ggzp1 = echarts.init(document.getElementById("container_ggzp1"));
+  myChart_ggzp1 = echarts.init(document.getElementById("container_ggzp1"));
   var option_ggzp1 = {
     title: {
       text: "当月巡查率",
@@ -410,11 +428,11 @@ onMounted(() => {
         "沙河源",
         "西华",
         "凤凰山",
-        ],
+      ],
       axisLabel: {
-      interval: 0, // 强制显示所有标签
+        interval: 0, // 强制显示所有标签
         //   rotate: 45   // 标签旋转角度
-        }
+      },
     },
     yAxis: {
       type: "value",
@@ -422,10 +440,10 @@ onMounted(() => {
     series: [
       {
         name: "当月巡查率",
-            type: "bar",
-        barWidth: '60%', // 调整柱子的宽度，可以是绝对值或百分比
+        type: "bar",
+        barWidth: "60%", // 调整柱子的宽度，可以是绝对值或百分比
         // radius: '50%',
- barGap: '300px',   // 柱子之间的间隔，可以是绝对值或百分比
+        barGap: "300px", // 柱子之间的间隔，可以是绝对值或百分比
         data: [
           {
             value: 15,
@@ -478,27 +496,26 @@ onMounted(() => {
           },
           {
             // value: ggzp_tableData.value[3].infoVal,
-            value:8,
+            value: 8,
             name: "凤凰山",
           },
         ],
         emphasis: {
-            itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
         },
-
       },
     ],
   };
   // 监听窗口大小变化事件
-window.addEventListener('resize', function() {
-  myChart_ggzp1.resize(); // 重新计算图表大小
-});
+  window.addEventListener("resize", function () {
+    myChart_ggzp1.resize(); // 重新计算图表大小
+  });
   myChart_ggzp1.setOption(option_ggzp1);
-// }
+  // }
   getMain().then((data) => {
     ggzp_tableData.value = data;
     echartInit_ggzp();
@@ -555,7 +572,7 @@ function switchShowDepts(deptId, deptName) {
 
   // }
 }
-const router = useRouter()
+const router = useRouter();
 const systemPermisson = reactive([]);
 const selfSystemPermisson = () => {
   axios({
@@ -572,18 +589,18 @@ const selfSystemPermisson = () => {
       for (var key in roleList) {
         console.log("子系统" + roleList[key].system);
         if (roleList[key].system == "all") {
-          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "网络理政管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "智慧公厕管家", "突出问题管家", "调度指挥管家", "垃圾全生命周期管家", "餐饮油烟管家"];
           systemPermisson.push("共享单车管家");
-          systemPermisson.push("垃圾分类管家");
+          systemPermisson.push("智慧公厕管家");
           systemPermisson.push("城管AI识别管家");
-          systemPermisson.push("城管诉易达管家");
+          systemPermisson.push("网络理政管家");
           systemPermisson.push("临街店铺管家");
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
           systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
-          systemPermisson.push("餐厨垃圾全生命周期管家");
+          systemPermisson.push("垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
           systemPermisson.push("环卫作业运行管家");
           systemPermisson.push("突出问题管家");
@@ -592,10 +609,10 @@ const selfSystemPermisson = () => {
         }
         if (roleList[key].system == "景观照明集中控制管家") {
           systemPermisson.push("景观照明管家");
-        } else if (roleList[key].system == "餐厨垃圾收运管家") {
-          systemPermisson.push("餐厨垃圾全生命周期管家");
-        } else if (roleList[key].system == "生活垃圾分类管家") {
-          systemPermisson.push("垃圾分类管家");
+        } else if (roleList[key].system == "垃圾全生命周期管家") {
+          systemPermisson.push("垃圾全生命周期管家");
+        } else if (roleList[key].system == "智慧公厕管家") {
+          systemPermisson.push("智慧公厕管家");
         } else if (roleList[key].system == "垃圾数据归集管家") {
           systemPermisson.push("生活垃圾转运处理管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
@@ -615,7 +632,7 @@ const selfSystemPermisson = () => {
 selfSystemPermisson();
 // 跳转到to指定的子系统汇总页面
 function show(item) {
-    var permission = ref(false);
+  var permission = ref(false);
   for (var i in systemPermisson) {
     if (item.systemName == systemPermisson[i]) {
       permission.value = true;
@@ -627,7 +644,7 @@ function show(item) {
   } else {
     ElMessage.error("对不起，你无权访问系统！");
   }
-  window.open(url)
+  window.open(url);
   // if (to === '') {
   //   ll
   //   ElMessage({
@@ -642,7 +659,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
-   store.dispatch("logout")
+  store.dispatch("logout");
   //TODO 清除登录信息
   router.push("/login");
 }
@@ -690,7 +707,7 @@ function backtoHome() {
   display: flex;
   padding: 5px;
   color: black;
-  margin-right:5%
+  margin-right: 5%;
 }
 
 .szcgInfo {
@@ -891,13 +908,29 @@ function backtoHome() {
 .table-container {
   flex: 6; /* 占据剩余宽度 */
   padding: 20px;
-
 }
 
 .image-container {
-    flex:4;
+  flex: 4;
   padding: 20px;
 
   text-align: right;
+}
+
+#fourTopic {
+  width: 25px;
+  height: 25px;
+  margin-top: -4vh;
+  background-color: #11e1b0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  float: right;
+}
+
+.dept-item {
+  margin-right: 1vw;
 }
 </style>

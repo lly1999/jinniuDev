@@ -1,7 +1,15 @@
 import { createStore } from "vuex";
-import { setToken, removeToken,getToken} from "@/composables/auth";
-import axios from 'axios'
+import {
+  setToken,
+  removeToken,
+  getToken,
+  setHwzyToken,
+  removeHwzyToken,
+  getHwzyToken,
+} from "@/composables/auth";
+import axios from "axios";
 import { params } from "@/store/store";
+
 // 创建一个新的 store 实例
 const store = createStore({
   state() {
@@ -28,8 +36,11 @@ const store = createStore({
             password,
           })
           .then((res) => {
+            console.log("登录成功！获取到token：", res.token);
             //存储token
             setToken(res.token);
+            console.log(2323,res.hwzyToken)
+            setHwzyToken(res.hwzyToken);
             resolve(res);
           })
           .catch((err) => reject(err));
@@ -37,44 +48,51 @@ const store = createStore({
     },
     //获取当前登录用户信息
     //commit用于提交mutation
-      getInfo({ commit }) {
+    getInfo({ commit }) {
       const token = getToken();
+      const hwzyToken = getHwzyToken();
+    
+      // getHwzyToken().then((data) => {
+      //   params.hwzyToken = data.access_token;
+      //   console.log(418, params.hwzyToken);
+      // });
       //Promise对象，用于异步处理用户信息的获取
       return new Promise((resolve, reject) => {
-
-           axios({
-             url: "/api/auth/getInfo",
-             method: "post",
-             headers: {
-               "Content-Type": "application/json",
-               Authorization: "Bearer " + token,
-               },
-               data: {
-                 
-             }
-           })
-             .then(function (resp) {
-                 console.log("用户信息", resp.data.data);
-                 params.username = resp.data.data.name;
-                 params.roleId = resp.data.data.role_id;
-                 params.realname = resp.data.data.real_name;
-                  if (resp.data.data.role_id.includes("83")) {
-                    params.role = "管理员";
-                  } else {
-                    params.role = "";
-                 }
-                  params.isLogin = true;
-                  params.token = token;
-               resolve(resp);
-             })
-             .catch((err) => reject(err));
-
+        
+        axios({
+          url: "/api/auth/getInfo",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          data: {},
+        })
+          .then(function (resp) {
+            
+            // console.log("用户信息", resp.data.data);
+            params.username = resp.data.data.name;
+            params.hwzyToken = hwzyToken;
+            params.roleId = resp.data.data.role_id;
+            params.realname = resp.data.data.real_name;
+            if (resp.data.data.role_id.includes("83")) {
+              params.role = "管理员";
+            } else {
+              params.role = "";
+            }
+            params.isLogin = true;
+            params.token = token;
+            resolve(resp);
+          })
+          .catch((err) => reject(err));
+        
       });
     },
     //退出登录
     logout({ commit }) {
       //移除cookie里的token  这个封装在auth.js中
       removeToken();
+      removeHwzyToken();
       //清除当前用户的状态
       commit("SET_USERINFO", {});
     },

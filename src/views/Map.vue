@@ -69,7 +69,7 @@
                   <el-button
                     size="small"
                     type="danger"
-                    @click="handleClick(scope.$index, scope.row)"
+                    @click="warningHandleClick(scope.$index, scope.row)"
                     >处理</el-button
                   >
                 </template>
@@ -96,7 +96,7 @@
             />
             <el-table
               :data="
-                EventHistoryList.slice((currentPage - 1) * 5, currentPage * 5)
+                EventHistoryList.slice((warningCurrentPage - 1) * 5, warningCurrentPage * 5)
               "
               style="width: 100%"
               size="large"
@@ -211,12 +211,12 @@
               >
               </el-table-column>
             </el-table>
-            <div class="float-end">
+            <div class="float-warningEnd">
               <el-pagination
                 background
                 layout="->,total, prev, pager, next, jumper"
-                :total="totalRecords"
-                :current-page="currentPage"
+                :total="warningTotalRecords"
+                :current-page="warningCurrentPage"
                 :page-size="5"
                 @current-change="getTransport"
               />
@@ -224,7 +224,7 @@
           </el-dialog>
 
           <el-dialog
-            v-model="handleEvent"
+            v-model="warningHandleEvent"
             title="事故处理"
             @close="handleClose"
           >
@@ -233,52 +233,52 @@
             ></div>
 
             <el-form
-              ref="ruleFormRef"
-              :model="ruleForm"
+              ref="warningRuleFormRef"
+              :model="warningRuleForm"
               status-icon
-              :rules="rules"
+              :warningRules="warningRules"
               label-width="120px"
-              class="demo-ruleForm"
+              class="demo-warningRuleForm"
             >
               <el-form-item label="处置人信息：" prop="info"
                 ><el-select
-                  v-model="ruleForm.info"
+                  v-model="warningRuleForm.info"
                   filterable
                   placeholder="请输入处置人姓名/电话号/工作单位"
                   class="fuzzy_select"
                 >
                   <el-option
-                    v-for="item in resetPasswordList"
+                    v-for="item in warningPersonList"
                     :key="item.name"
-                    :label="formatResult(item)"
+                    :label="warningFormatResult(item)"
                     :value="JSON.stringify(item)"
                   /> </el-select
               ></el-form-item>
 
               <!-- <el-form-item label="处置人姓名：" prop="name">
-                <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
+                <el-input v-model="warningRuleForm.name" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="处置人电话号码：" prop="phone">
                 <el-input
-                  v-model="ruleForm.phone"
+                  v-model="warningRuleForm.phone"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item label="工作单位：" prop="place">
                 <el-input
-                  v-model="ruleForm.place"
+                  v-model="warningRuleForm.place"
                   autocomplete="off"
                 ></el-input>
               </el-form-item> -->
               <el-form-item label="处置指令内容：" prop="content">
                 <el-input
-                  v-model="ruleForm.content"
+                  v-model="warningRuleForm.content"
                   type="textarea"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm(ruleFormRef)"
+                <el-button type="primary" @click="warningSubmitForm(warningRuleFormRef)"
                   >提交</el-button
                 >
               </el-form-item>
@@ -2383,7 +2383,7 @@ import { getMapDataSzcg } from "@/api/szcg.js";
 import { getMapDataYyxt } from "@/api/yyxt.js";
 
 import MapContent from "@/components/Mapcontent.vue";
-import MapContent1 from "@/components/Mapcontent1.vue";
+// import MapContent1 from "@/components/Mapcontent1.vue";
 import axios from "axios";
 import request from "@/utils/request.js";
 import moment from "moment";
@@ -2555,7 +2555,7 @@ const systemData = [
 // ===============================================告警事件
 const query = ref("");
 const value = ref("");
-const resetPasswordList = [
+const warningPersonList = [
   { name: "周攀", phone: "18008061031", company: "办公室" },
   { name: "李自勇", phone: "18008060397", company: "办公室" },
   { name: "蒲远胜", phone: "18008060520", company: "办公室" },
@@ -2608,10 +2608,10 @@ const resetPasswordList = [
 // 自定义结果格式
 // const selectedResult = ref(null);
 
-const formatResult = (result) => {
+const warningFormatResult = (result) => {
   return `${result.name} - ${result.phone} - ${result.company}`;
 };
-const getResetPasswordList = (pageNum) => {
+const getwarningPersonList = (pageNum) => {
   axios({
     // url: "/api/lzj/getWarning",
     url: "/api/auth/all_permission",
@@ -2708,22 +2708,24 @@ const getResetPasswordList = (pageNum) => {
       }
 
       console.log("这里：" + resetPassword);
-      resetPasswordList.push(resetPassword);
+      warningPersonList.push(resetPassword);
     }
   });
 };
-setInterval(getResetPasswordList(1), 60000);
+setInterval(getwarningPersonList(1), 60000);
 
-const totalRecords = ref(1000);
-let currentPage = ref(1);
-let pageCount = 0;
+const warningTotalRecords = ref(1000);
+let warningCurrentPage = ref(1);
+let warningPageCount = 0;
 
-let start = ref("");
-let end = ref("");
-const tomorrow = moment()
-  .add(+1, "d")
-  .format("YYYY-MM-DD");
-const today = moment().format("YYYY-MM-DD");
+let warningStart = moment("2023-03-01").format("YYYY-MM-DD");
+console.log(4211,warningStart)
+let warningEnd = moment().format("YYYY-MM-DD");
+console.log(4212,warningEnd)
+// const tomorrow = moment()
+//   .add(+1, "d")
+//   .format("YYYY-MM-DD");
+// const today = moment().format("YYYY-MM-DD");
 let changeValue = ref(["", ""]);
 // 禁选今天以后的日期以及没有数据的
 const disabledDate = (time) => {
@@ -2733,29 +2735,31 @@ const disabledDate = (time) => {
   );
 };
 function changeDate() {
-  start = moment(changeValue.value[0]).format("YYYY-MM-DD");
-  end = moment(changeValue.value[1]).format("YYYY-MM-DD");
-  // end =  new Date();
-  queryAllWarning(start, end, 1);
+  warningStart = moment(changeValue.value[0]).format("YYYY-MM-DD");
+  warningEnd = moment(changeValue.value[1]).format("YYYY-MM-DD");
+  console.log(14211,warningStart)
+  console.log(14212,warningEnd)
+  // warningEnd =  new Date();
+  queryAllWarning(warningStart, warningEnd, 1);
 }
 
-const ruleFormRef = ref(null);
+const warningRuleFormRef = ref(null);
 const defaultList = reactive([]);
 const EventHistoryList = reactive([]);
 const defaultVisible = ref(false);
-const handleEvent = ref(false);
-const token = ref("");
+const warningHandleEvent = ref(false);
+const warningToken = ref("");
 const event_uuid = ref("");
 const rowIndex = ref("");
 // const instructTime = ref("");
-const ruleForm = reactive({
+const warningRuleForm = reactive({
   name: "",
   phone: "",
   place: "",
   content: "",
 });
 
-const rules = reactive({
+const warningRules = reactive({
   info: [{ required: "true", message: "处置人信息不能为空", trigger: "blur" }],
   // name: [{ required: "true", message: "姓名不能为空", trigger: "blur" }],
   // phone: [{ required: "true", message: "电话不能为空", trigger: "blur" }],
@@ -2763,12 +2767,12 @@ const rules = reactive({
   content: [{ required: "true", message: "指令内容不能为空", trigger: "blur" }],
 });
 
-const submitForm = async () => {
-  const selectedValue = JSON.parse(ruleForm.info);
+const warningSubmitForm = async () => {
+  const selectedValue = JSON.parse(warningRuleForm.info);
 
-  if (!ruleFormRef) return;
+  if (!warningRuleFormRef) return;
 
-  ruleFormRef.value.validate((valid) => {
+  warningRuleFormRef.value.validate((valid) => {
     if (valid) {
       var telph = selectedValue.phone;
       var res = confirm("确认提交？");
@@ -2785,11 +2789,11 @@ const submitForm = async () => {
         url: "/ddzh/ws-message/single/web",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token.value,
+          Authorization: warningToken.value,
         },
         data: JSON.stringify({
           patrolTelephone: selectedValue.phone,
-          message: ruleForm.content,
+          message: warningRuleForm.content,
         }),
         method: "post",
       }).then(function (resp) {
@@ -2798,7 +2802,7 @@ const submitForm = async () => {
           "发送给了电话为：" +
             selectedValue.phone +
             "，指令内容为：" +
-            ruleForm.content
+            warningRuleForm.content
         );
       });
 
@@ -2815,7 +2819,7 @@ const submitForm = async () => {
             eventHandler: selectedValue.name,
             handlerPhone: selectedValue.phone,
             handlerWork: selectedValue.company,
-            instructionContent: ruleForm.content,
+            instructionContent: warningRuleForm.content,
           })
         ),
         method: "post",
@@ -2824,7 +2828,7 @@ const submitForm = async () => {
       });
       console.log("submit!");
       alert("提交成功！");
-      handleEvent.value = false;
+      warningHandleEvent.value = false;
       // defaultList.pop(rowIndex);
       // for(let i = 0;i < defaultList.length; i++){
       // if(defaultList[i].event_id == event_uuid.value){
@@ -2839,15 +2843,15 @@ const submitForm = async () => {
   });
 };
 
-const handleClick = (index, row) => {
+const warningHandleClick = (index, row) => {
   event_uuid.value = row.event_id;
   rowIndex.value = index;
   console.log("event_uuid:" + event_uuid.value);
-  handleEvent.value = true;
-  ruleForm.phone = "";
-  ruleForm.name = "";
-  ruleForm.place = "";
-  ruleForm.content = "";
+  warningHandleEvent.value = true;
+  warningRuleForm.phone = "";
+  warningRuleForm.name = "";
+  warningRuleForm.place = "";
+  warningRuleForm.content = "";
 };
 const fault_details = () => {
   var div = document.getElementById("dotClass");
@@ -2876,7 +2880,7 @@ const fault_details = () => {
     console.log(defaultVisible.value);
   }
 };
-const queryAllWarning = (startTime, endTime, pageNum) => {
+const queryAllWarning = (warningStartTime, warningEndTime, pageNum) => {
   axios({
     url: "/api/event-query/getAllGarbageEvent",
     method: "get",
@@ -2884,14 +2888,14 @@ const queryAllWarning = (startTime, endTime, pageNum) => {
       Authorization: "Bearer " + params.token,
     },
     params: {
-      startTime: startTime,
-      endTime: endTime,
+      startTime: warningStartTime,
+      endTime: warningEndTime,
     },
   }).then(function (resp) {
-    // console.log(222,"Bearer"+params.token);
+    // console.log(222,"Bearer"+params.warningToken);
     var data = resp.data.data;
     EventHistoryList.splice(0, EventHistoryList.length);
-    // console.log(111, resp.data.data);
+    console.log(111, resp.data.data);
     for (var key in data) {
       var default_site = {
         event_source: data[key].eventSource,
@@ -2909,18 +2913,18 @@ const queryAllWarning = (startTime, endTime, pageNum) => {
       };
       EventHistoryList.push(default_site);
     }
-    totalRecords.value = EventHistoryList.length;
-    // pageCount = parseInt(EventHistoryList.length) % 5;
-    currentPage.value = pageNum;
+    warningTotalRecords.value = EventHistoryList.length;
+    // warningPageCount = parseInt(EventHistoryList.length) % 5;
+    warningCurrentPage.value = pageNum;
   });
 };
-queryAllWarning("start", "end", 1);
+queryAllWarning(warningStart, warningEnd, 1);
 const getTransport = (pageNum) => {
   // 当前页
-  currentPage.value = pageNum;
+  warningCurrentPage.value = pageNum;
 };
 const changeColor = () => {
-  queryAllWarning("start", "end", 1);
+  queryAllWarning(warningStart, warningEnd, 1);
   axios({
     // url: "/api/lzj/getWarning",
     url: "/api/event-query/getNeedHandleEvent",
@@ -9661,7 +9665,7 @@ const tableData_xihua = [
 
 .query-container input[type="text"] {
   width: 100%;
-  padding: 10px;
+  padding: 10px; 
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;

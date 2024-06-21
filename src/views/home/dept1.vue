@@ -63,15 +63,17 @@
       <div class="subdepts">{{choosedDeptName}}</div>
     </div> -->
         <div class="subsys" v-if="!showDepts">
-          <class-item
-            v-for="system in choosedSystems"
-            :key="system.systemId"
-            @click="show(system, system.to, system.url)"
-            :logo="system.systemLogo"
-            :name="system.systemName"
-            styleName="subsysName"
-          >
-          </class-item>
+          <div v-for="system in choosedSystems" :key="system.systemId">
+            <class-item
+              class="dept-item"
+              @click="show(system, system.to, system.url)"
+              :logo="system.systemLogo"
+              :name="system.systemName"
+              styleName="subsysName"
+            >
+            </class-item>
+            <div id="fourTopic" title="运行正常"></div>
+          </div>
         </div>
         <div class="subsys" v-if="!showDepts">
           <div style="padding-left: 15px; margin-top: 20px">
@@ -675,8 +677,8 @@ import { getTokenGxdc, getMainGxdc } from "@/api/gxdc";
 import { params } from "@/store/store.js";
 import { getGroup } from "@/api/ddzh";
 import axios from "axios";
-import { useStore } from "vuex"
-const store = useStore()
+import { useStore } from "vuex";
+const store = useStore();
 
 import {
   getOverStandard,
@@ -1451,7 +1453,7 @@ onBeforeMount(() => {
   // })
   getTokenGxdc().then((data) => {
     gxdcUrl.value = data;
-    gxdc.url = "https://175.153.176.27:58443/manage/?token=" + gxdcUrl.value;
+    gxdc.url = "https://119.4.191.13:5580/manage/?token=" + gxdcUrl.value;
   });
   getMainGxdc().then((data) => {
     tableDataGxdc.value = data;
@@ -1535,18 +1537,18 @@ const selfSystemPermisson = () => {
       for (var key in roleList) {
         console.log("子系统" + roleList[key].system);
         if (roleList[key].system == "all") {
-          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "城管诉易达管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "生活垃圾分类管家", "突出问题管家", "调度指挥管家", "餐厨垃圾收运管家", "餐饮油烟管家"];
+          // systemPermisson.value = ["共享单车管家", "垃圾数据归集管家", "城管AI识别管家", "网络理政管家", "广告招牌二维码管", "扬尘治理大数据协同管家", "数字化城市信息管家", "景观照明集中控制管家", "智慧公厕管家", "突出问题管家", "调度指挥管家", "垃圾全生命周期管家", "餐饮油烟管家"];
           systemPermisson.push("共享单车管家");
-          systemPermisson.push("垃圾分类管家");
+          systemPermisson.push("智慧公厕管家");
           systemPermisson.push("城管AI识别管家");
-          systemPermisson.push("城管诉易达管家");
+          systemPermisson.push("网络理政管家");
           systemPermisson.push("临街店铺管家");
           systemPermisson.push("扬尘治理大数据协同管家");
           systemPermisson.push("数字化城市信息管家");
           systemPermisson.push("景观照明管家");
           systemPermisson.push("生活垃圾转运处理管家");
           systemPermisson.push("调度指挥管家");
-          systemPermisson.push("餐厨垃圾全生命周期管家");
+          systemPermisson.push("垃圾全生命周期管家");
           systemPermisson.push("餐饮油烟管家");
           systemPermisson.push("环卫作业运行管家");
           systemPermisson.push("突出问题管家");
@@ -1555,10 +1557,10 @@ const selfSystemPermisson = () => {
         }
         if (roleList[key].system == "景观照明集中控制管家") {
           systemPermisson.push("景观照明管家");
-        } else if (roleList[key].system == "餐厨垃圾收运管家") {
-          systemPermisson.push("餐厨垃圾全生命周期管家");
-        } else if (roleList[key].system == "生活垃圾分类管家") {
-          systemPermisson.push("垃圾分类管家");
+        } else if (roleList[key].system == "垃圾全生命周期管家") {
+          systemPermisson.push("垃圾全生命周期管家");
+        } else if (roleList[key].system == "智慧公厕管家") {
+          systemPermisson.push("智慧公厕管家");
         } else if (roleList[key].system == "垃圾数据归集管家") {
           systemPermisson.push("生活垃圾转运处理管家");
         } else if (roleList[key].system == "广告招牌二维码管家") {
@@ -1595,6 +1597,7 @@ function show(system, id, url) {
     } else {
       // router.push({ name: to, params: { subsysName } })
       if (id != "gxdc" && id != "ddzh") window.open(url);
+
       if (id == "gxdc") window.open(gxdc.url);
       if (id == "ddzh") {
         var roles = [];
@@ -1609,18 +1612,18 @@ function show(system, id, url) {
           roles.indexOf("83") != -1
         ) {
           var ddzh_url =
-            "https://175.153.176.27:18804/map/?username=18008060886&pwd=MTIzNDU2";
+            "https://119.4.191.13:8881/map/?username=18008060886&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
         if (roles.indexOf("93") != -1) {
           var ddzh_url =
-            "https://175.153.176.27:18804/map/?username=18008061151&pwd=MTIzNDU2";
+            "https://119.4.191.13:8881/map/?username=18008061151&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
 
         if (roles.indexOf("120") != -1) {
           var ddzh_url =
-            "https://175.153.176.27:18804/map/?username=18008061081&pwd=MTIzNDU2";
+            "https://119.4.191.13:8881/map/?username=18008061081&pwd=MTIzNDU2";
           window.open(ddzh_url);
         }
         if (
@@ -1629,11 +1632,11 @@ function show(system, id, url) {
           roles.indexOf("102") != -1
         ) {
           var ddzh_url =
-            "https://175.153.176.27:18804/map/?username=18008061109&pwd=MTIzNDU2";
+            "https://119.4.191.13:8881/map/?username=18008061109&pwd=MTIzNDU2";
           window.open(ddzh_url);
         } else {
           var ddzh_url =
-            "https://175.153.176.27:18804/map/?username=" +
+            "https://119.4.191.13:8881/map/?username=" +
             params.username +
             "&pwd=MTIzNDU2";
           console.log(ddzh_url);
@@ -1659,7 +1662,7 @@ function toMap() {
   router.push("/map");
 }
 function logout() {
-   store.dispatch("logout")
+  store.dispatch("logout");
   //TODO 清除登录信息
   router.push("/login");
 }
@@ -2213,5 +2216,22 @@ const six_clicked = () => {
   top: 202px;
   left: 40px;
   cursor: pointer;
+}
+
+#fourTopic {
+  width: 25px;
+  height: 25px;
+  margin-top: -4vh;
+  background-color: #11e1b0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  float: right;
+}
+
+.dept-item {
+  margin-right: 1vw;
 }
 </style>

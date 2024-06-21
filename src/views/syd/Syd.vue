@@ -14,7 +14,7 @@
       </template>
       <!-- 子系统名字 -->
       <template #content>
-        <span class="content" style="font-size:25px">城管诉易达管家</span>
+        <span class="content" style="font-size:25px">网络理政管家</span>
       </template>
       <!-- 用户信息 -->
       <template #userinfo>
